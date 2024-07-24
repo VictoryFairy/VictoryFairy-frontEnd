@@ -1,8 +1,71 @@
-# React + Vite
+## 데일리 스크럼
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- 매일 2시
+- 오늘 할 일 공유
 
-Currently, two official plugins are available:
+## 이슈 관리
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 라벨 붙이기
+- 백로그 연동
+
+## PR
+
+- 프론트는 3명 같이 리뷰 후 머지
+- 백엔드는 2명 같이 리뷰 후 머지
+
+## 활동 규칙
+
+- 14~19시 지키기
+- 멘토링 날에는 멘토링 전에 1800~1900 저녁 먹고 오기
+- 사소한 것도 질문하고 공유하자
+- PR이 올라오면 24시간 내에 리뷰하기(주말은 선택)
+- 사소한 회의도 기록하기
+
+## Git Flow의 기본 브랜치 명
+
+⇒ {접두사}/{분야}/{#issue} (ex. Feature/FE/#24)
+
+| 브랜치 접두사 | 의미                                                                            |
+| ------------- | ------------------------------------------------------------------------------- |
+| Feature       | 기능추가(테스트코드 포함), CSS 등 사용자 UI 디자인 변경                         |
+| Fix           | 버그 수정                                                                       |
+| Refactor      | 기능 변경 없이 코드수정된 경우                                                  |
+| Test          | 테스트 코드만 추가하거나 수정할 때                                              |
+| Config        | 환경설정 및 라이브러리 설정(패키지 매니저 수정)                                 |
+| Chore         | 파일 혹은 폴더명 수정하거나 옮기는 경우 그 외 기타 수정(코드 포맷팅), 오타 정정 |
+| Docs          | 문서 작성 및 수정(README 수정)                                                  |
+
+제목 : {깃모지}(공백한칸){제목}
+
+- 변경사항1
+- 변경사항2
+- 구현하면서 고려했던 사항
+
+예시
+✨ 아이디 입력 input 구현
+
+- 아이디 input 구현
+- 리렌더링 방지
+
+<h2>커밋 단위</h2>
+<p>이슈 → 단계별로 알아서 계획 세우고 잘 커밋하기!</p>
+<p>gitmoji → extension vscode 설치</p>
+<p>commitlint gitmoji</p>
+<h2>사용할 수 있는 깃모지</h2>
+
+| 유형                     | 이모지 |                    |
+| ------------------------ | ------ | ------------------ |
+| 기능 개발(Feature)       | ✨     | :sparkles:         |
+| 버그 수정(Fix)           | 🐛     | :bug:              |
+| 리팩토링(Refactor)       | ♻️     | :recycle:          |
+| 테스트 코드(Test)        | ✅     | :white_check_mark: |
+| 성능 개선                | ⚡️    |                    |
+| 코드 구조 개선           | 🎨     |                    |
+| 프로젝트 시작            | 🎉     |                    |
+| 린트, 컴파일러 오류 고침 | 🚨     |                    |
+| 문서 작성 및 수정(Docs)  | 📝     | :memo:             |
+| CI 빌드 시스템 구축      | 👷     |                    |
+| CI 빌드 수정             | 💚     |                    |
+| Config                   | 🔧     |                    |
+| 오타 수정                | ✏️     |                    |
+|                          |        |                    |
