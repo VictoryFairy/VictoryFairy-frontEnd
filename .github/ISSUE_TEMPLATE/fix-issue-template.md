@@ -1,9 +1,9 @@
 ---
 name: Fix issue template
 about: 버그 수정 이슈 템플릿
-title: ''
-labels: ''
-assignees: ''
+title: "[Fix] 이슈제목"
+labels: bug
+assignees: minseoook
 
 ---
 
