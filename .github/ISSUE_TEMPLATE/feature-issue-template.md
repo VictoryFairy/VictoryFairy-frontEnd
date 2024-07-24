@@ -2,7 +2,7 @@
 name: Feature issue template
 about: 기능추가 이슈 템플릿
 title: "[Feature] 이슈제목"
-labels: ''
+labels: Feature
 assignees: minseoook
 
 ---

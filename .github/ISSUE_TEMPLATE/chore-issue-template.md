@@ -2,7 +2,7 @@
 name: Chore issue template
 about: 기타 수정 사항 이슈 템플릿
 title: "[Chore] 이슈제목"
-labels: ''
+labels: Chore
 assignees: minseoook
 
 ---
