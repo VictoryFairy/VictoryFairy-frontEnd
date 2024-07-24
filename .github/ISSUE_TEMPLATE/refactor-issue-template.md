@@ -1,9 +1,9 @@
 ---
 name: Refactor issue template
 about: 리팩토링 이슈 템플릿
-title: ''
+title: "[Refactor] 이슈제목"
 labels: ''
-assignees: ''
+assignees: minseoook
 
 ---
 
