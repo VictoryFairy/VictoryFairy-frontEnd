@@ -42,7 +42,7 @@ module.exports = {
     "prettier/prettier": [
       "error",
       {
-        endOfLine: "lf", // Prettier 설정에 맞춰 줄 바꿈을 LF로 설정
+        endOfLine: "auto",
       },
     ],
   },
