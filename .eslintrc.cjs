@@ -27,8 +27,23 @@ module.exports = {
   parserOptions: {
     ecmaVersion: "latest",
     sourceType: "module",
-    project: ["tsconfig.app.json"],
+    project: ["./tsconfig.app.json"],
+    tsconfigRootDir: __dirname,
   },
   plugins: ["react", "prettier"],
-  rules: {},
+  rules: {
+    "react/function-component-definition": [
+      2,
+      {
+        namedComponents: "arrow-function",
+        unnamedComponents: "arrow-function",
+      },
+    ],
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto",
+      },
+    ],
+  },
 };
