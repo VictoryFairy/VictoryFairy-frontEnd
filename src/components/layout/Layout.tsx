@@ -4,7 +4,9 @@ import styled from "styled-components";
 const Layout = () => {
   return (
     <LayoutConatiner>
-      <Outlet />
+      <OutletWrapper>
+        <Outlet />
+      </OutletWrapper>
     </LayoutConatiner>
   );
 };
@@ -17,6 +19,10 @@ const LayoutConatiner = styled.div`
   max-width: 480px;
   min-height: 100vh;
   margin: auto;
+`;
+
+const OutletWrapper = styled.div`
+  margin: 0 20px;
 `;
 
 export default Layout;
