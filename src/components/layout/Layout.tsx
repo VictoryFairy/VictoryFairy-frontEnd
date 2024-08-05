@@ -6,11 +6,9 @@ import Bottom from "../common/Bottom";
 const Layout = () => {
   return (
     <LayoutConatiner>
-      <LayoutWrapper>
-        <Header />
-        <Outlet />
-        <Bottom />
-      </LayoutWrapper>
+      <Header />
+      <Outlet />
+      <Bottom />
     </LayoutConatiner>
   );
 };
@@ -24,10 +22,10 @@ const LayoutConatiner = styled.div`
   min-height: 100vh;
   margin: auto;
   position: relative;
-`;
-
-const LayoutWrapper = styled.div`
-  margin: 0 20px;
+  > div {
+    box-sizing: border-box;
+    padding: 0 20px;
+  }
 `;
 
 export default Layout;
