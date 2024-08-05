@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Header = () => {
-  return <HeaderContainer></HeaderContainer>;
+  return <HeaderContainer>header</HeaderContainer>;
 };
 
 const HeaderContainer = styled.div`

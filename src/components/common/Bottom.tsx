@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Bottom = () => {
-  return <BottomContainer></BottomContainer>;
+  return <BottomContainer>bottom</BottomContainer>;
 };
 
 const BottomContainer = styled.div`
