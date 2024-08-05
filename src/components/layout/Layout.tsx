@@ -23,6 +23,7 @@ const LayoutConatiner = styled.div`
   max-width: 480px;
   min-height: 100vh;
   margin: auto;
+  position: relative;
 `;
 
 const OutletWrapper = styled.div`

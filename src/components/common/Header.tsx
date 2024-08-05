@@ -1,12 +1,14 @@
 import styled from "styled-components";
 
 const Header = () => {
-  return <HeaderContainer>bottom</HeaderContainer>;
+  return <HeaderContainer></HeaderContainer>;
 };
 
 const HeaderContainer = styled.div`
   width: 100%;
   height: 100px;
+  position: absolute;
+  top: 0;
 `;
 
 // const IconWrapper = styled.div`

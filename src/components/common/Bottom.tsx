@@ -1,12 +1,14 @@
 import styled from "styled-components";
 
 const Bottom = () => {
-  return <BottomContainer>bottom</BottomContainer>;
+  return <BottomContainer></BottomContainer>;
 };
 
 const BottomContainer = styled.div`
   width: 100%;
   height: 100px;
+  position: absolute;
+  bottom: 0;
 `;
 
 // const IconWrapper = styled.div`
