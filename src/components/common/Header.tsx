@@ -5,8 +5,11 @@ const Header = () => {
 };
 
 const HeaderContainer = styled.div`
-  width: 100%;
   height: 64px;
+  position: fixed;
+  top: 0;
+  max-width: 480px;
+  width: 100%;
 `;
 
 export default Header;

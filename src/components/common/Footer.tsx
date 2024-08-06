@@ -10,7 +10,6 @@ const FooterContainer = styled.div`
   bottom: 0;
   max-width: 480px;
   width: 100%;
-  width: 480px;
 `;
 
 // const IconWrapper = styled.div`

@@ -28,6 +28,8 @@ const MainWrapper = styled.div`
   flex: 1;
   overflow: auto;
   height: calc(100vh - 64px - 64px);
+  padding-top: 60px;
+  padding-bottom: 60px;
 `;
 
 export default Layout;
