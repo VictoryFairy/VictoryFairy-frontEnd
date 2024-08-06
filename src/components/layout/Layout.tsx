@@ -24,10 +24,8 @@ const LayoutConatiner = styled.div`
   position: relative;
 `;
 
-const MainWrapper = styled.div`
-  flex: 1;
-  overflow: auto;
-  height: calc(100vh - 64px - 64px);
+const MainWrapper = styled.main`
+  height: 100vh;
   padding-top: 60px;
   padding-bottom: 60px;
 `;
