@@ -76,7 +76,7 @@ const PopupWrapper = styled.div`
 
 const PopupContainer = styled.div`
   width: 354px;
-  background-color: white;
+  background-color: var(--white);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -94,15 +94,14 @@ const ButtonGroup = styled.div`
     height: 48px;
     ${typography.title_02}
     border-radius: 8px;
-    border: 1px solid #2f3036;
     width: 100%;
   }
   .cancel-button {
     opacity: 0.4;
-    border: 1px solid #2f3036;
+    border: 1px solid var(--primary-color);
   }
   .confirm-button {
-    background: #2f3036;
+    background: var(--primary-color);
     color: white;
   }
 `;
