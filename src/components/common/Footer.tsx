@@ -55,6 +55,7 @@ const FooterContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 20px;
 `;
 
 const IconWrapper = styled.div<IconProps>`
@@ -65,6 +66,7 @@ const IconWrapper = styled.div<IconProps>`
           color:var(--primary-color);
           svg {
             stroke: var(--primary-color);
+            fill: var(--primary-color);
           }
         `
       : css`
@@ -72,6 +74,7 @@ const IconWrapper = styled.div<IconProps>`
           color:var(--gray-400);
           svg {
             stroke: var(--gray-400);
+            fill: var(--gray-400);
           }
         `}
   display: flex;
@@ -84,6 +87,9 @@ const IconWrapper = styled.div<IconProps>`
   cursor: pointer;
   span {
     margin-top: 5px;
+  }
+  > svg * {
+    stroke-width: 0.1;
   }
 `;
 
