@@ -27,12 +27,12 @@ const InputWrapper = styled.div`
   position: relative;
 `;
 
-const StyledInput = styled.input<{ hasError?: boolean }>`
+const StyledInput = styled.input<{ $hasError?: boolean }>`
   width: 100%;
   padding: 8px;
   outline: none;
   border: none;
-  border-bottom: 1px solid ${(props) => (props.hasError ? "red" : "#ccc")};
+  border-bottom: 1px solid ${(props) => (props.$hasError ? "red" : "#ccc")};
   border-radius: 4px;
 `;
 
@@ -122,7 +122,7 @@ const InputField = ({
           id={name}
           type={inputType}
           placeholder={placeholder}
-          hasError={!!error}
+          $hasError={!!error}
           {...register(name)}
         />
         {value && type !== "password" && (
