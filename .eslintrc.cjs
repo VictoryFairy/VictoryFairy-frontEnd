@@ -47,5 +47,6 @@ module.exports = {
     ],
     "import/prefer-default-export": "off",
     "@typescript-eslint/no-use-before-define": ["error", { variables: false }],
+    "react/require-default-props": "off",
   },
 };

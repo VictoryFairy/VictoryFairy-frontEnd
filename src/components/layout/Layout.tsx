@@ -1,12 +1,12 @@
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
-import Header from "../common/Header";
+import Header, { HeaderProps } from "../common/Header";
 import Footer from "../common/Footer";
 
-const Layout = () => {
+const Layout = ({ left, center, right }: HeaderProps) => {
   return (
     <LayoutConatiner>
-      <Header />
+      <Header left={left} center={center} right={right} />
       <MainWrapper>
         <Outlet />
       </MainWrapper>
