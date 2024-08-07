@@ -52,6 +52,12 @@ module.exports = {
     "react/jsx-props-no-spreading": 0,
     "import/no-extraneous-dependencies": 0,
     "@typescript-eslint/no-explicit-any": "off",
+    "react/no-array-index-key": "off",
+    "no-return-assign": "off",
+    "consistent-return": "off",
+    "jsx-a11y/alt-text": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
 
   },
 };
