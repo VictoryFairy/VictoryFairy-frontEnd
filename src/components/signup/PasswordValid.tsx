@@ -82,7 +82,7 @@ const PasswordValid = ({ setstep, handleSetUserInfo }: PasswordValidProps) => {
         </InputWrapper>
         <ButtonWrapper>
           <Button type='submit' disabled={isButtonDisabled}>
-            제출
+            확인
           </Button>
         </ButtonWrapper>
       </Form>

@@ -57,7 +57,7 @@ const EmailValid = ({ setstep, handleSetUserInfo }: EmailValidProps) => {
         </InputWrapper>
         <ButtonWrapper>
           <Button type='submit' disabled={isButtonDisabled}>
-            제출
+            확인
           </Button>
         </ButtonWrapper>
       </Form>

@@ -157,8 +157,8 @@ const TeamButton = styled.button<{
 }>`
   background-color: ${(props) => props.bg};
   color: ${(props) => props.color};
-  border: ${(props) => (props.selected ? "2px solid var(--gray-500)" : "none")};
   padding: 15px;
+  border: none;
   border-radius: 8px;
   cursor: pointer;
   font-size: 15px;
