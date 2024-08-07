@@ -2,6 +2,7 @@ import { useState } from "react";
 import EmailValid from "../components/signup/EmailValid";
 import VerificationCode from "../components/signup/VerificationCode";
 import { UserInfo } from "../types/User";
+import Profile from "../components/signup/Profile";
 
 const Signup = () => {
   const [step, setstep] = useState(1);
@@ -35,7 +36,9 @@ const Signup = () => {
           />
         );
       case 3:
-        return <div>ㅗㅇ</div>;
+        return (
+          <Profile setstep={setstep} handleSetUserInfo={handleSetUserInfo} />
+        );
       case 4:
         return <div>ㅗㅇ</div>;
       case 5:
