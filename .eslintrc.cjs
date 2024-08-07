@@ -52,5 +52,7 @@ module.exports = {
     "import/no-extraneous-dependencies": 0,
     "@typescript-eslint/no-explicit-any": "off",
     "react/no-array-index-key": "off",
+    "no-return-assign": "off",
+    "consistent-return": "off",
   },
 };

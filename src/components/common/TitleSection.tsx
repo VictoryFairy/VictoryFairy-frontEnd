@@ -17,7 +17,16 @@ const TitleSection = ({ title, subtitle }: TitleProps) => {
           </React.Fragment>
         ))}
       </Title>
-      {subtitle && <Subtitle>{subtitle}</Subtitle>}
+      {subtitle && (
+        <Subtitle>
+          {subtitle.split("<br/>").map((line, index) => (
+            <React.Fragment key={index}>
+              {index > 0 && <br />} {/* 첫 번째 줄 이후에만 <br /> 추가 */}
+              {line}
+            </React.Fragment>
+          ))}
+        </Subtitle>
+      )}
     </TitleWrapper>
   );
 };

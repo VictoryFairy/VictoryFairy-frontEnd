@@ -29,6 +29,7 @@ const Signup = () => {
       case 2:
         return (
           <VerificationCode
+            email={userInfo.email}
             setstep={setstep}
             handleSetUserInfo={handleSetUserInfo}
           />
