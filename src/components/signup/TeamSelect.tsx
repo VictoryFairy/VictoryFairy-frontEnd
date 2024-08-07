@@ -1,78 +1,172 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import TitleSection from "../common/TitleSection";
+import Button from "../common/Button";
+import { UserInfo } from "../../types/User";
 
-const teams = [
-  { id: 1, name: "LG Twins", color: "#DC143C" },
-  { id: 2, name: "Doosan Bears", color: "#000080" },
-  // ... 다른 팀들 추가
+interface Team {
+  id: string;
+  name: string;
+  color: string;
+  bg: string;
+}
+interface TeamSelectProps {
+  handleSetUserInfo: (userInfo: Partial<UserInfo>) => void;
+}
+const teams: Team[] = [
+  {
+    id: "lgtwins",
+    name: "LG Twins",
+    bg: "var(--lg-twins-red)",
+    color: "var(--lg-twins-black)",
+  },
+  {
+    id: "doosanbears",
+    name: "Doosan Bears",
+    bg: "var(--doosan-bears-navy)",
+    color: "var(--doosan-bears-red)",
+  },
+  {
+    id: "hanwhaeagles",
+    name: "Hanwha Eagles",
+    bg: "var(--hanwha-eagles-black)",
+    color: "var(--hanwha-eagles-orange)",
+  },
+  {
+    id: "samsunglions",
+    name: "SAMSUNG Lions",
+    bg: "var(--samsung-lions-blue)",
+    color: "var(--samsung-lions-gray)",
+  },
+  {
+    id: "ktwiz",
+    name: "KT Wiz",
+    bg: "var(--kt-wiz-black)",
+    color: "var(--kt-wiz-red)",
+  },
+  {
+    id: "ssglanders",
+    name: "SSG Landers",
+    bg: "var(--ssg-landers-red)",
+    color: "var(--ssg-landers-gray)",
+  },
+  {
+    id: "ncdinos",
+    name: "NC Dinos",
+    bg: "var(--nc-dinos-blue)",
+    color: "var(--nc-dinos-gold)",
+  },
+  {
+    id: "kiatigeres",
+    name: "KIA Tigers",
+    bg: "var(--kia-tigers-black)",
+    color: "var(--kia-tigers-red)",
+  },
+  {
+    id: "lottegiants",
+    name: "Lotte Giants",
+    bg: "var(--lotte-giants-navy)",
+    color: "var(--lotte-giants-red)",
+  },
+  {
+    id: "kiwoomheroes",
+    name: "Kiwoom Heroes",
+    bg: "var(--kiwoom-heroes-magenta)",
+    color: "var(--kiwoom-heroes-pink)",
+  },
 ];
 
-const TeamSelect = () => {
-  const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
-  const [noTeam, setNoTeam] = useState(false);
+const TeamSelect = ({ handleSetUserInfo }: TeamSelectProps) => {
+  const navigate = useNavigate();
+  const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
 
-  const handleTeamSelect = (teamName: string) => {
-    setSelectedTeam(teamName);
-    setNoTeam(false);
+  const handleTeamSelect = (team: Team) => {
+    setSelectedTeam(team);
+    handleSetUserInfo({ team: team.name });
+  };
+
+  const handleClick = () => {
+    navigate("/");
   };
 
   return (
     <Container>
-      <Header>
-        <TitleSection title='응원팀을 선택해주세요' />
-      </Header>
-
-      <TeamBox selected={!!selectedTeam}>{selectedTeam || "My Team"}</TeamBox>
+      <TitleSection title='응원하는 팀을 선택해주세요' />
+      <SelectedTeamBox
+        color={selectedTeam?.color || "transparent"}
+        bg={selectedTeam?.bg}>
+        {selectedTeam?.name || "My Team"}
+      </SelectedTeamBox>
 
       <TeamGrid>
         {teams.map((team) => (
           <TeamButton
             key={team.id}
-            onClick={() => handleTeamSelect(team.name)}
-            style={{
-              backgroundColor: team.color,
-            }}>
+            onClick={() => handleTeamSelect(team)}
+            color={team.color}
+            bg={team.bg}
+            selected={selectedTeam?.id === team.id}>
             {team.name}
           </TeamButton>
         ))}
       </TeamGrid>
 
-      <SubmitButton disabled={!selectedTeam && !noTeam}>
-        승리요정 시작하기
-      </SubmitButton>
+      <ButtonWrapper>
+        <Button
+          type='button'
+          onClick={handleClick}
+          disabled={selectedTeam === null}>
+          승리요정 시작하기
+        </Button>
+      </ButtonWrapper>
     </Container>
   );
 };
 
-// Styled components 정의
 const Container = styled.div`
-  // ... 스타일 정의
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 `;
 
-const Header = styled.div`
-  // ... 스타일 정의
-`;
-
-const TeamBox = styled.div<{ selected: boolean }>`
-  // ... 스타일 정의
-`;
-
-const NoTeamCheckbox = styled.label`
-  // ... 스타일 정의
+const SelectedTeamBox = styled.div<{ color: string; bg: string | undefined }>`
+  border: ${(props) =>
+    props.color === "transparent" ? "1px dashed var(--gray-300)" : "none"};
+  background-color: ${(props) => props.bg};
+  color: ${(props) =>
+    props.color === "transparent" ? "var(--gray-500)" : props.color};
+  padding: 25px;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 20px;
 `;
 
 const TeamGrid = styled.div`
-  // ... 스타일 정의
-`;
-
-const TeamButton = styled.button`
   display: grid;
-  // ... 스타일 정의
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+  flex: 1;
 `;
 
-const SubmitButton = styled.button`ㅉ
-  // ... 스타일 정의
+const TeamButton = styled.button<{
+  bg: string;
+  color: string;
+  selected: boolean;
+}>`
+  background-color: ${(props) => props.bg};
+  color: ${(props) => props.color};
+  border: ${(props) => (props.selected ? "2px solid var(--gray-500)" : "none")};
+  padding: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+`;
+
+const ButtonWrapper = styled.div`
+  margin-top: auto;
+  margin-top: 20px;
 `;
 
 export default TeamSelect;

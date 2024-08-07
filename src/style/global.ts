@@ -42,22 +42,31 @@ export const GlobalStyle = createGlobalStyle`
      /* 팀 컬러 변수 */
      --lg-twins-red: #C2232F;
     --lg-twins-black: #000000;
+
     --doosan-bears-navy: #131230;
     --doosan-bears-red: #CA000F;
+
     --ssg-landers-red: #C70032;
     --ssg-landers-gray: #8C8C8C;
+
     --kt-wiz-black: #000000;
     --kt-wiz-red: #FF1425;
+
     --hanwha-eagles-orange: #FF6600;
     --hanwha-eagles-black: #231F20;
+
     --nc-dinos-blue: #315288;
     --nc-dinos-gold: #CEAC67;
+
     --lotte-giants-red: #900020;
     --lotte-giants-navy: #041E42;
+
     --kia-tigers-red: #FF1A24;
     --kia-tigers-black: #202224;
+
     --kiwoom-heroes-magenta: #820024;
     --kiwoom-heroes-pink: #FF4281;
+    
     --samsung-lions-blue: #0066B3;
     --samsung-lions-gray: #8A8B8D;
 }

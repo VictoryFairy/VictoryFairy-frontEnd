@@ -7,7 +7,7 @@ import PasswordValid from "../components/signup/PasswordValid";
 import TeamSelect from "../components/signup/TeamSelect";
 
 const Signup = () => {
-  const [step, setstep] = useState(1);
+  const [step, setstep] = useState(5);
   const [userInfo, setuserInfo] = useState<UserInfo>({
     email: "",
     verificationCode: "",
@@ -50,7 +50,7 @@ const Signup = () => {
           />
         );
       case 5:
-        return <TeamSelect />;
+        return <TeamSelect handleSetUserInfo={handleSetUserInfo} />;
       default:
         return null;
     }
