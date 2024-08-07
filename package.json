@@ -20,6 +20,7 @@
     "sanitize.css": "^13.0.0",
     "styled-components": "^6.1.12",
     "vite": "^5.3.4",
+    "vite-plugin-svgr": "^4.2.0",
     "zustand": "^4.5.4"
   },
   "devDependencies": {
