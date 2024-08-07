@@ -27,7 +27,12 @@ const Signup = () => {
           <EmailValid setstep={setstep} handleSetUserInfo={handleSetUserInfo} />
         );
       case 2:
-        return <VerificationCode />;
+        return (
+          <VerificationCode
+            setstep={setstep}
+            handleSetUserInfo={handleSetUserInfo}
+          />
+        );
       case 3:
         return <div>ㅗㅇ</div>;
       case 4:

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import React from "react";
 import { typography } from "../../style/typography";
 
 interface TitleProps {
@@ -8,7 +9,14 @@ interface TitleProps {
 const TitleSection = ({ title, subtitle }: TitleProps) => {
   return (
     <TitleWrapper>
-      <Title>{title}</Title>
+      <Title>
+        {title.split("<br/>").map((line, index) => (
+          <React.Fragment key={index}>
+            {index > 0 && <br />} {/* 첫 번째 줄 이후에만 <br /> 추가 */}
+            {line}
+          </React.Fragment>
+        ))}
+      </Title>
       {subtitle && <Subtitle>{subtitle}</Subtitle>}
     </TitleWrapper>
   );
