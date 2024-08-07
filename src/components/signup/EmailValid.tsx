@@ -68,8 +68,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 20px;
-  box-sizing: border-box;
 `;
 
 const Form = styled.form`
@@ -83,8 +81,5 @@ const InputWrapper = styled.div`
   flex: 1;
 `;
 
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
+const ButtonWrapper = styled.div``;
 export default EmailValid;
