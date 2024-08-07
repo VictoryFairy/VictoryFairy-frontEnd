@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import Button from "../components/common/Button";
 import TitleSection from "../components/common/TitleSection";
 import InputField from "../components/common/InputField";
@@ -49,6 +50,9 @@ const Login = () => {
             setValue={setValue}
             error={errors.password}
           />
+          <ForgotPasswordLink to='/password-reset'>
+            비밀번호 찾기
+          </ForgotPasswordLink>
         </InputWrapper>
         <ButtonWrapper>
           <Button type='submit' disabled={isButtonDisabled}>
@@ -76,7 +80,11 @@ const Form = styled.form`
 const InputWrapper = styled.div`
   flex: 1;
 `;
-
+const ForgotPasswordLink = styled(Link)`
+  color: black;
+  display: flex;
+  justify-content: flex-end;
+`;
 const ButtonWrapper = styled.div``;
 
 export default Login;
