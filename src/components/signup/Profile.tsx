@@ -79,7 +79,7 @@ const Profile = ({ setstep, handleSetUserInfo }: ProfileProps) => {
 
         <ButtonWrapper>
           <Button type='submit' disabled={isButtonDisabled}>
-            제출
+            확인
           </Button>
         </ButtonWrapper>
       </Form>
