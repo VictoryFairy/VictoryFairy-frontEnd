@@ -1,24 +1,31 @@
 import { useState } from "react";
 import EmailValid from "../components/signup/EmailValid";
 import VerificationCode from "../components/signup/VerificationCode";
-
-interface UserInfo {
-  email: string;
-  verificationCode: string;
-  nickname: string;
-  profilePicture: string;
-  password: string;
-  team: string;
-}
+import { UserInfo } from "../types/User";
 
 const Signup = () => {
   const [step, setstep] = useState(1);
-  const [userInfo, setuserInfo] = useState<UserInfo | null>(null);
+  const [userInfo, setuserInfo] = useState<UserInfo>({
+    email: "",
+    verificationCode: "",
+    nickname: "",
+    profilePicture: "",
+    password: "",
+    team: "",
+  });
 
+  const handleSetUserInfo = (updatedUserInfo: Partial<UserInfo>) => {
+    setuserInfo((prevUserInfo) => ({
+      ...prevUserInfo,
+      ...updatedUserInfo,
+    }));
+  };
   const renderStep = () => {
     switch (step) {
       case 1:
-        return <EmailValid setstep={setstep} />;
+        return (
+          <EmailValid setstep={setstep} handleSetUserInfo={handleSetUserInfo} />
+        );
       case 2:
         return <VerificationCode />;
       case 3:
