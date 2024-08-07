@@ -4,6 +4,7 @@ import VerificationCode from "../components/signup/VerificationCode";
 import { UserInfo } from "../types/User";
 import Profile from "../components/signup/Profile";
 import PasswordValid from "../components/signup/PasswordValid";
+import TeamSelect from "../components/signup/TeamSelect";
 
 const Signup = () => {
   const [step, setstep] = useState(1);
@@ -22,6 +23,7 @@ const Signup = () => {
       ...updatedUserInfo,
     }));
   };
+
   const renderStep = () => {
     switch (step) {
       case 1:
@@ -48,7 +50,7 @@ const Signup = () => {
           />
         );
       case 5:
-        return <div>ㅗㅇ</div>;
+        return <TeamSelect />;
       default:
         return null;
     }

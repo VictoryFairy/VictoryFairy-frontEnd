@@ -70,13 +70,13 @@ const PasswordValid = ({ setstep, handleSetUserInfo }: PasswordValidProps) => {
             watch={watch}
             setValue={setValue}
           />
-          <ValidationMessage isValid={lengthValid}>
+          <ValidationMessage $isValid={lengthValid}>
             8글자 이상
           </ValidationMessage>
-          <ValidationMessage isValid={uppercaseValid}>
+          <ValidationMessage $isValid={uppercaseValid}>
             대문자 1개 이상 포함
           </ValidationMessage>
-          <ValidationMessage isValid={specialCharValid}>
+          <ValidationMessage $isValid={specialCharValid}>
             특수문자 1개 이상 포함, 다음제외 : ( ), &lt; &gt;, &quot, ;
           </ValidationMessage>
         </InputWrapper>
@@ -114,8 +114,8 @@ const ButtonWrapper = styled.div`
   justify-content: flex-end;
 `;
 
-const ValidationMessage = styled.p<{ isValid: boolean }>`
-  color: ${(props) => (props.isValid ? "black" : "gray")};
+const ValidationMessage = styled.p<{ $isValid: boolean }>`
+  color: ${(props) => (props.$isValid ? "black" : "gray")};
   font-size: 14px;
   margin-top: 5px;
 `;
