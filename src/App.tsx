@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Layout from "./components/layout/Layout";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
+import Login from "./pages/Login";
 import { typography } from "./style/typography";
 // import { ThemeProvider } from "styled-components";
 
@@ -44,6 +45,16 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <Signup />,
+      },
+    ],
+  },
+  {
+    path: "/login",
+    element: <Layout />,
+    children: [
+      {
+        path: "/login",
+        element: <Login />,
       },
     ],
   },

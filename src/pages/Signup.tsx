@@ -7,7 +7,7 @@ import PasswordValid from "../components/signup/PasswordValid";
 import TeamSelect from "../components/signup/TeamSelect";
 
 const Signup = () => {
-  const [step, setstep] = useState(5);
+  const [step, setstep] = useState(1);
   const [userInfo, setuserInfo] = useState<UserInfo>({
     email: "",
     verificationCode: "",
