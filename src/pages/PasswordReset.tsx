@@ -48,7 +48,7 @@ const PasswordReset = () => {
         return null;
     }
   };
-  return <div style={{ height: "100%", padding: "20px" }}>{renderStep()}</div>;
+  return <div style={{ height: "100%" }}>{renderStep()}</div>;
 };
 
 export default PasswordReset;
