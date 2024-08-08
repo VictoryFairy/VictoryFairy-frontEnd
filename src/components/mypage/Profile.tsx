@@ -28,18 +28,20 @@ const Profile = () => {
 };
 
 const Container = styled.div`
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 169px;
-  width: 394px;
+  width: 100%;
   gap: 25px;
   padding: 20px 0;
+  box-sizing: border-box;
 `;
 
 const ProfileWrapper = styled.div`
   height: 129px;
-  width: 320px;
+  width: 80%;
   gap: 50px;
   display: flex;
   justify-content: space-between;
@@ -47,8 +49,8 @@ const ProfileWrapper = styled.div`
 `;
 
 const ProfileImgWrapper = styled.img`
-  width: 129px;
-  height: 129px;
+  width: 110px;
+  height: 110px;
   border-radius: 100%;
 `;
 
@@ -84,6 +86,7 @@ const ProfileNameWrapper = styled.div`
     border: none;
     background-color: #1d92fe;
     color: var(--white);
+    cursor: pointer;
   }
 `;
 
