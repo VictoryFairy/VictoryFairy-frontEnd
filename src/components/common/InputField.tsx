@@ -82,6 +82,8 @@ interface InputFieldProps {
   watch: UseFormWatch<any>;
   setValue: UseFormSetValue<any>;
   error?: FieldError;
+  value?: string;
+  disabled?: boolean;
 }
 
 const InputField = ({
@@ -94,13 +96,15 @@ const InputField = ({
   watch,
   setValue,
   error,
+  value,
+  disabled,
 }: InputFieldProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   const inputType = type === "password" && isVisible ? "text" : type;
-  const value = watch(name) as string;
-  const currentLength = value ? value.length : 0;
+  const data = watch(name) as string;
+  const currentLength = data ? data.length : 0;
 
   const clearInput = () => {
     setValue(name, "");
@@ -121,11 +125,13 @@ const InputField = ({
         <StyledInput
           id={name}
           type={inputType}
+          value={value}
           placeholder={placeholder}
           $hasError={!!error}
+          disabled={disabled}
           {...register(name)}
         />
-        {value && type !== "password" && (
+        {data && type !== "password" && (
           <ClearButton type='button' onClick={clearInput}>
             ×
           </ClearButton>
