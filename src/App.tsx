@@ -5,8 +5,6 @@ import Layout from "./components/layout/Layout";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
-import { typography } from "./style/typography";
-import PasswordReset from "./pages/PasswordReset";
 // import { ThemeProvider } from "styled-components";
 
 const queryClient = new QueryClient();
