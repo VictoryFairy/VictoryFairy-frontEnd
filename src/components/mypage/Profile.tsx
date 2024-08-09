@@ -46,11 +46,12 @@ const ProfileWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
 `;
 
 const ProfileImgWrapper = styled.img`
-  width: 110px;
-  height: 110px;
+  width: 129px;
+  height: 129px;
   border-radius: 100%;
 `;
 
