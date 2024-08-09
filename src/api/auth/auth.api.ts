@@ -84,3 +84,23 @@ export const checkNicknameAvailability = async (data: NicknameCheckRequest) => {
     throw error;
   }
 };
+
+interface SignUpRequest {
+  email: string;
+  nickname: string;
+  image: string;
+  teamId: number;
+  password: string;
+}
+
+export const signUp = async (data: SignUpRequest) => {
+  try {
+    const response = await axiosInstance.post("/users/signup", data);
+    return response.status;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error(error);
+      throw error;
+    }
+  }
+};

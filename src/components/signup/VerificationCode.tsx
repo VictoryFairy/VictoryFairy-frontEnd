@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { UserInfo } from "../../types/User";
 import OTPInput from "../common/OTPInput";
 import TitleSection from "../common/TitleSection";
 import Button from "../common/Button";
@@ -14,14 +13,9 @@ import {
 interface VerificationCodeProps {
   email: string;
   setstep: (step: number) => void;
-  handleSetUserInfo: (userInfo: Partial<UserInfo>) => void;
 }
 
-const VerificationCode = ({
-  email,
-  setstep,
-  handleSetUserInfo,
-}: VerificationCodeProps) => {
+const VerificationCode = ({ email, setstep }: VerificationCodeProps) => {
   const [otp, setOtp] = useState(["", "", "", "", ""]);
   const [error, setError] = useState<string | null>(null);
 
@@ -34,7 +28,6 @@ const VerificationCode = ({
       const otpCode = otp.join("");
       await verifyEmailCode({ email, code: otpCode });
 
-      handleSetUserInfo({ verificationCode: otpCode });
       setstep(3);
     } catch (err) {
       if (axios.isAxiosError(err)) {
