@@ -5,6 +5,10 @@ import { UserInfo } from "../../types/User";
 import TitleSection from "../common/TitleSection";
 import InputField from "../common/InputField";
 import Button from "../common/Button";
+import {
+  checkNicknameAvailability,
+  uploadProfileImage,
+} from "../../api/auth/auth.api";
 
 interface ProfileProps {
   setstep: (step: number) => void;
@@ -20,28 +24,49 @@ const Profile = ({ setstep, handleSetUserInfo }: ProfileProps) => {
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
   );
   const fileInput = useRef<HTMLInputElement | null>(null);
-  const { register, watch, handleSubmit, setValue } = useForm<ProfileFormData>(
-    {},
-  );
+  const {
+    register,
+    watch,
+    handleSubmit,
+    setValue,
+    setError,
+    formState: { errors },
+  } = useForm<ProfileFormData>({});
   const nicknameValue = watch("nickname");
 
   const isButtonDisabled = !nicknameValue;
 
-  const onSubmit = (data: ProfileFormData) => {
-    handleSetUserInfo({ profilePicture: image, nickname: data.nickname });
-    setstep(4);
+  const onSubmit = async (data: ProfileFormData) => {
+    try {
+      const isExist = await checkNicknameAvailability({
+        nickname: data.nickname,
+      });
+
+      if (isExist) {
+        setError("nickname", {
+          type: "manual",
+          message: "닉네임이 이미 존재합니다.",
+        });
+      } else {
+        handleSetUserInfo({ profilePicture: image, nickname: data.nickname });
+        setstep(4);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setImage(reader.result as string);
-        }
-      };
-      reader.readAsDataURL(file);
+      try {
+        const formData = new FormData();
+        formData.append("file", file);
+        const profileImgUrl = await uploadProfileImage(formData);
+        setImage(profileImgUrl);
+      } catch (err) {
+        console.log(err);
+      }
     } else {
       setImage(
         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
@@ -74,6 +99,7 @@ const Profile = ({ setstep, handleSetUserInfo }: ProfileProps) => {
             register={register}
             watch={watch}
             setValue={setValue}
+            error={errors.nickname}
           />
         </div>
 

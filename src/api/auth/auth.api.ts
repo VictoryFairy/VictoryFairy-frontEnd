@@ -41,3 +41,46 @@ export const verifyEmailCode = async (data: VerifyEmailCodeRequest) => {
     }
   }
 };
+
+interface UploadProfileImageResponse {
+  profileImgUrl: string;
+}
+
+export const uploadProfileImage = async (formData: FormData) => {
+  try {
+    const response = await axiosInstance.post<UploadProfileImageResponse>(
+      "/s3-store/profile",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      },
+    );
+    return response.data.profileImgUrl;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+interface NicknameCheckRequest {
+  nickname: string;
+}
+
+interface NicknameCheckResponse {
+  isExist: boolean;
+}
+
+export const checkNicknameAvailability = async (data: NicknameCheckRequest) => {
+  try {
+    const response = await axiosInstance.post<NicknameCheckResponse>(
+      "/users/existed-nickname",
+      data,
+    );
+    return response.data.isExist;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
