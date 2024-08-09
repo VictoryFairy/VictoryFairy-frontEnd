@@ -7,6 +7,8 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { typography } from "./style/typography";
 import PasswordReset from "./pages/PasswordReset";
+import MyPage from "./pages/MyPage";
+
 // import { ThemeProvider } from "styled-components";
 
 const queryClient = new QueryClient();
@@ -22,6 +24,11 @@ const MiddelWrapper = styled.div`
 const RightWrapper = styled.div`
   ${typography.subtitle_02}
 `;
+
+const MyPageLeftWrapper = styled.div`
+  ${typography.display}
+`;
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -66,6 +73,18 @@ const router = createBrowserRouter([
       {
         path: "/password-reset",
         element: <PasswordReset />,
+      },
+    ],
+  },
+  {
+    path: "/mypage",
+    element: (
+      <Layout left={<MyPageLeftWrapper>마이페이지</MyPageLeftWrapper>} />
+    ),
+    children: [
+      {
+        path: "/mypage",
+        element: <MyPage />,
       },
     ],
   },
