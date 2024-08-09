@@ -26,10 +26,8 @@ const LayoutConatiner = styled.div`
 
 const MainWrapper = styled.main`
   height: 100vh;
-  /* padding-top: 60px;
+  padding-top: 60px;
   padding-bottom: 60px;
-   */
-  padding: 60px 20px;
 `;
 
 export default Layout;

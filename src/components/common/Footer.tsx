@@ -47,6 +47,7 @@ const Footer = () => {
 };
 
 const FooterContainer = styled.div`
+  background-color: var(--white);
   height: 64px;
   position: fixed;
   bottom: 0;
@@ -55,7 +56,6 @@ const FooterContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
 `;
 
 const IconWrapper = styled.div<IconProps>`
