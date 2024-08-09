@@ -127,3 +127,29 @@ export const login = async (data: LoginRequest) => {
     }
   }
 };
+
+interface ChangePasswordRequest {
+  email: string;
+  password: string;
+}
+
+export const changePassword = async (data: ChangePasswordRequest) => {
+  try {
+    await axiosInstance.patch("/users/password", data);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        switch (error.response.status) {
+          case 400:
+            throw new Error("해당 이메일로 가입된 계정이 없습니다.");
+          case 500:
+            throw new Error(
+              "서버 오류가 발생했습니다. 나중에 다시 시도해 주세요.",
+            );
+          default:
+            throw new Error("알 수 없는 오류가 발생했습니다.");
+        }
+      }
+    }
+  }
+};

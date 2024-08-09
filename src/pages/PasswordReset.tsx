@@ -30,20 +30,14 @@ const PasswordReset = () => {
       case 1:
         return <EmailValid setstep={setstep} handleSetUserInfo={handleInfo} />;
       case 2:
-        return (
-          <VerificationCode
-            email={info.email}
-            setstep={setstep}
-            handleSetUserInfo={handleInfo}
-          />
-        );
+        return <VerificationCode email={info.email} setstep={setstep} />;
 
       case 3:
         return (
           <PasswordValid setstep={setstep} handleSetUserInfo={handleInfo} />
         );
       case 4:
-        return <Confirmpassword password={info.password} />;
+        return <Confirmpassword password={info.password} email={info.email} />;
       default:
         return null;
     }
