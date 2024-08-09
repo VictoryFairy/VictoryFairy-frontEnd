@@ -1,9 +1,11 @@
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/common/Button";
 import TitleSection from "../components/common/TitleSection";
 import InputField from "../components/common/InputField";
+import { login } from "../api/auth/auth.api";
+import { useAuthStore } from "../store/authStore";
 
 interface LoginFormData {
   email: string;
@@ -11,16 +13,32 @@ interface LoginFormData {
 }
 
 const Login = () => {
+  const { loginAction } = useAuthStore();
+  const navigate = useNavigate();
   const {
     register,
     watch,
     handleSubmit,
     setValue,
+    setError,
     formState: { errors },
   } = useForm<LoginFormData>({});
 
-  const onSubmit = (data: LoginFormData) => {
-    console.log(data);
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      const response = await login(data);
+      if (response.acToken) {
+        loginAction(response.acToken);
+        navigate("/home");
+      }
+    } catch (err) {
+      if (err) {
+        setError("password", {
+          type: "manual",
+          message: "아이디 또는 비밀번호가 틀립니다.",
+        });
+      }
+    }
   };
   const emailValue = watch("email");
   const passwordValue = watch("password");
