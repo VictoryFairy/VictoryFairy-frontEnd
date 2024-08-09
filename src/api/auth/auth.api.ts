@@ -104,3 +104,26 @@ export const signUp = async (data: SignUpRequest) => {
     }
   }
 };
+
+interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export const login = async (data: LoginRequest) => {
+  try {
+    const response = await axiosInstance.post("/auth/login", data);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        switch (error.response.status) {
+          case 401:
+            throw new Error("아이디 또는 비밀번호가 틀렸습니다");
+          default:
+            throw new Error("로그인 중 오류가 발생했습니다.");
+        }
+      }
+    }
+  }
+};
