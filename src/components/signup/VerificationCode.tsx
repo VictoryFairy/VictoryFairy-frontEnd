@@ -19,6 +19,8 @@ const VerificationCode = ({
 }: VerificationCodeProps) => {
   const [otp, setOtp] = useState(["", "", "", "", ""]);
 
+  const isOtpComplete = otp.every((char) => char.length === 1);
+
   const handleClick = () => {
     console.log(otp.join(""));
     handleSetUserInfo({ verificationCode: otp.join(",") });
@@ -37,7 +39,11 @@ const VerificationCode = ({
       </div>
 
       <ButtonWrapper>
-        <Button type='button' onClick={handleClick} variant='primary'>
+        <Button
+          type='button'
+          onClick={handleClick}
+          variant='primary'
+          disabled={!isOtpComplete}>
           확인
         </Button>
       </ButtonWrapper>
