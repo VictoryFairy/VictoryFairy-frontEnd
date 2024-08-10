@@ -63,10 +63,10 @@ const IconWrapper = styled.div<IconProps>`
     isActive
       ? css`
           ${typography.title_01}
-          color:var(--primary-color);
+          color: ${({ theme }) => theme.colors.primary};
           svg {
-            stroke: var(--primary-color);
-            fill: var(--primary-color);
+            stroke: ${({ theme }) => theme.colors.primary};
+            fill: ${({ theme }) => theme.colors.primary};
           }
         `
       : css`
