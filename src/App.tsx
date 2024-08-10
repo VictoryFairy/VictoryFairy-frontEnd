@@ -7,7 +7,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { typography } from "./style/typography";
 import PasswordReset from "./pages/PasswordReset";
-// import { ThemeProvider } from "styled-components";
+import { ThemeContextProvider } from "./context/ThemeContext";
 
 const queryClient = new QueryClient();
 
@@ -74,7 +74,9 @@ const router = createBrowserRouter([
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <ThemeContextProvider>
+        <RouterProvider router={router} />
+      </ThemeContextProvider>
     </QueryClientProvider>
   );
 };
