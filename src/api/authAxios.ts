@@ -8,6 +8,7 @@ const authAxiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
 
 authAxiosInstance.interceptors.request.use(
