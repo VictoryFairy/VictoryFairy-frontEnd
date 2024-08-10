@@ -60,5 +60,6 @@ module.exports = {
     "jsx-a11y/no-noninteractive-element-interactions": "off",
     "@typescript-eslint/return-await": "off",
     "no-param-reassign": ["error", { props: false }],
+    "no-console": "off",
   },
 };

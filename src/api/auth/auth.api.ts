@@ -59,7 +59,7 @@ export const uploadProfileImage = async (formData: FormData) => {
     );
     return response.data.profileImgUrl;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };
