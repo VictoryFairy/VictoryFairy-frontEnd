@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import Tabs from "../../components/common/Tabs";
 import Rate from "./Rate";
+import Watch from "./Watch";
 
 const Main = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -10,7 +11,7 @@ const Main = () => {
       case 0:
         return <Rate />;
       case 1:
-        return <div>내 직관</div>;
+        return <Watch />;
       default:
         return null;
     }
