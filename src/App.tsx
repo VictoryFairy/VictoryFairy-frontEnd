@@ -9,6 +9,9 @@ import { typography } from "./style/typography";
 import PasswordReset from "./pages/PasswordReset";
 import { ThemeContextProvider } from "./context/ThemeContext";
 import Main from "./pages/main/Main";
+import MyPage from "./pages/MyPage";
+
+// import { ThemeProvider } from "styled-components";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +26,11 @@ const MiddelWrapper = styled.div`
 const RightWrapper = styled.div`
   ${typography.subtitle_02}
 `;
+
+const MyPageLeftWrapper = styled.div`
+  ${typography.display}
+`;
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -77,6 +85,18 @@ const router = createBrowserRouter([
       {
         path: "/main",
         element: <Main />,
+      },
+    ],
+  },
+  {
+    path: "/mypage",
+    element: (
+      <Layout left={<MyPageLeftWrapper>마이페이지</MyPageLeftWrapper>} />
+    ),
+    children: [
+      {
+        path: "/mypage",
+        element: <MyPage />,
       },
     ],
   },
