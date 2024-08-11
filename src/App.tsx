@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import { typography } from "./style/typography";
 import PasswordReset from "./pages/PasswordReset";
 import { ThemeContextProvider } from "./context/ThemeContext";
+import Main from "./pages/main/Main";
 
 const queryClient = new QueryClient();
 
@@ -66,6 +67,16 @@ const router = createBrowserRouter([
       {
         path: "/password-reset",
         element: <PasswordReset />,
+      },
+    ],
+  },
+  {
+    path: "/main",
+    element: <Layout />,
+    children: [
+      {
+        path: "/main",
+        element: <Main />,
       },
     ],
   },
