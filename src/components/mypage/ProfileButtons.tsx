@@ -15,12 +15,13 @@ const ProfileButtons = () => {
 
 const Container = styled.div`
   display: flex;
-  height: 340px;
+  height: 100%;
   width: 100%;
   flex-direction: column;
   align-items: center;
+  background-color: var(--white);
   gap: 25px;
-  margin-top: 50px;
+  margin-top: 10px;
   > span {
     margin-top: 20px;
     ${typography.title_02}

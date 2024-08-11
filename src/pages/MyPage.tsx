@@ -4,7 +4,7 @@ import ProfileButtons from "../components/mypage/ProfileButtons";
 
 const MyPage = () => {
   return (
-    <Container>
+    <Container className='MyPage'>
       <Profile />
       <ProfileButtons />
     </Container>
@@ -17,6 +17,7 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  background-color: var(--gray-50);
 `;
 
 export default MyPage;

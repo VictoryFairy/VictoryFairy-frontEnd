@@ -37,6 +37,7 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   width: 100%;
+  background-color: var(--white);
   > :nth-child(1) {
     ${typography.title_02}
   }
