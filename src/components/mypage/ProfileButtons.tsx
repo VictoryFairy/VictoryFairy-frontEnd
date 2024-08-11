@@ -1,10 +1,22 @@
 import styled from "styled-components";
 import { typography } from "../../style/typography";
 import ArrowRight from "../../assets/Icons/arrow-right.svg?react";
+import { usePopup } from "../../hooks/usePopup";
 
 const ProfileButtons = () => {
+  const { Popup, isOpen, openPopup } = usePopup();
+  const handleLogoutClick = () => {
+    openPopup();
+  };
   return (
     <Container>
+      {isOpen && (
+        <Popup
+          title='확인'
+          message='정말 로그아웃하시겠습니까?'
+          type='confirm'
+        />
+      )}
       <span>정보 수정</span>
       <ProfileWrapper>
         <span>프로필 설정</span>
@@ -26,7 +38,7 @@ const ProfileButtons = () => {
         <ArrowRight />
       </ProfileLastWrapper>
       <ProfileLogWrapper>
-        <div>로그아웃</div>
+        <div onClick={handleLogoutClick}>로그아웃</div>
         <div>회원탈퇴</div>
       </ProfileLogWrapper>
     </Container>
