@@ -135,7 +135,6 @@ const TodayMatchListContainer = styled.div`
   display: flex;
   gap: 12px;
   width: 100%;
-  flex-wrap: nowrap;
   overflow-x: scroll;
 `;
 
