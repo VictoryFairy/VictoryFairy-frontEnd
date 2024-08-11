@@ -36,9 +36,8 @@ const Footer = () => {
         <span>정보</span>
       </IconWrapper>
       <IconWrapper
-      // onClick={() => navigate("/")}
-      // isActive={location.pathname === "/"}
-      >
+        onClick={() => navigate("/mypage")}
+        isActive={location.pathname === "/mypage"}>
         <MyPageIcon />
         <span>마이페이지</span>
       </IconWrapper>
