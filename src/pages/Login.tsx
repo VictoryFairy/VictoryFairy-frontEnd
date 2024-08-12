@@ -28,7 +28,7 @@ const Login = () => {
     try {
       const response = await login(data);
       if (response.acToken) {
-        loginAction(response.acToken);
+        loginAction(response.acToken, response.teamId);
         navigate("/home");
       }
     } catch (err) {
