@@ -38,7 +38,9 @@ const ProfileButtons = () => {
         <ArrowRight />
       </ProfileLastWrapper>
       <ProfileLogWrapper>
-        <div onClick={handleLogoutClick}>로그아웃</div>
+        <div role='button' tabIndex={0} onClick={handleLogoutClick}>
+          로그아웃
+        </div>
         <div>회원탈퇴</div>
       </ProfileLogWrapper>
     </Container>
