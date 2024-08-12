@@ -15,33 +15,33 @@ const ParkingInfoPage = () => {
     "stadium"
   > | null>(null);
 
-  // const { data } = useQuery<ParkingInfo[]>({
-  //   queryKey: ["parkingInfos", selectedStadiumId],
-  //   queryFn: () => getParkingInfosByStadiumId(selectedStadiumId),
-  // });
+  const { data } = useQuery<ParkingInfo[]>({
+    queryKey: ["parkingInfos", selectedStadiumId],
+    queryFn: () => getParkingInfosByStadiumId(selectedStadiumId),
+  });
 
-  // useEffect(() => {
-  //   if (data) {
-  //     setSelectedParking(null);
-  //   }
-  // }, [data]);
-  //   if (!data) return;
-  //   const stadiumData = data?.[0].stadium;
-  //   const parkingSpots = data?.map((parkingInfo) => ({
-  //     id: parkingInfo.id,
-  //     name: parkingInfo.name,
-  //     is_free: parkingInfo.is_free,
-  //     latitude: parkingInfo.latitude,
-  //     longitude: parkingInfo.longitude,
-  //     address: parkingInfo.address,
-  //   }));
-  const stadiumData = {
-    id: 1,
-    name: "잠실",
-    latitude: 35.8409,
-    longitude: 128.6828,
-    address: "잠실",
-  };
+  useEffect(() => {
+    if (data) {
+      setSelectedParking(null);
+    }
+  }, [data]);
+  if (!data) return;
+  // const stadiumData = data?.[0].stadium;
+  // const parkingSpots = data?.map((parkingInfo) => ({
+  //   id: parkingInfo.id,
+  //   name: parkingInfo.name,
+  //   is_free: parkingInfo.is_free,
+  //   latitude: parkingInfo.latitude,
+  //   longitude: parkingInfo.longitude,
+  //   address: parkingInfo.address,
+  // }));
+  // const stadiumData = {
+  //   id: 1,
+  //   name: "잠실",
+  //   latitude: 35.8409,
+  //   longitude: 128.6828,
+  //   address: "잠실",
+  // };
   const parkingSpots = [
     {
       id: 1,
@@ -52,8 +52,8 @@ const ParkingInfoPage = () => {
     },
     {
       id: 2,
-      address: "대구 수성구 알파시티1로 232",
-      name: "데이터뱅크 주차장",
+      address: "대구 수성구 대구미술관",
+      name: "미술관 주차장 주차장",
       latitude: 35.8276258,
       longitude: 128.6739499,
     },
