@@ -4,9 +4,10 @@ import { useNavigate } from "react-router-dom";
 import TitleSection from "../common/TitleSection";
 import Button from "../common/Button";
 import { UserInfo } from "../../types/User";
+import { signUp } from "../../api/auth/auth.api";
 
 interface Team {
-  id: string;
+  id: number;
   name: string;
   color: string;
   bg: string;
@@ -14,75 +15,76 @@ interface Team {
 }
 
 interface TeamSelectProps {
+  userInfo: UserInfo;
   handleSetUserInfo: (userInfo: Partial<UserInfo>) => void;
 }
 
 const teams: Team[] = [
   {
-    id: "lgtwins",
+    id: 0,
     name: "LG Twins",
     bg: "var(--lg-twins-red)",
     color: "var(--lg-twins-black)",
     borderColor: "transparent",
   },
   {
-    id: "doosanbears",
+    id: 1,
     name: "Doosan Bears",
     bg: "var(--doosan-bears-navy)",
     color: "white",
     borderColor: "var(--doosan-bears-red)",
   },
   {
-    id: "hanwhaeagles",
+    id: 2,
     name: "Hanwha Eagles",
     bg: "var(--hanwha-eagles-black)",
     color: "var(--hanwha-eagles-orange)",
     borderColor: "transparent",
   },
   {
-    id: "samsunglions",
+    id: 3,
     name: "SAMSUNG Lions",
     bg: "var(--samsung-lions-blue)",
     color: "white",
     borderColor: "transparent",
   },
   {
-    id: "ktwiz",
+    id: 4,
     name: "KT Wiz",
     bg: "var(--kt-wiz-black)",
     color: "var(--kt-wiz-red)",
     borderColor: "transparent",
   },
   {
-    id: "ssglanders",
+    id: 5,
     name: "SSG Landers",
     bg: "var(--ssg-landers-red)",
     color: "gold",
     borderColor: "transparent",
   },
   {
-    id: "ncdinos",
+    id: 6,
     name: "NC Dinos",
     bg: "var(--nc-dinos-blue)",
     color: "var(--nc-dinos-gold)",
     borderColor: "transparent",
   },
   {
-    id: "kiatigeres",
+    id: 7,
     name: "KIA Tigers",
     bg: "var(--kia-tigers-black)",
     color: "var(--kia-tigers-red)",
     borderColor: "transparent",
   },
   {
-    id: "lottegiants",
+    id: 8,
     name: "Lotte Giants",
     bg: "var(--lotte-giants-navy)",
     color: "var(--lotte-giants-red)",
     borderColor: "white",
   },
   {
-    id: "kiwoomheroes",
+    id: 9,
     name: "Kiwoom Heroes",
     bg: "var(--kiwoom-heroes-magenta)",
     color: "white",
@@ -90,17 +92,29 @@ const teams: Team[] = [
   },
 ];
 
-const TeamSelect = ({ handleSetUserInfo }: TeamSelectProps) => {
+const TeamSelect = ({ handleSetUserInfo, userInfo }: TeamSelectProps) => {
   const navigate = useNavigate();
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
 
   const handleTeamSelect = (team: Team) => {
     setSelectedTeam(team);
-    handleSetUserInfo({ team: team.name });
+    handleSetUserInfo({ teamId: team.id });
   };
 
-  const handleClick = () => {
-    navigate("/");
+  const handleClick = async () => {
+    try {
+      const data = {
+        email: userInfo.email,
+        nickname: userInfo.nickname,
+        image: userInfo.profilePicture,
+        teamId: selectedTeam!.id,
+        password: userInfo.password,
+      };
+      await signUp(data);
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

@@ -1,29 +1,37 @@
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import Button from "../common/Button";
 import InputField from "../common/InputField";
 import TitleSection from "../common/TitleSection";
+import { changePassword } from "../../api/auth/auth.api";
 
 interface ConfirmpasswordProps {
   password: string;
+  email: string;
 }
 interface ResetpasswordFormData {
   password: string;
   confirmPassword: string;
 }
-const Confirmpassword = ({ password }: ConfirmpasswordProps) => {
+const Confirmpassword = ({ password, email }: ConfirmpasswordProps) => {
+  const navigate = useNavigate();
   const { register, watch, handleSubmit, setValue } =
     useForm<ResetpasswordFormData>({
       mode: "onChange",
     });
 
-  const onSubmit = (data: ResetpasswordFormData) => {
-    console.log(data);
+  const onSubmit = async (data: ResetpasswordFormData) => {
+    try {
+      await changePassword({ email, password: data.confirmPassword });
+      alert("비밀번호 변경이 완료되었습니다.");
+      navigate("/login");
+    } catch (err) {
+      console.log(err);
+    }
   };
   const passwordValue = password;
   const confirmPasswordValue = watch("confirmPassword");
-
-  console.log(passwordValue, confirmPasswordValue);
 
   const isButtonDisabled =
     !passwordValue ||
