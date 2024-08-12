@@ -1,4 +1,8 @@
 import styled from "styled-components";
+
+import gps from "../../../assets/Icons/location.svg";
+import arrow from "../../../assets/Icons/arrow-right.svg";
+import naver from "../../../assets/Icons/naver.svg";
 import { ParkingInfo } from "../../../types/Stadium";
 
 interface ParkingListProps {
@@ -9,61 +13,77 @@ interface ParkingListProps {
 const ParkingList = ({ parkingSpots, onSelectParking }: ParkingListProps) => {
   return (
     <ParkingListContainer>
-      <h2>주차정보</h2>
-      {parkingSpots.length === 0 && <div>아무것도 없다</div>}
+      {parkingSpots.length === 0 && <div>주차 정보가 없습니다</div>}
       {parkingSpots.map((spot) => (
         <ParkingItem key={spot.id} onClick={() => onSelectParking(spot)}>
-          <ParkingName>
-            {/* <FaParking color='#4A90E2' /> */}
-            {spot.name}
-          </ParkingName>
-          <ParkingAddress>
-            {/* <FaMapMarkerAlt color='#4A90E2' /> */}
-            {spot.address}
-          </ParkingAddress>
+          <LeftContent>
+            <Icon src={gps} alt='location' />
+            <ParkingInf>
+              <ParkingName>{spot.name}</ParkingName>
+              <ParkingAddress>{spot.address}</ParkingAddress>
+            </ParkingInf>
+          </LeftContent>
+          <RightContent>
+            <NaverIcon src={naver} alt='naver' />
+            <Icon src={arrow} alt='arrow' />
+          </RightContent>
         </ParkingItem>
       ))}
     </ParkingListContainer>
   );
 };
+
 const ParkingListContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  padding: 20px;
-  background-color: #f5f5f5;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  padding: 10px;
 `;
 
 const ParkingItem = styled.div`
-  background-color: white;
-  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-  cursor: pointer;
-
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+  border-bottom: 1px solid #eee;
 `;
 
-const ParkingName = styled.h3`
-  margin: 0 0 10px;
-  color: #333;
+const LeftContent = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
 `;
 
-const ParkingAddress = styled.p`
-  margin: 0;
-  color: #666;
+const RightContent = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Icon = styled.img`
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+`;
+
+const NaverIcon = styled(Icon)`
+  width: 15px;
+  height: 15px;
+  fill: #03c75a;
+`;
+
+const ParkingInf = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ParkingName = styled.span`
   font-size: 14px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  font-weight: bold;
+  color: #333;
 `;
+
+const ParkingAddress = styled.span`
+  font-size: 12px;
+  color: #666;
+`;
+
 export default ParkingList;
