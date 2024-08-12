@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import ParkingInfoPage from "../components/info/map/ParkingInfoPage";
+import CheerSongPage from "../components/info/cheerSong/CheerSongPage";
 
 const Info = () => {
   const [activeTab, setActiveTab] = useState<"map" | "cheer">("map");
@@ -25,12 +26,7 @@ const Info = () => {
       </Tabs>
 
       {activeTab === "map" && <ParkingInfoPage />}
-      {activeTab === "cheer" && (
-        <div>
-          {/* <Heading>응원가</Heading> */}
-          <p>응원가는 아직 준비되지 않았습니다.</p>
-        </div>
-      )}
+      {activeTab === "cheer" && <CheerSongPage />}
     </Container>
   );
 };
