@@ -1,11 +1,11 @@
 import { useState } from "react";
 import styled from "styled-components";
-import search from "../assets/Icons/search.svg";
+import ParkingInfoPage from "../components/info/map/ParkingInfoPage";
 
 const Info = () => {
-  const [activeTab, setActiveTab] = useState<"info" | "cheer">("info");
+  const [activeTab, setActiveTab] = useState<"map" | "cheer">("map");
 
-  const handleTabChange = (tab: "info" | "cheer") => {
+  const handleTabChange = (tab: "map" | "cheer") => {
     setActiveTab(tab);
   };
 
@@ -13,8 +13,8 @@ const Info = () => {
     <Container>
       <Tabs>
         <TabButton
-          active={activeTab === "info"}
-          onClick={() => handleTabChange("info")}>
+          active={activeTab === "map"}
+          onClick={() => handleTabChange("map")}>
           주차정보
         </TabButton>
         <TabButton
@@ -23,10 +23,14 @@ const Info = () => {
           응원가
         </TabButton>
       </Tabs>
-      <SearchBar>
-        <SearchInput placeholder='구장명 , 팀명을 검색해보세요.' />
-        <SearchIcon src={search} />
-      </SearchBar>
+
+      {activeTab === "map" && <ParkingInfoPage />}
+      {activeTab === "cheer" && (
+        <div>
+          {/* <Heading>응원가</Heading> */}
+          <p>응원가는 아직 준비되지 않았습니다.</p>
+        </div>
+      )}
     </Container>
   );
 };
@@ -48,29 +52,6 @@ const TabButton = styled.button<{ active: boolean }>`
   color: ${({ active }) => (active ? "#000" : "#888")};
   font-size: 18px;
   font-weight: ${({ active }) => (active ? "bold" : "normal")};
-  cursor: pointer;
-`;
-
-const SearchBar = styled.div`
-  display: flex;
-  align-items: center;
-
-  padding: 10px;
-  background-color: #f8f8f8;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-`;
-
-const SearchInput = styled.input`
-  flex: 1;
-  border: none;
-  background: transparent;
-  outline: none;
-  font-size: 14px;
-`;
-
-const SearchIcon = styled.img`
-  color: #888;
   cursor: pointer;
 `;
 
