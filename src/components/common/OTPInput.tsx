@@ -66,8 +66,8 @@ const Container = styled.div`
 `;
 
 const Input = styled.input`
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   font-size: 24px;
   text-align: center;
   border: 1px solid #ccc;

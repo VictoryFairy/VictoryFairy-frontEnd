@@ -10,11 +10,10 @@ const Signup = () => {
   const [step, setstep] = useState(1);
   const [userInfo, setuserInfo] = useState<UserInfo>({
     email: "",
-    verificationCode: "",
     nickname: "",
     profilePicture: "",
     password: "",
-    team: "",
+    teamId: 0,
   });
 
   const handleSetUserInfo = (updatedUserInfo: Partial<UserInfo>) => {
@@ -31,13 +30,7 @@ const Signup = () => {
           <EmailValid setstep={setstep} handleSetUserInfo={handleSetUserInfo} />
         );
       case 2:
-        return (
-          <VerificationCode
-            email={userInfo.email}
-            setstep={setstep}
-            handleSetUserInfo={handleSetUserInfo}
-          />
-        );
+        return <VerificationCode email={userInfo.email} setstep={setstep} />;
       case 3:
         return (
           <Profile setstep={setstep} handleSetUserInfo={handleSetUserInfo} />
@@ -50,7 +43,12 @@ const Signup = () => {
           />
         );
       case 5:
-        return <TeamSelect handleSetUserInfo={handleSetUserInfo} />;
+        return (
+          <TeamSelect
+            handleSetUserInfo={handleSetUserInfo}
+            userInfo={userInfo}
+          />
+        );
       default:
         return null;
     }

@@ -6,6 +6,7 @@ import TitleSection from "../common/TitleSection";
 import InputField from "../common/InputField";
 import Button from "../common/Button";
 import { UserInfo } from "../../types/User";
+import { requestEmailVerificationCode } from "../../api/auth/auth.api";
 
 interface EmailValidProps {
   setstep: (step: number) => void;
@@ -20,6 +21,7 @@ const EmailValid = ({ setstep, handleSetUserInfo }: EmailValidProps) => {
     watch,
     handleSubmit,
     setValue,
+    setError,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -31,10 +33,18 @@ const EmailValid = ({ setstep, handleSetUserInfo }: EmailValidProps) => {
 
   const isButtonDisabled = !emailValue;
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
-    handleSetUserInfo({ email: data.email });
-    setstep(2);
+  const onSubmit = async (data: FormData) => {
+    try {
+      await requestEmailVerificationCode({ email: data.email });
+      handleSetUserInfo({ email: data.email });
+      setstep(2);
+    } catch (error) {
+      setError("email", {
+        type: "manual",
+        message:
+          "이메일 인증 코드 전송 중 오류가 발생했습니다. 다시 시도해 주세요.",
+      });
+    }
   };
   return (
     <Container>

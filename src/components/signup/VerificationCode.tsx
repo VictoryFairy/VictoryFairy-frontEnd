@@ -1,30 +1,53 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { UserInfo } from "../../types/User";
+import axios from "axios";
 import OTPInput from "../common/OTPInput";
 import TitleSection from "../common/TitleSection";
 import Button from "../common/Button";
 import EmailVerificationTimer from "./EmailVerificationTimer";
+import {
+  requestEmailVerificationCode,
+  verifyEmailCode,
+} from "../../api/auth/auth.api";
 
 interface VerificationCodeProps {
   email: string;
   setstep: (step: number) => void;
-  handleSetUserInfo: (userInfo: Partial<UserInfo>) => void;
 }
 
-const VerificationCode = ({
-  email,
-  setstep,
-  handleSetUserInfo,
-}: VerificationCodeProps) => {
+const VerificationCode = ({ email, setstep }: VerificationCodeProps) => {
   const [otp, setOtp] = useState(["", "", "", "", ""]);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleClick = () => {
-    console.log(otp.join(""));
-    handleSetUserInfo({ verificationCode: otp.join(",") });
-    setstep(3);
+  const isOtpComplete = otp.every((char) => char.length === 1);
+
+  const handleClick = async () => {
+    setError(null);
+
+    try {
+      const otpCode = otp.join("");
+      await verifyEmailCode({ email, code: otpCode });
+
+      setstep(3);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        setError(err.message);
+      }
+    }
   };
-  const handleResend = () => {};
+
+  const handleResend = async () => {
+    try {
+      await requestEmailVerificationCode({ email });
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        setError(
+          "이메일 인증 코드 전송 중 오류가 발생했습니다. 다시 시도해 주세요.",
+        );
+      }
+    }
+  };
+
   return (
     <Container>
       <div>
@@ -34,10 +57,15 @@ const VerificationCode = ({
         />
         <OTPInput otp={otp} setOtp={setOtp} />
         <EmailVerificationTimer onResend={handleResend} />
+        {error && <ErrorMessage>{error}</ErrorMessage>}
       </div>
 
       <ButtonWrapper>
-        <Button type='button' onClick={handleClick} variant='primary'>
+        <Button
+          type='button'
+          onClick={handleClick}
+          variant='primary'
+          disabled={!isOtpComplete}>
           확인
         </Button>
       </ButtonWrapper>
@@ -53,5 +81,10 @@ const Container = styled.div`
 `;
 
 const ButtonWrapper = styled.div``;
+
+const ErrorMessage = styled.div`
+  color: red;
+  margin-top: 10px;
+`;
 
 export default VerificationCode;
