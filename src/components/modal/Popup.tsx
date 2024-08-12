@@ -7,8 +7,8 @@ interface PopupProps {
   message: string;
   closePopup: () => void;
   type: "confirm" | "alert";
-  confirmMessage: string;
-  confirmFunc: () => void;
+  confirmMessage?: string;
+  confirmFunc?: () => void;
 }
 
 const Popup = ({
@@ -34,7 +34,7 @@ const Popup = ({
               type='button'
               className='confirm-button'
               onClick={() => {
-                confirmFunc();
+                confirmFunc?.();
                 closePopup();
               }}>
               {confirmMessage}
@@ -43,7 +43,13 @@ const Popup = ({
         );
       case "alert":
         return (
-          <button type='button' className='confirm-button' onClick={closePopup}>
+          <button
+            type='button'
+            className='confirm-button'
+            onClick={() => {
+              confirmFunc?.();
+              closePopup();
+            }}>
             확인
           </button>
         );
