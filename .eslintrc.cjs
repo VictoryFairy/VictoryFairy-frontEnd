@@ -61,5 +61,6 @@ module.exports = {
     "@typescript-eslint/return-await": "off",
     "no-param-reassign": ["error", { props: false }],
     "no-console": "off",
+    "no-new": "off",
   },
 };

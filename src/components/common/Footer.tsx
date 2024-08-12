@@ -29,9 +29,8 @@ const Footer = () => {
         <span>랭킹</span>
       </IconWrapper>
       <IconWrapper
-      // onClick={() => navigate("/")}
-      // isActive={location.pathname === "/"}
-      >
+        onClick={() => navigate("/info")}
+        isActive={location.pathname === "/info"}>
         <InfoIcon />
         <span>정보</span>
       </IconWrapper>

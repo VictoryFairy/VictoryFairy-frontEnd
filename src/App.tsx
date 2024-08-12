@@ -10,6 +10,9 @@ import PasswordReset from "./pages/PasswordReset";
 import { ThemeContextProvider } from "./context/ThemeContext";
 import Main from "./pages/main/Main";
 import MyPage from "./pages/MyPage";
+import Info from "./pages/Info";
+
+// import { ThemeProvider } from "styled-components";
 
 const queryClient = new QueryClient();
 
@@ -83,6 +86,16 @@ const router = createBrowserRouter([
       {
         path: "/home",
         element: <Main />,
+      },
+    ],
+  },
+  {
+    path: "/info",
+    element: <Layout />,
+    children: [
+      {
+        path: "/info",
+        element: <Info />,
       },
     ],
   },
