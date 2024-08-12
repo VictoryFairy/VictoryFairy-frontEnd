@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { typography } from "../../style/typography";
 import ArrowRight from "../../assets/Icons/arrow-right.svg?react";
 import { usePopup } from "../../hooks/usePopup";
@@ -8,6 +9,7 @@ const ProfileButtons = () => {
   const handleLogoutClick = () => {
     openPopup();
   };
+  const navigate = useNavigate();
   return (
     <Container>
       {isOpen && (
@@ -29,7 +31,10 @@ const ProfileButtons = () => {
           <ArrowRight />
         </ProfileTeamWrapper>
       </ProfileWrapper>
-      <ProfileWrapper>
+      <ProfileWrapper
+        role='button'
+        tabIndex={0}
+        onClick={() => navigate("/mypage/profile")}>
         <span>프로필 수정</span>
         <ArrowRight />
       </ProfileWrapper>

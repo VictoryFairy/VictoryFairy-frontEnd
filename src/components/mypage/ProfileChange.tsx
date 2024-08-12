@@ -1,0 +1,114 @@
+import styled from "styled-components";
+import Button from "../common/Button";
+import { typography } from "../../style/typography";
+import CancelIcon from "../../assets/Icons/cancel.svg?react";
+import CameraIcon from "../../assets/Icons/camera.svg?react";
+
+const ProfileChange = () => {
+  return (
+    <Container>
+      <Form>
+        <ProfileWrapper>
+          <Avatar
+            alt='avatar'
+            src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg'
+          />
+          <CameraIconWrapper>
+            <CameraIcon />
+          </CameraIconWrapper>
+        </ProfileWrapper>
+        <InputWrapper>
+          <span>닉네임</span>
+          <input value='홍길동' />
+          <CancelIcon />
+        </InputWrapper>
+
+        <ButtonWrapper>
+          <Button type='submit'>저장</Button>
+        </ButtonWrapper>
+      </Form>
+    </Container>
+  );
+};
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
+
+const Form = styled.form`
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+`;
+
+const ProfileWrapper = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
+
+const InputWrapper = styled.div`
+  flex: 1;
+  > span {
+    height: 16px;
+    ${typography.caption};
+    color: var(--gray-700);
+  }
+  > input {
+    width: 100%;
+    height: 40px;
+    gap: 8px;
+    padding: 12px 8px 8px 0;
+    border: none;
+    border-bottom: 1px solid var(--primary-color);
+    outline: none;
+    ${typography.body_02}
+  }
+  > svg {
+    position: absolute;
+    right: 20px;
+    margin-top: 12px;
+    width: 20px;
+    height: 20px;
+    color: var(--primary-color);
+    cursor: pointer;
+  }
+`;
+
+const Avatar = styled.img`
+  margin-bottom: 20px;
+  cursor: pointer;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+`;
+
+const CameraIconWrapper = styled.div`
+  position: absolute;
+  bottom: 20px;
+  margin-left: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: var(--gray-900);
+  border-radius: 39px;
+  gap: 10px;
+  padding: 8px;
+  > svg {
+    fill: var(--white);
+    width: 20px;
+    height: 20px;
+  }
+`;
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+export default ProfileChange;
