@@ -4,8 +4,8 @@ import { persist } from "zustand/middleware";
 interface StoreState {
   isLoggedIn: boolean;
   token: string;
-  teamId: number | null;
-  loginAction: (token: string, teamId: number | null) => void;
+  teamId: number;
+  loginAction: (token: string, teamId: number) => void;
   logoutAction: () => void;
 }
 
@@ -15,11 +15,11 @@ export const useAuthStore = create(
       isLoggedIn: false,
       token: "",
       teamId: 0,
-      loginAction: (token: string, teamId: number | null) => {
+      loginAction: (token: string, teamId: number) => {
         set({ isLoggedIn: true, token, teamId });
       },
       logoutAction: () => {
-        set({ isLoggedIn: false, token: "", teamId: null });
+        set({ isLoggedIn: false, token: "", teamId: 0 });
       },
     }),
     {
