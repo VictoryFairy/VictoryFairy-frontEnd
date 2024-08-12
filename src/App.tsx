@@ -7,6 +7,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { typography } from "./style/typography";
 import PasswordReset from "./pages/PasswordReset";
+import MyPage from "./pages/MyPage";
 import Info from "./pages/Info";
 // import { ThemeProvider } from "styled-components";
 
@@ -23,6 +24,11 @@ const MiddelWrapper = styled.div`
 const RightWrapper = styled.div`
   ${typography.subtitle_02}
 `;
+
+const MyPageLeftWrapper = styled.div`
+  ${typography.display}
+`;
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -77,6 +83,18 @@ const router = createBrowserRouter([
       {
         path: "/info",
         element: <Info />,
+      },
+    ],
+  },
+  {
+    path: "/mypage",
+    element: (
+      <Layout left={<MyPageLeftWrapper>마이페이지</MyPageLeftWrapper>} />
+    ),
+    children: [
+      {
+        path: "/mypage",
+        element: <MyPage />,
       },
     ],
   },
