@@ -77,6 +77,9 @@ body{
     min-height: 100vh;
     font-family: 'Spoqa Han Sans Neo', 'sans-serif';
 }
+button,h1,h2,h3,h4,h5,h6,p {
+    all: unset;
+}
 
 
 

@@ -31,18 +31,15 @@ const Tabs = ({
 const TabsContainer = styled.div<{ direction: "row" | "column" }>`
   display: flex;
   ${typography.display}
+  padding: 16px 0;
   gap: 16px;
-  padding: 0 20px;
   flex-direction: ${({ direction }) => direction};
-  height: 64px;
 `;
 
-const Tab = styled.div<{ isActive: boolean }>`
+const Tab = styled.span<{ isActive: boolean }>`
   cursor: pointer;
   color: ${({ isActive }) =>
     isActive ? "var(--primary-color)" : "var(--gray-200)"};
-  display: flex;
-  align-items: center;
 `;
 
 export default Tabs;
