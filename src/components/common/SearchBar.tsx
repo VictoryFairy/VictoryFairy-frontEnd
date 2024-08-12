@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import search from "../../assets/Icons/search.svg";
+import { typography } from "../../style/typography";
 
 interface SearchBarProps {
   placeholder: string;
@@ -51,7 +52,7 @@ const SearchInput = styled.input`
   border: none;
   background: transparent;
   outline: none;
-  font-size: 14px;
+  ${typography.title_01}
 `;
 
 const SearchIcon = styled.img`
