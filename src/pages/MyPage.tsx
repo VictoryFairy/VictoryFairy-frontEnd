@@ -14,9 +14,11 @@ const MyPage = () => {
 const Container = styled.div`
   height: 100%;
   max-width: 480px;
-  width: 100%;
+  width: calc(100% + 40px);
+  margin: 0 -20px;
   display: flex;
   flex-direction: column;
+  background-color: var(--gray-50);
 `;
 
 export default MyPage;
