@@ -134,6 +134,26 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/mypage/team",
+    element: (
+      <Layout
+        left={
+          <ArrowLeft
+            fill='var(--primary-color)'
+            onClick={() => (window.location.href = "/mypage")}
+          />
+        }
+        center={<MiddelWrapper>응원팀 변경</MiddelWrapper>}
+      />
+    ),
+    children: [
+      {
+        path: "/mypage/team",
+        element: <TeamChange />,
+      },
+    ],
+  },
 ]);
 
 const App = () => {

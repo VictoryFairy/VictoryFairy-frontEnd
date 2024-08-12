@@ -3,10 +3,22 @@ import Button from "../common/Button";
 import { typography } from "../../style/typography";
 import CancelIcon from "../../assets/Icons/cancel.svg?react";
 import CameraIcon from "../../assets/Icons/camera.svg?react";
+import { usePopup } from "../../hooks/usePopup";
 
 const ProfileChange = () => {
+  const { Popup, isOpen, openPopup } = usePopup();
+  const handleBtnClick = () => {
+    openPopup();
+  };
   return (
     <Container>
+      {isOpen && (
+        <Popup
+          title='프로필 설정 완료'
+          message='프로필 설정이 완료되었습니다.'
+          type='confirm'
+        />
+      )}
       <Form>
         <ProfileWrapper>
           <Avatar
@@ -24,7 +36,9 @@ const ProfileChange = () => {
         </InputWrapper>
 
         <ButtonWrapper>
-          <Button type='submit'>저장</Button>
+          <Button type='button' onClick={handleBtnClick}>
+            저장
+          </Button>
         </ButtonWrapper>
       </Form>
     </Container>

@@ -20,23 +20,22 @@ const ProfileButtons = () => {
         />
       )}
       <span>정보 수정</span>
-      <ProfileWrapper>
-        <span>프로필 설정</span>
-        <ArrowRight />
-      </ProfileWrapper>
-      <ProfileWrapper>
-        <span>응원팀 변경</span>
-        <ProfileTeamWrapper>
-          <span>LG 트윈스</span>
-          <ArrowRight />
-        </ProfileTeamWrapper>
-      </ProfileWrapper>
       <ProfileWrapper
         role='button'
         tabIndex={0}
         onClick={() => navigate("/mypage/profile")}>
         <span>프로필 수정</span>
         <ArrowRight />
+      </ProfileWrapper>
+      <ProfileWrapper>
+        <span>응원팀 변경</span>
+        <ProfileTeamWrapper
+          role='button'
+          tabIndex={0}
+          onClick={() => navigate("/mypage/team")}>
+          <span>LG 트윈스</span>
+          <ArrowRight />
+        </ProfileTeamWrapper>
       </ProfileWrapper>
       <ProfileLastWrapper>
         <span>문의 사항</span>
