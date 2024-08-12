@@ -43,7 +43,7 @@ const StadiumList = ({
 // 수평 스크롤을 지원하며 스크롤바를 숨기는 스타일
 const TeamListContainer = styled.div`
   overflow: hidden; /* 기본 스크롤바 숨기기 */
-  margin-top: 20px;
+  /* margin-top: 20px; */
   margin-bottom: 10px;
 `;
 

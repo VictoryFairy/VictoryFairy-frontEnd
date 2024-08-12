@@ -1,8 +1,6 @@
-import styled from "styled-components";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import StadiumList from "./StadiumList";
-import search from "../../../assets/Icons/search.svg";
 import Map from "./Map";
 import { getParkingInfosByStadiumId } from "../../../api/info/info.api";
 import { ParkingInfo } from "../../../types/Stadium";
@@ -71,20 +69,13 @@ const ParkingInfoPage = () => {
       latitude: 35.8276258,
       longitude: 128.6739499,
     },
-    {
-      id: 5,
-      address: "대구 수성구 대구미술관",
-      name: "미술관 주차장 주차장",
-      latitude: 35.8276258,
-      longitude: 128.6739499,
-    },
   ];
   return (
     <div>
-      <SearchBar>
+      {/* <SearchBar>
         <SearchInput placeholder='구장명 , 팀명을 검색해보세요.' />
         <SearchIcon src={search} />
-      </SearchBar>
+      </SearchBar> */}
       <StadiumList
         setSelectedStadiumId={setSelectedStadiumId}
         selectedStadiumId={selectedStadiumId}
@@ -102,27 +93,26 @@ const ParkingInfoPage = () => {
     </div>
   );
 };
-const SearchBar = styled.div`
-  display: flex;
-  align-items: center;
+// const SearchBar = styled.div`
+//   display: flex;
+//   align-items: center;
+//   padding: 10px;
+//   background-color: #f8f8f8;
+//   border: 1px solid #ccc;
+//   border-radius: 5px;
+// `;
 
-  padding: 10px;
-  background-color: #f8f8f8;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-`;
+// const SearchInput = styled.input`
+//   flex: 1;
+//   border: none;
+//   background: transparent;
+//   outline: none;
+//   font-size: 14px;
+// `;
 
-const SearchInput = styled.input`
-  flex: 1;
-  border: none;
-  background: transparent;
-  outline: none;
-  font-size: 14px;
-`;
-
-const SearchIcon = styled.img`
-  color: #888;
-  cursor: pointer;
-`;
+// const SearchIcon = styled.img`
+//   color: #888;
+//   cursor: pointer;
+// `;
 
 export default ParkingInfoPage;
