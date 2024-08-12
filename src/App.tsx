@@ -11,8 +11,6 @@ import { ThemeContextProvider } from "./context/ThemeContext";
 import Main from "./pages/main/Main";
 import MyPage from "./pages/MyPage";
 
-// import { ThemeProvider } from "styled-components";
-
 const queryClient = new QueryClient();
 
 const LeftWrapper = styled.div`
