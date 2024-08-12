@@ -19,34 +19,54 @@ const ZoomButton = ({ mapInstance, zoomType }: ZoomButtonProps) => {
   };
 
   return (
-    <Button onClick={handleZoom} bottom={zoomType === "in" ? "80px" : "140px"}>
-      {zoomType === "in" ? "+" : "-"}
+    <Button onClick={handleZoom} zoomType={zoomType}>
+      {zoomType === "in" ? "+" : "−"}
     </Button>
   );
 };
-const Button = styled.button<{ bottom: string }>`
+
+const Button = styled.button<{ zoomType: "in" | "out" }>`
   position: absolute;
   right: 20px;
-  width: 40px;
-  height: 40px;
+  top: ${({ zoomType }) => (zoomType === "in" ? "10px" : "55px")};
+  width: 30px;
+  height: 30px;
   background-color: #ffffff;
-  color: #4a90e2;
-  border: 2px solid #dddddd;
-  border-radius: 50%;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  font-size: 18px;
+  font-size: 24px;
   font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 
   &:hover {
-    background-color: #4a90e2;
-    color: #ffffff;
+    background-color: #f0f8ff;
   }
 
-  bottom: ${({ bottom }) => bottom};
+  &:active {
+    background-color: #e6f3ff;
+    transform: translateY(1px);
+  }
+
+  ${({ zoomType }) =>
+    zoomType === "out" &&
+    `
+    border-top: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  `}
+
+  ${({ zoomType }) =>
+    zoomType === "in" &&
+    `
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  `}
 `;
+
 export default ZoomButton;
