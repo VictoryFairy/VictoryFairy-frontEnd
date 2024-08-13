@@ -98,7 +98,7 @@ const TeamChange = () => {
         <Popup
           title='응원팀 변경 완료'
           message='응원팀 변경이 완료되었습니다.'
-          type='confirm'
+          type='alert'
         />
       )}
       <SelectedTeamBox

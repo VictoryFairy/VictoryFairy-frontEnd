@@ -16,7 +16,7 @@ const ProfileChange = () => {
         <Popup
           title='프로필 설정 완료'
           message='프로필 설정이 완료되었습니다.'
-          type='confirm'
+          type='alert'
         />
       )}
       <Form>
