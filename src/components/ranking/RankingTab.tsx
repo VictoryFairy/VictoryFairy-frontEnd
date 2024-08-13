@@ -1,6 +1,72 @@
 import styled from "styled-components";
+import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ChartOptions,
+  ChartData,
+} from "chart.js";
 import { typography } from "../../style/typography";
 
+// 필요한 구성 요소를 Chart.js에 등록
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+);
+
+const labels = ["100포인트", "300포인트", "200포인트"];
+
+const data: ChartData<"bar", number[], string> = {
+  labels,
+  datasets: [
+    {
+      data: [65, 80, 59],
+      backgroundColor: ["#545763", "#2F3036", "#BABCC3"],
+      borderColor: ["#545763", "#2F3036", "#BABCC3"],
+      borderWidth: 1,
+    },
+  ],
+};
+
+// 차트 옵션 타입
+const options: ChartOptions<"bar"> = {
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+      border: {
+        display: false,
+      },
+    },
+    y: {
+      beginAtZero: true,
+      ticks: {
+        display: false,
+      },
+      grid: {
+        display: false,
+      },
+      border: {
+        display: false,
+      },
+    },
+  },
+  plugins: {
+    legend: {
+      display: false,
+    },
+  },
+};
 const team = [
   "전체",
   "LG트윈스",
@@ -27,12 +93,42 @@ const RankingTab = () => {
           );
         })}
       </TeamTabWrapper>
+      <RankTopWrapper>
+        <TextWrapper>
+          <div>
+            <span>오늘의 랭킹</span>
+            <span>2024.05.24 기준</span>
+          </div>
+          <span>오늘 경기에 대한 랭킹 정보만 보여집니다</span>
+        </TextWrapper>
+        <RankProfileWrapper>
+          <RankWrapper>
+            <img src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg' />
+            <span>홍길동</span>
+            <div>2</div>
+          </RankWrapper>
+          <FirstRankWrapper>
+            <img src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg' />
+            <span>홍길동</span>
+            <div>1</div>
+          </FirstRankWrapper>
+          <RankWrapper>
+            <img src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg' />
+            <span>홍길동</span>
+            <div>3</div>
+          </RankWrapper>
+        </RankProfileWrapper>
+        <BarWrapper>
+          <Bar data={data} options={options} />
+        </BarWrapper>
+      </RankTopWrapper>
     </Container>
   );
 };
 
 const Container = styled.div`
   height: 100%;
+  overflow: scroll;
   display: flex;
   flex-direction: column;
   padding: 20px 0;
@@ -59,4 +155,87 @@ const TeamTabWrapper = styled.div`
   }
 `;
 
+const RankTopWrapper = styled.div`
+  height: 400px;
+  border-radius: 12px;
+  padding: 20px;
+  gap: 20px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+`;
+
+const TextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  > div {
+    display: flex;
+  }
+`;
+const RankProfileWrapper = styled.div`
+  display: flex;
+  margin: 0 10px;
+  align-items: flex-end;
+  justify-content: space-between;
+`;
+
+const RankWrapper = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  > img {
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+  }
+  > div {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    background-color: var(--gray-400);
+    ${typography.subtitle_02}
+  }
+`;
+
+const FirstRankWrapper = styled.div`
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  > div {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    background-color: var(--primary-color);
+    ${typography.subtitle_02}
+  }
+  > img {
+    width: 100px;
+    border-radius: 100%;
+    height: 100px;
+  }
+`;
+
+const BarWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  > canvas {
+    width: 100% !important;
+    height: 150px !important;
+  }
+`;
 export default RankingTab;
