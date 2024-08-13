@@ -1,43 +1,123 @@
 import styled from "styled-components";
 import { typography } from "../../style/typography";
+import ArrowRight from "../../assets/Icons/arrow-right.svg?react";
+import { usePopup } from "../../hooks/usePopup";
 
 const ProfileButtons = () => {
+  const { Popup, isOpen, openPopup } = usePopup();
+  const handleLogoutClick = () => {
+    openPopup();
+  };
   return (
     <Container>
-      <Button type='button'>응원팀 변경</Button>
-      <Button type='button'>프로필 수정</Button>
-      <Button type='button'>문의 사항</Button>
-      <Button type='button'>로그아웃</Button>
-      <span>회원탈퇴</span>
+      {isOpen && (
+        <Popup
+          title='확인'
+          message='정말 로그아웃하시겠습니까?'
+          type='confirm'
+        />
+      )}
+      <span>정보 수정</span>
+      <ProfileWrapper>
+        <span>프로필 설정</span>
+        <ArrowRight />
+      </ProfileWrapper>
+      <ProfileWrapper>
+        <span>응원팀 변경</span>
+        <ProfileTeamWrapper>
+          <span>LG 트윈스</span>
+          <ArrowRight />
+        </ProfileTeamWrapper>
+      </ProfileWrapper>
+      <ProfileWrapper>
+        <span>프로필 수정</span>
+        <ArrowRight />
+      </ProfileWrapper>
+      <ProfileLastWrapper>
+        <span>문의 사항</span>
+        <ArrowRight />
+      </ProfileLastWrapper>
+      <ProfileLogWrapper>
+        <div role='button' tabIndex={0} onClick={handleLogoutClick}>
+          로그아웃
+        </div>
+        <div>회원탈퇴</div>
+      </ProfileLogWrapper>
     </Container>
   );
 };
 
 const Container = styled.div`
   display: flex;
-  height: 340px;
+  height: 100%;
   width: 100%;
   flex-direction: column;
-  align-items: center;
-  gap: 25px;
-  margin-top: 50px;
+  align-items: left;
+  background-color: var(--white);
+  margin-top: 15px;
+  padding: 0 20px;
   > span {
-    margin-top: 20px;
+    margin: 20px 0;
     ${typography.title_02}
+  }
+`;
+
+const ProfileWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--gray-100);
+  cursor: pointer;
+
+  svg {
+    fill: var(--gray-900);
+  }
+  ${typography.body_02}
+`;
+const ProfileLastWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  padding: 8px 0;
+  cursor: pointer;
+
+  svg {
+    fill: var(--gray-900);
+  }
+  ${typography.body_02}
+`;
+
+const ProfileLogWrapper = styled.div`
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  > :nth-child(1) {
+    border-right: 1px solid black;
+    color: var(--red-600);
+  }
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    padding: 0 15px;
+    ${typography.subtitle_02}
     cursor: pointer;
   }
 `;
 
-const Button = styled.button`
-  ${typography.title_02};
-  height: 48px;
-  width: 80%;
-  background-color: var(--white);
-  border: 1px solid var(--gray-900);
-  border-radius: 8px;
-  padding: 12px 16px;
-  gap: 10px;
-  cursor: pointer;
+const ProfileTeamWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  :nth-child(1) {
+    margin-right: 5px;
+  }
 `;
-
 export default ProfileButtons;
