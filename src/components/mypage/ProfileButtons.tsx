@@ -15,6 +15,10 @@ const ProfileButtons = () => {
           title='확인'
           message='정말 로그아웃하시겠습니까?'
           type='confirm'
+          confirmMessage='로그아웃'
+          confirmFunc={() => {
+            alert("완료");
+          }}
         />
       )}
       <span>정보 수정</span>

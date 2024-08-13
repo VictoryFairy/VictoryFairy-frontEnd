@@ -17,16 +17,22 @@ export const usePopup = () => {
       title,
       message,
       type,
+      confirmMessage,
+      confirmFunc,
     }: {
       title: string;
       message: string;
       type: "confirm" | "alert";
+      confirmMessage?: string;
+      confirmFunc?: () => void;
     }) => (
       <Popup
         title={title}
         message={message}
         closePopup={closePopup}
         type={type as "confirm" | "alert"}
+        confirmMessage={confirmMessage}
+        confirmFunc={confirmFunc}
       />
     ),
     [closePopup],
