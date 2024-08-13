@@ -29,3 +29,17 @@ export const getParkingInfosByStadiumId = async (id: number) => {
     throw error;
   }
 };
+
+interface TeamResponse {
+  id: number;
+  name: string;
+}
+export const getTeams = async () => {
+  try {
+    const response = await authAxiosInstance.get<TeamResponse[]>("/teams");
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
