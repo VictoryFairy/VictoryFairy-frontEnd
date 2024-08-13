@@ -44,10 +44,6 @@ const ParkingInfoPage = () => {
 
   return (
     <div>
-      {/* <SearchBar>
-        <SearchInput placeholder='구장명 , 팀명을 검색해보세요.' />
-        <SearchIcon src={search} />
-      </SearchBar> */}
       <StadiumList
         setSelectedStadiumId={setSelectedStadiumId}
         selectedStadiumId={selectedStadiumId}
@@ -65,26 +61,5 @@ const ParkingInfoPage = () => {
     </div>
   );
 };
-// const SearchBar = styled.div`
-//   display: flex;
-//   align-items: center;
-//   padding: 10px;
-//   background-color: #f8f8f8;
-//   border: 1px solid #ccc;
-//   border-radius: 5px;
-// `;
-
-// const SearchInput = styled.input`
-//   flex: 1;
-//   border: none;
-//   background: transparent;
-//   outline: none;
-//   font-size: 14px;
-// `;
-
-// const SearchIcon = styled.img`
-//   color: #888;
-//   cursor: pointer;
-// `;
 
 export default ParkingInfoPage;

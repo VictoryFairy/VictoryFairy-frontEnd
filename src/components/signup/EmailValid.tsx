@@ -15,6 +15,7 @@ interface EmailValidProps {
 const schema = z.object({
   email: z.string().email("유효하지 않은 이메일 주소입니다."),
 });
+
 const EmailValid = ({ setstep, handleSetUserInfo }: EmailValidProps) => {
   const {
     register,
@@ -92,4 +93,5 @@ const InputWrapper = styled.div`
 `;
 
 const ButtonWrapper = styled.div``;
+
 export default EmailValid;
