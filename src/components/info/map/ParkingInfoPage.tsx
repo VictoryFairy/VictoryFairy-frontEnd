@@ -5,9 +5,14 @@ import Map from "./Map";
 import { getParkingInfosByStadiumId } from "../../../api/info/info.api";
 import { ParkingInfo } from "../../../types/Stadium";
 import ParkingList from "./ParkingList";
+import { useAuthStore } from "../../../store/authStore";
+import { getStadiumId } from "../../../utils/getStadiumId";
 
 const ParkingInfoPage = () => {
-  const [selectedStadiumId, setSelectedStadiumId] = useState(1);
+  const { teamId } = useAuthStore();
+  const [selectedStadiumId, setSelectedStadiumId] = useState(
+    getStadiumId(teamId),
+  );
   const [selectedParking, setSelectedParking] = useState<Omit<
     ParkingInfo,
     "stadium"
