@@ -27,7 +27,6 @@ const Info = () => {
       {activeTab === "map" && <ParkingInfoPage />}
       {activeTab === "cheer" && (
         <div>
-          {/* <Heading>응원가</Heading> */}
           <p>응원가는 아직 준비되지 않았습니다.</p>
         </div>
       )}
