@@ -51,9 +51,11 @@ const WatchListContainer = styled.div`
   gap: 20px;
   margin-top: 16px;
   .watchList-header {
-    ${typography.title_02}
     display: flex;
     justify-content: space-between;
+    h1 {
+      ${typography.title_02}
+    }
     .icons {
       display: flex;
       gap: 10px;
