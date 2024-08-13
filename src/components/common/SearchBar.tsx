@@ -3,8 +3,8 @@ import styled from "styled-components";
 import search from "../../assets/Icons/search.svg";
 import { typography } from "../../style/typography";
 
-interface SearchBarProps {
-  placeholder: string;
+interface SearchBarProps
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
   searchTerm: string;
   onSearchChange: (searchTerm: string) => void;
   onSearch: () => void;
@@ -15,6 +15,7 @@ const SearchBar = ({
   searchTerm,
   onSearchChange,
   onSearch,
+  ...inputProps
 }: SearchBarProps) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onSearchChange(e.target.value);
@@ -33,6 +34,7 @@ const SearchBar = ({
         value={searchTerm}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
+        {...inputProps}
       />
       <SearchIcon src={search} onClick={onSearch} />
     </SearchBarWrapper>
