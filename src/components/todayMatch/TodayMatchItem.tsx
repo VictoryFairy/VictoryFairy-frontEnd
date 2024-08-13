@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { typography } from "../../style/typography";
+import { DailyMatchResponse } from "../../api/game/game";
 
 interface TodayMatchItemProps {
-  match: any;
+  match: DailyMatchResponse;
 }
 
 const TodayMatchItem = ({ match }: TodayMatchItemProps) => {
@@ -12,10 +13,12 @@ const TodayMatchItem = ({ match }: TodayMatchItemProps) => {
         <div>{match.homeTeam.name}</div>
         <div>{match.awayTeam.name}</div>
       </div>
-      <div className='score'>
-        <div>{match.homeTeamScore}</div>
-        <div>{match.awayTeamScore}</div>
-      </div>
+      {match.status === "경기 종료" && (
+        <div className='score'>
+          <div>{match.homeTeamScore}</div>
+          <div>{match.awayTeamScore}</div>
+        </div>
+      )}
     </TodayMatchItemContainer>
   );
 };
@@ -41,7 +44,7 @@ const TodayMatchItemContainer = styled.div`
   .score {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     padding: 4px 8px;
     gap: 8px;
     width: 25px;
