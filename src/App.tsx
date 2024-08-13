@@ -122,6 +122,7 @@ const router = createBrowserRouter([
           <ArrowLeft
             fill='var(--primary-color)'
             onClick={() => (window.location.href = "/mypage")}
+            cursor='pointer'
           />
         }
         center={<MiddelWrapper>프로필 설정</MiddelWrapper>}
@@ -142,6 +143,7 @@ const router = createBrowserRouter([
           <ArrowLeft
             fill='var(--primary-color)'
             onClick={() => (window.location.href = "/mypage")}
+            cursor='pointer'
           />
         }
         center={<MiddelWrapper>응원팀 변경</MiddelWrapper>}

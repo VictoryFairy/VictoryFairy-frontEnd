@@ -27,12 +27,12 @@ const ProfileButtons = () => {
         <span>프로필 수정</span>
         <ArrowRight />
       </ProfileWrapper>
-      <ProfileWrapper>
+      <ProfileWrapper
+        role='button'
+        tabIndex={0}
+        onClick={() => navigate("/mypage/team")}>
         <span>응원팀 변경</span>
-        <ProfileTeamWrapper
-          role='button'
-          tabIndex={0}
-          onClick={() => navigate("/mypage/team")}>
+        <ProfileTeamWrapper>
           <span>LG 트윈스</span>
           <ArrowRight />
         </ProfileTeamWrapper>
