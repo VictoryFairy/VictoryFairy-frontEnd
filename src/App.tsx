@@ -11,6 +11,7 @@ import { ThemeContextProvider } from "./context/ThemeContext";
 import Main from "./pages/main/Main";
 import MyPage from "./pages/MyPage";
 import Info from "./pages/Info";
+import Ranking from "./pages/Ranking";
 
 // import { ThemeProvider } from "styled-components";
 
@@ -108,6 +109,16 @@ const router = createBrowserRouter([
       {
         path: "/mypage",
         element: <MyPage />,
+      },
+    ],
+  },
+  {
+    path: "/ranking",
+    element: <Layout left={<MyPageLeftWrapper>랭킹</MyPageLeftWrapper>} />,
+    children: [
+      {
+        path: "/ranking",
+        element: <Ranking />,
       },
     ],
   },
