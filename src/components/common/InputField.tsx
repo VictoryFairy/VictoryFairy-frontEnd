@@ -7,6 +7,76 @@ import {
   UseFormSetValue,
 } from "react-hook-form";
 
+interface InputFieldProps
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "name"> {
+  name: string; // name은 필수이므로 여전히 명시적으로 선언
+  label: string;
+  register: UseFormRegister<any>;
+  watch: UseFormWatch<any>;
+  setValue: UseFormSetValue<any>;
+  error?: FieldError;
+  maxLength?: number;
+}
+
+const InputField = ({
+  name,
+  label,
+  type = "text",
+  placeholder,
+  maxLength,
+  register,
+  watch,
+  setValue,
+  error,
+  ...inputProps
+}: InputFieldProps) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const toggleVisibility = () => setIsVisible(!isVisible);
+
+  const inputType = type === "password" && isVisible ? "text" : type;
+  const data = watch(name) as string;
+  const currentLength = data ? data.length : 0;
+
+  const clearInput = () => {
+    setValue(name, "");
+  };
+
+  return (
+    <InputContainer>
+      <div className='labelWrapper'>
+        <InputLabel htmlFor={name}>{label}</InputLabel>
+        {maxLength && (
+          <CharCount>
+            {currentLength}/{maxLength}
+          </CharCount>
+        )}
+      </div>
+
+      <InputWrapper>
+        <StyledInput
+          id={name}
+          type={inputType}
+          placeholder={placeholder}
+          $hasError={!!error}
+          {...register(name)}
+          {...inputProps}
+        />
+        {data && type !== "password" && (
+          <ClearButton type='button' onClick={clearInput}>
+            ×
+          </ClearButton>
+        )}
+        {type === "password" && (
+          <VisibilityToggle type='button' onClick={toggleVisibility}>
+            {isVisible ? "👁️" : "👁️‍🗨️"}
+          </VisibilityToggle>
+        )}
+      </InputWrapper>
+      {error && <ErrorMessage>{error.message}</ErrorMessage>}
+    </InputContainer>
+  );
+};
+
 const InputContainer = styled.div`
   margin-bottom: 16px;
   position: relative;
@@ -71,80 +141,4 @@ const ClearButton = styled.button`
     color: #666;
   }
 `;
-
-interface InputFieldProps {
-  name: string;
-  label: string;
-  type?: string;
-  placeholder?: string;
-  maxLength?: number;
-  register: UseFormRegister<any>;
-  watch: UseFormWatch<any>;
-  setValue: UseFormSetValue<any>;
-  error?: FieldError;
-  value?: string;
-  disabled?: boolean;
-}
-
-const InputField = ({
-  name,
-  label,
-  type = "text",
-  placeholder,
-  maxLength,
-  register,
-  watch,
-  setValue,
-  error,
-  value,
-  disabled,
-}: InputFieldProps) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const toggleVisibility = () => setIsVisible(!isVisible);
-
-  const inputType = type === "password" && isVisible ? "text" : type;
-  const data = watch(name) as string;
-  const currentLength = data ? data.length : 0;
-
-  const clearInput = () => {
-    setValue(name, "");
-  };
-
-  return (
-    <InputContainer>
-      <div className='labelWrapper'>
-        <InputLabel htmlFor={name}>{label}</InputLabel>
-        {maxLength && (
-          <CharCount>
-            {currentLength}/{maxLength}
-          </CharCount>
-        )}
-      </div>
-
-      <InputWrapper>
-        <StyledInput
-          id={name}
-          type={inputType}
-          value={value}
-          placeholder={placeholder}
-          $hasError={!!error}
-          disabled={disabled}
-          {...register(name)}
-        />
-        {data && type !== "password" && (
-          <ClearButton type='button' onClick={clearInput}>
-            ×
-          </ClearButton>
-        )}
-        {type === "password" && (
-          <VisibilityToggle type='button' onClick={toggleVisibility}>
-            {isVisible ? "👁️" : "👁️‍🗨️"}
-          </VisibilityToggle>
-        )}
-      </InputWrapper>
-      {error && <ErrorMessage>{error.message}</ErrorMessage>}
-    </InputContainer>
-  );
-};
-
 export default InputField;
