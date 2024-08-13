@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-boolean-value */
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/common/Button";
@@ -15,15 +16,13 @@ const Home = () => {
       <Subtitle>지금 바로 시작해보세요.</Subtitle>
 
       <ButtonContainer>
-        <Button
-          type='button'
-          variant='primary'
-          onClick={() => navigate("/signup")}>
+        <Button size='big' type='button' onClick={() => navigate("/signup")}>
           회원가입
         </Button>
         <Button
+          size='big'
+          styleType='text'
           type='button'
-          variant='secondary'
           onClick={() => navigate("/login")}>
           로그인
         </Button>
