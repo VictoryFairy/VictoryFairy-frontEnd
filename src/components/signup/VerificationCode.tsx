@@ -61,11 +61,7 @@ const VerificationCode = ({ email, setstep }: VerificationCodeProps) => {
       </div>
 
       <ButtonWrapper>
-        <Button
-          type='button'
-          onClick={handleClick}
-          variant='primary'
-          disabled={!isOtpComplete}>
+        <Button type='button' onClick={handleClick} disabled={!isOtpComplete}>
           확인
         </Button>
       </ButtonWrapper>
