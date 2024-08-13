@@ -12,8 +12,8 @@ import {
   ChartData,
 } from "chart.js";
 import { typography } from "../../style/typography";
+import ArrowRight from "../../assets/Icons/arrow-right.svg?react";
 
-// 필요한 구성 요소를 Chart.js에 등록
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -37,7 +37,6 @@ const data: ChartData<"bar", number[], string> = {
   ],
 };
 
-// 차트 옵션 타입
 const options: ChartOptions<"bar"> = {
   scales: {
     x: {
@@ -46,6 +45,13 @@ const options: ChartOptions<"bar"> = {
       },
       border: {
         display: false,
+      },
+      ticks: {
+        color: "#898C9B",
+        font: {
+          size: 10,
+          weight: 400,
+        },
       },
     },
     y: {
@@ -122,12 +128,63 @@ const RankingTab = () => {
           <Bar data={data} options={options} />
         </BarWrapper>
       </RankTopWrapper>
+      <RankTextWrapper>
+        <RankText>
+          <RankTextLeft>
+            <span>15</span>
+            <img
+              src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg'
+              alt='#'
+            />
+            <span>김예지</span>
+          </RankTextLeft>
+          <div>00P</div>
+        </RankText>
+        <MyRankWrapper>
+          <MyRank>
+            <RankTextLeft>
+              <span>15</span>
+              <img
+                src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg'
+                alt='#'
+              />
+              <span>김예지</span>
+            </RankTextLeft>
+            <RankTextRight>
+              <span>00P</span>
+              <span>up</span>
+            </RankTextRight>
+          </MyRank>
+          <MyRanks>
+            <span>나의 승률</span>
+            <span>00%</span>
+          </MyRanks>
+          <MyRanks>
+            <span>직관 경기 누적수</span>
+            <span>5회</span>
+          </MyRanks>
+        </MyRankWrapper>
+        <RankText>
+          <RankTextLeft>
+            <span>15</span>
+            <img
+              src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg'
+              alt='#'
+            />
+            <span>김예지</span>
+          </RankTextLeft>
+          <span>00P</span>
+        </RankText>
+        <ConfirmRank>
+          전체 랭킹 확인 하기
+          <ArrowRight />
+        </ConfirmRank>
+      </RankTextWrapper>
     </Container>
   );
 };
 
 const Container = styled.div`
-  height: 100%;
   overflow: scroll;
   display: flex;
   flex-direction: column;
@@ -156,9 +213,10 @@ const TeamTabWrapper = styled.div`
 `;
 
 const RankTopWrapper = styled.div`
-  height: 400px;
+  height: 384px;
   border-radius: 12px;
   padding: 20px;
+  margin-top: 20px;
   gap: 20px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -235,7 +293,78 @@ const BarWrapper = styled.div`
   display: flex;
   > canvas {
     width: 100% !important;
-    height: 150px !important;
+    height: 120px !important;
+  }
+`;
+
+const RankTextWrapper = styled.div`
+  width: 100%;
+  height: 370px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+`;
+
+const RankText = styled.div`
+  width: 100%;
+  height: 48px;
+  border-radius: 8px;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const RankTextLeft = styled.div`
+  img {
+    width: 28px;
+    height: 28px;
+    border-radius: 100%;
+    margin: 0 10px;
+  }
+`;
+
+const MyRankWrapper = styled.div`
+  width: 100%;
+  border-radius: 8px;
+  padding: 10px 20px;
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  :nth-child(3) {
+    margin-bottom: 10px;
+  }
+`;
+const MyRank = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--gray-100);
+  padding: 15px 0;
+`;
+
+const RankTextRight = styled.div`
+  display: flex;
+`;
+
+const MyRanks = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 16px;
+  margin-top: 15px;
+`;
+
+const ConfirmRank = styled.span`
+  color: var(--gray-400);
+  margin: 20px 0;
+  > svg {
+    fill: var(--gray-400);
   }
 `;
 export default RankingTab;
