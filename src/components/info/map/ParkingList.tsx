@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
+import { useRef } from "react";
 import gps from "../../../assets/Icons/location.svg";
-import arrow from "../../../assets/Icons/arrow-right.svg";
+import arrow from "../../../assets/Icons/plus.svg";
 import naver from "../../../assets/Icons/naver.svg";
 import { ParkingInfo } from "../../../types/Stadium";
 
@@ -11,11 +12,18 @@ interface ParkingListProps {
 }
 
 const ParkingList = ({ parkingSpots, onSelectParking }: ParkingListProps) => {
+  const itemRefs = useRef<HTMLDivElement>(null);
+
+  const handleClick = (spot: Omit<ParkingInfo, "stadium">) => {
+    if (!itemRefs.current) return;
+    onSelectParking(spot);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   return (
-    <ParkingListContainer>
+    <ParkingListContainer ref={itemRefs}>
       {parkingSpots.length === 0 && <div>주차 정보가 없습니다</div>}
       {parkingSpots.map((spot) => (
-        <ParkingItem key={spot.id} onClick={() => onSelectParking(spot)}>
+        <ParkingItem key={spot.id} onClick={() => handleClick(spot)}>
           <LeftContent>
             <Icon src={gps} alt='location' />
             <ParkingInf>
@@ -24,8 +32,12 @@ const ParkingList = ({ parkingSpots, onSelectParking }: ParkingListProps) => {
             </ParkingInf>
           </LeftContent>
           <RightContent>
-            <NaverIcon src={naver} alt='naver' />
-            <Icon src={arrow} alt='arrow' />
+            <NaverIcon
+              src={naver}
+              alt='naver'
+              onClick={() => (window.location.href = spot.link)}
+            />
+            <img src={arrow} alt='arrow' />
           </RightContent>
         </ParkingItem>
       ))}
@@ -37,7 +49,8 @@ const ParkingListContainer = styled.div`
   display: flex;
   flex-direction: column;
   background-color: white;
-  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 40px;
 `;
 
 const ParkingItem = styled.div`
@@ -46,6 +59,7 @@ const ParkingItem = styled.div`
   align-items: center;
   padding: 15px;
   border-bottom: 1px solid #eee;
+  cursor: pointer;
 `;
 
 const LeftContent = styled.div`
@@ -65,9 +79,9 @@ const Icon = styled.img`
 `;
 
 const NaverIcon = styled(Icon)`
-  width: 15px;
-  height: 15px;
-  fill: #03c75a;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
 `;
 
 const ParkingInf = styled.div`

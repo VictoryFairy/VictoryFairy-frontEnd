@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
+import { useRef, useEffect } from "react";
 import { getStadiums } from "../../../api/info/info.api";
 import { Stadium } from "../../../types/Stadium";
 
@@ -15,24 +16,38 @@ const StadiumList = ({
   const { data, isLoading } = useQuery<Stadium[]>({
     queryKey: ["stadiums"],
     queryFn: getStadiums,
+    staleTime: Infinity, // 데이터가 무한히 stale 상태가 되지 않도록 설정
   });
 
+  const listRef = useRef<HTMLDivElement>(null);
+  const scrollPosition = useRef<number>(0);
+
+  console.log(scrollPosition.current);
   const handleStadiumClick = (stadium: Stadium) => {
     setSelectedStadiumId(stadium.id);
+    if (listRef.current) {
+      scrollPosition.current = listRef.current.scrollLeft;
+    }
   };
+
+  useEffect(() => {
+    if (listRef.current) {
+      listRef.current.scrollLeft = scrollPosition.current;
+    }
+  }, [selectedStadiumId]);
 
   if (isLoading) return <div>로딩중...</div>;
 
   return (
     <TeamListContainer>
-      <TeamList>
+      <TeamList ref={listRef}>
         {data?.map((stadium) => (
           <TeamButton
             type='button'
             key={stadium.id}
             onClick={() => handleStadiumClick(stadium)}
             active={stadium.id === selectedStadiumId}>
-            {stadium.name}
+            {stadium.full_name}
           </TeamButton>
         ))}
       </TeamList>
@@ -43,13 +58,11 @@ const StadiumList = ({
 // 수평 스크롤을 지원하며 스크롤바를 숨기는 스타일
 const TeamListContainer = styled.div`
   overflow: hidden; /* 기본 스크롤바 숨기기 */
-  /* margin-top: 20px; */
   margin-bottom: 10px;
 `;
 
 const TeamList = styled.div`
   display: flex; /* 자식 요소들을 수평으로 나열합니다. */
-
   overflow-x: auto; /* 수평 스크롤을 허용합니다. */
   overflow-y: hidden; /* 수직 스크롤은 숨깁니다. */
   -webkit-overflow-scrolling: touch; /* 부드러운 스크롤을 터치 스크롤에 적용합니다. */
@@ -70,10 +83,10 @@ const TeamButton = styled.button<{ active: boolean }>`
   cursor: pointer;
   font-size: 14px;
   white-space: nowrap;
-  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 
   &:last-child {
     margin-right: 0;
   }
 `;
+
 export default StadiumList;
