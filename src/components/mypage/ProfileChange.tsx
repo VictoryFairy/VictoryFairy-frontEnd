@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import Button from "../common/Button";
-import CancelIcon from "../../assets/Icons/cancel.svg?react";
-import CameraIcon from "../../assets/Icons/camera.svg?react";
 import { usePopup } from "../../hooks/usePopup";
 import Text from "../common/Text";
+import Icon from "../common/Icon";
 
 const ProfileChange = () => {
   const { Popup, isOpen, openPopup } = usePopup();
@@ -26,7 +25,7 @@ const ProfileChange = () => {
             src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg'
           />
           <CameraIconWrapper>
-            <CameraIcon />
+            <Icon icon='IcCamera' />
           </CameraIconWrapper>
         </ProfileWrapper>
         <InputWrapper>
@@ -34,7 +33,7 @@ const ProfileChange = () => {
             닉네임
           </Text>
           <input value='홍길동' />
-          <CancelIcon />
+          <Icon icon='IcCancel' />
         </InputWrapper>
 
         <ButtonWrapper>
