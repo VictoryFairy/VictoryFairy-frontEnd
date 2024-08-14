@@ -26,11 +26,16 @@ const Map = ({ selectedStadium, parkingSpots, selectedParking }: MapProps) => {
       if (!mapInstance) return null;
 
       const markerSvg = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
-      <circle cx="20" cy="20" r="18" fill="#4A90E2" stroke="white" stroke-width="2"/>
-      <text x="20" y="25" font-family="Arial" font-size="14" fill="white" text-anchor="middle">P</text>
-    </svg>
-  `;
+      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+        <!-- Marker Background -->
+        <circle cx="25" cy="25" r="20" fill="#4A90E2" stroke="#fff" stroke-width="3"/>
+        <!-- Shadow Effect -->
+        <circle cx="25" cy="30" r="18" fill="rgba(0, 0, 0, 0.2)" />
+        <!-- Marker Icon -->
+        <circle cx="25" cy="25" r="15" fill="#fff"/>
+        <text x="25" y="30" font-family="Arial" font-size="18" fill="#4A90E2" text-anchor="middle" dominant-baseline="middle">P</text>
+      </svg>
+    `;
 
       const marker = new window.naver.maps.Marker({
         position: new window.naver.maps.LatLng(spot.latitude, spot.longitude),
@@ -70,8 +75,10 @@ const Map = ({ selectedStadium, parkingSpots, selectedParking }: MapProps) => {
 
     const mapOptions: naver.maps.MapOptions = {
       center: new window.naver.maps.LatLng(
-        selectedStadium.latitude,
-        selectedStadium.longitude,
+        // selectedStadium.latitude,
+        // selectedStadium.longitude,
+        37.5665,
+        126.978,
       ),
       zoom: 15,
     };
@@ -80,7 +87,7 @@ const Map = ({ selectedStadium, parkingSpots, selectedParking }: MapProps) => {
       mapOptions,
     );
     setMapInstance(newMapInstance);
-  }, [selectedStadium]);
+  }, []);
 
   useEffect(() => {
     if (!mapInstance || !selectedStadium) return;

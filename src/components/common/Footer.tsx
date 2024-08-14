@@ -35,7 +35,7 @@ const Footer = () => {
       </IconWrapper>
       <IconWrapper
         onClick={() => navigate("/mypage")}
-        isActive={location.pathname === "/mypage"}>
+        isActive={location.pathname.startsWith("/mypage")}>
         <MyPageIcon />
         <span>마이페이지</span>
       </IconWrapper>

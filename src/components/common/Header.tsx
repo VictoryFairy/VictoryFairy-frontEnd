@@ -17,6 +17,12 @@ const Header = ({ left, center, right }: HeaderProps) => {
 };
 
 const HeaderContainer = styled.div`
+  :nth-child(2) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
   height: 64px;
   position: fixed;
   top: 0;

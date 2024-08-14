@@ -12,6 +12,9 @@ import Main from "./pages/main/Main";
 import MyPage from "./pages/MyPage";
 import Info from "./pages/Info";
 import Ranking from "./pages/Ranking";
+import TeamChange from "./components/mypage/TeamChange";
+import ProfileChange from "./components/mypage/ProfileChange";
+import ArrowLeft from "./assets/Icons/arrow-left.svg?react";
 
 // import { ThemeProvider } from "styled-components";
 
@@ -119,6 +122,44 @@ const router = createBrowserRouter([
       {
         path: "/ranking",
         element: <Ranking />,
+    path: "/mypage/profile",
+    element: (
+      <Layout
+        left={
+          <ArrowLeft
+            fill='var(--primary-color)'
+            onClick={() => (window.location.href = "/mypage")}
+            cursor='pointer'
+          />
+        }
+        center={<MiddelWrapper>프로필 설정</MiddelWrapper>}
+      />
+    ),
+    children: [
+      {
+        path: "/mypage/profile",
+        element: <ProfileChange />,
+      },
+    ],
+  },
+  {
+    path: "/mypage/team",
+    element: (
+      <Layout
+        left={
+          <ArrowLeft
+            fill='var(--primary-color)'
+            onClick={() => (window.location.href = "/mypage")}
+            cursor='pointer'
+          />
+        }
+        center={<MiddelWrapper>응원팀 변경</MiddelWrapper>}
+      />
+    ),
+    children: [
+      {
+        path: "/mypage/team",
+        element: <TeamChange />,
       },
     ],
   },
