@@ -64,7 +64,17 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Layout />,
+    element: (
+      <Layout
+        left={
+          <ArrowLeft
+            fill='var(--primary-color)'
+            onClick={() => (window.location.href = "/")}
+            cursor='pointer'
+          />
+        }
+      />
+    ),
     children: [
       {
         path: "/login",
