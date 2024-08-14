@@ -43,7 +43,7 @@ const ParkingInfoPage = () => {
   }));
 
   return (
-    <div>
+    <div style={{ minHeight: "100vh" }}>
       <StadiumList
         setSelectedStadiumId={setSelectedStadiumId}
         selectedStadiumId={selectedStadiumId}
