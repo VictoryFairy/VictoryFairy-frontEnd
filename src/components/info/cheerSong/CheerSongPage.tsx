@@ -36,11 +36,9 @@ const CheerSongPage = () => {
         />
       </div>
 
-      <CheerSongList />
-      <CheerSongList />
-      <CheerSongList />
-      <CheerSongList />
-      <CheerSongList />
+      <CheerSongList teamName='롯데' />
+      <CheerSongList teamName='삼성' />
+      <CheerSongList teamName='한화' />
       <div>무한스크롤 트리거</div>
     </Container>
   );

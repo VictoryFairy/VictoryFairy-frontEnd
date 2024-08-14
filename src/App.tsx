@@ -95,7 +95,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/info",
-    element: <Layout />,
+    element: <Layout left={<MyPageLeftWrapper>정보</MyPageLeftWrapper>} />,
     children: [
       {
         path: "/info",
