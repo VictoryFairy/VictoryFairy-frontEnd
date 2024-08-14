@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../store/authStore";
 import TeamList from "./TeamList";
 import search from "../../../assets/Icons/search.svg";
@@ -11,13 +12,13 @@ const CheerSongPage = () => {
   const { teamId } = useAuthStore();
   const [selectedTeamId, setSelectedTeamId] = useState(teamId);
   const [activeTab, setActiveTab] = useState(0); // 0 team , 1 player
-
+  const navigate = useNavigate();
   const handleTabClick = (index: number) => {
     setActiveTab(index);
   };
   return (
     <Container>
-      <SearchBarWrapper>
+      <SearchBarWrapper onClick={() => navigate("/search-cheerSong")}>
         <SearchInput placeholder='선수명, 제목, 가사를 입력해주세요' />
         <SearchIcon src={search} />
       </SearchBarWrapper>
@@ -72,6 +73,7 @@ const SearchBarWrapper = styled.div`
   height: 35px;
   margin: 0 20px;
   margin-bottom: 20px;
+  cursor: pointer;
 `;
 
 const SearchInput = styled.input`

@@ -107,7 +107,7 @@ const router = createBrowserRouter([
     path: "/search-cheerSong",
     children: [
       {
-        path: "/info",
+        path: "/search-cheerSong",
         element: <SearchCheerSong />,
       },
     ],
