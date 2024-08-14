@@ -132,6 +132,10 @@ const router = createBrowserRouter([
       {
         path: "/ranking",
         element: <Ranking />,
+      },
+    ],
+  },
+  {
     path: "/mypage/profile",
     element: (
       <Layout
