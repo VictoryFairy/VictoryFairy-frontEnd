@@ -1,5 +1,9 @@
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useNavigate,
+} from "react-router-dom";
 import styled from "styled-components";
 import Layout from "./components/layout/Layout";
 import Home from "./pages/Home";
@@ -35,6 +39,17 @@ const MyPageLeftWrapper = styled.div`
   ${typography.display}
 `;
 
+const BackButton = () => {
+  const navigate = useNavigate();
+  return (
+    <ArrowLeft
+      fill='var(--primary-color)'
+      onClick={() => navigate(-1)}
+      cursor='pointer'
+    />
+  );
+};
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -54,7 +69,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/signup",
-    element: <Layout />,
+    element: <Layout left={<BackButton />} />,
     children: [
       {
         path: "/signup",
@@ -64,17 +79,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: (
-      <Layout
-        left={
-          <ArrowLeft
-            fill='var(--primary-color)'
-            onClick={() => (window.location.href = "/")}
-            cursor='pointer'
-          />
-        }
-      />
-    ),
+    element: <Layout left={<BackButton />} />,
     children: [
       {
         path: "/login",
