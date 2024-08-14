@@ -30,7 +30,15 @@ const ParkingList = ({ parkingSpots, onSelectParking }: ParkingListProps) => {
               <ParkingAddress>{spot.address}</ParkingAddress>
             </ParkingInf>
           </LeftContent>
-          <RightContent />
+
+          <RightContent>
+            <Icon
+              icon='IcNaver'
+              fill='#03C75A'
+              onClick={() => (window.location.href = spot.link)}
+            />
+            <Icon icon='IcArrowRight' />
+          </RightContent>
         </ParkingItem>
       ))}
     </ParkingListContainer>
@@ -57,11 +65,13 @@ const ParkingItem = styled.div`
 const LeftContent = styled.div`
   display: flex;
   align-items: center;
+  gap: 15px;
 `;
 
 const RightContent = styled.div`
   display: flex;
   align-items: center;
+  gap: 10px;
 `;
 
 const ParkingInf = styled.div`
