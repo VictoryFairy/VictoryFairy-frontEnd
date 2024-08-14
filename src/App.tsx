@@ -14,6 +14,7 @@ import Info from "./pages/Info";
 import TeamChange from "./components/mypage/TeamChange";
 import ProfileChange from "./components/mypage/ProfileChange";
 import ArrowLeft from "./assets/Icons/arrow-left.svg?react";
+import SearchCheerSong from "./pages/SearchCheerSong";
 
 // import { ThemeProvider } from "styled-components";
 
@@ -99,6 +100,15 @@ const router = createBrowserRouter([
       {
         path: "/info",
         element: <Info />,
+      },
+    ],
+  },
+  {
+    path: "/search-cheerSong",
+    children: [
+      {
+        path: "/info",
+        element: <SearchCheerSong />,
       },
     ],
   },
