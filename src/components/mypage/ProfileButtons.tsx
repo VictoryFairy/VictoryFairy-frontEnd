@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { typography } from "../../style/typography";
 import ArrowRight from "../../assets/Icons/arrow-right.svg?react";
 import { usePopup } from "../../hooks/usePopup";
@@ -8,6 +9,7 @@ const ProfileButtons = () => {
   const handleLogoutClick = () => {
     openPopup();
   };
+  const navigate = useNavigate();
   return (
     <Container>
       {isOpen && (
@@ -22,20 +24,22 @@ const ProfileButtons = () => {
         />
       )}
       <span>정보 수정</span>
-      <ProfileWrapper>
-        <span>프로필 설정</span>
+      <ProfileWrapper
+        role='button'
+        tabIndex={0}
+        onClick={() => navigate("/mypage/profile")}>
+        <span>프로필 수정</span>
         <ArrowRight />
       </ProfileWrapper>
-      <ProfileWrapper>
+      <ProfileWrapper
+        role='button'
+        tabIndex={0}
+        onClick={() => navigate("/mypage/team")}>
         <span>응원팀 변경</span>
         <ProfileTeamWrapper>
           <span>LG 트윈스</span>
           <ArrowRight />
         </ProfileTeamWrapper>
-      </ProfileWrapper>
-      <ProfileWrapper>
-        <span>프로필 수정</span>
-        <ArrowRight />
       </ProfileWrapper>
       <ProfileLastWrapper>
         <span>문의 사항</span>

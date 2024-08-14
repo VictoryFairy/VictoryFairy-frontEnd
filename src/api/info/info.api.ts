@@ -3,9 +3,9 @@ import authAxiosInstance from "../authAxios";
 interface StadiumsResponse {
   id: number;
   name: string;
+  full_name: string;
   latitude: number;
   longitude: number;
-  address: string;
 }
 export const getStadiums = async () => {
   try {
