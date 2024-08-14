@@ -19,20 +19,23 @@ export const usePopup = () => {
       type,
       confirmMessage,
       confirmFunc,
+      comp,
     }: {
       title: string;
       message: string;
-      type: "confirm" | "alert";
+      type: "confirm" | "alert" | "test";
       confirmMessage?: string;
       confirmFunc?: () => void;
+      comp?: React.ReactNode;
     }) => (
       <Popup
         title={title}
         message={message}
         closePopup={closePopup}
-        type={type as "confirm" | "alert"}
+        type={type as "confirm" | "alert" | "test"}
         confirmMessage={confirmMessage}
         confirmFunc={confirmFunc}
+        comp={comp}
       />
     ),
     [closePopup],
