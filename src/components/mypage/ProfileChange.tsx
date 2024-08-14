@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import Button from "../common/Button";
-import { typography } from "../../style/typography";
 import CancelIcon from "../../assets/Icons/cancel.svg?react";
 import CameraIcon from "../../assets/Icons/camera.svg?react";
 import { usePopup } from "../../hooks/usePopup";
+import Text from "../common/Text";
 
 const ProfileChange = () => {
   const { Popup, isOpen, openPopup } = usePopup();
@@ -30,7 +30,9 @@ const ProfileChange = () => {
           </CameraIconWrapper>
         </ProfileWrapper>
         <InputWrapper>
-          <span>닉네임</span>
+          <Text variant='caption' color='var(--gray-700)'>
+            닉네임
+          </Text>
           <input value='홍길동' />
           <CancelIcon />
         </InputWrapper>
@@ -69,8 +71,6 @@ const InputWrapper = styled.div`
   flex: 1;
   > span {
     height: 16px;
-    ${typography.caption};
-    color: var(--gray-700);
   }
   > input {
     width: 100%;
@@ -80,7 +80,6 @@ const InputWrapper = styled.div`
     border: none;
     border-bottom: 1px solid var(--primary-color);
     outline: none;
-    ${typography.body_02}
   }
   > svg {
     position: absolute;
@@ -124,5 +123,6 @@ const CameraIconWrapper = styled.div`
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
+  margin-bottom: 10px;
 `;
 export default ProfileChange;
