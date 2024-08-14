@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { Bar } from "react-chartjs-2";
 import {
@@ -14,6 +15,7 @@ import {
 import { typography } from "../../style/typography";
 import ArrowRight from "../../assets/Icons/arrow-right.svg?react";
 import Text from "../common/Text";
+import Button from "../common/Button";
 
 ChartJS.register(
   CategoryScale,
@@ -74,7 +76,7 @@ const options: ChartOptions<"bar"> = {
     },
   },
 };
-const team = [
+const team: Team["name"][] = [
   "전체",
   "LG트윈스",
   "두산베어스",
@@ -82,21 +84,48 @@ const team = [
   "KT위즈",
   "한화이글스",
   "NC다이노스",
-  "롯제자이언츠",
+  "롯데자이언츠",
   "KIA타이거즈",
   "키움히어로즈",
   "삼성라이온즈",
 ];
 
+interface Team {
+  name:
+    | "전체"
+    | "LG트윈스"
+    | "두산베어스"
+    | "SSG렌더스"
+    | "KT위즈"
+    | "한화이글스"
+    | "NC다이노스"
+    | "롯데자이언츠"
+    | "KIA타이거즈"
+    | "키움히어로즈"
+    | "삼성라이온즈";
+}
+
 const RankingTab = () => {
+  const [teamTab, setTeamTab] = useState<Team["name"]>("전체");
+  const handleClickTeam = (value: Team["name"]) => {
+    setTeamTab(value);
+  };
   return (
     <Container>
       <TeamTabWrapper>
         {team.map((element, index) => {
           return (
-            <button type='button' key={index}>
-              {element}
-            </button>
+            <Button
+              style={{
+                color: teamTab === element ? "var(--white)" : "var(--gray-400)",
+              }}
+              styleType={teamTab === element ? "default" : "outline"}
+              key={index}
+              onClick={() => {
+                handleClickTeam(element);
+              }}>
+              <Text variant='subtitle_01'>{element}</Text>
+            </Button>
           );
         })}
       </TeamTabWrapper>
@@ -156,10 +185,14 @@ const RankingTab = () => {
               <Text variant='title_01'>김예지</Text>
             </RankTextLeft>
             <RankTextRight>
-              <Text variant='title_01' color='var(--gray-400)'>
+              <Text variant='title_01' color='var(--primary-color)'>
                 00P
               </Text>
-              <span>up</span>
+              <Button>
+                <Text variant='subtitle_01' color='var(--white)'>
+                  up^
+                </Text>
+              </Button>
             </RankTextRight>
           </MyRank>
           <MyRanks>
@@ -221,6 +254,7 @@ const TeamTabWrapper = styled.div`
   overflow-x: scroll;
   padding-bottom: 10px;
   > button {
+    cursor: pointer;
     flex: 0 0 auto;
     width: 100px;
     height: 32px;
@@ -386,6 +420,16 @@ const MyRank = styled.div`
 
 const RankTextRight = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
+  > button {
+    width: 54px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+  }
 `;
 
 const MyRanks = styled.div`
