@@ -18,21 +18,14 @@ import Info from "./pages/Info";
 import TeamChange from "./components/mypage/TeamChange";
 import ProfileChange from "./components/mypage/ProfileChange";
 import ArrowLeft from "./assets/Icons/arrow-left.svg?react";
+import { useSignupStore } from "./store/signupStep";
 
 // import { ThemeProvider } from "styled-components";
 
 const queryClient = new QueryClient();
 
-const LeftWrapper = styled.div`
-  ${typography.subtitle_02}
-`;
-
 const MiddelWrapper = styled.div`
   ${typography.headline}
-`;
-
-const RightWrapper = styled.div`
-  ${typography.subtitle_02}
 `;
 
 const MyPageLeftWrapper = styled.div`
@@ -41,10 +34,27 @@ const MyPageLeftWrapper = styled.div`
 
 const BackButton = () => {
   const navigate = useNavigate();
+  const { step, decreaseStep } = useSignupStore();
+
+  const handleBack = () => {
+    if (
+      window.location.pathname === "/signup" ||
+      window.location.pathname === "/password-reset"
+    ) {
+      if (step > 1) {
+        decreaseStep();
+      } else {
+        navigate(-1);
+      }
+    } else {
+      navigate(-1);
+    }
+  };
+
   return (
     <ArrowLeft
       fill='var(--primary-color)'
-      onClick={() => navigate(-1)}
+      onClick={handleBack}
       cursor='pointer'
     />
   );
@@ -53,13 +63,7 @@ const BackButton = () => {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <Layout
-        left={<LeftWrapper>left</LeftWrapper>}
-        center={<MiddelWrapper>Title</MiddelWrapper>}
-        right={<RightWrapper>Right</RightWrapper>}
-      />
-    ),
+    element: <Layout />,
     children: [
       {
         path: "/",
@@ -89,7 +93,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/password-reset",
-    element: <Layout />,
+    element: <Layout left={<BackButton />} />,
     children: [
       {
         path: "/password-reset",

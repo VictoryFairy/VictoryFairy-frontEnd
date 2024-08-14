@@ -5,9 +5,11 @@ import { UserInfo } from "../types/User";
 import Profile from "../components/signup/Profile";
 import PasswordValid from "../components/signup/PasswordValid";
 import TeamSelect from "../components/signup/TeamSelect";
+import { useSignupStore } from "../store/signupStep";
 
 const Signup = () => {
-  const [step, setstep] = useState(1);
+  // const [step, setstep] = useState(1);
+  const { step, setstep } = useSignupStore();
   const [userInfo, setuserInfo] = useState<UserInfo>({
     email: "",
     nickname: "",
@@ -45,6 +47,7 @@ const Signup = () => {
       case 5:
         return (
           <TeamSelect
+            setstep={setstep}
             handleSetUserInfo={handleSetUserInfo}
             userInfo={userInfo}
           />
@@ -53,7 +56,9 @@ const Signup = () => {
         return null;
     }
   };
-  return <div style={{ height: "100%" }}>{renderStep()}</div>;
+  return (
+    <div style={{ height: "100%", paddingTop: "30px" }}>{renderStep()}</div>
+  );
 };
 
 export default Signup;
