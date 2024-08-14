@@ -17,6 +17,8 @@ import TeamChange from "./components/mypage/TeamChange";
 import ProfileChange from "./components/mypage/ProfileChange";
 import ArrowLeft from "./assets/Icons/arrow-left.svg?react";
 import SearchCheerSong from "./pages/SearchCheerSong";
+import SelectMatch from "./pages/Register/SelectMatch";
+import RegisterForm from "./pages/Register/RegisterForm";
 
 // import { ThemeProvider } from "styled-components";
 
@@ -185,6 +187,26 @@ const router = createBrowserRouter([
       {
         path: "/mypage/team",
         element: <TeamChange />,
+      },
+    ],
+  },
+  {
+    path: "/selct-match",
+    element: <Layout />,
+    children: [
+      {
+        path: "/selct-match",
+        element: <SelectMatch />,
+      },
+    ],
+  },
+  {
+    path: "/register",
+    element: <Layout />,
+    children: [
+      {
+        path: "/register",
+        element: <RegisterForm />,
       },
     ],
   },
