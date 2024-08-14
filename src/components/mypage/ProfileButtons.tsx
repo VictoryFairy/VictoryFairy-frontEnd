@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { typography } from "../../style/typography";
-import ArrowRight from "../../assets/Icons/arrow-right.svg?react";
-import { usePopup } from "../../hooks/usePopup";
+import { typography } from "@/style/typography";
+import { usePopup } from "@/hooks/usePopup";
+import ArrowRight from "@/assets/Icons/arrow-right.svg?react";
 
 const ProfileButtons = () => {
   const { Popup, isOpen, openPopup } = usePopup();

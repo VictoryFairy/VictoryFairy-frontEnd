@@ -1,10 +1,10 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { UserInfo } from "@/types/User";
+import { signUp } from "@/api/auth/auth.api";
 import TitleSection from "../common/TitleSection";
 import Button from "../common/Button";
-import { UserInfo } from "../../types/User";
-import { signUp } from "../../api/auth/auth.api";
 
 interface Team {
   id: number;

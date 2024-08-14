@@ -11,8 +11,8 @@ import {
   ChartOptions,
   ChartData,
 } from "chart.js";
-import { typography } from "../../style/typography";
-import ArrowRight from "../../assets/Icons/arrow-right.svg?react";
+import { typography } from "@/style/typography";
+import ArrowRight from "@/assets/Icons/arrow-right.svg?react";
 
 ChartJS.register(
   CategoryScale,

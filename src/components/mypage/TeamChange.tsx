@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { usePopup } from "../../hooks/usePopup";
+import { usePopup } from "@/hooks/usePopup";
 import Button from "../common/Button";
 
 interface Team {

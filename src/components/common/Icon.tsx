@@ -1,4 +1,4 @@
-import { icons, IconType } from "../../types/Icons";
+import { icons, IconType } from "@/types/Icons";
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
   icon: IconType;

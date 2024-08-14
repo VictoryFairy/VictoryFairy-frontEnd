@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { typography } from "../../style/typography";
+import { typography } from "@/style/typography";
 
 const Profile = () => {
   return (

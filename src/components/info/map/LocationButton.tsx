@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import styled from "styled-components";
-import LocationIcon from "../../../assets/Icons/current_location.svg?react";
+import LocationIcon from "@/assets/Icons/current_location.svg?react";
 
 interface LocationButtonProps {
   mapInstance: naver.maps.Map | null;

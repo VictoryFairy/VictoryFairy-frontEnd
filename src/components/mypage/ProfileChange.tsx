@@ -1,9 +1,9 @@
 import styled from "styled-components";
+import { typography } from "@/style/typography";
+import { usePopup } from "@/hooks/usePopup";
 import Button from "../common/Button";
-import { typography } from "../../style/typography";
-import CancelIcon from "../../assets/Icons/cancel.svg?react";
-import CameraIcon from "../../assets/Icons/camera.svg?react";
-import { usePopup } from "../../hooks/usePopup";
+import CancelIcon from "@/assets/Icons/cancel.svg?react";
+import CameraIcon from "@/assets/Icons/camera.svg?react";
 
 const ProfileChange = () => {
   const { Popup, isOpen, openPopup } = usePopup();

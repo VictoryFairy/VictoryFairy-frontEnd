@@ -1,10 +1,10 @@
 import styled, { css } from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
-import { typography } from "../../style/typography";
-import HomeIcon from "../../assets/Icons/home.svg?react";
-import RankingIcon from "../../assets/Icons/ranking.svg?react";
-import InfoIcon from "../../assets/Icons/info.svg?react";
-import MyPageIcon from "../../assets/Icons/mypage.svg?react";
+import { typography } from "@/style/typography";
+import HomeIcon from "@/assets/Icons/home.svg?react";
+import RankingIcon from "@/assets/Icons/ranking.svg?react";
+import InfoIcon from "@/assets/Icons/info.svg?react";
+import MyPageIcon from "@/assets/Icons/mypage.svg?react";
 
 interface IconProps {
   isActive?: boolean;

@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 import { useRef } from "react";
-import gps from "../../../assets/Icons/location.svg";
-import arrow from "../../../assets/Icons/plus.svg";
-import naver from "../../../assets/Icons/naver.svg";
-import { ParkingInfo } from "../../../types/Stadium";
+import gps from "@/assets/Icons/location.svg";
+import arrow from "@/assets/Icons/plus.svg";
+import naver from "@/assets/Icons/naver.svg";
+import { ParkingInfo } from "@/types/Stadium";
 
 interface ParkingListProps {
   parkingSpots: Omit<ParkingInfo, "stadium">[];

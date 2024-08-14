@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
-import ArrowLeftIcon from "../../assets/Icons/arrow-left.svg?react";
-import ArrowRightIcon from "../../assets/Icons/arrow-right.svg?react";
+import ArrowLeftIcon from "@/assets/Icons/arrow-left.svg?react";
+import ArrowRightIcon from "@/assets/Icons/arrow-right.svg?react";
 import GameListItem from "./GameListItem";
 
 const MONTHS = [
