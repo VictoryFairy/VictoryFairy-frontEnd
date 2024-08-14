@@ -59,6 +59,7 @@ const Container = styled.div`
 
   .list {
     margin-top: 20px;
+    margin-bottom: 30px;
   }
 `;
 const HeaderContainer = styled.div`
