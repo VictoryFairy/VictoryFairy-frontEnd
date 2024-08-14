@@ -39,13 +39,24 @@ const CheerSongPage = () => {
       <CheerSongList teamName='롯데' />
       <CheerSongList teamName='삼성' />
       <CheerSongList teamName='한화' />
-      <div>무한스크롤 트리거</div>
+      <CheerSongList teamName='롯데' />
+      <CheerSongList teamName='삼성' />
+      <CheerSongList teamName='한화' />
+      <CheerSongList teamName='롯데' />
+      <CheerSongList teamName='삼성' />
+      <CheerSongList teamName='한화' />
+      <CheerSongList teamName='롯데' />
+      <CheerSongList teamName='삼성' />
+      <CheerSongList teamName='한화' />
+      <CheerSongList teamName='롯데' />
+      <CheerSongList teamName='삼성' />
+      <CheerSongList teamName='한화' />
+      <div className='trigger'>무한스크롤 트리거</div>
     </Container>
   );
 };
 
 const Container = styled.div`
-  min-height: 100vh;
   max-width: 480px;
   width: calc(100% + 40px);
   margin: 0 -20px;
@@ -60,6 +71,10 @@ const Container = styled.div`
   .selectContainer {
     margin: 20px 0;
     padding: 0 20px;
+  }
+  .trigger {
+    height: 70px;
+    margin-bottom: 60px;
   }
 `;
 const SearchBarWrapper = styled.div`
