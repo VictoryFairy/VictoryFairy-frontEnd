@@ -32,24 +32,17 @@ const SearchCheerSong = () => {
         </HeaderSection>
       </HeaderContainer>
       <div className='list'>
-        <CheerSongList />
-        <CheerSongList />
-        <CheerSongList />
-        <CheerSongList />
-        <CheerSongList />
-        <CheerSongList />
-        <CheerSongList />
-        <CheerSongList />
-        <CheerSongList />
-        <CheerSongList />
-        <CheerSongList />
-        <CheerSongList />
-        <CheerSongList />
-        <CheerSongList />
-        <CheerSongList />
-        <CheerSongList />
-        <CheerSongList />
-        <CheerSongList />
+        <CheerSongList teamName='롯데' />
+        <CheerSongList teamName='삼성' />
+        <CheerSongList teamName='한화' />
+        <CheerSongList teamName='롯데' />
+        <CheerSongList teamName='롯데' />
+        <CheerSongList teamName='롯데' />
+        <CheerSongList teamName='롯데' />
+        <CheerSongList teamName='롯데' />
+        <CheerSongList teamName='롯데' />
+        <CheerSongList teamName='롯데' />
+        <CheerSongList teamName='롯데' />
       </div>
     </Container>
   );

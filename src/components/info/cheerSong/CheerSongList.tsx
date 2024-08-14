@@ -1,18 +1,41 @@
 import styled from "styled-components";
-import heart from "../../../assets/Icons/heart.svg";
+import Heart from "../../../assets/Icons/heart.svg?react";
+import ArrowRight from "../../../assets/Icons/arrow-right.svg?react";
 
-const CheerSongList = () => {
+const teamColors = {
+  롯데: "var(--lotte-giants-navy)",
+  삼성: "var(--samsung-lions-blue)",
+  LG: "var(--lg-twins-red)",
+  두산: "var(--doosan-bears-navy)",
+  SSG: "var(--ssg-landers-red)",
+  KT: "var(--kt-wiz-black)",
+  한화: "var(--hanwha-eagles-orange)",
+  NC: "var(--nc-dinos-blue)",
+  KIA: "var(--kia-tigers-red)",
+  키움: "var(--kiwoom-heroes-pink)",
+};
+type TeamName = keyof typeof teamColors;
+
+interface CheerSongListProps {
+  teamName: TeamName;
+}
+const CheerSongList = ({ teamName }: CheerSongListProps) => {
   return (
     <Container>
       <CheersInfo>
-        <TeamLogo>롯데</TeamLogo>
+        <TeamLogo teamName={teamName}>{teamName}</TeamLogo>
         <InfoWrapper>
           <CheersName>안타송</CheersName>
           <Description>최강 롯데 승리를 위해</Description>
         </InfoWrapper>
       </CheersInfo>
       <IconWrapper>
-        <img src={heart} />
+        <Heart onClick={() => {}} cursor='pointer' />
+        <ArrowRight
+          fill='var(--primary-color)'
+          onClick={() => {}}
+          cursor='pointer'
+        />
       </IconWrapper>
     </Container>
   );
@@ -29,6 +52,7 @@ const Container = styled.div`
 
 const CheersInfo = styled.div`
   display: flex;
+  gap: 10px;
   align-items: center;
   flex: 1;
 `;
@@ -36,18 +60,19 @@ const CheersInfo = styled.div`
 const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 10px;
   align-items: flex-start;
 `;
 
-const TeamLogo = styled.div`
-  width: 40px;
-  height: 40px;
-  background-color: var(--lotte-giants-red);
+const TeamLogo = styled.div<{ teamName: TeamName }>`
+  width: 60px;
+  height: 35px;
+  background-color: ${({ teamName }) => teamColors[teamName]};
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
+  border-radius: 10px;
   font-weight: bold;
   margin-right: 12px;
 `;
