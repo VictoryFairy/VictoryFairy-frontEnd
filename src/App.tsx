@@ -11,6 +11,7 @@ import { ThemeContextProvider } from "./context/ThemeContext";
 import Main from "./pages/main/Main";
 import MyPage from "./pages/MyPage";
 import Info from "./pages/Info";
+import Post from "./pages/Post";
 
 // import { ThemeProvider } from "styled-components";
 
@@ -108,6 +109,16 @@ const router = createBrowserRouter([
       {
         path: "/mypage",
         element: <MyPage />,
+      },
+    ],
+  },
+  {
+    path: "/post",
+    element: <Layout />,
+    children: [
+      {
+        path: ":id",
+        element: <Post />,
       },
     ],
   },

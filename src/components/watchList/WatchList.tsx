@@ -5,13 +5,15 @@ import SearchIcon from "../../assets/Icons/search.svg?react";
 import SelectionBar from "../common/SelectionBar";
 import CalendarContainer from "../common/Calendar";
 import { typography } from "../../style/typography";
-import ListTab from "./ListTab";
+import ListTab from "./ListTab/ListTab";
 import { MyGame } from "../../types/Game";
+import GalleryTab from "./GalleryTab/GalleryTab";
 
 const DATA: MyGame[] = [
   {
     id: 1,
-    image: "http://example.com/url/to/image.jpg",
+    image:
+      "https://i.pinimg.com/736x/82/72/97/82729707c6b933e8b7fce187fe0adb1d.jpg",
     seat: "115블록 2열 13번",
     review: "좋았다",
     status: "WIN",
@@ -49,7 +51,8 @@ const DATA: MyGame[] = [
   },
   {
     id: 2,
-    image: "http://example.com/url/to/image2.jpg",
+    image:
+      "https://i.pinimg.com/736x/32/d9/e4/32d9e459886530093d03cd44731a48eb.jpg",
     seat: "116블록 3열 14번",
     review: "별로였다",
     status: "Lose",
@@ -87,7 +90,8 @@ const DATA: MyGame[] = [
   },
   {
     id: 3,
-    image: "http://example.com/url/to/image3.jpg",
+    image:
+      "https://i.pinimg.com/736x/4d/11/e1/4d11e1042915d1b825f6950892b7ad4d.jpg",
     seat: "117블록 4열 15번",
     review: "괜찮았다",
     status: "Tie",
@@ -172,7 +176,7 @@ const WatchList = () => {
       case 1:
         return <ListTab data={DATA} />;
       case 2:
-        return <div>갤러리</div>;
+        return <GalleryTab data={DATA} />;
       default:
         return null;
     }
