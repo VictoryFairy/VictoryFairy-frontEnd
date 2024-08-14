@@ -33,6 +33,7 @@ const HeaderContainer = styled.div`
   align-items: center;
   padding: 0 20px;
   background-color: var(--white);
+  z-index: 1;
 `;
 
 const HeaderSection = styled.div`

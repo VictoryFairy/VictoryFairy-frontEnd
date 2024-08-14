@@ -11,6 +11,7 @@ import { ThemeContextProvider } from "./context/ThemeContext";
 import Main from "./pages/main/Main";
 import MyPage from "./pages/MyPage";
 import Info from "./pages/Info";
+import Ranking from "./pages/Ranking";
 import TeamChange from "./components/mypage/TeamChange";
 import ProfileChange from "./components/mypage/ProfileChange";
 import ArrowLeft from "./assets/Icons/arrow-left.svg?react";
@@ -115,6 +116,12 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: "/ranking",
+    element: <Layout left={<MyPageLeftWrapper>랭킹</MyPageLeftWrapper>} />,
+    children: [
+      {
+        path: "/ranking",
+        element: <Ranking />,
     path: "/mypage/profile",
     element: (
       <Layout
