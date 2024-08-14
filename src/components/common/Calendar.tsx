@@ -8,47 +8,46 @@ import WinIcon from "../../assets/Icons/win.svg?react";
 import LoseIcon from "../../assets/Icons/lose.svg?react";
 import TieIcon from "../../assets/Icons/tie.svg?react";
 import NoGameIcon from "../../assets/Icons/no-game.svg?react";
+import { MyGame } from "../../types/Game";
 
 interface CalendarProps {
-  data?: any;
+  data?: MyGame[];
 }
 
 const CalendarContainer = ({ data }: CalendarProps) => {
-  const titleContent = ({ date }: any) => {
-    const match = data.find(
-      (item: any) =>
-        item.date.toLocaleDateString() === date.toLocaleDateString(),
+  function titleContent({ date }: any) {
+    const match = data?.find(
+      (item: any) => moment(date).format("YYYY-MM-DD") === item.game.date,
     );
 
     if (match) {
-      if (match.result === "win") {
+      if (match.status === "WIN") {
         return <WinIcon />;
       }
-      if (match.result === "lose") {
+      if (match.status === "Lose") {
         return <LoseIcon />;
       }
-      if (match.result === "draw") {
+      if (match.status === "Tie") {
         return <TieIcon />;
       }
     }
     return null; // 일치하는 데이터가 없을 경우 아무것도 표시하지 않음
-  };
+  }
 
   // 특정 날짜에 대한 클래스 반환
   const tileClassName = ({ date }: any) => {
-    const match = data.find(
-      (item: any) =>
-        item.date.toLocaleDateString() === date.toLocaleDateString(),
+    const match = data?.find(
+      (item: any) => moment(date).format("YYYY-MM-DD") === item.game.date,
     );
 
     if (match) {
-      if (match.result === "win") {
+      if (match.status === "WIN") {
         return "event-tile win";
       }
-      if (match.result === "lose") {
+      if (match.status === "Lose") {
         return "event-tile lose";
       }
-      if (match.result === "draw") {
+      if (match.status === "Tie") {
         return "event-tile draw";
       }
     }

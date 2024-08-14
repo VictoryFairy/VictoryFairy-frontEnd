@@ -22,9 +22,8 @@ const Footer = () => {
         <span>홈</span>
       </IconWrapper>
       <IconWrapper
-      // onClick={() => navigate("/")}
-      // isActive={location.pathname === "/"}
-      >
+        onClick={() => navigate("/ranking")}
+        isActive={location.pathname === "/ranking"}>
         <RankingIcon />
         <span>랭킹</span>
       </IconWrapper>
