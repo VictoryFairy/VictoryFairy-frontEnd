@@ -1,10 +1,9 @@
 import styled from "styled-components";
 
 import { useRef } from "react";
-import gps from "../../../assets/Icons/location.svg";
-import arrow from "../../../assets/Icons/plus.svg";
-import naver from "../../../assets/Icons/naver.svg";
+
 import { ParkingInfo } from "../../../types/Stadium";
+import Icon from "../../common/Icon";
 
 interface ParkingListProps {
   parkingSpots: Omit<ParkingInfo, "stadium">[];
@@ -25,20 +24,13 @@ const ParkingList = ({ parkingSpots, onSelectParking }: ParkingListProps) => {
       {parkingSpots.map((spot) => (
         <ParkingItem key={spot.id} onClick={() => handleClick(spot)}>
           <LeftContent>
-            <Icon src={gps} alt='location' />
+            <Icon icon='IcLocation' />
             <ParkingInf>
               <ParkingName>{spot.name}</ParkingName>
               <ParkingAddress>{spot.address}</ParkingAddress>
             </ParkingInf>
           </LeftContent>
-          <RightContent>
-            <NaverIcon
-              src={naver}
-              alt='naver'
-              onClick={() => (window.location.href = spot.link)}
-            />
-            <img src={arrow} alt='arrow' />
-          </RightContent>
+          <RightContent />
         </ParkingItem>
       ))}
     </ParkingListContainer>
@@ -70,18 +62,6 @@ const LeftContent = styled.div`
 const RightContent = styled.div`
   display: flex;
   align-items: center;
-`;
-
-const Icon = styled.img`
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
-`;
-
-const NaverIcon = styled(Icon)`
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
 `;
 
 const ParkingInf = styled.div`
