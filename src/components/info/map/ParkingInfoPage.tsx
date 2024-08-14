@@ -43,7 +43,7 @@ const ParkingInfoPage = () => {
   }));
 
   return (
-    <div>
+    <div style={{ marginBottom: "70px" }}>
       <StadiumList
         setSelectedStadiumId={setSelectedStadiumId}
         selectedStadiumId={selectedStadiumId}

@@ -25,7 +25,7 @@ const LayoutConatiner = styled.div`
 `;
 
 const MainWrapper = styled.main`
-  min-height: 100vh;
+  height: 100vh;
   padding: 60px 20px;
 `;
 
