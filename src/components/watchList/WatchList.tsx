@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import { typography } from "@/style/typography";
 import { MyGame } from "@/types/Game";
-import ListTab from "@/components/watchList/ListTab";
+import ListTab from "./ListTab/ListTab";
 import FilterIcon from "@/assets/Icons/filter.svg?react";
 import SearchIcon from "@/assets/Icons/search.svg?react";
 import SelectionBar from "../common/SelectionBar";
