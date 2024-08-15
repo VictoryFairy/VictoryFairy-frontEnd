@@ -84,25 +84,25 @@ const samsungLions: Theme = {
 
 export const getTheme = (team: string) => {
   switch (team) {
-    case "LG트윈스":
+    case "LG":
       return lgTwins;
-    case "두산베어스":
+    case "두산":
       return doosanBears;
-    case "SSG랜더스":
+    case "SSG":
       return ssgLanders;
-    case "KT위즈":
+    case "KT":
       return ktWiz;
-    case "한화이글스":
+    case "한화":
       return hanwhaEagles;
-    case "NC다이노스":
+    case "NC":
       return ncDinos;
-    case "롯데자이언츠":
+    case "롯데":
       return lotteGiants;
-    case "KIA타이거즈":
+    case "KIA":
       return kiaTigers;
-    case "키움히어로즈":
+    case "키움":
       return kiwoomHeroes;
-    case "삼성라이온즈":
+    case "삼성":
       return samsungLions;
     default:
       return defaultTheme;
