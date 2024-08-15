@@ -210,11 +210,11 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/selct-match",
+    path: "/select-match",
     element: <Layout />,
     children: [
       {
-        path: "/selct-match",
+        path: "/select-match",
         element: <SelectMatch />,
       },
     ],
