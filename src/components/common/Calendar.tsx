@@ -2,13 +2,13 @@ import moment from "moment";
 import Calendar from "react-calendar";
 import styled from "styled-components";
 import { useState } from "react";
-import { typography } from "../../style/typography";
-import WinIcon from "../../assets/Icons/win.svg?react";
-import LoseIcon from "../../assets/Icons/lose.svg?react";
-import TieIcon from "../../assets/Icons/tie.svg?react";
-import NoGameIcon from "../../assets/Icons/no-game.svg?react";
+import { typography } from "@/style/typography";
 import { MyGame } from "../../types/Game";
 import Icon from "./Icon";
+import WinIcon from "@/assets/Icons/win.svg?react";
+import LoseIcon from "@/assets/Icons/lose.svg?react";
+import TieIcon from "@/assets/Icons/tie.svg?react";
+import NoGameIcon from "@/assets/Icons/no-game.svg?react";
 
 interface CalendarProps {
   data?: MyGame[];

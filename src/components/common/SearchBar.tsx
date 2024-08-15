@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import search from "../../assets/Icons/search.svg";
-import { typography } from "../../style/typography";
+import search from "@/assets/Icons/search.svg";
+import { typography } from "@/style/typography";
 
 interface SearchBarProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {

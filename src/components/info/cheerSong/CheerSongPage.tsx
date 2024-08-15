@@ -1,11 +1,11 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../../../store/authStore";
+import { useAuthStore } from "@/store/authStore";
+import search from "@/assets/Icons/search.svg";
+import { typography } from "@/style/typography";
+import SelectionBar from "@/components/common/SelectionBar";
 import TeamList from "./TeamList";
-import search from "../../../assets/Icons/search.svg";
-import { typography } from "../../../style/typography";
-import SelectionBar from "../../common/SelectionBar";
 import CheerSongList from "./CheerSongList";
 
 const CheerSongPage = () => {

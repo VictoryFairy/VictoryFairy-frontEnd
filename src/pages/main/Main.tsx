@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
-import Tabs from "../../components/common/Tabs";
+import Tabs from "@/components/common/Tabs";
 import Rate from "./Rate";
 import Watch from "./Watch";
 

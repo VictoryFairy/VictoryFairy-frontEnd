@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
-import { typography } from "../../style/typography";
+import { typography } from "@/style/typography";
 
 interface EmailVerificationTimerProps {
   onResend: () => void;

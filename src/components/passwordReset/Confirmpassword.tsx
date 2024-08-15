@@ -1,20 +1,25 @@
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { changePassword } from "@/api/auth/auth.api";
 import Button from "../common/Button";
 import InputField from "../common/InputField";
 import TitleSection from "../common/TitleSection";
-import { changePassword } from "../../api/auth/auth.api";
 
 interface ConfirmpasswordProps {
   password: string;
   email: string;
+  setstep: (step: number) => void;
 }
 interface ResetpasswordFormData {
   password: string;
   confirmPassword: string;
 }
-const Confirmpassword = ({ password, email }: ConfirmpasswordProps) => {
+const Confirmpassword = ({
+  password,
+  email,
+  setstep,
+}: ConfirmpasswordProps) => {
   const navigate = useNavigate();
   const { register, watch, handleSubmit, setValue } =
     useForm<ResetpasswordFormData>({
@@ -25,8 +30,12 @@ const Confirmpassword = ({ password, email }: ConfirmpasswordProps) => {
     try {
       await changePassword({ email, password: data.confirmPassword });
       alert("비밀번호 변경이 완료되었습니다.");
+      setstep(1);
       navigate("/login");
     } catch (err) {
+      alert("비밀번호 변경이 실패했습니다.");
+      setstep(1);
+      navigate("/login");
       console.log(err);
     }
   };

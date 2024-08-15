@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Heart from "../../../assets/Icons/heart.svg?react";
-import ArrowRight from "../../../assets/Icons/arrow-right.svg?react";
+import Heart from "@/assets/Icons/heart.svg?react";
+import ArrowRight from "@/assets/Icons/arrow-right.svg?react";
 
 const teamColors = {
   롯데: "var(--lotte-giants-navy)",

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { UserInfo } from "@/types/User";
+import { signUp } from "@/api/auth/auth.api";
 import TitleSection from "../common/TitleSection";
 import Button from "../common/Button";
-import { UserInfo } from "../../types/User";
-import { signUp } from "../../api/auth/auth.api";
 
 interface Team {
   id: number;
@@ -15,6 +15,7 @@ interface Team {
 }
 
 interface TeamSelectProps {
+  setstep: (step: number) => void;
   userInfo: UserInfo;
   handleSetUserInfo: (userInfo: Partial<UserInfo>) => void;
 }
@@ -92,7 +93,11 @@ const teams: Team[] = [
   },
 ];
 
-const TeamSelect = ({ handleSetUserInfo, userInfo }: TeamSelectProps) => {
+const TeamSelect = ({
+  handleSetUserInfo,
+  userInfo,
+  setstep,
+}: TeamSelectProps) => {
   const navigate = useNavigate();
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
 
@@ -112,7 +117,11 @@ const TeamSelect = ({ handleSetUserInfo, userInfo }: TeamSelectProps) => {
       };
       await signUp(data);
       navigate("/");
+      setstep(1);
     } catch (err) {
+      alert("회원가입 실패");
+      setstep(1);
+      navigate("/");
       console.log(err);
     }
   };
