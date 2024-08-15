@@ -21,8 +21,8 @@ import TeamChange from "./components/mypage/TeamChange";
 import ProfileChange from "./components/mypage/ProfileChange";
 import ArrowLeft from "./assets/Icons/arrow-left.svg?react";
 import SearchCheerSong from "./pages/SearchCheerSong";
-import SelectMatch from "./pages/Register/SelectMatch";
-import RegisterForm from "./pages/Register/RegisterForm";
+import SelectMatch from "./pages/register/SelectMatch";
+import RegisterForm from "./pages/register/RegisterForm";
 import { useSignupStore } from "./store/signupStep";
 
 // import { ThemeProvider } from "styled-components";
