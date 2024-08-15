@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { typography } from "../../style/typography";
 import ArrowRight from "../../assets/Icons/arrow-right.svg?react";
 import { usePopup } from "../../hooks/usePopup";
+import Text from "../common/Text";
 
 const ProfileButtons = () => {
   const { Popup, isOpen, openPopup } = usePopup();
@@ -23,33 +23,47 @@ const ProfileButtons = () => {
           }}
         />
       )}
-      <span>정보 수정</span>
+      <Text variant='title_02' color='var(--primary-color)'>
+        정보 수정
+      </Text>
       <ProfileWrapper
         role='button'
         tabIndex={0}
         onClick={() => navigate("/mypage/profile")}>
-        <span>프로필 수정</span>
+        <Text variant='body_02' color='var(--primary-color)'>
+          프로필 설정
+        </Text>
         <ArrowRight />
       </ProfileWrapper>
       <ProfileWrapper
         role='button'
         tabIndex={0}
         onClick={() => navigate("/mypage/team")}>
-        <span>응원팀 변경</span>
+        <Text variant='body_02' color='var(--primary-color)'>
+          응원팀 변경{" "}
+        </Text>
         <ProfileTeamWrapper>
-          <span>LG 트윈스</span>
+          <Text variant='subtitle_02' color='var(--primary-color)'>
+            LG 트윈스
+          </Text>
           <ArrowRight />
         </ProfileTeamWrapper>
       </ProfileWrapper>
       <ProfileLastWrapper>
-        <span>문의 사항</span>
+        <Text variant='body_02' color='var(--primary-color)'>
+          문의 사항
+        </Text>
         <ArrowRight />
       </ProfileLastWrapper>
       <ProfileLogWrapper>
         <div role='button' tabIndex={0} onClick={handleLogoutClick}>
-          로그아웃
+          <Text variant='subtitle_02' color='var(--red-600)'>
+            로그아웃
+          </Text>
         </div>
-        <div>회원탈퇴</div>
+        <Text variant='subtitle_02' color='var(--gray-400)'>
+          회원탈퇴
+        </Text>
       </ProfileLogWrapper>
     </Container>
   );
@@ -63,10 +77,9 @@ const Container = styled.div`
   align-items: left;
   background-color: var(--white);
   margin-top: 15px;
-  padding: 0 20px;
+  padding: 10px 20px;
   > span {
     margin: 20px 0;
-    ${typography.title_02}
   }
 `;
 
@@ -79,11 +92,9 @@ const ProfileWrapper = styled.div`
   padding: 8px 0;
   border-bottom: 1px solid var(--gray-100);
   cursor: pointer;
-
   svg {
     fill: var(--gray-900);
   }
-  ${typography.body_02}
 `;
 const ProfileLastWrapper = styled.div`
   display: flex;
@@ -97,7 +108,6 @@ const ProfileLastWrapper = styled.div`
   svg {
     fill: var(--gray-900);
   }
-  ${typography.body_02}
 `;
 
 const ProfileLogWrapper = styled.div`
@@ -107,16 +117,15 @@ const ProfileLogWrapper = styled.div`
   justify-content: center;
   align-items: center;
   > :nth-child(1) {
-    border-right: 1px solid black;
-    color: var(--red-600);
+    border-right: 1px solid var(--gray-400);
+    padding: 0 15px;
+    cursor: pointer;
   }
-  > div {
+  > :nth-child(2) {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 20px;
     padding: 0 15px;
-    ${typography.subtitle_02}
     cursor: pointer;
   }
 `;
