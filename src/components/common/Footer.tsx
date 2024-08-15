@@ -16,8 +16,8 @@ const Footer = () => {
   return (
     <FooterContainer>
       <IconWrapper
-        onClick={() => navigate("/")}
-        isActive={location.pathname === "/"}>
+        onClick={() => navigate("/home")}
+        isActive={location.pathname === "/home"}>
         <HomeIcon />
         <span>홈</span>
       </IconWrapper>
