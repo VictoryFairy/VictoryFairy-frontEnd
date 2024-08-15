@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import ArrowRight from "../../assets/Icons/arrow-right.svg?react";
 import { usePopup } from "../../hooks/usePopup";
 import Text from "../common/Text";
+import { useUserStore } from "../../store/userInfo";
 
 const ProfileButtons = () => {
   const { Popup, isOpen, openPopup } = usePopup();
@@ -11,8 +12,8 @@ const ProfileButtons = () => {
   const handleLogoutClick = () => {
     openPopup();
   };
-
   const navigate = useNavigate();
+  const team = useUserStore((state) => state.supportTeam);
   return (
     <Container>
       {isOpen && popupText === "로그아웃" && (
@@ -84,7 +85,7 @@ const ProfileButtons = () => {
         </Text>
         <ProfileTeamWrapper>
           <Text variant='subtitle_02' color='var(--primary-color)'>
-            LG 트윈스
+            {team}
           </Text>
           <ArrowRight />
         </ProfileTeamWrapper>
@@ -118,7 +119,6 @@ const ProfileButtons = () => {
             회원탈퇴
           </Text>
         </div>
-
       </ProfileLogWrapper>
     </Container>
   );

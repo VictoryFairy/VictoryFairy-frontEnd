@@ -1,11 +1,45 @@
+import { useEffect } from "react";
 import styled from "styled-components";
+import { useQuery } from "@tanstack/react-query";
 import Text from "../common/Text";
+import { getMemberInfo } from "../../api/auth/auth.api";
+import { MypageUserInfo } from "../../types/userInfo";
+import { useUserStore } from "../../store/userInfo";
 
 const Profile = () => {
+  // const [userInfo, setUserInfo] = useState<Omit<
+  //   MypageUserInfo,
+  //   "registeredGames"
+  // > | null>(null);
+
+  const { data } = useQuery<MypageUserInfo>({
+    queryKey: ["getMemberInfo"],
+    queryFn: getMemberInfo,
+  });
+
+  const { setUserInfo: setUserStoreInfo } = useUserStore();
+  const nickname = useUserStore((state) => state.nickname);
+
+  useEffect(() => {
+    if (data) {
+      // const userInfos = {
+      //   email: data.email,
+      //   nickname: data.nickname,
+      //   score: data.score,
+      //   supportTeam: data.supportTeam,
+      //   supportTeamId: data.supportTeamId,
+      // };
+      // setUserInfo(userInfos);
+      setUserStoreInfo(data.nickname, data.supportTeam);
+    } else {
+      // setUserInfo(null);
+    }
+  }, [data]);
+
   return (
     <Container>
       <Text variant='title_02' color='var(--primary-color)'>
-        김예지님, 안녕하세요!
+        {nickname}님, 안녕하세요!
       </Text>
       <ProfileWrapper>
         <ProfileInfoWrapper>
