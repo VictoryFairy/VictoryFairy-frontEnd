@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import styled from "styled-components";
-import LocationIcon from "@/assets/Icons/current_location.svg?react";
+import Icon from "@/components/common/Icon";
 
 interface LocationButtonProps {
   mapInstance: naver.maps.Map | null;
@@ -39,7 +39,7 @@ const LocationButton = ({ mapInstance }: LocationButtonProps) => {
 
   return (
     <Button onClick={moveToMyLocation}>
-      <LocationIcon />
+      <Icon icon='IcLocation' />
     </Button>
   );
 };

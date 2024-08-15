@@ -1,7 +1,7 @@
-import { icons, IconType } from "@/types/Icons";
+import * as icons from "@/assets/Icons/_index";
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
-  icon: IconType;
+  icon: keyof typeof icons;
   fill?: string;
 }
 

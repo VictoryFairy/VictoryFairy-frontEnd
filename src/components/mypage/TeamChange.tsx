@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { usePopup } from "@/hooks/usePopup";
 import Button from "../common/Button";
+import Text from "../common/Text";
 
 interface Team {
   id: number;
@@ -127,7 +128,7 @@ const TeamChange = () => {
           type='button'
           onClick={handleBtnClick}
           disabled={selectedTeam === null}>
-          저장
+          <Text variant='title_02'>저장</Text>
         </Button>
       </ButtonWrapper>
     </Container>
@@ -192,8 +193,7 @@ const TeamButton = styled.button<{
 `;
 
 const ButtonWrapper = styled.div`
-  margin-top: auto;
-  margin-top: 20px;
+  margin: 20px 0;
 `;
 
 export default TeamChange;

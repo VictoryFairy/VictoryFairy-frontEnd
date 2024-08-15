@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { typography } from "@/style/typography";
+import { typography } from "../../../style/typography";
 
 interface ResultLabelProps {
   status: "WIN" | "Lose" | "Tie" | "No game";

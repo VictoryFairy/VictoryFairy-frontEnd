@@ -3,6 +3,7 @@ import EmailValid from "../components/passwordReset/EmailValid";
 import VerificationCode from "../components/passwordReset/VerificationCode";
 import PasswordValid from "../components/passwordReset/PassWordReset";
 import Confirmpassword from "../components/passwordReset/Confirmpassword";
+import { useSignupStore } from "../store/signupStep";
 
 interface ResetPassword {
   email: string;
@@ -11,7 +12,8 @@ interface ResetPassword {
 }
 
 const PasswordReset = () => {
-  const [step, setstep] = useState(1);
+  // const [step, setstep] = useState(1);
+  const { step, setstep } = useSignupStore();
   const [info, setInfo] = useState<ResetPassword>({
     email: "",
     password: "",
@@ -37,12 +39,20 @@ const PasswordReset = () => {
           <PasswordValid setstep={setstep} handleSetUserInfo={handleInfo} />
         );
       case 4:
-        return <Confirmpassword password={info.password} email={info.email} />;
+        return (
+          <Confirmpassword
+            setstep={setstep}
+            password={info.password}
+            email={info.email}
+          />
+        );
       default:
         return null;
     }
   };
-  return <div style={{ height: "100%" }}>{renderStep()}</div>;
+  return (
+    <div style={{ height: "100%", paddingTop: "30px" }}>{renderStep()}</div>
+  );
 };
 
 export default PasswordReset;

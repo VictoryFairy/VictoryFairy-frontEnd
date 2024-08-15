@@ -1,26 +1,38 @@
 import styled from "styled-components";
-import { typography } from "@/style/typography";
+import Text from "@/components/common/Text";
 
 const Profile = () => {
   return (
     <Container>
-      <div>김예지님, 안녕하세요!</div>
+      <Text variant='title_02' color='var(--primary-color)'>
+        김예지님, 안녕하세요!
+      </Text>
       <ProfileWrapper>
         <ProfileInfoWrapper>
-          <span>승률</span>
-          <span>
-            80<span>%</span>
-          </span>
+          <Text variant='subtitle_02' color='var(--primary-color)'>
+            승률
+          </Text>
+          <Text variant='display' color='var(--primary-color)'>
+            80
+            <Text variant='title_02' color='var(--primary-color)'>
+              %
+            </Text>
+          </Text>
         </ProfileInfoWrapper>
         <img
           src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg'
           alt='#'
         />
         <ProfileInfoWrapper>
-          <span>승요력</span>
-          <span>
-            3000<span>P</span>
-          </span>
+          <Text variant='subtitle_02' color='var(--primary-color)'>
+            승요력
+          </Text>
+          <Text variant='display' color='var(--primary-color)'>
+            3000
+            <Text variant='title_02' color='var(--primary-color)'>
+              P
+            </Text>
+          </Text>
         </ProfileInfoWrapper>
       </ProfileWrapper>
     </Container>
@@ -38,9 +50,6 @@ const Container = styled.div`
   flex-direction: column;
   width: 100%;
   background-color: var(--white);
-  > :nth-child(1) {
-    ${typography.title_02}
-  }
 `;
 
 const ProfileWrapper = styled.div`
@@ -62,16 +71,11 @@ const ProfileInfoWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  :nth-child(1) {
-    ${typography.subtitle_02}
-  }
   :nth-child(2) {
     height: 46px;
     display: flex;
     align-items: center;
-    ${typography.display}
-    >span {
-      ${typography.title_02}
+    > span {
       padding-left: 2px;
     }
   }
