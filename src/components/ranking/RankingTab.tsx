@@ -14,6 +14,8 @@ import {
 } from "chart.js";
 import { typography } from "../../style/typography";
 import ArrowRight from "../../assets/Icons/arrow-right.svg?react";
+import Text from "../common/Text";
+import Button from "../common/Button";
 import RankPopup from "./RankPopup";
 
 ChartJS.register(
@@ -51,7 +53,7 @@ const options: ChartOptions<"bar"> = {
       ticks: {
         color: "#898C9B",
         font: {
-          size: 10,
+          size: 9,
           weight: 400,
         },
       },
@@ -75,7 +77,7 @@ const options: ChartOptions<"bar"> = {
     },
   },
 };
-const team = [
+const team: Team["name"][] = [
   "전체",
   "LG트윈스",
   "두산베어스",
@@ -83,13 +85,32 @@ const team = [
   "KT위즈",
   "한화이글스",
   "NC다이노스",
-  "롯제자이언츠",
+  "롯데자이언츠",
   "KIA타이거즈",
   "키움히어로즈",
   "삼성라이온즈",
 ];
 
+interface Team {
+  name:
+    | "전체"
+    | "LG트윈스"
+    | "두산베어스"
+    | "SSG렌더스"
+    | "KT위즈"
+    | "한화이글스"
+    | "NC다이노스"
+    | "롯데자이언츠"
+    | "KIA타이거즈"
+    | "키움히어로즈"
+    | "삼성라이온즈";
+}
+
 const RankingTab = () => {
+  const [teamTab, setTeamTab] = useState<Team["name"]>("전체");
+  const handleClickTeam = (value: Team["name"]) => {
+    setTeamTab(value);
+  };
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = () => setIsOpen(true);
@@ -99,34 +120,42 @@ const RankingTab = () => {
       <TeamTabWrapper>
         {team.map((element, index) => {
           return (
-            <button type='button' key={index}>
-              {element}
-            </button>
+            <Button
+              style={{
+                color: teamTab === element ? "var(--white)" : "var(--gray-400)",
+              }}
+              styleType={teamTab === element ? "default" : "outline"}
+              key={index}
+              onClick={() => {
+                handleClickTeam(element);
+              }}>
+              <Text variant='subtitle_01'>{element}</Text>
+            </Button>
           );
         })}
       </TeamTabWrapper>
       <RankTopWrapper>
         <TextWrapper>
           <div>
-            <span>오늘의 랭킹</span>
-            <span>2024.05.24 기준</span>
+            <Text variant='title_02'>오늘의 랭킹</Text>
+            <Text variant='caption'>2024.05.24 기준</Text>
           </div>
-          <span>오늘 경기에 대한 랭킹 정보만 보여집니다</span>
+          <Text variant='caption'>오늘 경기에 대한 랭킹 정보만 보여집니다</Text>
         </TextWrapper>
         <RankProfileWrapper>
           <RankWrapper>
             <img src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg' />
-            <span>홍길동</span>
+            <Text variant='title_02'>홍길동</Text>
             <div>2</div>
           </RankWrapper>
           <FirstRankWrapper>
             <img src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg' />
-            <span>홍길동</span>
+            <Text variant='title_02'>홍길동</Text>
             <div>1</div>
           </FirstRankWrapper>
           <RankWrapper>
             <img src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg' />
-            <span>홍길동</span>
+            <Text variant='title_02'>홍길동</Text>
             <div>3</div>
           </RankWrapper>
         </RankProfileWrapper>
@@ -142,9 +171,13 @@ const RankingTab = () => {
               src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg'
               alt='#'
             />
-            <span>김예지</span>
+            <Text variant='title_01' color='var(--gray-400)'>
+              김예지
+            </Text>
           </RankTextLeft>
-          <div>00P</div>
+          <Text variant='title_01' color='var(--gray-400)'>
+            00P
+          </Text>
         </RankText>
         <MyRankWrapper>
           <MyRank>
@@ -154,20 +187,34 @@ const RankingTab = () => {
                 src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg'
                 alt='#'
               />
-              <span>김예지</span>
+              <Text variant='title_01'>김예지</Text>
             </RankTextLeft>
             <RankTextRight>
-              <span>00P</span>
-              <span>up</span>
+              <Text variant='title_01' color='var(--primary-color)'>
+                00P
+              </Text>
+              <Button>
+                <Text variant='subtitle_01' color='var(--white)'>
+                  up^
+                </Text>
+              </Button>
             </RankTextRight>
           </MyRank>
           <MyRanks>
-            <span>나의 승률</span>
-            <span>00%</span>
+            <Text variant='subtitle_01' color='var(--gray-900)'>
+              나의 승률
+            </Text>
+            <Text variant='caption' color='var(--gray-900)'>
+              00%
+            </Text>
           </MyRanks>
           <MyRanks>
-            <span>직관 경기 누적수</span>
-            <span>5회</span>
+            <Text variant='subtitle_01' color='var(--gray-900)'>
+              직관 경기 누적수
+            </Text>
+            <Text variant='caption' color='var(--gray-900)'>
+              5회
+            </Text>
           </MyRanks>
         </MyRankWrapper>
         <RankText>
@@ -177,18 +224,24 @@ const RankingTab = () => {
               src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg'
               alt='#'
             />
-            <span>김예지</span>
+            <Text variant='title_01' color='var(--gray-400)'>
+              김예지
+            </Text>
           </RankTextLeft>
-          <span>00P</span>
+          <Text variant='title_01' color='var(--gray-400)'>
+            00P
+          </Text>
         </RankText>
         <ConfirmRank>
           <button type='button' onClick={handleOpen}>
-            전체 랭킹 확인 하기
+            <Text variant='title_01' color='var(--gray-400)'>
+              전체 랭킹 확인 하기
+            </Text>
           </button>
+
           <ArrowRight />
         </ConfirmRank>
       </RankTextWrapper>
-
       <RankPopup isOpen={isOpen} handleClose={handleClose} />
     </Container>
   );
@@ -210,6 +263,7 @@ const TeamTabWrapper = styled.div`
   overflow-x: scroll;
   padding-bottom: 10px;
   > button {
+    cursor: pointer;
     flex: 0 0 auto;
     width: 100px;
     height: 32px;
@@ -236,8 +290,18 @@ const RankTopWrapper = styled.div`
 const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  > :nth-child(2) {
+    color: #767676;
+    margin: 5px 0;
+  }
   > div {
     display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    > :nth-child(2) {
+      color: var(--primary-color);
+      margin-left: 15px;
+    }
   }
 `;
 const RankProfileWrapper = styled.div`
@@ -270,6 +334,9 @@ const RankWrapper = styled.div`
     background-color: var(--gray-400);
     ${typography.subtitle_02}
   }
+  > span {
+    margin-top: 7px;
+  }
 `;
 
 const FirstRankWrapper = styled.div`
@@ -295,6 +362,9 @@ const FirstRankWrapper = styled.div`
     width: 100px;
     border-radius: 100%;
     height: 100px;
+  }
+  > span {
+    margin-top: 7px;
   }
 `;
 
@@ -359,6 +429,16 @@ const MyRank = styled.div`
 
 const RankTextRight = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
+  > button {
+    width: 54px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+  }
 `;
 
 const MyRanks = styled.div`
@@ -377,5 +457,4 @@ const ConfirmRank = styled.span`
     fill: var(--gray-400);
   }
 `;
-
 export default RankingTab;
