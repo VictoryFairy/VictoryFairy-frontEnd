@@ -34,7 +34,7 @@ const SelectMatch = () => {
           matches={data}
         />
       )}
-      <Button onClick={handleClickButton} disabled={!selectedDate} size='big'>
+      <Button onClick={handleClickButton} disabled={!selectedMatch} size='big'>
         직관 기록 하기
       </Button>
     </SelectMatchContainer>
