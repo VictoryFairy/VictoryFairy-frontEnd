@@ -39,6 +39,7 @@ const ButtonContainer = styled.button<
   padding: 12px 16px;
   border-radius: 8px;
   width: 100%;
+  cursor: pointer;
   ${({ size }) => size && buttonSize[size]}
   ${({ variant, styleType, disabled }) =>
     disabled
