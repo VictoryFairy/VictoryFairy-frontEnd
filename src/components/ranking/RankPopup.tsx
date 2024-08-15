@@ -1,15 +1,9 @@
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import Text from "../common/Text";
-import {
-  RankText,
-  RankTextWrapper,
-  RankTextLeft,
-  MyRank,
-  RankTextRight,
-  MyRanks,
-} from "./RankingTab";
-import Button from "../common/Button";
+import { RankTextWrapper } from "./RankingTab";
+import RankTextComp from "./RankTextComp";
+import MyRankComp from "./MyRankComp";
 
 interface PopupProps {
   isOpen: boolean;
@@ -34,134 +28,15 @@ const RankPopup = ({ isOpen, handleClose }: PopupProps) => {
           전체 랭킹
         </Text>
         <RankTextWrapper>
-          <RankText>
-            <RankTextLeft>
-              <span>15</span>
-              <img
-                src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg'
-                alt='#'
-              />
-              <Text variant='title_01' color='var(--gray-400)'>
-                김예지
-              </Text>
-            </RankTextLeft>
-            <Text variant='title_01' color='var(--gray-400)'>
-              00P
-            </Text>
-          </RankText>
-          <RankText>
-            <RankTextLeft>
-              <span>15</span>
-              <img
-                src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg'
-                alt='#'
-              />
-              <Text variant='title_01' color='var(--gray-400)'>
-                김예지
-              </Text>
-            </RankTextLeft>
-            <Text variant='title_01' color='var(--gray-400)'>
-              00P
-            </Text>
-          </RankText>
-          <RankText>
-            <RankTextLeft>
-              <span>15</span>
-              <img
-                src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg'
-                alt='#'
-              />
-              <Text variant='title_01' color='var(--gray-400)'>
-                김예지
-              </Text>
-            </RankTextLeft>
-            <Text variant='title_01' color='var(--gray-400)'>
-              00P
-            </Text>
-          </RankText>
-          <RankText>
-            <RankTextLeft>
-              <span>15</span>
-              <img
-                src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg'
-                alt='#'
-              />
-              <Text variant='title_01' color='var(--gray-400)'>
-                김예지
-              </Text>
-            </RankTextLeft>
-            <Text variant='title_01' color='var(--gray-400)'>
-              00P
-            </Text>
-          </RankText>
-          <RankText>
-            <RankTextLeft>
-              <span>15</span>
-              <img
-                src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg'
-                alt='#'
-              />
-              <Text variant='title_01' color='var(--gray-400)'>
-                김예지
-              </Text>
-            </RankTextLeft>
-            <Text variant='title_01' color='var(--gray-400)'>
-              00P
-            </Text>
-          </RankText>
-          <RankText>
-            <RankTextLeft>
-              <span>15</span>
-              <img
-                src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg'
-                alt='#'
-              />
-              <Text variant='title_01' color='var(--gray-400)'>
-                김예지
-              </Text>
-            </RankTextLeft>
-            <Text variant='title_01' color='var(--gray-400)'>
-              00P
-            </Text>
-          </RankText>
+          <RankTextComp />
+          <RankTextComp />
+          <RankTextComp />
+          <RankTextComp />
+          <RankTextComp />
+          <RankTextComp />
         </RankTextWrapper>
         <div>
-          <MyRank>
-            <RankTextLeft>
-              <span>15</span>
-              <img
-                src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg'
-                alt='#'
-              />
-              <Text variant='title_01'>김예지</Text>
-            </RankTextLeft>
-            <RankTextRight>
-              <Text variant='title_01' color='var(--primary-color)'>
-                00P
-              </Text>
-              <Button>
-                <Text variant='subtitle_01' color='var(--white)'>
-                  up^
-                </Text>
-              </Button>
-            </RankTextRight>
-          </MyRank>
-          <MyRanks>
-            <Text variant='subtitle_01' color='var(--gray-900)'>
-              나의 승률
-            </Text>
-            <Text variant='caption' color='var(--gray-900)'>
-              00%
-            </Text>
-          </MyRanks>
-          <MyRanks>
-            <Text variant='subtitle_01' color='var(--gray-900)'>
-              직관 경기 누적수
-            </Text>
-            <Text variant='caption' color='var(--gray-900)'>
-              5회
-            </Text>
-          </MyRanks>
+          <MyRankComp />
         </div>
       </RankPopupWrapper>
     </MotionPopup>
