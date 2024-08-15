@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { Bar } from "react-chartjs-2";
 import {
@@ -13,6 +14,7 @@ import {
 } from "chart.js";
 import { typography } from "../../style/typography";
 import ArrowRight from "../../assets/Icons/arrow-right.svg?react";
+import RankPopup from "./RankPopup";
 
 ChartJS.register(
   CategoryScale,
@@ -88,6 +90,10 @@ const team = [
 ];
 
 const RankingTab = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpen = () => setIsOpen(true);
+  const handleClose = () => setIsOpen(false);
   return (
     <Container>
       <TeamTabWrapper>
@@ -176,10 +182,14 @@ const RankingTab = () => {
           <span>00P</span>
         </RankText>
         <ConfirmRank>
-          전체 랭킹 확인 하기
+          <button type='button' onClick={handleOpen}>
+            전체 랭킹 확인 하기
+          </button>
           <ArrowRight />
         </ConfirmRank>
       </RankTextWrapper>
+
+      <RankPopup isOpen={isOpen} handleClose={handleClose} />
     </Container>
   );
 };
@@ -367,4 +377,5 @@ const ConfirmRank = styled.span`
     fill: var(--gray-400);
   }
 `;
+
 export default RankingTab;
