@@ -79,6 +79,7 @@ const InputField = ({
 
 const InputContainer = styled.div`
   margin-bottom: 16px;
+  width: 100%;
   position: relative;
   .labelWrapper {
     display: flex;

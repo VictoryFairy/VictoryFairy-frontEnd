@@ -66,7 +66,6 @@ const ProfileButtons = () => {
       <Text variant='title_02' color='var(--primary-color)'>
         정보 수정
       </Text>
-
       <ProfileWrapper
         role='button'
         tabIndex={0}
@@ -119,6 +118,7 @@ const ProfileButtons = () => {
             회원탈퇴
           </Text>
         </div>
+
       </ProfileLogWrapper>
     </Container>
   );

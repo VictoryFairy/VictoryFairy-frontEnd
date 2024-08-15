@@ -50,6 +50,7 @@ const TextAreaField = ({
           id={name}
           placeholder={placeholder}
           rows={rows}
+          disabled={disabled}
           {...register(name)}
           {...textareaProps}
         />
@@ -61,6 +62,8 @@ const TextAreaField = ({
 const InputContainer = styled.div`
   margin-bottom: 16px;
   position: relative;
+  width: 100%;
+
   .labelWrapper {
     display: flex;
     justify-content: space-between;
@@ -87,6 +90,7 @@ const StyledTextArea = styled.textarea`
   border-radius: 4px;
   resize: vertical;
   min-height: 100px;
+  background-color: ${(prop) => (prop.disabled ? "var(--gray-50)" : "white")};
 `;
 
 const CharCount = styled.span`

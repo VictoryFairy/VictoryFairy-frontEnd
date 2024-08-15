@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { MyGame } from "../../types/Game";
-import ResultLabel from "./ResultLabel";
-import Text from "../common/Text";
+import ResultLabel from "../watchList/ListTab/ResultLabel";
+import Text from "./Text";
 
 interface GameListItemProps {
   data: MyGame;
