@@ -16,14 +16,8 @@ export interface Game {
   date: string;
   time: string;
   status: string;
-  homeTeam: {
-    id: number;
-    name: string;
-  };
-  awayTeam: {
-    id: number;
-    name: string;
-  };
+  homeTeam: Team;
+  awayTeam: Team;
   stadium: {
     id: number;
     name: string;
@@ -37,4 +31,9 @@ export interface Game {
     id: number;
     name: string;
   };
+}
+
+export interface Team {
+  id: number;
+  name: string;
 }
