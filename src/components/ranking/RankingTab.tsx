@@ -12,7 +12,6 @@ import {
   ChartOptions,
   ChartData,
 } from "chart.js";
-import { typography } from "../../style/typography";
 import ArrowRight from "../../assets/Icons/arrow-right.svg?react";
 import Text from "../common/Text";
 import Button from "../common/Button";
@@ -242,13 +241,14 @@ const RankingTab = () => {
           <ArrowRight />
         </ConfirmRank>
       </RankTextWrapper>
+      <Overlay isVisible={isOpen} onClick={handleClose} />
+
       <RankPopup isOpen={isOpen} handleClose={handleClose} />
     </Container>
   );
 };
 
 const Container = styled.div`
-  overflow: scroll;
   display: flex;
   flex-direction: column;
   padding: 20px 0;
@@ -271,7 +271,6 @@ const TeamTabWrapper = styled.div`
     padding: 8px 12px;
     gap: 7px;
     border: 1px solid var(--gray-100);
-    ${typography.subtitle_01}
     margin-right: 10px;
   }
 `;
@@ -332,7 +331,6 @@ const RankWrapper = styled.div`
     justify-content: center;
     color: var(--white);
     background-color: var(--gray-400);
-    ${typography.subtitle_02}
   }
   > span {
     margin-top: 7px;
@@ -356,7 +354,6 @@ const FirstRankWrapper = styled.div`
     justify-content: center;
     color: var(--white);
     background-color: var(--primary-color);
-    ${typography.subtitle_02}
   }
   > img {
     width: 100px;
@@ -377,17 +374,17 @@ const BarWrapper = styled.div`
   }
 `;
 
-const RankTextWrapper = styled.div`
+export const RankTextWrapper = styled.div`
   width: 100%;
   height: 370px;
-  margin-top: 30px;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
 `;
 
-const RankText = styled.div`
+export const RankText = styled.div`
   width: 100%;
   height: 48px;
   border-radius: 8px;
@@ -397,7 +394,7 @@ const RankText = styled.div`
   align-items: center;
 `;
 
-const RankTextLeft = styled.div`
+export const RankTextLeft = styled.div`
   img {
     width: 28px;
     height: 28px;
@@ -406,7 +403,7 @@ const RankTextLeft = styled.div`
   }
 `;
 
-const MyRankWrapper = styled.div`
+export const MyRankWrapper = styled.div`
   width: 100%;
   border-radius: 8px;
   padding: 10px 20px;
@@ -418,7 +415,7 @@ const MyRankWrapper = styled.div`
     margin-bottom: 10px;
   }
 `;
-const MyRank = styled.div`
+export const MyRank = styled.div`
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -427,7 +424,7 @@ const MyRank = styled.div`
   padding: 15px 0;
 `;
 
-const RankTextRight = styled.div`
+export const RankTextRight = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -441,7 +438,7 @@ const RankTextRight = styled.div`
   }
 `;
 
-const MyRanks = styled.div`
+export const MyRanks = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -456,5 +453,16 @@ const ConfirmRank = styled.span`
   > svg {
     fill: var(--gray-400);
   }
+`;
+
+const Overlay = styled.div<{ isVisible: boolean }>`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: ${({ isVisible }) => (isVisible ? "block" : "none")};
+  z-index: 1000;
 `;
 export default RankingTab;
