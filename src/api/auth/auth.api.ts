@@ -2,10 +2,12 @@ import axios from "axios";
 import axiosInstance from "../axios";
 import { MypageUserInfo } from "../../types/UserInfo";
 import authAxiosInstance from "../authAxios";
+import { useAuthStore } from "../../store/authStore";
 
 interface EmailCodeRequest {
   email: string;
 }
+const { token } = useAuthStore.getState();
 
 export const requestEmailVerificationCode = async (data: EmailCodeRequest) => {
   try {
@@ -181,7 +183,11 @@ export const getMemberInfo = async (): Promise<MypageUserInfo> => {
 
 export const logout = async () => {
   try {
-    await authAxiosInstance.delete("/auth/logout");
+    await axiosInstance.delete("/auth/logout", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.response) {
