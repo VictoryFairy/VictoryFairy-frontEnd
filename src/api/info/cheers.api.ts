@@ -59,6 +59,7 @@ export const fetchSearchCheerSongs = async ({
   );
   return response.data;
 };
+
 export interface CheerSongDetailResponse {
   id: number;
   title: string;
@@ -72,6 +73,25 @@ export interface CheerSongDetailResponse {
 export const fetchCheerSongDetail = async (id: number) => {
   const response = await authAxiosInstance.get<CheerSongDetailResponse>(
     `/cheering-songs/${id}`,
+  );
+  return response.data;
+};
+
+export interface FetchLikedCheerSongsResponse {
+  data: CheerSong[];
+  meta: FetchCheerSongsMeta;
+}
+
+export const FetchLikedCheerSongs = async ({
+  pageParam = 0,
+}: {
+  pageParam?: number;
+}) => {
+  const response = await authAxiosInstance.get<FetchLikedCheerSongsResponse>(
+    `/cheering-songs/liked`,
+    {
+      params: { take: 5, cursor: pageParam },
+    },
   );
   return response.data;
 };
