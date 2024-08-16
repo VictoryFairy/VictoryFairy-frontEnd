@@ -1,7 +1,7 @@
 export interface Rank {
   rank: number;
   score: number;
-  profile_image: string;
+  image: string;
   nickname: string;
-  user_id: number;
+  userId: number;
 }
