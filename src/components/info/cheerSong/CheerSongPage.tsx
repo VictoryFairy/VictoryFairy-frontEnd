@@ -159,6 +159,8 @@ const CheerSongPage = () => {
           ) : (
             likedCheerSongsData?.pages.map((cheerSong) => (
               <CheerSongList
+                selectedTeamId={selectedTeamId}
+                activeTab={activeTab}
                 key={cheerSong.id}
                 id={cheerSong.id}
                 teamName={cheerSong.team.name as TeamName}
@@ -179,6 +181,8 @@ const CheerSongPage = () => {
       {selectedTeamId !== 0 &&
         cheerSongsData?.pages.map((cheerSong) => (
           <CheerSongList
+            selectedTeamId={selectedTeamId}
+            activeTab={activeTab}
             key={cheerSong.id}
             id={cheerSong.id}
             teamName={cheerSong.team.name as TeamName}

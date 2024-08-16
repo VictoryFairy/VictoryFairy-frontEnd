@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Icon from "@/components/common/Icon";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteLikeCheerSong, postLikeCheerSong } from "@/api/info/cheers.api";
 
 const teamColors = {
   롯데: "var(--lotte-giants-navy)",
@@ -23,6 +25,8 @@ interface CheerSongListProps {
   lyricPreview?: string;
   jerseyNumber?: string;
   isLiked: boolean;
+  selectedTeamId?: number;
+  activeTab?: number;
 }
 const CheerSongList = ({
   id,
@@ -31,11 +35,41 @@ const CheerSongList = ({
   lyricPreview,
   jerseyNumber,
   isLiked,
+  selectedTeamId,
+  activeTab,
 }: CheerSongListProps) => {
   const navigate = useNavigate();
   const newlyricPreview = lyricPreview?.slice(0, 10);
   const handleNavigate = () => {
     navigate(`/cheerSongDetail/${id}`);
+  };
+  const queryClient = useQueryClient();
+
+  const likeMutation = useMutation({
+    mutationFn: postLikeCheerSong,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["cheerSongs", selectedTeamId, activeTab],
+      });
+    },
+  });
+
+  const unlikeMutation = useMutation({
+    mutationFn: deleteLikeCheerSong,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["cheerSongs", selectedTeamId, activeTab],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["likedCheerSongs", activeTab],
+      });
+    },
+  });
+  const handleAddLike = () => {
+    likeMutation.mutate(id);
+  };
+  const handleRemoveLike = () => {
+    unlikeMutation.mutate(id);
   };
   return (
     <Container>
@@ -50,9 +84,14 @@ const CheerSongList = ({
       </CheersInfo>
       <IconWrapper>
         {isLiked ? (
-          <Icon icon='IcHeart' fill='red' cursor='pointer' />
+          <Icon
+            icon='IcHeart'
+            fill='red'
+            cursor='pointer'
+            onClick={handleRemoveLike}
+          />
         ) : (
-          <Icon icon='IcHeart' cursor='pointer' />
+          <Icon icon='IcHeart' cursor='pointer' onClick={handleAddLike} />
         )}
         <Icon icon='IcArrowRight' cursor='pointer' onClick={handleNavigate} />
       </IconWrapper>
