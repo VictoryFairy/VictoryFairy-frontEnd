@@ -24,6 +24,7 @@ import SearchCheerSong from "./pages/SearchCheerSong";
 import SelectMatch from "./pages/register/SelectMatch";
 import RegisterForm from "./pages/register/RegisterForm";
 import { useSignupStore } from "./store/signupStep";
+import CheersongDetail from "./pages/CheersongDetail";
 
 // import { ThemeProvider } from "styled-components";
 
@@ -132,6 +133,16 @@ const router = createBrowserRouter([
       {
         path: "/search-cheerSong",
         element: <SearchCheerSong />,
+      },
+    ],
+  },
+  {
+    path: "/cheerSongDetail/:id",
+    element: <Layout />,
+    children: [
+      {
+        path: "/cheerSongDetail/:id",
+        element: <CheersongDetail />,
       },
     ],
   },
