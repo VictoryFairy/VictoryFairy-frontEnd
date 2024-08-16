@@ -39,3 +39,23 @@ export const fetchCheerSongs = async ({
   );
   return response.data;
 };
+interface FetchSearchCheerSongsResponse {
+  data: CheerSong[];
+  meta: FetchCheerSongsMeta;
+}
+
+export const fetchSearchCheerSongs = async ({
+  pageParam = 0,
+  q,
+}: {
+  pageParam?: number;
+  q: string;
+}) => {
+  const response = await authAxiosInstance.get<FetchSearchCheerSongsResponse>(
+    `/cheering-songs/search`,
+    {
+      params: { take: 5, cursor: pageParam, q },
+    },
+  );
+  return response.data;
+};
