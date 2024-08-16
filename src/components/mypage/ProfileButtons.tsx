@@ -1,21 +1,24 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { typography } from "../../style/typography";
 import ArrowRight from "../../assets/Icons/arrow-right.svg?react";
 import { usePopup } from "../../hooks/usePopup";
+import Text from "../common/Text";
 
 const ProfileButtons = () => {
   const { Popup, isOpen, openPopup } = usePopup();
+  const [popupText, setPopupText] = useState("");
   const handleLogoutClick = () => {
     openPopup();
   };
+
   const navigate = useNavigate();
   return (
     <Container>
-      {isOpen && (
+      {isOpen && popupText === "로그아웃" && (
         <Popup
           title='확인'
-          message='정말 로그아웃하시겠습니까?'
+          message='정말 로그아웃 하시겠습니까?'
           type='confirm'
           confirmMessage='로그아웃'
           confirmFunc={() => {
@@ -23,33 +26,98 @@ const ProfileButtons = () => {
           }}
         />
       )}
-      <span>정보 수정</span>
+      {isOpen && popupText === "회원탈퇴" && (
+        <Popup
+          title='확인'
+          message='탈퇴 후 복구가 불가능합니다.<br />탈퇴 하시려면 비밀번호를 입력해주세요.'
+          type='test'
+          confirmMessage='탈퇴'
+          confirmFunc={() => {
+            alert("완료");
+          }}
+          comp={
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+              }}>
+              <Text variant='caption' color='var(--gray-700)'>
+                비밀번호
+              </Text>
+              <input
+                style={{
+                  width: "100%",
+                  height: "40px",
+                  border: "none",
+                  borderBottom: "1px solid var(--gray-400)",
+                  outline: "none",
+                  margin: "5px 0",
+                }}
+              />
+              <Text variant='caption' color='var(--red-600)'>
+                입력하신 비밀번호가 일치하지 않습니다.
+              </Text>
+            </div>
+          }
+        />
+      )}
+
+      <Text variant='title_02' color='var(--primary-color)'>
+        정보 수정
+      </Text>
       <ProfileWrapper
         role='button'
         tabIndex={0}
         onClick={() => navigate("/mypage/profile")}>
-        <span>프로필 수정</span>
+        <Text variant='body_02' color='var(--primary-color)'>
+          프로필 설정
+        </Text>
         <ArrowRight />
       </ProfileWrapper>
       <ProfileWrapper
         role='button'
         tabIndex={0}
         onClick={() => navigate("/mypage/team")}>
-        <span>응원팀 변경</span>
+        <Text variant='body_02' color='var(--primary-color)'>
+          응원팀 변경{" "}
+        </Text>
         <ProfileTeamWrapper>
-          <span>LG 트윈스</span>
+          <Text variant='subtitle_02' color='var(--primary-color)'>
+            LG 트윈스
+          </Text>
           <ArrowRight />
         </ProfileTeamWrapper>
       </ProfileWrapper>
       <ProfileLastWrapper>
-        <span>문의 사항</span>
+        <Text variant='body_02' color='var(--primary-color)'>
+          문의 사항
+        </Text>
         <ArrowRight />
       </ProfileLastWrapper>
       <ProfileLogWrapper>
-        <div role='button' tabIndex={0} onClick={handleLogoutClick}>
-          로그아웃
+        <div
+          role='button'
+          tabIndex={0}
+          onClick={() => {
+            setPopupText("로그아웃");
+            handleLogoutClick();
+          }}>
+          <Text variant='subtitle_02' color='var(--red-600)'>
+            로그아웃
+          </Text>
         </div>
-        <div>회원탈퇴</div>
+        <div
+          role='button'
+          tabIndex={0}
+          onClick={() => {
+            setPopupText("회원탈퇴");
+            handleLogoutClick();
+          }}>
+          <Text variant='subtitle_02' color='var(--gray-400)'>
+            회원탈퇴
+          </Text>
+        </div>
       </ProfileLogWrapper>
     </Container>
   );
@@ -63,10 +131,9 @@ const Container = styled.div`
   align-items: left;
   background-color: var(--white);
   margin-top: 15px;
-  padding: 0 20px;
+  padding: 10px 20px;
   > span {
     margin: 20px 0;
-    ${typography.title_02}
   }
 `;
 
@@ -79,11 +146,9 @@ const ProfileWrapper = styled.div`
   padding: 8px 0;
   border-bottom: 1px solid var(--gray-100);
   cursor: pointer;
-
   svg {
     fill: var(--gray-900);
   }
-  ${typography.body_02}
 `;
 const ProfileLastWrapper = styled.div`
   display: flex;
@@ -97,7 +162,6 @@ const ProfileLastWrapper = styled.div`
   svg {
     fill: var(--gray-900);
   }
-  ${typography.body_02}
 `;
 
 const ProfileLogWrapper = styled.div`
@@ -107,16 +171,15 @@ const ProfileLogWrapper = styled.div`
   justify-content: center;
   align-items: center;
   > :nth-child(1) {
-    border-right: 1px solid black;
-    color: var(--red-600);
+    border-right: 1px solid var(--gray-400);
+    padding: 0 15px;
+    cursor: pointer;
   }
-  > div {
+  > :nth-child(2) {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 20px;
     padding: 0 15px;
-    ${typography.subtitle_02}
     cursor: pointer;
   }
 `;
@@ -128,4 +191,5 @@ const ProfileTeamWrapper = styled.div`
     margin-right: 5px;
   }
 `;
+
 export default ProfileButtons;

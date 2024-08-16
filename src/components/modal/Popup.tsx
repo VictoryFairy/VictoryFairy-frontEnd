@@ -6,9 +6,10 @@ interface PopupProps {
   title: string;
   message: string;
   closePopup: () => void;
-  type: "confirm" | "alert";
+  type: "confirm" | "alert" | "test";
   confirmMessage?: string;
   confirmFunc?: () => void;
+  comp?: React.ReactNode;
 }
 
 const Popup = ({
@@ -18,6 +19,7 @@ const Popup = ({
   type,
   confirmMessage,
   confirmFunc,
+  comp,
 }: PopupProps) => {
   const renderButtons = () => {
     switch (type) {
@@ -53,6 +55,29 @@ const Popup = ({
             확인
           </button>
         );
+      case "test":
+        return (
+          <div className='test-wrapper'>
+            {comp}
+            <div className='button-wrapper'>
+              <button
+                type='button'
+                className='cancel-button'
+                onClick={closePopup}>
+                취소
+              </button>
+              <button
+                type='button'
+                className='confirm-button'
+                onClick={() => {
+                  confirmFunc?.();
+                  closePopup();
+                }}>
+                {confirmMessage}
+              </button>
+            </div>
+          </div>
+        );
       default:
         return null;
     }
@@ -63,7 +88,10 @@ const Popup = ({
       <PopupWrapper onClick={closePopup}>
         <PopupContainer onClick={(e) => e.stopPropagation()}>
           <h1 className='title'>{title}</h1>
-          <p className='message'>{message}</p>
+          <p
+            className='message'
+            dangerouslySetInnerHTML={{ __html: message }}
+          />
           <ButtonGroup>{renderButtons()}</ButtonGroup>
         </PopupContainer>
       </PopupWrapper>
@@ -89,6 +117,7 @@ const PopupWrapper = styled.div`
   .message {
     margin-top: 8px;
     ${typography.body_long_02}
+    color: var(--primary-color);
   }
 `;
 
@@ -100,6 +129,7 @@ const PopupContainer = styled.div`
   align-items: center;
   text-align: center;
   padding: 20px;
+  border-radius: 12px;
 `;
 
 const ButtonGroup = styled.div`
@@ -113,6 +143,7 @@ const ButtonGroup = styled.div`
     ${typography.title_02}
     border-radius: 8px;
     width: 100%;
+    cursor: pointer;
   }
   .cancel-button {
     opacity: 0.4;
@@ -121,6 +152,20 @@ const ButtonGroup = styled.div`
   .confirm-button {
     background: var(--primary-color);
     color: white;
+  }
+
+  .test-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .button-wrapper {
+    display: flex;
+    margin-top: 20px;
+    :nth-child(1) {
+      margin-right: 10px;
+    }
   }
 `;
 

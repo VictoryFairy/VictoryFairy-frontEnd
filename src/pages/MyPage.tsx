@@ -19,6 +19,12 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   background-color: var(--gray-50);
+  overflow-y: scroll;
+  > div ::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
 `;
 
 export default MyPage;
