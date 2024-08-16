@@ -35,10 +35,12 @@ const CheerSongPage = () => {
     hasNextPage: hasNextLikedPage,
     isFetchingNextPage: isFetchingNextLikedPage,
   } = useInfiniteQuery({
-    queryKey: ["likedCheerSongs"],
+    queryKey: ["likedCheerSongs", activeTab],
     queryFn: async ({ pageParam = 0 }) => {
+      const type = activeTab === 0 ? "team" : "player";
       const response = await FetchLikedCheerSongs({
         pageParam,
+        type,
       });
       return response;
     },
@@ -157,6 +159,8 @@ const CheerSongPage = () => {
           ) : (
             likedCheerSongsData?.pages.map((cheerSong) => (
               <CheerSongList
+                selectedTeamId={selectedTeamId}
+                activeTab={activeTab}
                 key={cheerSong.id}
                 id={cheerSong.id}
                 teamName={cheerSong.team.name as TeamName}
@@ -177,6 +181,8 @@ const CheerSongPage = () => {
       {selectedTeamId !== 0 &&
         cheerSongsData?.pages.map((cheerSong) => (
           <CheerSongList
+            selectedTeamId={selectedTeamId}
+            activeTab={activeTab}
             key={cheerSong.id}
             id={cheerSong.id}
             teamName={cheerSong.team.name as TeamName}
