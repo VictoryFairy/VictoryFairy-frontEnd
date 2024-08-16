@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { useState } from "react";
-import FilterIcon from "../../assets/Icons/filter.svg?react";
-import SearchIcon from "../../assets/Icons/search.svg?react";
+import { typography } from "@/style/typography";
+import { MyGame } from "@/types/Game";
+import ListTab from "./ListTab/ListTab";
+import FilterIcon from "@/assets/Icons/filter.svg?react";
+import SearchIcon from "@/assets/Icons/search.svg?react";
 import SelectionBar from "../common/SelectionBar";
 import CalendarContainer from "../common/Calendar";
-import { typography } from "../../style/typography";
-import ListTab from "./ListTab/ListTab";
-import { MyGame } from "../../types/Game";
 import GalleryTab from "./GalleryTab/GalleryTab";
 
 const DATA: MyGame[] = [

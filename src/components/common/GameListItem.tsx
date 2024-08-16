@@ -1,14 +1,14 @@
 import styled from "styled-components";
-import { MyGame } from "../../types/Game";
-import ResultLabel from "../watchList/ListTab/ResultLabel";
+import { MyGame } from "@/types/Game";
 import Text from "./Text";
+import ResultLabel from "../watchList/ListTab/ResultLabel";
 
 interface GameListItemProps {
   data: MyGame;
 }
-
-// TODO: 파일명 좀 더 구체적으로 변경하기
-// TODO: 아이콘 추가, 그 전에 아이콘 컴포넌트화
+// TODO : registerForm에서 재사용 할 수 있도록 리팩토링
+// 문제는 내 직관 탭에서의 데이터와 registerForm에서의 데이터가 다르다는 것
+// resultlabel을 데이터에 따라 다르게 렌더링 시켜야한다
 const GameListItem = ({ data }: GameListItemProps) => {
   return (
     <GameListItemContainer>
@@ -33,7 +33,7 @@ const GameListItem = ({ data }: GameListItemProps) => {
     </GameListItemContainer>
   );
 };
-const GameListItemContainer = styled.li`
+export const GameListItemContainer = styled.li`
   display: flex;
   flex-direction: row;
   justify-content: center;

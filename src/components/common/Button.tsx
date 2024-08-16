@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { button, buttonSize } from "../../style/button";
+import { button, buttonSize } from "@/style/button";
 
 interface ButtonProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "disabled"> {
@@ -39,6 +39,7 @@ const ButtonContainer = styled.button<
   padding: 12px 16px;
   border-radius: 8px;
   width: 100%;
+  cursor: pointer;
   ${({ size }) => size && buttonSize[size]}
   ${({ variant, styleType, disabled }) =>
     disabled

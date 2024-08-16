@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React from "react";
-import { typography } from "../../style/typography";
+import { typography } from "@/style/typography";
 
 interface TitleProps {
   title: string;

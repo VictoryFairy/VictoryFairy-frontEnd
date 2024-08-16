@@ -1,6 +1,6 @@
 import styled from "styled-components";
+import { typography } from "@/style/typography";
 import ModalPortal from "./ModalPortal";
-import { typography } from "../../style/typography";
 
 interface PopupProps {
   title: string;
