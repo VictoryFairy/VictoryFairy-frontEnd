@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Heart from "../../../assets/Icons/heart.svg?react";
-import ArrowRight from "../../../assets/Icons/arrow-right.svg?react";
+import { useNavigate } from "react-router-dom";
+import Icon from "../../common/Icon";
 
 const teamColors = {
   롯데: "var(--lotte-giants-navy)",
@@ -14,28 +14,47 @@ const teamColors = {
   KIA: "var(--kia-tigers-red)",
   키움: "var(--kiwoom-heroes-pink)",
 };
-type TeamName = keyof typeof teamColors;
+export type TeamName = keyof typeof teamColors;
 
 interface CheerSongListProps {
+  id: number;
   teamName: TeamName;
+  title: string;
+  lyricPreview?: string;
+  jerseyNumber?: string;
+  isLiked: boolean;
 }
-const CheerSongList = ({ teamName }: CheerSongListProps) => {
+const CheerSongList = ({
+  id,
+  teamName,
+  title,
+  lyricPreview,
+  jerseyNumber,
+  isLiked,
+}: CheerSongListProps) => {
+  const navigate = useNavigate();
+  const newlyricPreview = lyricPreview?.slice(0, 10);
+  const handleNavigate = () => {
+    navigate(`/cheerSongDetail/${id}`);
+  };
   return (
     <Container>
       <CheersInfo>
         <TeamLogo teamName={teamName}>{teamName}</TeamLogo>
         <InfoWrapper>
-          <CheersName>안타송</CheersName>
-          <Description>최강 롯데 승리를 위해</Description>
+          <CheersName>{title}</CheersName>
+          <Description>
+            {jerseyNumber ? `no . ${jerseyNumber}` : newlyricPreview}
+          </Description>
         </InfoWrapper>
       </CheersInfo>
       <IconWrapper>
-        <Heart onClick={() => {}} cursor='pointer' />
-        <ArrowRight
-          fill='var(--primary-color)'
-          onClick={() => {}}
-          cursor='pointer'
-        />
+        {isLiked ? (
+          <Icon icon='IcHeart' fill='red' cursor='pointer' />
+        ) : (
+          <Icon icon='IcHeart' cursor='pointer' />
+        )}
+        <Icon icon='IcArrowRight' cursor='pointer' onClick={handleNavigate} />
       </IconWrapper>
     </Container>
   );
