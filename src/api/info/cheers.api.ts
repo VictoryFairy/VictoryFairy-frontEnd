@@ -1,20 +1,25 @@
+import { Player } from "../../types/Player";
+import { Team } from "../../types/Team";
 import authAxiosInstance from "../authAxios";
 
 interface CheerSong {
   id: number;
   title: string;
-  lyric: string;
-  team: string;
+  lyrics_preview: string;
+  team: Team;
+  player: Player | null;
   isLiked: boolean;
 }
 
-interface FetchCheerSongsResponse {
+interface FetchCheerSongsMeta {
+  take: number;
+  hasNextData: boolean;
+  cursor: number;
+}
+
+export interface FetchCheerSongsResponse {
   data: CheerSong[];
-  meta: {
-    take: number;
-    cursor: number;
-    hasNextData: boolean;
-  };
+  meta: FetchCheerSongsMeta;
 }
 
 export const fetchCheerSongs = async ({
@@ -26,7 +31,7 @@ export const fetchCheerSongs = async ({
   teamId: number;
   type: "team" | "player";
 }) => {
-  const response: FetchCheerSongsResponse = await authAxiosInstance.get(
+  const response = await authAxiosInstance.get<FetchCheerSongsResponse>(
     `/cheering-songs/teams/${teamId}/types/${type}`,
     {
       params: { take: 5, cursor: pageParam },
