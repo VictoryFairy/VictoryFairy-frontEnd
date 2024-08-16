@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { typography } from "../../style/typography";
-import { DailyMatchResponse } from "../../api/game/game";
+import { typography } from "@/style/typography";
+import { DailyMatchResponse } from "@/api/game/game";
 
 interface TodayMatchItemProps {
   match: DailyMatchResponse;

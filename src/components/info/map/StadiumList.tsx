@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 import { useRef, useEffect } from "react";
-import { getStadiums } from "../../../api/info/info.api";
-import { Stadium } from "../../../types/Stadium";
+import { getStadiums } from "@/api/info/info.api";
+import { Stadium } from "@/types/Stadium";
 
 interface StadiumListProps {
   selectedStadiumId: number;

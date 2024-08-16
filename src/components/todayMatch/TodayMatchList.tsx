@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
+import { typography } from "@/style/typography";
+import { getDailyMatch } from "@/api/game/game";
 import TodayMatchItem from "./TodayMatchItem";
-import { typography } from "../../style/typography";
-import { getDailyMatch } from "../../api/game/game";
 
 // const DATA = [
 //   {

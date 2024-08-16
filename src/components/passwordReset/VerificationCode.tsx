@@ -8,7 +8,7 @@ import EmailVerificationTimer from "../signup/EmailVerificationTimer";
 import {
   requestEmailVerificationCode,
   verifyEmailCode,
-} from "../../api/auth/auth.api";
+} from "@/api/auth/auth.api";
 
 interface VerificationCodeProps {
   email: string;

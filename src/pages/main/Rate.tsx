@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import SwitchIcon from "../../assets/Icons/switch.svg?react";
-import ArrowRight from "../../assets/Icons/arrow-right.svg?react";
-import Download from "../../assets/Icons/download.svg?react";
-import Share from "../../assets/Icons/share.svg?react";
-import { typography } from "../../style/typography";
+import SwitchIcon from "@/assets/Icons/switch.svg?react";
+import ArrowRight from "@/assets/Icons/arrow-right.svg?react";
+import Download from "@/assets/Icons/download.svg?react";
+import Share from "@/assets/Icons/share.svg?react";
+import { typography } from "@/style/typography";
 
 const Rate = () => {
   return (

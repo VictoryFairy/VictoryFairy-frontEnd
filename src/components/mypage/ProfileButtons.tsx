@@ -1,8 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import ArrowRight from "../../assets/Icons/arrow-right.svg?react";
-import { usePopup } from "../../hooks/usePopup";
+import { usePopup } from "@/hooks/usePopup";
+import ArrowRight from "@/assets/Icons/arrow-right.svg?react";
 import Text from "../common/Text";
 
 const ProfileButtons = () => {

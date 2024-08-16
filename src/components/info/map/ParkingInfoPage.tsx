@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import StadiumList from "./StadiumList";
-import Map from "./Map";
-import { getParkingInfosByStadiumId } from "../../../api/info/info.api";
-import { ParkingInfo } from "../../../types/Stadium";
+import { getParkingInfosByStadiumId } from "@/api/info/info.api";
+import { ParkingInfo } from "@/types/Stadium";
+import { useAuthStore } from "@/store/authStore";
+import { getStadiumId } from "@/utils/getStadiumId";
 import ParkingList from "./ParkingList";
-import { useAuthStore } from "../../../store/authStore";
-import { getStadiumId } from "../../../utils/getStadiumId";
+import Map from "./Map";
+import StadiumList from "./StadiumList";
 
 const ParkingInfoPage = () => {
   const { teamId } = useAuthStore();

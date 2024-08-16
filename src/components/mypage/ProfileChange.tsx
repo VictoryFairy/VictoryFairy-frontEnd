@@ -1,6 +1,6 @@
 import styled from "styled-components";
+import { usePopup } from "@/hooks/usePopup";
 import Button from "../common/Button";
-import { usePopup } from "../../hooks/usePopup";
 import Text from "../common/Text";
 import Icon from "../common/Icon";
 

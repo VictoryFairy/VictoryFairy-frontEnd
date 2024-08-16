@@ -1,14 +1,14 @@
 import { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import {
+  requestEmailVerificationCode,
+  verifyEmailCode,
+} from "@/api/auth/auth.api";
 import OTPInput from "../common/OTPInput";
 import TitleSection from "../common/TitleSection";
 import Button from "../common/Button";
 import EmailVerificationTimer from "./EmailVerificationTimer";
-import {
-  requestEmailVerificationCode,
-  verifyEmailCode,
-} from "../../api/auth/auth.api";
 
 interface VerificationCodeProps {
   email: string;

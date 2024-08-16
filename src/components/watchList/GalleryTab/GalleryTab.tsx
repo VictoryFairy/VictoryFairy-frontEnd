@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { MyGame } from "../../../types/Game";
-import MonthNav from "../../common/MonthNav";
+import { MyGame } from "@/types/Game";
+import MonthNav from "@/components/common/MonthNav";
 
 interface GalleryTabProps {
   data?: MyGame[];
