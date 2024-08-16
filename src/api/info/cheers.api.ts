@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Player } from "../../types/Player";
 import { Team } from "../../types/Team";
 import authAxiosInstance from "../authAxios";
@@ -96,4 +97,21 @@ export const FetchLikedCheerSongs = async ({
     },
   );
   return response.data;
+};
+
+export const postLikeCheerSong = async (id: number) => {
+  try {
+    await authAxiosInstance.post(`/cheering-songs/${id}/likes`);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        switch (error.response.status) {
+          case 409:
+            throw new Error("이미 좋아요 한 응원가 입니다");
+          default:
+            throw new Error("");
+        }
+      }
+    }
+  }
 };
