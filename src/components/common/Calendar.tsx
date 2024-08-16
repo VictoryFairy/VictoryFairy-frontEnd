@@ -1,10 +1,10 @@
 import moment from "moment";
 import Calendar from "react-calendar";
 import styled from "styled-components";
+import { useState } from "react";
 import { typography } from "@/style/typography";
-import { MyGame } from "@/types/Game";
-import ArrowLeftIcon from "@/assets/Icons/arrow-left.svg?react";
-import ArrowRightIcon from "@/assets/Icons/arrow-right.svg?react";
+import { MyGame } from "../../types/Game";
+import Icon from "./Icon";
 import WinIcon from "@/assets/Icons/win.svg?react";
 import LoseIcon from "@/assets/Icons/lose.svg?react";
 import TieIcon from "@/assets/Icons/tie.svg?react";
@@ -12,9 +12,25 @@ import NoGameIcon from "@/assets/Icons/no-game.svg?react";
 
 interface CalendarProps {
   data?: MyGame[];
+  onClick?: (
+    date: Date,
+    evnet: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => void;
 }
 
-const CalendarContainer = ({ data }: CalendarProps) => {
+const CalendarContainer = ({ data, onClick }: CalendarProps) => {
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+  const handleClickDay = (
+    date: Date,
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    setSelectedDate(date);
+    if (onClick) {
+      onClick(date, event);
+    }
+  };
+
   function titleContent({ date }: any) {
     const match = data?.find(
       (item: any) => moment(date).format("YYYY-MM-DD") === item.game.date,
@@ -40,6 +56,9 @@ const CalendarContainer = ({ data }: CalendarProps) => {
       (item: any) => moment(date).format("YYYY-MM-DD") === item.game.date,
     );
 
+    const isFutureDate = moment(date).isAfter(moment(), "day");
+    const isSelected = selectedDate && moment(date).isSame(selectedDate, "day");
+
     if (match) {
       if (match.status === "WIN") {
         return "event-tile win";
@@ -51,7 +70,7 @@ const CalendarContainer = ({ data }: CalendarProps) => {
         return "event-tile draw";
       }
     }
-    return null; // 일치하는 데이터가 없을 경우 클래스 없음
+    return `${isFutureDate ? "future" : ""} ${isSelected ? "selected" : ""}`;
   };
 
   return (
@@ -59,31 +78,33 @@ const CalendarContainer = ({ data }: CalendarProps) => {
       <CalendarStyle
         locale='ko-KR'
         minDate={new Date(2024, 0, 1)} // 달력의 최소 날짜
-        maxDate={new Date(2024, 11, 31)} // 달력의 최대 날짜
+        maxDate={new Date()} // 달력의 최대 날짜
         showNeighboringMonth={false} // 이월 날짜 보이기
-        tileContent={data ? titleContent : undefined}
-        tileClassName={data ? tileClassName : undefined}
+        // eslint-disable-next-line react/jsx-no-bind
+        tileContent={titleContent}
+        tileClassName={tileClassName}
         formatDay={(_, date) => moment(date).format("D")}
         formatYear={(_, date) => moment(date).format("YYYY")} // 네비게이션 눌렀을때 숫자 년도만 보이게
         formatMonthYear={(_, date) => moment(date).format("MMMM YYYY")} // 네비게이션에서 August 2024 이렇게 보이도록 설정
         formatShortWeekday={(_, date) => moment(date).format("ddd")} // 요일 2글자로 표시
-        nextLabel={<ArrowRightIcon />}
-        prevLabel={<ArrowLeftIcon />}
+        nextLabel={<Icon icon='IcArrowRight' />}
+        prevLabel={<Icon icon='IcArrowLeft' />}
         next2Label={null}
         prev2Label={null}
+        onClickDay={handleClickDay}
       />
       {data && (
         <div className='explain'>
           <div>
-            <WinIcon />
+            <Icon icon='IcWin' />
             승리
           </div>
           <div>
-            <LoseIcon />
+            <Icon icon='IcLose' />
             패배
           </div>
           <div>
-            <TieIcon />
+            <Icon icon='IcTie' />
             무승부
           </div>
           <div>
@@ -100,8 +121,10 @@ const CalendarWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   border: 1px solid var(--gray-100);
   border-radius: 8px;
+
   ${typography.subtitle_01}
 
   .win {
@@ -122,18 +145,6 @@ const CalendarWrapper = styled.div`
     align-items: center;
     gap: 12px;
     margin-bottom: 12px;
-
-    /* .win,
-    .lose {
-      svg {
-        circle {
-          fill: ${({ theme }) => theme.colors.primary};
-        }
-        path {
-          fill: ${({ theme }) => theme.colors.secondary};
-        }
-      }
-    } */
 
     > div {
       display: flex;
@@ -158,9 +169,18 @@ const CalendarStyle = styled(Calendar)`
   align-items: flex-start;
   padding: 12px 12px 16px;
   gap: 10px;
-
   background: var(--white);
   border-radius: 8px;
+  width: 330px;
+  .future {
+    color: var(--gray-200);
+  }
+
+  .selected {
+    background: var(--primary-color);
+    color: var(--white);
+    border-radius: 50%;
+  }
   // 상단 네비게이션
   .react-calendar__navigation {
     align-items: center;
@@ -196,8 +216,8 @@ const CalendarStyle = styled(Calendar)`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 51px;
-    height: 51px;
+    width: 43px;
+    height: 43px;
     padding: 0;
   }
   .event-tile {
