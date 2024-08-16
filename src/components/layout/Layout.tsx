@@ -3,14 +3,18 @@ import styled from "styled-components";
 import Header, { HeaderProps } from "../common/Header";
 import Footer from "../common/Footer";
 
-const Layout = ({ left, center, right }: HeaderProps) => {
+interface LayoutProps extends HeaderProps {
+  footer?: boolean;
+}
+
+const Layout = ({ left, center, right, footer = true }: LayoutProps) => {
   return (
     <LayoutConatiner>
       <Header left={left} center={center} right={right} />
       <MainWrapper>
         <Outlet />
       </MainWrapper>
-      <Footer />
+      {footer && <Footer />}
     </LayoutConatiner>
   );
 };
