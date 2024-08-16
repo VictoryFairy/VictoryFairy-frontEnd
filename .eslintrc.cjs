@@ -62,5 +62,6 @@ module.exports = {
     "no-param-reassign": ["error", { props: false }],
     "no-console": "off",
     "no-new": "off",
+    "import/no-cycle": "off",
   },
 };
