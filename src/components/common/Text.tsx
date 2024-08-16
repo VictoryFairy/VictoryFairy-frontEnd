@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { typography } from "../../style/typography";
+import { typography } from "@/style/typography";
 
 type TextTags = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span";
 

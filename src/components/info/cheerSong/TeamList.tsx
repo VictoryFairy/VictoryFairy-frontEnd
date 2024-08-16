@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
-import { Team } from "../../../types/Team";
-import { getTeams } from "../../../api/info/info.api";
+import { Team } from "@/types/Team";
+import { getTeams } from "@/api/info/info.api";
 
 interface TeamListProps {
   selectedTeamId: number;
@@ -15,19 +15,26 @@ const TeamList = ({ setSelectedTeamId, selectedTeamId }: TeamListProps) => {
     staleTime: Infinity,
   });
 
-  if (!data) return;
+  if (isLoading) return <div>로딩중...</div>;
+  if (!data) return null;
 
-  const cheersCat = [{ id: 0, name: "My 응원가" }, ...data];
+  const myCheerCategory = { id: 0, name: "My 응원가" };
+  // const cheersCat = [myCheerCategory, ...data];
+
   const handleTeamClick = (team: Team) => {
     setSelectedTeamId(team.id);
   };
 
-  if (isLoading) return <div>로딩중...</div>;
-
   return (
     <TeamListContainer>
+      <FixedTeamButton
+        type='button'
+        onClick={() => handleTeamClick(myCheerCategory)}
+        active={myCheerCategory.id === selectedTeamId}>
+        {myCheerCategory.name}
+      </FixedTeamButton>
       <TeamLists>
-        {cheersCat?.map((team) => (
+        {data.map((team) => (
           <TeamButton
             type='button'
             key={team.id}
@@ -41,26 +48,40 @@ const TeamList = ({ setSelectedTeamId, selectedTeamId }: TeamListProps) => {
   );
 };
 
-// 수평 스크롤을 지원하며 스크롤바를 숨기는 스타일
 const TeamListContainer = styled.div`
-  overflow: hidden; /* 기본 스크롤바 숨기기 */
+  display: flex;
+  align-items: center;
+  overflow: hidden;
   margin-bottom: 20px;
   background-color: white;
 `;
 
-const TeamLists = styled.div`
-  display: flex; /* 자식 요소들을 수평으로 나열합니다. */
+const FixedTeamButton = styled.button<{ active: boolean }>`
+  flex-shrink: 0;
+  margin-right: 10px;
+  padding: 8px 16px;
+  border: 2px solid gainsboro;
+  background-color: ${(props) => (props.active ? "#333" : "#fff")};
+  color: ${(props) => (props.active ? "#fff" : "#333")};
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
+`;
 
-  overflow-x: auto; /* 수평 스크롤을 허용합니다. */
-  overflow-y: hidden; /* 수직 스크롤은 숨깁니다. */
-  -webkit-overflow-scrolling: touch; /* 부드러운 스크롤을 터치 스크롤에 적용합니다. */
-  scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
+const TeamLists = styled.div`
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
   &::-webkit-scrollbar {
-    display: none; /* Chrome, Safari에서 스크롤바 숨기기 */
+    display: none;
   }
 `;
 
 const TeamButton = styled.button<{ active: boolean }>`
+  flex-shrink: 0;
   margin-right: 10px;
   padding: 8px 16px;
   border: 2px solid gainsboro;

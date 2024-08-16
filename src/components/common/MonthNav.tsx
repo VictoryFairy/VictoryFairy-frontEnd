@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
-import ArrowLeftIcon from "../../assets/Icons/arrow-left.svg?react";
-import ArrowRightIcon from "../../assets/Icons/arrow-right.svg?react";
+import ArrowLeftIcon from "@/assets/Icons/arrow-left.svg?react";
+import ArrowRightIcon from "@/assets/Icons/arrow-right.svg?react";
 
 const MONTHS = [
   "January",

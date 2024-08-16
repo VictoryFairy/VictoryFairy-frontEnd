@@ -1,8 +1,8 @@
 import { useEffect, useRef, useCallback, useState } from "react";
 import styled from "styled-components";
+import { ParkingInfo, Stadium } from "@/types/Stadium";
 import LocationButton from "./LocationButton";
 import ZoomButton from "./ZoomButton";
-import { ParkingInfo, Stadium } from "../../../types/Stadium";
 
 interface MapProps {
   selectedStadium: Stadium;

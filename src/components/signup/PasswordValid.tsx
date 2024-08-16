@@ -2,10 +2,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import styled from "styled-components";
+import { UserInfo } from "@/types/User";
 import TitleSection from "../common/TitleSection";
 import InputField from "../common/InputField";
 import Button from "../common/Button";
-import { UserInfo } from "../../types/User";
 
 interface PasswordValidProps {
   setstep: (step: number) => void;
