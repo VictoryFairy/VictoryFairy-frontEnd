@@ -8,7 +8,10 @@ import search from "../../../assets/Icons/search.svg";
 import { typography } from "../../../style/typography";
 import SelectionBar from "../../common/SelectionBar";
 import CheerSongList, { TeamName } from "./CheerSongList";
-import { fetchCheerSongs } from "../../../api/info/cheers.api";
+import {
+  fetchCheerSongs,
+  FetchLikedCheerSongs,
+} from "../../../api/info/cheers.api";
 
 const CheerSongPage = () => {
   const { teamId } = useAuthStore();
@@ -25,6 +28,25 @@ const CheerSongPage = () => {
       queryKey: ["cheerSongs", selectedTeamId, activeTab],
     });
   }, [selectedTeamId, activeTab, queryClient]);
+
+  const { data2, fetchNextPage2, hasNextPage2, isFetchingNextPage2 } =
+    useInfiniteQuery({
+      queryKey: ["LikedcheerSongs"],
+      queryFn: async ({ pageParam = 0 }) => {
+        const response = await FetchLikedCheerSongs({
+          pageParam,
+        });
+        return response;
+      },
+      getNextPageParam: (lastPage) => {
+        return lastPage.meta.hasNextData ? lastPage.meta.cursor : undefined;
+      },
+      initialPageParam: 0,
+      enabled: selectedTeamId === 0,
+      select: (data3) => ({
+        pages: data3.pages.flatMap((page) => page.data),
+      }),
+    });
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
