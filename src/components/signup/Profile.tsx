@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { useRef, useState } from "react";
-import { UserInfo } from "../../types/User";
-import TitleSection from "../common/TitleSection";
-import InputField from "../common/InputField";
-import Button from "../common/Button";
+import { UserInfo } from "@/types/User";
 import {
   checkNicknameAvailability,
   uploadProfileImage,
-} from "../../api/auth/auth.api";
+} from "@/api/auth/auth.api";
+import TitleSection from "../common/TitleSection";
+import InputField from "../common/InputField";
+import Button from "../common/Button";
 
 interface ProfileProps {
   setstep: (step: number) => void;

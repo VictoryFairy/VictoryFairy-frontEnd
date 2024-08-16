@@ -1,9 +1,7 @@
 import styled from "styled-components";
-
 import { useRef } from "react";
-
-import { ParkingInfo } from "../../../types/Stadium";
-import Icon from "../../common/Icon";
+import { ParkingInfo } from "@/types/Stadium";
+import Icon from "@/components/common/Icon";
 
 interface ParkingListProps {
   parkingSpots: Omit<ParkingInfo, "stadium">[];

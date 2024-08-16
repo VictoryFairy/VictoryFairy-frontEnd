@@ -2,18 +2,16 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
-import { useAuthStore } from "../../../store/authStore";
+
+import { fetchCheerSongs, FetchLikedCheerSongs } from "@/api/info/cheers.api";
+import { useAuthStore } from "@/store/authStore";
+import SelectionBar from "@/components/common/SelectionBar";
+import Text from "@/components/common/Text";
+import { typography } from "@/style/typography";
 import TeamList from "./TeamList";
-import search from "../../../assets/Icons/search.svg";
-import { typography } from "../../../style/typography";
-import SelectionBar from "../../common/SelectionBar";
 import CheerSongList, { TeamName } from "./CheerSongList";
-import {
-  fetchCheerSongs,
-  FetchLikedCheerSongs,
-} from "../../../api/info/cheers.api";
 import empty from "../../../assets/images/Group 625793.png";
-import Text from "../../common/Text";
+import search from "../../../assets/Icons/search.svg";
 
 const CheerSongPage = () => {
   const { teamId } = useAuthStore();

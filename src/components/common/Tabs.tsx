@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { typography } from "../../style/typography";
+import { typography } from "@/style/typography";
 
 export interface TabProps {
   labels: string[]; // 탭의 라벨들을 받는 prop

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
-import { Team } from "../../../types/Team";
-import { getTeams } from "../../../api/info/info.api";
+import { Team } from "@/types/Team";
+import { getTeams } from "@/api/info/info.api";
 
 interface TeamListProps {
   selectedTeamId: number;

@@ -1,6 +1,6 @@
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import Icon from "../../common/Icon";
+import styled from "styled-components";
+import Icon from "@/components/common/Icon";
 
 const teamColors = {
   롯데: "var(--lotte-giants-navy)",
