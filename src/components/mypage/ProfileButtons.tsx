@@ -118,7 +118,6 @@ const ProfileButtons = () => {
             회원탈퇴
           </Text>
         </div>
-
       </ProfileLogWrapper>
     </Container>
   );
