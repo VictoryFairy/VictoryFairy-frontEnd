@@ -35,10 +35,12 @@ const CheerSongPage = () => {
     hasNextPage: hasNextLikedPage,
     isFetchingNextPage: isFetchingNextLikedPage,
   } = useInfiniteQuery({
-    queryKey: ["likedCheerSongs"],
+    queryKey: ["likedCheerSongs", activeTab],
     queryFn: async ({ pageParam = 0 }) => {
+      const type = activeTab === 0 ? "team" : "player";
       const response = await FetchLikedCheerSongs({
         pageParam,
+        type,
       });
       return response;
     },

@@ -84,11 +84,13 @@ export interface FetchLikedCheerSongsResponse {
 
 export const FetchLikedCheerSongs = async ({
   pageParam = 0,
+  type,
 }: {
   pageParam?: number;
+  type: "team" | "player";
 }) => {
   const response = await authAxiosInstance.get<FetchLikedCheerSongsResponse>(
-    `/cheering-songs/liked`,
+    `/cheering-songs/liked/types/${type}`,
     {
       params: { take: 5, cursor: pageParam },
     },
