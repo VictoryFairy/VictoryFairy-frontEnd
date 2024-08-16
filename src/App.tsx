@@ -68,7 +68,7 @@ const BackButton = () => {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: <Layout footer={false} />,
     children: [
       {
         path: "/",
@@ -78,7 +78,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/signup",
-    element: <Layout left={<BackButton />} />,
+    element: <Layout footer={false} left={<BackButton />} />,
     children: [
       {
         path: "/signup",
