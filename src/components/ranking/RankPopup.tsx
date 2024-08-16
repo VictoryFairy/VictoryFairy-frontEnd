@@ -1,5 +1,9 @@
 import { motion } from "framer-motion";
 import styled from "styled-components";
+import { useQuery } from "@tanstack/react-query";
+import { getRankList } from "@/api/rank/rank.api";
+import { Rank } from "@/types/Rank";
+import { useEffect } from "react";
 import Text from "../common/Text";
 import { RankTextWrapper } from "./RankingTab";
 import RankTextComp from "./RankTextComp";
@@ -8,9 +12,19 @@ import MyRankComp from "./MyRankComp";
 interface PopupProps {
   isOpen: boolean;
   handleClose: () => void;
+  teamId: number;
 }
 
-const RankPopup = ({ isOpen, handleClose }: PopupProps) => {
+const RankPopup = ({ isOpen, handleClose, teamId }: PopupProps) => {
+  const { data } = useQuery<Rank[]>({
+    queryKey: ["getRankList", { teamId }],
+    queryFn: () => getRankList(teamId),
+  });
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+    }
+  }, [data]);
   return (
     <MotionPopup
       initial={{ y: "100%" }}
@@ -19,7 +33,7 @@ const RankPopup = ({ isOpen, handleClose }: PopupProps) => {
       drag='y'
       dragConstraints={{ top: 0 }}
       onDragEnd={(e, info) => {
-        if (info.point.y > 300) {
+        if (info.point.y > 600) {
           handleClose();
         }
       }}>

@@ -78,39 +78,41 @@ const options: ChartOptions<"bar"> = {
     },
   },
 };
-const team: Team["name"][] = [
+const teamNames = [
   "전체",
-  "LG트윈스",
+  "롯데자이언츠",
   "두산베어스",
+  "KIA타이거즈",
+  "삼성라이온즈",
   "SSG렌더스",
+  "NC다이노스",
+  "LG트윈스",
+  "키움히어로즈",
   "KT위즈",
   "한화이글스",
-  "NC다이노스",
-  "롯데자이언츠",
-  "KIA타이거즈",
-  "키움히어로즈",
-  "삼성라이온즈",
 ];
 
-interface Team {
-  name:
-    | "전체"
-    | "LG트윈스"
-    | "두산베어스"
-    | "SSG렌더스"
-    | "KT위즈"
-    | "한화이글스"
-    | "NC다이노스"
-    | "롯데자이언츠"
-    | "KIA타이거즈"
-    | "키움히어로즈"
-    | "삼성라이온즈";
-}
+const teamNumberMap: { [key: string]: number } = {
+  전체: 0,
+  롯데자이언츠: 1,
+  두산베어스: 2,
+  KIA타이거즈: 3,
+  삼성라이온즈: 4,
+  SSG렌더스: 5,
+  NC다이노스: 6,
+  LG트윈스: 7,
+  키움히어로즈: 8,
+  KT위즈: 9,
+  한화이글스: 10,
+};
 
 const RankingTab = () => {
-  const [teamTab, setTeamTab] = useState<Team["name"]>("전체");
-  const handleClickTeam = (value: Team["name"]) => {
+  const [teamId, setTeamId] = useState<number>(0);
+  const [teamTab, setTeamTab] = useState<string>("전체");
+
+  const handleClickTeam = (value: string) => {
     setTeamTab(value);
+    setTeamId(teamNumberMap[value]);
   };
   const [isOpen, setIsOpen] = useState(false);
 
@@ -119,7 +121,7 @@ const RankingTab = () => {
   return (
     <Container>
       <TeamTabWrapper>
-        {team.map((element, index) => {
+        {teamNames.map((element, index) => {
           return (
             <Button
               style={{
@@ -182,7 +184,7 @@ const RankingTab = () => {
       </RankTextWrapper>
       <Overlay isVisible={isOpen} onClick={handleClose} />
 
-      <RankPopup isOpen={isOpen} handleClose={handleClose} />
+      <RankPopup isOpen={isOpen} handleClose={handleClose} teamId={teamId} />
     </Container>
   );
 };
