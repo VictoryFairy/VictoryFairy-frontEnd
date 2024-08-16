@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import ArrowRight from "../../assets/Icons/arrow-right.svg?react";
 import { usePopup } from "../../hooks/usePopup";
 import Text from "../common/Text";
 import { useUserStore } from "../../store/userInfo";
+import { logout } from "../../api/auth/auth.api";
+import { useAuthStore } from "../../store/authStore";
 
 const ProfileButtons = () => {
   const { Popup, isOpen, openPopup } = usePopup();
@@ -13,7 +16,25 @@ const ProfileButtons = () => {
     openPopup();
   };
   const navigate = useNavigate();
-  const team = useUserStore((state) => state.supportTeam);
+  const { supportTeam, deleteUserInfo } = useUserStore((state) => ({
+    supportTeam: state.supportTeam,
+    deleteUserInfo: state.deleteUserInfo,
+  }));
+  const { logoutAction } = useAuthStore((state) => ({
+    logoutAction: state.logoutAction,
+  }));
+
+  const mutationLogout = useMutation<void, Error>({
+    mutationFn: logout,
+    onSuccess: () => {
+      logoutAction();
+      deleteUserInfo();
+      navigate("/");
+    },
+    onError: (error) => {
+      console.error("로그아웃 중 오류 발생:", error);
+    },
+  });
   return (
     <Container>
       {isOpen && popupText === "로그아웃" && (
@@ -23,7 +44,7 @@ const ProfileButtons = () => {
           type='confirm'
           confirmMessage='로그아웃'
           confirmFunc={() => {
-            alert("완료");
+            mutationLogout.mutate();
           }}
         />
       )}
@@ -85,7 +106,7 @@ const ProfileButtons = () => {
         </Text>
         <ProfileTeamWrapper>
           <Text variant='subtitle_02' color='var(--primary-color)'>
-            {team}
+            {supportTeam}
           </Text>
           <ArrowRight />
         </ProfileTeamWrapper>

@@ -1,6 +1,6 @@
 import axios from "axios";
 import axiosInstance from "../axios";
-import { MypageUserInfo } from "../../types/userInfo";
+import { MypageUserInfo } from "../../types/UserInfo";
 import authAxiosInstance from "../authAxios";
 
 interface EmailCodeRequest {
@@ -170,6 +170,24 @@ export const getMemberInfo = async (): Promise<MypageUserInfo> => {
             throw new Error(
               "서버 오류가 발생했습니다. 나중에 다시 시도해 주세요.",
             );
+          default:
+            throw new Error("알 수 없는 오류가 발생했습니다.");
+        }
+      }
+    }
+    throw new Error("요청 중 문제가 발생했습니다. 다시 시도해 주세요.");
+  }
+};
+
+export const logout = async () => {
+  try {
+    await authAxiosInstance.delete("/auth/logout");
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        switch (error.response.status) {
+          case 401:
+            throw new Error("로그인 되어 있지 않습니다.");
           default:
             throw new Error("알 수 없는 오류가 발생했습니다.");
         }
