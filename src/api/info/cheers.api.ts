@@ -59,3 +59,19 @@ export const fetchSearchCheerSongs = async ({
   );
   return response.data;
 };
+export interface CheerSongDetailResponse {
+  id: number;
+  title: string;
+  team: Team;
+  player: Player | null;
+  isLiked: boolean;
+  lyrics: string;
+  link: string;
+}
+
+export const fetchCheerSongDetail = async (id: number) => {
+  const response = await authAxiosInstance.get<CheerSongDetailResponse>(
+    `/cheering-songs/${id}`,
+  );
+  return response.data;
+};
