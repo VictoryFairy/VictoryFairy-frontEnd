@@ -13,9 +13,19 @@ interface PopupProps {
   isOpen: boolean;
   handleClose: () => void;
   teamId: number;
+  withUser: Rank | null;
+  totalGame?: number;
+  win?: number;
 }
 
-const RankPopup = ({ isOpen, handleClose, teamId }: PopupProps) => {
+const RankPopup = ({
+  isOpen,
+  handleClose,
+  teamId,
+  withUser,
+  totalGame,
+  win,
+}: PopupProps) => {
   const [ranking, setRanking] = useState<Rank[]>([]);
   const { data } = useQuery<Rank[]>({
     queryKey: ["getRankList", { teamId }],
@@ -58,7 +68,11 @@ const RankPopup = ({ isOpen, handleClose, teamId }: PopupProps) => {
           })}
         </RankTextWrapper>
         <div>
-          <MyRankComp />
+          <MyRankComp
+            withUser={withUser}
+            win={win ?? 0}
+            totalGame={totalGame ?? 0}
+          />
         </div>
       </RankPopupWrapper>
     </MotionPopup>

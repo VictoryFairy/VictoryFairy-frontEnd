@@ -1,26 +1,37 @@
 import styled from "styled-components";
+import { MyInfo } from "@/api/rank/rank.api";
+import { Rank } from "@/types/Rank";
+import Icon from "../common/Icon";
 import Text from "../common/Text";
 import Button from "../common/Button";
 
-const MyRankComp = () => {
+interface MyRankCompType extends MyInfo {
+  withUser: Rank | null;
+}
+
+const MyRankComp = ({ totalGame, win, withUser }: MyRankCompType) => {
   return (
     <>
       <MyRank>
         <RankTextLeft>
-          <span>15</span>
-          <img
-            src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg'
-            alt='#'
-          />
-          <Text variant='title_01'>김예지</Text>
+          <span>{withUser?.rank}</span>
+          <img src={withUser?.image} alt='#' />
+          <Text variant='title_01'>{withUser?.nickname}</Text>
         </RankTextLeft>
         <RankTextRight>
           <Text variant='title_01' color='var(--primary-color)'>
-            00P
+            {withUser?.score}P
           </Text>
           <Button>
             <Text variant='subtitle_01' color='var(--white)'>
-              up^
+              UP
+            </Text>
+            <Text variant='subtitle_01' color='var(--white)'>
+              <Icon
+                icon='IcArrowUp'
+                fill='var(--white)'
+                style={{ width: "12px", height: "12px", marginLeft: "3px" }}
+              />
             </Text>
           </Button>
         </RankTextRight>
@@ -30,7 +41,7 @@ const MyRankComp = () => {
           나의 승률
         </Text>
         <Text variant='caption' color='var(--gray-900)'>
-          00%
+          {(win / totalGame) % 100}%
         </Text>
       </MyRanks>
       <MyRanks>
@@ -38,7 +49,7 @@ const MyRankComp = () => {
           직관 경기 누적수
         </Text>
         <Text variant='caption' color='var(--gray-900)'>
-          5회
+          {totalGame}
         </Text>
       </MyRanks>
     </>

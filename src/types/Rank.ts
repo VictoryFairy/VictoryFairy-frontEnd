@@ -3,5 +3,5 @@ export interface Rank {
   score: number;
   image: string;
   nickname: string;
-  userId: number;
+  userId?: number;
 }

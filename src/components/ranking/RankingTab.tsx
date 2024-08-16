@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Bar } from "react-chartjs-2";
 import {
@@ -12,6 +12,9 @@ import {
   ChartOptions,
   ChartData,
 } from "chart.js";
+import { ApiResponse, getTopRank, MyInfo } from "@/api/rank/rank.api";
+import { useQuery } from "@tanstack/react-query";
+import { Rank } from "@/types/Rank";
 import Text from "../common/Text";
 import Button from "../common/Button";
 import RankPopup from "./RankPopup";
@@ -30,7 +33,7 @@ ChartJS.register(
 
 const labels = ["100포인트", "300포인트", "200포인트"];
 
-const data: ChartData<"bar", number[], string> = {
+const datas: ChartData<"bar", number[], string> = {
   labels,
   datasets: [
     {
@@ -109,12 +112,33 @@ const teamNumberMap: { [key: string]: number } = {
 const RankingTab = () => {
   const [teamId, setTeamId] = useState<number>(0);
   const [teamTab, setTeamTab] = useState<string>("전체");
+  const [top, setTop] = useState<Rank[] | null>(null);
+  const [withUser, setWithUser] = useState<Rank[] | null>(null);
+  const [user, setUser] = useState<MyInfo | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const userMe = withUser?.find((my) => my.userId === user?.userId) || null;
 
   const handleClickTeam = (value: string) => {
     setTeamTab(value);
     setTeamId(teamNumberMap[value]);
   };
-  const [isOpen, setIsOpen] = useState(false);
+
+  const { data } = useQuery<ApiResponse>({
+    queryKey: ["getTopRank", { teamId }],
+    queryFn: () => getTopRank(teamId),
+  });
+
+  useEffect(() => {
+    if (data) {
+      setTop(data.top);
+      setWithUser(data.withUser);
+      setUser(data.user);
+    }
+    console.log(top);
+    console.log(withUser);
+    console.log(user);
+  }, [data, top, user, withUser]);
 
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
@@ -163,13 +187,19 @@ const RankingTab = () => {
           </RankWrapper>
         </RankProfileWrapper>
         <BarWrapper>
-          <Bar data={data} options={options} />
+          <Bar data={datas} options={options} />
         </BarWrapper>
       </RankTopWrapper>
       <RankTextWrapper>
         <RankTextComp />
         <MyRankWrapper>
-          <MyRankComp />
+          {user && withUser && (
+            <MyRankComp
+              totalGame={user.totalGame}
+              win={user.win}
+              withUser={userMe}
+            />
+          )}
         </MyRankWrapper>
         <RankTextComp />
         <ConfirmRank>
@@ -184,7 +214,14 @@ const RankingTab = () => {
       </RankTextWrapper>
       <Overlay isVisible={isOpen} onClick={handleClose} />
 
-      <RankPopup isOpen={isOpen} handleClose={handleClose} teamId={teamId} />
+      <RankPopup
+        isOpen={isOpen}
+        handleClose={handleClose}
+        teamId={teamId}
+        withUser={userMe}
+        totalGame={user?.totalGame}
+        win={user?.win}
+      />
     </Container>
   );
 };
@@ -346,6 +383,9 @@ const ConfirmRank = styled.span`
   > svg {
     width: 16px;
     height: 16px;
+  }
+  > button {
+    cursor: pointer;
   }
 `;
 
