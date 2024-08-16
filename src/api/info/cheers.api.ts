@@ -115,3 +115,12 @@ export const postLikeCheerSong = async (id: number) => {
     }
   }
 };
+export const deleteLikeCheerSong = async (id: number) => {
+  try {
+    await authAxiosInstance.delete(`/cheering-songs/${id}/likes`);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error(error);
+    }
+  }
+};
