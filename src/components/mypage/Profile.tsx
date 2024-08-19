@@ -37,13 +37,12 @@ const Profile = () => {
 
   const [record, setRecord] = useState<Record | null>(null);
   const { setUserInfo: setUserStoreInfo } = useUserStore();
-  const nickname = useUserStore((state) => state.nickname);
   const teamId = useAuthStore((state) => state.teamId);
 
   useEffect(() => {
     if (data) {
       console.log(data);
-      setUserStoreInfo(data.user.nickname, teamNames[teamId]);
+      setUserStoreInfo(data.user.nickname, teamNames[teamId], data.user.image);
       setRecord(data.record);
     }
   }, [data]);
@@ -51,7 +50,7 @@ const Profile = () => {
   return (
     <Container>
       <Text variant='title_02' color='var(--primary-color)'>
-        {nickname}님, 안녕하세요!
+        {data?.user.nickname}님, 안녕하세요!
       </Text>
       <ProfileWrapper>
         <ProfileInfoWrapper>
@@ -69,10 +68,7 @@ const Profile = () => {
             </Text>
           </Text>
         </ProfileInfoWrapper>
-        <img
-          src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg'
-          alt='#'
-        />
+        <img src={data?.user.image} alt='#' />
         <ProfileInfoWrapper>
           <Text variant='subtitle_02' color='var(--primary-color)'>
             승요력
