@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import styled from "styled-components";
 import Text from "@/components/common/Text";
 import { useQuery } from "@tanstack/react-query";
@@ -33,19 +33,30 @@ const Profile = () => {
   const { data } = useQuery<MypageUserInfo>({
     queryKey: ["getMemberInfo"],
     queryFn: getMemberInfo,
+    refetchOnWindowFocus: true,
   });
 
   const [record, setRecord] = useState<Record | null>(null);
   const { setUserInfo: setUserStoreInfo } = useUserStore();
   const teamId = useAuthStore((state) => state.teamId);
 
-  useEffect(() => {
+  const updateUserStore = useCallback(() => {
     if (data) {
-      console.log(data);
       setUserStoreInfo(data.user.nickname, teamNames[teamId], data.user.image);
       setRecord(data.record);
     }
-  }, [data]);
+  }, [data, teamId, setUserStoreInfo]);
+
+  useEffect(() => {
+    updateUserStore();
+  }, [updateUserStore]);
+
+  const winPercentage = useMemo(() => {
+    if (record && record.total > 0) {
+      return ((record.win / record.total) * 100).toFixed(2);
+    }
+    return "0.00";
+  }, [record]);
 
   return (
     <Container>
@@ -58,23 +69,19 @@ const Profile = () => {
             승률
           </Text>
           <Text variant='display' color='var(--primary-color)'>
-            {record && Number.isNaN((record.win / record.total) * 100)
-              ? "NaN"
-              : record && `${((record.win / record.total) * 100).toFixed(2)}`}
+            {winPercentage}
             <Text variant='title_02' color='var(--primary-color)'>
-              {record && Number.isNaN((record.win / record.total) * 100)
-                ? ""
-                : "%"}
+              %
             </Text>
           </Text>
         </ProfileInfoWrapper>
-        <img src={data?.user.image} alt='#' />
+        <img src={data?.user.image || "/default-image.png"} alt='Profile' />
         <ProfileInfoWrapper>
           <Text variant='subtitle_02' color='var(--primary-color)'>
             승요력
           </Text>
           <Text variant='display' color='var(--primary-color)'>
-            {record?.score}
+            {record?.score || "N/A"}
             <Text variant='title_02' color='var(--primary-color)'>
               P
             </Text>

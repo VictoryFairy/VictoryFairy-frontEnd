@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { profileChange } from "@/api/mypage/mypage.api";
 import styled from "styled-components";
@@ -10,7 +10,7 @@ import Icon from "../common/Icon";
 
 const ProfileChange = () => {
   const [image, setImage] = useState<string | null>(null);
-  const [name, setName] = useState<string | null>(null);
+  const [name, setName] = useState<string>("");
   const { Popup, isOpen, openPopup } = usePopup();
   const { updateNickname } = useUserStore();
   const navigate = useNavigate();
@@ -18,21 +18,24 @@ const ProfileChange = () => {
     profile: state.profile,
     nickname: state.nickname,
   }));
-  const handleBtnClick = () => {
+
+  useEffect(() => {
+    setImage(profile ?? null);
+    setName(nickname ?? "");
+  }, [profile, nickname]);
+
+  const handleBtnClick = useCallback(() => {
     if (name) {
-      profileChange("nickname", name);
-      updateNickname(name);
+      profileChange("nickname", name).then(() => {
+        updateNickname(name);
+        navigate("/mypage");
+      });
     }
-    navigate("/mypage");
-  };
+  }, [name, updateNickname, navigate]);
+
   const nickChange = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
-
-  useEffect(() => {
-    setImage(profile);
-    setName(nickname);
-  }, []);
 
   return (
     <Container>
@@ -46,7 +49,7 @@ const ProfileChange = () => {
       )}
       <Form>
         <ProfileWrapper>
-          <Avatar alt='avatar' src={image || undefined} />
+          <Avatar alt='avatar' src={image ?? "/default-avatar.png"} />
           <CameraIconWrapper>
             <Icon icon='IcCamera' />
           </CameraIconWrapper>
@@ -55,10 +58,9 @@ const ProfileChange = () => {
           <Text variant='caption' color='var(--gray-700)'>
             닉네임
           </Text>
-          <input type='text' value={name || undefined} onChange={nickChange} />
+          <input type='text' value={name} onChange={nickChange} />
           <Icon icon='IcCancel' />
         </InputWrapper>
-
         <ButtonWrapper>
           <Button type='button' onClick={openPopup}>
             저장
@@ -91,13 +93,13 @@ const ProfileWrapper = styled.div`
 
 const InputWrapper = styled.div`
   flex: 1;
+  position: relative;
   > span {
     height: 16px;
   }
   > input {
     width: 100%;
     height: 40px;
-    gap: 8px;
     padding: 12px 8px 8px 0;
     border: none;
     border-bottom: 1px solid var(--primary-color);
@@ -106,7 +108,7 @@ const InputWrapper = styled.div`
   > svg {
     position: absolute;
     right: 20px;
-    margin-top: 12px;
+    top: 12px;
     width: 20px;
     height: 20px;
     color: var(--primary-color);
@@ -126,15 +128,14 @@ const Avatar = styled.img`
 const CameraIconWrapper = styled.div`
   position: absolute;
   bottom: 20px;
-  margin-left: 70px;
+  left: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 36px;
   height: 36px;
   background-color: var(--gray-900);
-  border-radius: 39px;
-  gap: 10px;
+  border-radius: 50%;
   padding: 8px;
   > svg {
     fill: var(--white);
@@ -142,9 +143,11 @@ const CameraIconWrapper = styled.div`
     height: 20px;
   }
 `;
+
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-bottom: 10px;
 `;
+
 export default ProfileChange;
