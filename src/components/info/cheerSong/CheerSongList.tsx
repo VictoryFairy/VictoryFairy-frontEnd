@@ -41,6 +41,16 @@ const CheerSongList = ({
   const navigate = useNavigate();
   const newlyricPreview = lyricPreview?.slice(0, 10);
   const handleNavigate = () => {
+    const songData = {
+      teamName,
+      title,
+      preview: lyricPreview || jerseyNumber,
+    };
+    const recentSearches = JSON.parse(
+      localStorage.getItem("recentSearches") || "[]",
+    );
+    const updatedSearches = [songData, ...recentSearches].slice(0, 5);
+    localStorage.setItem("recentSearches", JSON.stringify(updatedSearches));
     navigate(`/cheerSongDetail/${id}`);
   };
   const queryClient = useQueryClient();
