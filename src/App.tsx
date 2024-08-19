@@ -90,7 +90,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Layout left={<BackButton />} />,
+    element: <Layout left={<BackButton />} footer={false} />,
     children: [
       {
         path: "/login",
@@ -100,7 +100,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/password-reset",
-    element: <Layout left={<BackButton />} />,
+    element: <Layout left={<BackButton />} footer={false} />,
     children: [
       {
         path: "/password-reset",
