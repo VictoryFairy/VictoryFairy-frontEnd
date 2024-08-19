@@ -50,7 +50,12 @@ const Profile = () => {
 
   const updateUserStore = useCallback(() => {
     if (data) {
-      setUserStoreInfo(data.user.nickname, teamNames[teamId], data.user.image);
+      setUserStoreInfo(
+        data.user.nickname,
+        teamNames[teamId],
+        data.user.image,
+        data.user.email,
+      );
       setRecord(data.record);
       setUser(data.user);
     }

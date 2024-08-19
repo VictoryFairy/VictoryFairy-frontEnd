@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { usePopup } from "@/hooks/usePopup";
-import { logout, passwordChk } from "@/api/mypage/mypage.api"; // passwordChk import
+import { logout, passwordChk, withdrawal } from "@/api/mypage/mypage.api"; // passwordChk import
 import ArrowRight from "@/assets/Icons/arrow-right.svg?react";
 import Text from "../common/Text";
 import { useUserStore } from "../../store/userInfo";
@@ -13,7 +13,7 @@ const ProfileButtons = () => {
   const { Popup, isOpen, openPopup } = usePopup();
   const [popupText, setPopupText] = useState("");
   const [password, setPassword] = useState(""); // 비밀번호 상태
-  const [isPasswordValid, setIsPasswordValid] = useState<boolean | null>(null); // 비밀번호 검증 결과
+  const [isPasswordValid, setIsPasswordValid] = useState<boolean>(false); // 비밀번호 검증 결과
 
   const handleLogoutClick = () => {
     openPopup();
@@ -30,6 +30,18 @@ const ProfileButtons = () => {
 
   const mutationLogout = useMutation<void, Error>({
     mutationFn: logout,
+    onSuccess: () => {
+      logoutAction();
+      deleteUserInfo();
+      navigate("/");
+    },
+    onError: (error) => {
+      console.error("로그아웃 중 오류 발생:", error);
+    },
+  });
+
+  const withdraw = useMutation<void, Error>({
+    mutationFn: withdrawal,
     onSuccess: () => {
       logoutAction();
       deleteUserInfo();
@@ -57,7 +69,7 @@ const ProfileButtons = () => {
       if (newPassword) {
         mutationPasswordChk.mutate(newPassword);
       } else {
-        setIsPasswordValid(null);
+        setIsPasswordValid(false);
       }
     },
     [],
@@ -76,17 +88,6 @@ const ProfileButtons = () => {
           }}
         />
       )}
-      {isOpen && popupText === "로그아웃" && (
-        <Popup
-          title='확인'
-          message='정말 로그아웃 하시겠습니까?'
-          type='confirm'
-          confirmMessage='로그아웃'
-          confirmFunc={() => {
-            mutationLogout.mutate();
-          }}
-        />
-      )}
       {isOpen && popupText === "회원탈퇴" && (
         <Popup
           title='확인'
@@ -94,8 +95,9 @@ const ProfileButtons = () => {
           type='test'
           confirmMessage='탈퇴'
           confirmFunc={() => {
-            alert("완료");
+            withdraw.mutate();
           }}
+          TF={isPasswordValid}
           comp={
             <div
               style={{
