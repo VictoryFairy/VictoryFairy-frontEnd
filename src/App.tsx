@@ -15,19 +15,16 @@ import { ThemeContextProvider } from "./context/ThemeContext";
 import Main from "./pages/main/Main";
 import MyPage from "./pages/MyPage";
 import Info from "./pages/Info";
-import Post from "./pages/Post";
+import Post from "./pages/Detail";
 import Ranking from "./pages/Ranking";
 import TeamChange from "./components/mypage/TeamChange";
 import ProfileChange from "./components/mypage/ProfileChange";
 import ArrowLeft from "./assets/Icons/arrow-left.svg?react";
 import SearchCheerSong from "./pages/SearchCheerSong";
-
 import { useSignupStore } from "./store/signupStep";
 import CheersongDetail from "./pages/CheersongDetail";
-import SelectMatch from "./pages/Register/SelectMatch";
-import RegisterForm from "./pages/Register/RegisterForm";
-
-// import { ThemeProvider } from "styled-components";
+import SelectMatch from "./pages/register/SelectMatch";
+import RegisterForm from "./pages/register/RegisterForm";
 
 const queryClient = new QueryClient();
 
@@ -160,12 +157,12 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/post",
+    path: "/detail",
     element: <Layout />,
     children: [
       {
         path: ":id",
-        element: <Post />,
+        element: <Detail />,
       },
     ],
   },

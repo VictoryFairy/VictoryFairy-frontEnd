@@ -45,7 +45,7 @@ const DATA: MyGame = {
   },
 };
 // TODO: 토글버튼으로 수정하기/삭제하기
-const Post = () => {
+const Detail = () => {
   // UI만 잡고 직관 등록 후 작업 예정
   const { register, watch, setValue } = useForm({
     mode: "onChange",
@@ -53,9 +53,9 @@ const Post = () => {
   return (
     <>
       <GameListItem data={DATA} />
-      <PostContainer>
+      <DetailContainer>
         <div className='img'>
-          <img src={DATA.image} alt='post' />
+          <img src={DATA.image} alt='img' />
         </div>
         <InputField
           name='text'
@@ -86,11 +86,11 @@ const Post = () => {
           setValue={setValue}
           disabled
         />
-      </PostContainer>
+      </DetailContainer>
     </>
   );
 };
-const PostContainer = styled.div`
+const DetailContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -111,4 +111,4 @@ const PostContainer = styled.div`
   }
 `;
 
-export default Post;
+export default Detail;

@@ -34,13 +34,13 @@ const WatchList = () => {
     // TODO: 이게 맞는 방법일까
     data?.forEach((item: MyGame) => {
       if (item.game.date === moment(date).format("YYYY-MM-DD")) {
-        navigate(`/register/${item.id}`);
+        navigate(`/detail/${item.id}`);
       }
     });
   };
 
   const handleClickMatch = (id: number) => {
-    navigate(`/register/${id}`);
+    navigate(`/detail/${id}`);
   };
 
   const renderContent = () => {
