@@ -101,6 +101,7 @@ const SearchCheerSong = () => {
               title={cheerSong.title}
               lyricPreview={cheerSong.lyricPreview}
               type='search'
+              setRecentSearches={setRecentSearches}
             />
           ))}
         </div>
