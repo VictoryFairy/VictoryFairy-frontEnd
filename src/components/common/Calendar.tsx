@@ -14,11 +14,12 @@ interface CalendarProps {
   data?: MyGame[];
   onClick?: (
     date: Date,
-    evnet: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => void;
+  onMonthChange?: (date: Date) => void; // Month 변경 핸들러 추가
 }
 
-const CalendarContainer = ({ data, onClick }: CalendarProps) => {
+const CalendarContainer = ({ data, onClick, onMonthChange }: CalendarProps) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const handleClickDay = (
@@ -31,13 +32,19 @@ const CalendarContainer = ({ data, onClick }: CalendarProps) => {
     }
   };
 
+  const handleMonthChange = (date: Date) => {
+    if (onMonthChange) {
+      onMonthChange(date); // onMonthChange 핸들러 호출
+    }
+  };
+
   function titleContent({ date }: any) {
     const match = data?.find(
       (item: any) => moment(date).format("YYYY-MM-DD") === item.game.date,
     );
 
     if (match) {
-      if (match.status === "WIN") {
+      if (match.status === "Win") {
         return <WinIcon />;
       }
       if (match.status === "Lose") {
@@ -60,7 +67,7 @@ const CalendarContainer = ({ data, onClick }: CalendarProps) => {
     const isSelected = selectedDate && moment(date).isSame(selectedDate, "day");
 
     if (match) {
-      if (match.status === "WIN") {
+      if (match.status === "Win") {
         return "event-tile win";
       }
       if (match.status === "Lose") {
@@ -92,6 +99,9 @@ const CalendarContainer = ({ data, onClick }: CalendarProps) => {
         next2Label={null}
         prev2Label={null}
         onClickDay={handleClickDay}
+        onActiveStartDateChange={
+          ({ activeStartDate }) => handleMonthChange(activeStartDate!) // onActiveStartDateChange 이벤트로 Month 변경 감지
+        }
       />
       {data && (
         <div className='explain'>
