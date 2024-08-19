@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { usePopup } from "@/hooks/usePopup";
 import { profileChange } from "@/api/mypage/mypage.api";
 import { useAuthStore } from "@/store/authStore";
@@ -87,16 +88,20 @@ const teams: Team[] = [
   },
 ];
 const TeamChange = () => {
+  const navigate = useNavigate();
   const { Popup, isOpen, openPopup } = usePopup();
-  const handleBtnClick = () => {
-    profileChange("teamId", selectedTeam?.id);
-  };
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
+  const handleBtnClick = () => {
+    if (selectedTeam) {
+      profileChange("teamId", selectedTeam?.id);
+      updateTeamId(selectedTeam?.id);
+    }
+    navigate("/mypage");
+  };
   const { updateTeamId } = useAuthStore();
 
   const handleTeamSelect = (team: Team) => {
     setSelectedTeam(team);
-    updateTeamId(team.id);
   };
   return (
     <Container>
