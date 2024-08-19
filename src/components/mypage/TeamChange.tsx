@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { usePopup } from "@/hooks/usePopup";
+import { profileChange } from "@/api/mypage/mypage.api";
 import Button from "../common/Button";
 import Text from "../common/Text";
 
@@ -87,7 +88,7 @@ const teams: Team[] = [
 const TeamChange = () => {
   const { Popup, isOpen, openPopup } = usePopup();
   const handleBtnClick = () => {
-    openPopup();
+    profileChange("teamId", selectedTeam?.id);
   };
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
   const handleTeamSelect = (team: Team) => {
@@ -100,6 +101,7 @@ const TeamChange = () => {
           title='응원팀 변경 완료'
           message='응원팀 변경이 완료되었습니다.'
           type='alert'
+          confirmFunc={handleBtnClick}
         />
       )}
       <SelectedTeamBox
@@ -126,7 +128,7 @@ const TeamChange = () => {
       <ButtonWrapper>
         <Button
           type='button'
-          onClick={handleBtnClick}
+          onClick={openPopup}
           disabled={selectedTeam === null}>
           <Text variant='title_02'>저장</Text>
         </Button>

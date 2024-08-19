@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import styled from "styled-components";
-import { useQuery } from "@tanstack/react-query";
-import { getMemberInfo } from "../../api/auth/auth.api";
-import { MypageUserInfo } from "../../types/userInfo";
-import { useUserStore } from "../../store/userInfo";
 import Text from "@/components/common/Text";
+import { useQuery } from "@tanstack/react-query";
+import { MypageUserInfo } from "@/types/UserInfo";
+import { getMemberInfo } from "../../api/auth/auth.api";
+import { useUserStore } from "../../store/userInfo";
 
 const Profile = () => {
   // const [userInfo, setUserInfo] = useState<Omit<
