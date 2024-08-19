@@ -117,7 +117,7 @@ const RankingTab = () => {
   const [user, setUser] = useState<MyInfo | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  const userMe = withUser?.find((my) => my.userId === user?.userId) || null;
+  const userMe = withUser?.find((my) => my.userId === user?.userId);
 
   const handleClickTeam = (value: string) => {
     setTeamTab(value);
@@ -135,9 +135,9 @@ const RankingTab = () => {
       setWithUser(data.withUser);
       setUser(data.user);
     }
-    console.log(top);
-    console.log(withUser);
-    console.log(user);
+    console.log("top:", top);
+    console.log("withUser:", withUser);
+    console.log("user:", user);
   }, [data, top, user, withUser]);
 
   const handleOpen = () => setIsOpen(true);
@@ -191,17 +191,43 @@ const RankingTab = () => {
         </BarWrapper>
       </RankTopWrapper>
       <RankTextWrapper>
-        <RankTextComp />
+        {withUser?.map((element) => {
+          if (userMe?.rank && element.rank < userMe.rank)
+            return (
+              <RankTextComp
+                key={element.userId}
+                rank={element.rank}
+                score={element.score}
+                image={element.image}
+                nickname={element.nickname}
+                userId={element.userId}
+              />
+            );
+          return null;
+        })}
         <MyRankWrapper>
           {user && withUser && (
             <MyRankComp
               totalGame={user.totalGame}
               win={user.win}
-              withUser={userMe}
+              withUser={userMe || null}
             />
           )}
         </MyRankWrapper>
-        <RankTextComp />
+        {withUser?.map((element) => {
+          if (userMe?.rank && element.rank > userMe.rank)
+            return (
+              <RankTextComp
+                key={element.userId}
+                rank={element.rank}
+                score={element.score}
+                image={element.image}
+                nickname={element.nickname}
+                userId={element.userId}
+              />
+            );
+          return null;
+        })}
         <ConfirmRank>
           <button type='button' onClick={handleOpen}>
             <Text variant='title_01' color='var(--gray-400)'>

@@ -13,7 +13,7 @@ interface PopupProps {
   isOpen: boolean;
   handleClose: () => void;
   teamId: number;
-  withUser: Rank | null;
+  withUser?: Rank | null;
   totalGame?: number;
   win?: number;
 }
@@ -69,7 +69,7 @@ const RankPopup = ({
         </RankTextWrapper>
         <div>
           <MyRankComp
-            withUser={withUser}
+            withUser={withUser || null}
             win={win ?? 0}
             totalGame={totalGame ?? 0}
           />

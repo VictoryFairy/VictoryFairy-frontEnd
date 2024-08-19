@@ -41,7 +41,9 @@ const MyRankComp = ({ totalGame, win, withUser }: MyRankCompType) => {
           나의 승률
         </Text>
         <Text variant='caption' color='var(--gray-900)'>
-          {(win / totalGame) % 100}%
+          {Number.isNaN((win / totalGame) * 100)
+            ? "NaN"
+            : `${((win / totalGame) * 100).toFixed(2)}%`}
         </Text>
       </MyRanks>
       <MyRanks>
