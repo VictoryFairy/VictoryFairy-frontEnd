@@ -3,8 +3,22 @@ import styled from "styled-components";
 import Text from "@/components/common/Text";
 import { useQuery } from "@tanstack/react-query";
 import { MypageUserInfo } from "@/types/UserInfo";
+import { useAuthStore } from "@/store/authStore";
 import { getMemberInfo } from "../../api/auth/auth.api";
 import { useUserStore } from "../../store/userInfo";
+
+const teamNames = [
+  "LG트윈스",
+  "두산베어스",
+  "한화이글스",
+  "삼성라이온즈",
+  "KT위즈",
+  "SSG랜더스",
+  "NC다이노스",
+  "KIA타이거즈",
+  "롯데자이언츠",
+  "키움히어로즈",
+];
 
 const Profile = () => {
   // const [userInfo, setUserInfo] = useState<Omit<
@@ -19,6 +33,7 @@ const Profile = () => {
 
   const { setUserInfo: setUserStoreInfo } = useUserStore();
   const nickname = useUserStore((state) => state.nickname);
+  const teamId = useAuthStore((state) => state.teamId);
 
   useEffect(() => {
     if (data) {
@@ -30,7 +45,8 @@ const Profile = () => {
       //   supportTeamId: data.supportTeamId,
       // };
       // setUserInfo(userInfos);
-      setUserStoreInfo(data.nickname, data.supportTeam);
+      console.log(data);
+      setUserStoreInfo(data.user.nickname, teamNames[teamId]);
     } else {
       // setUserInfo(null);
     }

@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { usePopup } from "@/hooks/usePopup";
 import { profileChange } from "@/api/mypage/mypage.api";
+import { useAuthStore } from "@/store/authStore";
 import Button from "../common/Button";
 import Text from "../common/Text";
 
@@ -91,8 +92,11 @@ const TeamChange = () => {
     profileChange("teamId", selectedTeam?.id);
   };
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
+  const { updateTeamId } = useAuthStore();
+
   const handleTeamSelect = (team: Team) => {
     setSelectedTeam(team);
+    updateTeamId(team.id);
   };
   return (
     <Container>
