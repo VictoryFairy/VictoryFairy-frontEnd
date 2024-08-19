@@ -1,14 +1,39 @@
+import { ChangeEvent, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { profileChange } from "@/api/mypage/mypage.api";
 import styled from "styled-components";
 import { usePopup } from "@/hooks/usePopup";
+import { useUserStore } from "@/store/userInfo";
 import Button from "../common/Button";
 import Text from "../common/Text";
 import Icon from "../common/Icon";
 
 const ProfileChange = () => {
+  const [image, setImage] = useState<string | null>(null);
+  const [name, setName] = useState<string | null>(null);
   const { Popup, isOpen, openPopup } = usePopup();
+  const { updateNickname } = useUserStore();
+  const navigate = useNavigate();
+  const { profile, nickname } = useUserStore((state) => ({
+    profile: state.profile,
+    nickname: state.nickname,
+  }));
   const handleBtnClick = () => {
-    openPopup();
+    if (name) {
+      profileChange("nickname", name);
+      updateNickname(name);
+    }
+    navigate("/mypage");
   };
+  const nickChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
+
+  useEffect(() => {
+    setImage(profile);
+    setName(nickname);
+  }, []);
+
   return (
     <Container>
       {isOpen && (
@@ -16,14 +41,12 @@ const ProfileChange = () => {
           title='프로필 설정 완료'
           message='프로필 설정이 완료되었습니다.'
           type='alert'
+          confirmFunc={handleBtnClick}
         />
       )}
       <Form>
         <ProfileWrapper>
-          <Avatar
-            alt='avatar'
-            src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg'
-          />
+          <Avatar alt='avatar' src={image || undefined} />
           <CameraIconWrapper>
             <Icon icon='IcCamera' />
           </CameraIconWrapper>
@@ -32,12 +55,12 @@ const ProfileChange = () => {
           <Text variant='caption' color='var(--gray-700)'>
             닉네임
           </Text>
-          <input value='홍길동' />
+          <input type='text' value={name || undefined} onChange={nickChange} />
           <Icon icon='IcCancel' />
         </InputWrapper>
 
         <ButtonWrapper>
-          <Button type='button' onClick={handleBtnClick}>
+          <Button type='button' onClick={openPopup}>
             저장
           </Button>
         </ButtonWrapper>

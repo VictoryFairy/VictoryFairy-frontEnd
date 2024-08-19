@@ -10,6 +10,7 @@ interface UserState {
     supportTeam: string | null,
     profile: string | null,
   ) => void;
+  updateNickname: (nickname: string) => void;
   deleteUserInfo: () => void;
 }
 
@@ -23,7 +24,11 @@ export const useUserStore = create(
         set({ nickname, supportTeam, profile }),
       deleteUserInfo: () =>
         set({ nickname: null, supportTeam: null, profile: null }),
+      updateNickname: (nickname: string) => {
+        set({ nickname });
+      },
     }),
+
     {
       name: "user-storage",
     },
