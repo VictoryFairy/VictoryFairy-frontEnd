@@ -18,15 +18,17 @@ const teamColors = {
 };
 export type TeamName = keyof typeof teamColors;
 
-interface CheerSongListProps {
+export interface CheerSongListProps {
   id: number;
   teamName: TeamName;
   title: string;
   lyricPreview?: string;
   jerseyNumber?: string;
-  isLiked: boolean;
+  isLiked?: boolean;
   selectedTeamId?: number;
   activeTab?: number;
+  type?: string;
+  setRecentSearches?: (data: CheerSongListProps[]) => void;
 }
 const CheerSongList = ({
   id,
@@ -37,12 +39,34 @@ const CheerSongList = ({
   isLiked,
   selectedTeamId,
   activeTab,
+  type,
+  setRecentSearches,
 }: CheerSongListProps) => {
   const navigate = useNavigate();
   const newlyricPreview = lyricPreview?.slice(0, 10);
   const handleNavigate = () => {
+    const songData = {
+      id,
+      teamName,
+      title,
+      lyricPreview: lyricPreview || jerseyNumber,
+    };
+
+    const storedSearches = JSON.parse(
+      localStorage.getItem("recentSearches") || "[]",
+    ) as CheerSongListProps[];
+
+    const updatedSearches = storedSearches.filter((search) => search.id !== id);
+
+    updatedSearches.unshift(songData);
+
+    const limitedSearches = updatedSearches.slice(0, 5);
+
+    localStorage.setItem("recentSearches", JSON.stringify(limitedSearches));
+
     navigate(`/cheerSongDetail/${id}`);
   };
+
   const queryClient = useQueryClient();
 
   const likeMutation = useMutation({
@@ -71,29 +95,54 @@ const CheerSongList = ({
   const handleRemoveLike = () => {
     unlikeMutation.mutate(id);
   };
+  const handleDeleteSearch = () => {
+    if (setRecentSearches) {
+      const recentSearches = JSON.parse(
+        localStorage.getItem("recentSearches") || "[]",
+      ) as CheerSongListProps[];
+
+      const updatedSearches = recentSearches.filter(
+        (search) => search.id !== id,
+      );
+
+      localStorage.setItem("recentSearches", JSON.stringify(updatedSearches));
+
+      setRecentSearches(updatedSearches);
+    }
+  };
   return (
     <Container>
       <CheersInfo>
         <TeamLogo teamName={teamName}>{teamName}</TeamLogo>
         <InfoWrapper>
-          <CheersName>{title}</CheersName>
+          <CheersName onClick={handleNavigate}>{title}</CheersName>
           <Description>
             {jerseyNumber ? `no . ${jerseyNumber}` : newlyricPreview}
           </Description>
         </InfoWrapper>
       </CheersInfo>
       <IconWrapper>
-        {isLiked ? (
-          <Icon
-            icon='IcHeart'
-            fill='red'
-            cursor='pointer'
-            onClick={handleRemoveLike}
-          />
+        {type === "search" ? (
+          <Icon icon='IcCancel' onClick={handleDeleteSearch} cursor='pointer' />
         ) : (
-          <Icon icon='IcHeart' cursor='pointer' onClick={handleAddLike} />
+          <>
+            {isLiked ? (
+              <Icon
+                icon='IcHeart'
+                fill='red'
+                cursor='pointer'
+                onClick={handleRemoveLike}
+              />
+            ) : (
+              <Icon icon='IcHeart' cursor='pointer' onClick={handleAddLike} />
+            )}
+            <Icon
+              icon='IcArrowRight'
+              cursor='pointer'
+              onClick={handleNavigate}
+            />
+          </>
         )}
-        <Icon icon='IcArrowRight' cursor='pointer' onClick={handleNavigate} />
       </IconWrapper>
     </Container>
   );
@@ -139,6 +188,7 @@ const CheersName = styled.span`
   font-size: 16px;
   font-weight: bold;
   color: var(--lotte-giants-navy);
+  cursor: pointer;
 `;
 
 const Description = styled.span`
