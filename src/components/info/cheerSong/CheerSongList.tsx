@@ -27,6 +27,7 @@ interface CheerSongListProps {
   isLiked: boolean;
   selectedTeamId?: number;
   activeTab?: number;
+  type?: string;
 }
 const CheerSongList = ({
   id,
@@ -37,6 +38,7 @@ const CheerSongList = ({
   isLiked,
   selectedTeamId,
   activeTab,
+  type,
 }: CheerSongListProps) => {
   const navigate = useNavigate();
   const newlyricPreview = lyricPreview?.slice(0, 10);
@@ -93,17 +95,27 @@ const CheerSongList = ({
         </InfoWrapper>
       </CheersInfo>
       <IconWrapper>
-        {isLiked ? (
-          <Icon
-            icon='IcHeart'
-            fill='red'
-            cursor='pointer'
-            onClick={handleRemoveLike}
-          />
+        {type === "search" ? (
+          <Icon icon='IcCancel' />
         ) : (
-          <Icon icon='IcHeart' cursor='pointer' onClick={handleAddLike} />
+          <>
+            {isLiked ? (
+              <Icon
+                icon='IcHeart'
+                fill='red'
+                cursor='pointer'
+                onClick={handleRemoveLike}
+              />
+            ) : (
+              <Icon icon='IcHeart' cursor='pointer' onClick={handleAddLike} />
+            )}
+            <Icon
+              icon='IcArrowRight'
+              cursor='pointer'
+              onClick={handleNavigate}
+            />
+          </>
         )}
-        <Icon icon='IcArrowRight' cursor='pointer' onClick={handleNavigate} />
       </IconWrapper>
     </Container>
   );
