@@ -5,6 +5,15 @@ interface User {
   image: string;
 }
 
+interface Record {
+  win: number;
+  lose: number;
+  tie: number;
+  cancel: number;
+  total: number;
+  score: number;
+}
 export interface MypageUserInfo {
   user: User;
+  record: Record;
 }

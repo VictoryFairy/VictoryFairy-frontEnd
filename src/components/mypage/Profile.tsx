@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Text from "@/components/common/Text";
 import { useQuery } from "@tanstack/react-query";
@@ -6,6 +6,15 @@ import { MypageUserInfo } from "@/types/UserInfo";
 import { useAuthStore } from "@/store/authStore";
 import { getMemberInfo } from "../../api/auth/auth.api";
 import { useUserStore } from "../../store/userInfo";
+
+interface Record {
+  win: number;
+  lose: number;
+  tie: number;
+  cancel: number;
+  total: number;
+  score: number;
+}
 
 const teamNames = [
   "LG트윈스",
@@ -21,34 +30,21 @@ const teamNames = [
 ];
 
 const Profile = () => {
-  // const [userInfo, setUserInfo] = useState<Omit<
-  //   MypageUserInfo,
-  //   "registeredGames"
-  // > | null>(null);
-
   const { data } = useQuery<MypageUserInfo>({
     queryKey: ["getMemberInfo"],
     queryFn: getMemberInfo,
   });
 
+  const [record, setRecord] = useState<Record | null>(null);
   const { setUserInfo: setUserStoreInfo } = useUserStore();
   const nickname = useUserStore((state) => state.nickname);
   const teamId = useAuthStore((state) => state.teamId);
 
   useEffect(() => {
     if (data) {
-      // const userInfos = {
-      //   email: data.email,
-      //   nickname: data.nickname,
-      //   score: data.score,
-      //   supportTeam: data.supportTeam,
-      //   supportTeamId: data.supportTeamId,
-      // };
-      // setUserInfo(userInfos);
       console.log(data);
       setUserStoreInfo(data.user.nickname, teamNames[teamId]);
-    } else {
-      // setUserInfo(null);
+      setRecord(data.record);
     }
   }, [data]);
 
@@ -63,9 +59,13 @@ const Profile = () => {
             승률
           </Text>
           <Text variant='display' color='var(--primary-color)'>
-            80
+            {record && Number.isNaN((record.win / record.total) * 100)
+              ? "NaN"
+              : record && `${((record.win / record.total) * 100).toFixed(2)}`}
             <Text variant='title_02' color='var(--primary-color)'>
-              %
+              {record && Number.isNaN((record.win / record.total) * 100)
+                ? ""
+                : "%"}
             </Text>
           </Text>
         </ProfileInfoWrapper>
@@ -78,7 +78,7 @@ const Profile = () => {
             승요력
           </Text>
           <Text variant='display' color='var(--primary-color)'>
-            3000
+            {record?.score}
             <Text variant='title_02' color='var(--primary-color)'>
               P
             </Text>
