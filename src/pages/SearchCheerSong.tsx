@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import Text from "@/components/common/Text";
 import SearchBar from "../components/common/SearchBar";
 import ArrowLeft from "../assets/Icons/arrow-left.svg?react";
 import CheerSongList, {
@@ -90,21 +91,28 @@ const SearchCheerSong = () => {
         </HeaderSection>
       </HeaderContainer>
 
-      <h3 className='searchList'>최근 검색어</h3>
-      {recentSearches.length > 0 && (
-        <div className='list'>
-          {recentSearches.map((cheerSong) => (
-            <CheerSongList
-              key={cheerSong.id}
-              id={cheerSong.id}
-              teamName={cheerSong.teamName as TeamName}
-              title={cheerSong.title}
-              lyricPreview={cheerSong.lyricPreview}
-              type='search'
-              setRecentSearches={setRecentSearches}
-            />
-          ))}
-        </div>
+      {searchTerm.length === 0 && (
+        <>
+          <h3 className='searchList'>최근 검색어</h3>
+          {recentSearches.length === 0 && (
+            <TextStyle as='p'>검색어가 없습니다</TextStyle>
+          )}
+          {recentSearches.length > 0 && (
+            <div className='list'>
+              {recentSearches.map((cheerSong) => (
+                <CheerSongList
+                  key={cheerSong.id}
+                  id={cheerSong.id}
+                  teamName={cheerSong.teamName as TeamName}
+                  title={cheerSong.title}
+                  lyricPreview={cheerSong.lyricPreview}
+                  type='search'
+                  setRecentSearches={setRecentSearches}
+                />
+              ))}
+            </div>
+          )}
+        </>
       )}
       <div className='list'>
         {data?.pages.map((page, index) => (
@@ -164,7 +172,10 @@ const HeaderContainer = styled.div`
   background-color: var(--white);
   z-index: 10;
 `;
-
+const TextStyle = styled(Text)`
+  text-align: center;
+  margin-top: 30px;
+`;
 const HeaderSection = styled.div`
   flex: 1;
   margin-left: 20px;
