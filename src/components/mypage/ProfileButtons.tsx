@@ -1,20 +1,24 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useMutation } from "@tanstack/react-query";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { usePopup } from "@/hooks/usePopup";
+import { logout, passwordChk } from "@/api/mypage/mypage.api"; // passwordChk import
 import ArrowRight from "@/assets/Icons/arrow-right.svg?react";
 import Text from "../common/Text";
 import { useUserStore } from "../../store/userInfo";
-import { logout } from "../../api/auth/auth.api";
 import { useAuthStore } from "../../store/authStore";
 
 const ProfileButtons = () => {
   const { Popup, isOpen, openPopup } = usePopup();
   const [popupText, setPopupText] = useState("");
+  const [password, setPassword] = useState(""); // 비밀번호 상태
+  const [isPasswordValid, setIsPasswordValid] = useState<boolean | null>(null); // 비밀번호 검증 결과
+
   const handleLogoutClick = () => {
     openPopup();
   };
+
   const navigate = useNavigate();
   const { supportTeam, deleteUserInfo } = useUserStore((state) => ({
     supportTeam: state.supportTeam,
@@ -35,8 +39,43 @@ const ProfileButtons = () => {
       console.error("로그아웃 중 오류 발생:", error);
     },
   });
+
+  const mutationPasswordChk = useMutation<any, Error, string>({
+    mutationFn: passwordChk,
+    onSuccess: (data) => {
+      setIsPasswordValid(data.isCorrect); // 비밀번호 검증 성공
+    },
+    onError: (error) => {
+      console.error("비밀번호 체크 중 오류 발생:", error);
+    },
+  });
+
+  const onPasswordChange = useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newPassword = e.target.value;
+      setPassword(newPassword);
+      if (newPassword) {
+        mutationPasswordChk.mutate(newPassword);
+      } else {
+        setIsPasswordValid(null);
+      }
+    },
+    [],
+  );
+
   return (
     <Container>
+      {isOpen && popupText === "로그아웃" && (
+        <Popup
+          title='확인'
+          message='정말 로그아웃 하시겠습니까?'
+          type='confirm'
+          confirmMessage='로그아웃'
+          confirmFunc={() => {
+            mutationLogout.mutate();
+          }}
+        />
+      )}
       {isOpen && popupText === "로그아웃" && (
         <Popup
           title='확인'
@@ -68,6 +107,8 @@ const ProfileButtons = () => {
                 비밀번호
               </Text>
               <input
+                onChange={onPasswordChange}
+                value={password}
                 style={{
                   width: "100%",
                   height: "40px",
@@ -77,9 +118,11 @@ const ProfileButtons = () => {
                   margin: "5px 0",
                 }}
               />
-              <Text variant='caption' color='var(--red-600)'>
-                입력하신 비밀번호가 일치하지 않습니다.
-              </Text>
+              {isPasswordValid === false && (
+                <Text variant='caption' color='var(--red-600)'>
+                  입력하신 비밀번호가 일치하지 않습니다.
+                </Text>
+              )}
             </div>
           }
         />
@@ -172,6 +215,7 @@ const ProfileWrapper = styled.div`
     fill: var(--gray-900);
   }
 `;
+
 const ProfileLastWrapper = styled.div`
   display: flex;
   justify-content: space-between;
