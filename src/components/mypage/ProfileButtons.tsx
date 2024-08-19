@@ -147,7 +147,7 @@ const ProfileButtons = () => {
         tabIndex={0}
         onClick={() => navigate("/mypage/team")}>
         <Text variant='body_02' color='var(--primary-color)'>
-          응원팀 변경{" "}
+          응원팀 변경
         </Text>
         <ProfileTeamWrapper>
           <Text variant='subtitle_02' color='var(--primary-color)'>

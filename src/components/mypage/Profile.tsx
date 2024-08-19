@@ -24,16 +24,16 @@ interface User {
 }
 
 const teamNames = [
-  "LG트윈스",
+  "롯데자이언츠",
   "두산베어스",
-  "한화이글스",
+  "KIA타이거즈",
   "삼성라이온즈",
-  "KT위즈",
   "SSG랜더스",
   "NC다이노스",
-  "KIA타이거즈",
-  "롯데자이언츠",
+  "LG트윈스",
   "키움히어로즈",
+  "KT위즈",
+  "한화이글스",
 ];
 
 const Profile = () => {
@@ -52,7 +52,7 @@ const Profile = () => {
     if (data) {
       setUserStoreInfo(
         data.user.nickname,
-        teamNames[teamId],
+        teamNames[teamId - 1],
         data.user.image,
         data.user.email,
       );
