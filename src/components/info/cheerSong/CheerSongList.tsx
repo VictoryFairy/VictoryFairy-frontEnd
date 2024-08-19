@@ -51,13 +51,22 @@ const CheerSongList = ({
       title,
       lyricPreview: lyricPreview || jerseyNumber,
     };
-    const recentSearches = JSON.parse(
+
+    const storedSearches = JSON.parse(
       localStorage.getItem("recentSearches") || "[]",
-    );
-    const updatedSearches = [songData, ...recentSearches].slice(0, 5);
-    localStorage.setItem("recentSearches", JSON.stringify(updatedSearches));
+    ) as CheerSongListProps[];
+
+    const updatedSearches = storedSearches.filter((search) => search.id !== id);
+
+    updatedSearches.unshift(songData);
+
+    const limitedSearches = updatedSearches.slice(0, 5);
+
+    localStorage.setItem("recentSearches", JSON.stringify(limitedSearches));
+
     navigate(`/cheerSongDetail/${id}`);
   };
+
   const queryClient = useQueryClient();
 
   const likeMutation = useMutation({
@@ -106,7 +115,7 @@ const CheerSongList = ({
       <CheersInfo>
         <TeamLogo teamName={teamName}>{teamName}</TeamLogo>
         <InfoWrapper>
-          <CheersName>{title}</CheersName>
+          <CheersName onClick={handleNavigate}>{title}</CheersName>
           <Description>
             {jerseyNumber ? `no . ${jerseyNumber}` : newlyricPreview}
           </Description>
@@ -179,6 +188,7 @@ const CheersName = styled.span`
   font-size: 16px;
   font-weight: bold;
   color: var(--lotte-giants-navy);
+  cursor: pointer;
 `;
 
 const Description = styled.span`
