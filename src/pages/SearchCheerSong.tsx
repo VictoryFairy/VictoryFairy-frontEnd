@@ -5,6 +5,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import SearchBar from "../components/common/SearchBar";
 import ArrowLeft from "../assets/Icons/arrow-left.svg?react";
 import CheerSongList, {
+  CheerSongListProps,
   TeamName,
 } from "../components/info/cheerSong/CheerSongList";
 import { fetchSearchCheerSongs } from "../api/info/cheers.api";
@@ -14,6 +15,16 @@ const SearchCheerSong = () => {
   const navigate = useNavigate();
   const observer = useRef<IntersectionObserver | null>(null);
   const lastElementRef = useRef<HTMLDivElement | null>(null);
+  const [recentSearches, setRecentSearches] = useState<CheerSongListProps[]>(
+    [],
+  );
+
+  useEffect(() => {
+    const storedSearches = JSON.parse(
+      localStorage.getItem("recentSearches") || "[]",
+    );
+    setRecentSearches(storedSearches);
+  }, []);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
@@ -78,6 +89,22 @@ const SearchCheerSong = () => {
           />
         </HeaderSection>
       </HeaderContainer>
+
+      <h3 className='searchList'>최근 검색어</h3>
+      {recentSearches.length > 0 && (
+        <div className='list'>
+          {recentSearches.map((cheerSong) => (
+            <CheerSongList
+              key={cheerSong.id}
+              id={cheerSong.id}
+              teamName={cheerSong.teamName as TeamName}
+              title={cheerSong.title}
+              lyricPreview={cheerSong.lyricPreview}
+              type='search'
+            />
+          ))}
+        </div>
+      )}
       <div className='list'>
         {data?.pages.map((page, index) => (
           <div key={index}>
@@ -114,6 +141,10 @@ const Container = styled.div`
   position: relative;
   padding-top: 60px;
 
+  .searchList {
+    margin-top: 20px;
+    padding: 0 20px;
+  }
   .list {
     margin-top: 20px;
     margin-bottom: 30px;

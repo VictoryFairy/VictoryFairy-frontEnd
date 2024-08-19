@@ -18,13 +18,13 @@ const teamColors = {
 };
 export type TeamName = keyof typeof teamColors;
 
-interface CheerSongListProps {
+export interface CheerSongListProps {
   id: number;
   teamName: TeamName;
   title: string;
   lyricPreview?: string;
   jerseyNumber?: string;
-  isLiked: boolean;
+  isLiked?: boolean;
   selectedTeamId?: number;
   activeTab?: number;
   type?: string;
@@ -44,9 +44,10 @@ const CheerSongList = ({
   const newlyricPreview = lyricPreview?.slice(0, 10);
   const handleNavigate = () => {
     const songData = {
+      id,
       teamName,
       title,
-      preview: lyricPreview || jerseyNumber,
+      lyricPreview: lyricPreview || jerseyNumber,
     };
     const recentSearches = JSON.parse(
       localStorage.getItem("recentSearches") || "[]",
@@ -83,6 +84,7 @@ const CheerSongList = ({
   const handleRemoveLike = () => {
     unlikeMutation.mutate(id);
   };
+  const handleDeleteSearch = () => {};
   return (
     <Container>
       <CheersInfo>
@@ -96,7 +98,7 @@ const CheerSongList = ({
       </CheersInfo>
       <IconWrapper>
         {type === "search" ? (
-          <Icon icon='IcCancel' />
+          <Icon icon='IcCancel' onClick={handleDeleteSearch} />
         ) : (
           <>
             {isLiked ? (
