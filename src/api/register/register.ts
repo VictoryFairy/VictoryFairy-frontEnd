@@ -25,3 +25,18 @@ export const postRegisterGame = async (data: any) => {
     console.error(err);
   }
 };
+
+export const getRegisteredGameMonthly = async (year: number, month: number) => {
+  try {
+    const response = await authAxiosInstance.get("/registered-games", {
+      params: {
+        year,
+        month,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
