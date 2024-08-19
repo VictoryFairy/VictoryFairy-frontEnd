@@ -66,7 +66,6 @@ module.exports = {
     "import/prefer-default-export": "off",
     "@typescript-eslint/no-use-before-define": ["error", { variables: false }],
     "react/require-default-props": "off",
-
     "react/jsx-props-no-spreading": 0,
     "import/no-extraneous-dependencies": 0,
     "@typescript-eslint/no-explicit-any": "off",
@@ -80,6 +79,7 @@ module.exports = {
     "no-param-reassign": ["error", { props: false }],
     "no-console": "off",
     "no-new": "off",
+    "react-hooks/exhaustive-deps": "off",
     "import/no-cycle": "off",
   },
 };
