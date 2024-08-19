@@ -36,3 +36,4 @@ export { default as IcShow } from "./show.svg?react";
 export { default as IcSwitch } from "./switch.svg?react";
 export { default as IcTie } from "./tie.svg?react";
 export { default as IcWin } from "./win.svg?react";
+export { default as IcPolygon } from "./polygon.svg?react";
