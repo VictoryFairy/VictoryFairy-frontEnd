@@ -42,6 +42,21 @@ const OTPInput = ({ otp, setOtp }: OTPInputProps) => {
     }
   };
 
+  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    const pastedData = e.clipboardData.getData("Text").trim();
+    const newOtp = [...otp];
+
+    for (let i = 0; i < otp.length; i++) {
+      if (pastedData[i]) {
+        newOtp[i] = pastedData[i];
+      }
+    }
+    setOtp(newOtp);
+
+    inputRefs.current[Math.min(pastedData.length - 1, otp.length - 1)]?.focus();
+  };
   return (
     <Container>
       {otp.map((data, index) => (
@@ -52,6 +67,7 @@ const OTPInput = ({ otp, setOtp }: OTPInputProps) => {
           value={data}
           onChange={(e) => handleChange(e.target, index)}
           onKeyDown={(e) => handleKeyDown(e, index)}
+          onPaste={(e) => handlePaste(e)}
         />
       ))}
     </Container>

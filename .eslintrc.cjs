@@ -81,5 +81,6 @@ module.exports = {
     "no-console": "off",
     "no-new": "off",
     "import/no-cycle": "off",
+    "no-plusplus": "off",
   },
 };
