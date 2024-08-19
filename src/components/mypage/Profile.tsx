@@ -16,6 +16,13 @@ interface Record {
   score: number;
 }
 
+interface User {
+  id: number;
+  email: string;
+  nickname: string;
+  image: string;
+}
+
 const teamNames = [
   "LG트윈스",
   "두산베어스",
@@ -37,6 +44,7 @@ const Profile = () => {
   });
 
   const [record, setRecord] = useState<Record | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const { setUserInfo: setUserStoreInfo } = useUserStore();
   const teamId = useAuthStore((state) => state.teamId);
 
@@ -44,6 +52,7 @@ const Profile = () => {
     if (data) {
       setUserStoreInfo(data.user.nickname, teamNames[teamId], data.user.image);
       setRecord(data.record);
+      setUser(data.user);
     }
   }, [data, teamId, setUserStoreInfo]);
 
@@ -75,7 +84,7 @@ const Profile = () => {
             </Text>
           </Text>
         </ProfileInfoWrapper>
-        <img src={data?.user.image || "/default-image.png"} alt='Profile' />
+        <img src={user?.image || "/default-image.png"} alt='Profile' />
         <ProfileInfoWrapper>
           <Text variant='subtitle_02' color='var(--primary-color)'>
             승요력

@@ -1,7 +1,8 @@
-import { ChangeEvent, useEffect, useState, useCallback } from "react";
+import { ChangeEvent, useEffect, useState, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { profileChange } from "@/api/mypage/mypage.api";
 import styled from "styled-components";
+import { uploadProfileImage } from "@/api/auth/auth.api";
 import { usePopup } from "@/hooks/usePopup";
 import { useUserStore } from "@/store/userInfo";
 import Button from "../common/Button";
@@ -12,7 +13,21 @@ const ProfileChange = () => {
   const [image, setImage] = useState<string | null>(null);
   const [name, setName] = useState<string>("");
   const { Popup, isOpen, openPopup } = usePopup();
-  const { updateNickname } = useUserStore();
+  const { updateNickname, updateImage } = useUserStore();
+  const fileInput = useRef<HTMLInputElement | null>(null);
+  const onChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      try {
+        const formData = new FormData();
+        formData.append("file", file);
+        const profileImgUrl = await uploadProfileImage(formData);
+        setImage(profileImgUrl);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
   const navigate = useNavigate();
   const { profile, nickname } = useUserStore((state) => ({
     profile: state.profile,
@@ -24,14 +39,19 @@ const ProfileChange = () => {
     setName(nickname ?? "");
   }, [profile, nickname]);
 
-  const handleBtnClick = useCallback(() => {
+  const handleBtnClick = useCallback(async () => {
     if (name) {
-      profileChange("nickname", name).then(() => {
+      await profileChange("nickname", name).then(() => {
         updateNickname(name);
-        navigate("/mypage");
       });
     }
-  }, [name, updateNickname, navigate]);
+    if (image) {
+      await profileChange("image", image).then(() => {
+        updateImage(image);
+      });
+    }
+    navigate("/mypage");
+  }, [name, updateNickname, updateImage, navigate, image, profile, nickname]);
 
   const nickChange = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -49,7 +69,17 @@ const ProfileChange = () => {
       )}
       <Form>
         <ProfileWrapper>
-          <Avatar alt='avatar' src={image ?? "/default-avatar.png"} />
+          <Avatar
+            alt='avatar'
+            src={image ?? "/default-avatar.png"}
+            onClick={() => fileInput.current?.click()}
+          />
+          <HiddenFileInput
+            type='file'
+            accept='image/jpg,image/png,image/jpeg'
+            onChange={onChange}
+            ref={fileInput}
+          />
           <CameraIconWrapper>
             <Icon icon='IcCamera' />
           </CameraIconWrapper>
@@ -93,13 +123,13 @@ const ProfileWrapper = styled.div`
 
 const InputWrapper = styled.div`
   flex: 1;
-  position: relative;
   > span {
     height: 16px;
   }
   > input {
     width: 100%;
     height: 40px;
+    gap: 8px;
     padding: 12px 8px 8px 0;
     border: none;
     border-bottom: 1px solid var(--primary-color);
@@ -108,7 +138,7 @@ const InputWrapper = styled.div`
   > svg {
     position: absolute;
     right: 20px;
-    top: 12px;
+    margin-top: 12px;
     width: 20px;
     height: 20px;
     color: var(--primary-color);
@@ -128,14 +158,15 @@ const Avatar = styled.img`
 const CameraIconWrapper = styled.div`
   position: absolute;
   bottom: 20px;
-  left: 70px;
+  margin-left: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 36px;
   height: 36px;
   background-color: var(--gray-900);
-  border-radius: 50%;
+  border-radius: 39px;
+  gap: 10px;
   padding: 8px;
   > svg {
     fill: var(--white);
@@ -143,11 +174,13 @@ const CameraIconWrapper = styled.div`
     height: 20px;
   }
 `;
-
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-bottom: 10px;
+`;
+const HiddenFileInput = styled.input`
+  display: none;
 `;
 
 export default ProfileChange;

@@ -161,6 +161,7 @@ export const changePassword = async (data: ChangePasswordRequest) => {
 export const getMemberInfo = async (): Promise<MypageUserInfo> => {
   try {
     const response = await authAxiosInstance.get<MypageUserInfo>("/users/me");
+    console.log(response.data);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

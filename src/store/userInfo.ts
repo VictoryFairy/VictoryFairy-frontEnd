@@ -11,6 +11,7 @@ interface UserState {
     profile: string | null,
   ) => void;
   updateNickname: (nickname: string) => void;
+  updateImage: (profile: string) => void;
   deleteUserInfo: () => void;
 }
 
@@ -26,6 +27,9 @@ export const useUserStore = create(
         set({ nickname: null, supportTeam: null, profile: null }),
       updateNickname: (nickname: string) => {
         set({ nickname });
+      },
+      updateImage: (profile: string) => {
+        set({ profile });
       },
     }),
 
