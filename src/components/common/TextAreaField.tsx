@@ -51,6 +51,7 @@ const TextAreaField = ({
           placeholder={placeholder}
           rows={rows}
           disabled={disabled}
+          maxLength={maxLength}
           {...register(name)}
           {...textareaProps}
         />
@@ -87,7 +88,6 @@ const StyledTextArea = styled.textarea`
   outline: none;
   border: none;
   border-bottom: 1px solid #ccc;
-  border-radius: 4px;
   resize: vertical;
   min-height: 100px;
   background-color: ${(prop) => (prop.disabled ? "var(--gray-50)" : "white")};
