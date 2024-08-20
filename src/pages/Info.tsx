@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import ParkingInfoPage from "../components/info/map/ParkingInfoPage";
 import CheerSongPage from "../components/info/cheerSong/CheerSongPage";
 
 const Info = () => {
-  const [activeTab, setActiveTab] = useState<"map" | "cheer">("map");
+  const [activeTab, setActiveTab] = useState<"map" | "cheer">(() => {
+    return (localStorage.getItem("activeTab") as "map" | "cheer") || "map";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("activeTab", activeTab);
+  }, [activeTab]);
 
   const handleTabChange = (tab: "map" | "cheer") => {
     setActiveTab(tab);

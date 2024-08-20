@@ -70,15 +70,31 @@ const Map = ({ selectedStadium, parkingSpots, selectedParking }: MapProps) => {
     [mapInstance],
   );
 
+  // useEffect(() => {
+  //   if (!window.naver || !mapRef.current) return;
+
+  //   const mapOptions: naver.maps.MapOptions = {
+  //     center: new window.naver.maps.LatLng(
+  //       // selectedStadium.latitude,
+  //       // selectedStadium.longitude,
+  //       37.5665,
+  //       126.978,
+  //     ),
+  //     zoom: 15,
+  //   };
+  //   const newMapInstance = new window.naver.maps.Map(
+  //     mapRef.current,
+  //     mapOptions,
+  //   );
+  //   setMapInstance(newMapInstance);
+  // }, []);
   useEffect(() => {
-    if (!window.naver || !mapRef.current) return;
+    if (!window.naver || !mapRef.current || !selectedStadium) return;
 
     const mapOptions: naver.maps.MapOptions = {
       center: new window.naver.maps.LatLng(
-        // selectedStadium.latitude,
-        // selectedStadium.longitude,
-        37.5665,
-        126.978,
+        selectedStadium.latitude,
+        selectedStadium.longitude,
       ),
       zoom: 15,
     };
@@ -87,7 +103,7 @@ const Map = ({ selectedStadium, parkingSpots, selectedParking }: MapProps) => {
       mapOptions,
     );
     setMapInstance(newMapInstance);
-  }, []);
+  }, [selectedStadium]);
 
   useEffect(() => {
     if (!mapInstance || !selectedStadium) return;

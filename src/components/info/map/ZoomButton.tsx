@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 interface ZoomButtonProps {
@@ -6,9 +7,12 @@ interface ZoomButtonProps {
 }
 
 const ZoomButton = ({ mapInstance, zoomType }: ZoomButtonProps) => {
-  const handleZoom = () => {
-    if (!mapInstance) return;
+  const [isZooming, setIsZooming] = useState(false);
 
+  const handleZoom = () => {
+    if (!mapInstance || isZooming) return;
+
+    setIsZooming(true);
     const currentZoom = mapInstance.getZoom();
     const newZoom = zoomType === "in" ? currentZoom + 1 : currentZoom - 1;
 
@@ -16,6 +20,9 @@ const ZoomButton = ({ mapInstance, zoomType }: ZoomButtonProps) => {
       duration: 300,
       easing: "easeOutCubic",
     });
+    setTimeout(() => {
+      setIsZooming(false);
+    }, 300);
   };
 
   return (

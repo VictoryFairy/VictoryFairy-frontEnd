@@ -7,6 +7,7 @@ interface StoreState {
   teamId: number;
   loginAction: (token: string, teamId?: number) => void;
   logoutAction: () => void;
+  updateTeamId: (teamId: number) => void;
 }
 
 export const useAuthStore = create(
@@ -20,6 +21,9 @@ export const useAuthStore = create(
       },
       logoutAction: () => {
         set({ isLoggedIn: false, token: "", teamId: 0 });
+      },
+      updateTeamId: (teamId: number) => {
+        set({ teamId });
       },
     }),
     {

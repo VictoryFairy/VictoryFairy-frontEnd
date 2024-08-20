@@ -1,9 +1,13 @@
 import { postUploadImg } from "@/api/register/register";
 
 export const uploadImg = async (img: File) => {
-  const formData = new FormData();
-  formData.append("file", img);
-  // 응답값 수정 필요
-  const { profileImgUrl } = await postUploadImg(formData);
-  return profileImgUrl;
+  try {
+    const formData = new FormData();
+    formData.append("file", img);
+    const { registeredGameImgUrl } = await postUploadImg(formData);
+    return registeredGameImgUrl;
+  } catch (error) {
+    console.error("Error uploading image:", error);
+    throw error;
+  }
 };
