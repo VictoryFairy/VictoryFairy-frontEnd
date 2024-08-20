@@ -10,19 +10,37 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
+    "@tanstack/react-query": "^5.51.21",
+    "@types/navermaps": "^3.7.5",
+    "@vitejs/plugin-react": "^4.3.1",
+    "axios": "^1.7.3",
     "eslint-config-airbnb-typescript": "^18.0.0",
+    "framer-motion": "^11.3.27",
+    "moment": "^2.30.1",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-calendar": "^5.0.0",
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.52.2",
+    "react-intersection-observer": "^9.13.0",
+    "react-router-dom": "^6.26.0",
+    "sanitize.css": "^13.0.0",
+    "styled-components": "^6.1.12",
+    "vite": "^5.3.4",
+    "vite-plugin-svgr": "^4.2.0",
+    "zod": "^3.23.8",
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.17.0",
     "@typescript-eslint/parser": "^7.17.0",
-    "@vitejs/plugin-react": "^4.3.1",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jsx-a11y": "^6.9.0",
     "eslint-plugin-prettier": "^5.2.1",
@@ -30,7 +48,6 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
     "prettier": "^3.3.3",
-    "typescript": "^5.2.2",
-    "vite": "^5.3.4"
+    "typescript": "^5.2.2"
   }
 }
