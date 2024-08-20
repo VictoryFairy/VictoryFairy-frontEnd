@@ -9,13 +9,13 @@ interface MyRankCompType extends MyInfo {
   withUser: Rank | null;
 }
 
-const MyRankComp = ({ totalGame, win, withUser }: MyRankCompType) => {
+const MyRankComp = ({ totalGames, win, withUser }: MyRankCompType) => {
   return (
     <>
       <MyRank>
         <RankTextLeft>
           <span>{withUser?.rank}</span>
-          <img src={withUser?.image} alt='#' />
+          <img src={withUser?.profile_image} alt='#' />
           <Text variant='title_01'>{withUser?.nickname}</Text>
         </RankTextLeft>
         <RankTextRight>
@@ -41,9 +41,9 @@ const MyRankComp = ({ totalGame, win, withUser }: MyRankCompType) => {
           나의 승률
         </Text>
         <Text variant='caption' color='var(--gray-900)'>
-          {Number.isNaN((win / totalGame) * 100)
-            ? "NaN"
-            : `${((win / totalGame) * 100).toFixed(2)}%`}
+          {Number.isNaN((win / totalGames) * 100)
+            ? "데이터 없음"
+            : `${((win / totalGames) * 100).toFixed(2)}%`}
         </Text>
       </MyRanks>
       <MyRanks>
@@ -51,7 +51,7 @@ const MyRankComp = ({ totalGame, win, withUser }: MyRankCompType) => {
           직관 경기 누적수
         </Text>
         <Text variant='caption' color='var(--gray-900)'>
-          {totalGame}
+          {totalGames}
         </Text>
       </MyRanks>
     </>
