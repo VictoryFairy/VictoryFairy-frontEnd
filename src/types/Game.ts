@@ -3,12 +3,9 @@ export interface MyGame {
   image: string;
   seat: string;
   review: string;
-  status: "WIN" | "Lose" | "Tie" | "No game";
+  status: "Win" | "Lose" | "Tie" | "No game";
   game: Game;
-  cheeringTeam: {
-    id: number;
-    name: string;
-  };
+  cheeringTeam: Team;
 }
 
 export interface Game {
