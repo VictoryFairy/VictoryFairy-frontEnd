@@ -167,7 +167,7 @@ const CheerSongPage = () => {
                 id={cheerSong.id}
                 teamName={cheerSong.team.name as TeamName}
                 title={cheerSong.title}
-                lyricPreview={cheerSong.lyrics_preview}
+                lyricPreview={cheerSong.lyricsPreview}
                 isLiked={cheerSong.isLiked}
                 jerseyNumber={
                   cheerSong.player
@@ -189,7 +189,7 @@ const CheerSongPage = () => {
             id={cheerSong.id}
             teamName={cheerSong.team.name as TeamName}
             title={cheerSong.title}
-            lyricPreview={cheerSong.lyrics_preview}
+            lyricPreview={cheerSong.lyricsPreview}
             isLiked={cheerSong.isLiked}
             jerseyNumber={
               cheerSong.player
