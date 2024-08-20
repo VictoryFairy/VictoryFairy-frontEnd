@@ -38,7 +38,7 @@ const CheersongDetail = () => {
         <HeaderSection>{data?.title}</HeaderSection>
         <HeaderSection>
           {data?.isLiked ? (
-            <Icon icon='IcHeart' fill='red' />
+            <Icon icon='IcHeartFill' fill='red' />
           ) : (
             <Icon icon='IcHeart' />
           )}

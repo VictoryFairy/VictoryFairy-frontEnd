@@ -128,7 +128,7 @@ const CheerSongList = ({
           <>
             {isLiked ? (
               <Icon
-                icon='IcHeart'
+                icon='IcHeartFill'
                 fill='red'
                 cursor='pointer'
                 onClick={handleRemoveLike}
