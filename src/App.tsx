@@ -24,8 +24,8 @@ import SearchCheerSong from "./pages/SearchCheerSong";
 
 import { useSignupStore } from "./store/signupStep";
 import CheersongDetail from "./pages/CheersongDetail";
-import SelectMatch from "./pages/register/SelectMatch";
-import RegisterForm from "./pages/register/RegisterForm";
+import RegisterForm from "./pages/Register/RegisterForm";
+import SelectMatch from "./pages/Register/SelectMatch";
 
 // import { ThemeProvider } from "styled-components";
 
