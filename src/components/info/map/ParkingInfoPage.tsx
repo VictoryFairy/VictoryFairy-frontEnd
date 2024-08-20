@@ -22,6 +22,7 @@ const ParkingInfoPage = () => {
     queryKey: ["parkingInfos", selectedStadiumId],
     queryFn: () => getParkingInfosByStadiumId(selectedStadiumId),
     enabled: !!selectedStadiumId,
+    staleTime: Infinity,
   });
 
   useEffect(() => {
