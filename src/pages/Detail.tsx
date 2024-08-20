@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import GameListItem from "../components/common/GameListItem";
+// import GameListItem from "../components/common/GameListItem";
 import { MyGame } from "../types/Game";
 import InputField from "../components/common/InputField";
 import TextAreaField from "../components/common/TextAreaField";
@@ -11,7 +11,7 @@ const DATA: MyGame = {
     "https://i.pinimg.com/736x/32/d9/e4/32d9e459886530093d03cd44731a48eb.jpg",
   seat: "115블록 2열 13번",
   review: "좋았다",
-  status: "WIN",
+  status: "Win",
   game: {
     id: "20240801SSLG0",
     date: "2024-08-01",
@@ -52,7 +52,7 @@ const Detail = () => {
   });
   return (
     <>
-      <GameListItem data={DATA} />
+      {/* <GameListItem data={DATA} /> */}
       <DetailContainer>
         <div className='img'>
           <img src={DATA.image} alt='img' />

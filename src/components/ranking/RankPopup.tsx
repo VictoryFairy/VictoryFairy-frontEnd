@@ -44,7 +44,7 @@ const RankPopup = ({
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
       drag='y'
       dragConstraints={{ top: 0 }}
-      onDragEnd={(e, info) => {
+      onDragEnd={(_, info) => {
         if (info.point.y > 600) {
           handleClose();
         }
