@@ -26,6 +26,7 @@ import CheersongDetail from "./pages/CheersongDetail";
 import Detail from "./pages/Detail";
 import SelectMatch from "./pages/Register/SelectMatch";
 import RegisterForm from "./pages/Register/RegisterForm";
+// import { ThemeProvider } from "styled-components";
 
 const queryClient = new QueryClient();
 

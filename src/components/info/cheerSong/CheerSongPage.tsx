@@ -10,7 +10,7 @@ import Text from "@/components/common/Text";
 import { typography } from "@/style/typography";
 import TeamList from "./TeamList";
 import CheerSongList, { TeamName } from "./CheerSongList";
-import empty from "../../../assets/images/Group 625793.png";
+import empty from "../../../assets/images/cheersEmpty/Group 625793.png";
 import search from "../../../assets/Icons/search.svg";
 
 const CheerSongPage = () => {
