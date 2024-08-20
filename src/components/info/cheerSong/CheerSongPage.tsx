@@ -27,6 +27,9 @@ const CheerSongPage = () => {
     queryClient.resetQueries({
       queryKey: ["cheerSongs", selectedTeamId, activeTab],
     });
+    queryClient.resetQueries({
+      queryKey: ["likedCheerSongs", activeTab],
+    });
   }, [selectedTeamId, activeTab, queryClient]);
 
   const {
@@ -81,10 +84,9 @@ const CheerSongPage = () => {
   });
 
   useEffect(() => {
-    if (observer.current) observer.current.disconnect();
-
     const handleObserver = (entries: IntersectionObserverEntry[]) => {
       const target = entries[0];
+
       if (
         target.isIntersecting &&
         hasNextCheerPage &&
@@ -100,9 +102,7 @@ const CheerSongPage = () => {
       }
     };
 
-    observer.current = new IntersectionObserver(handleObserver, {
-      rootMargin: "100px",
-    });
+    observer.current = new IntersectionObserver(handleObserver);
 
     if (lastElementRef.current) {
       observer.current.observe(lastElementRef.current);

@@ -58,6 +58,7 @@ const InputField = ({
           type={inputType}
           placeholder={placeholder}
           $hasError={!!error}
+          maxLength={maxLength}
           {...register(name)}
           {...inputProps}
         />
@@ -100,11 +101,10 @@ const InputWrapper = styled.div`
 
 const StyledInput = styled.input<{ $hasError?: boolean }>`
   width: 100%;
-  padding: 8px;
+  padding: 10px 0px;
   outline: none;
   border: none;
   border-bottom: 1px solid ${(props) => (props.$hasError ? "red" : "#ccc")};
-  border-radius: 4px;
 `;
 
 const CharCount = styled.span`

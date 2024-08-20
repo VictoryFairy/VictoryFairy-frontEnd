@@ -1,125 +1,84 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Bar } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  ChartOptions,
-  ChartData,
-} from "chart.js";
+import { ApiResponse, getTopRank, MyInfo } from "@/api/rank/rank.api";
+import { useQuery } from "@tanstack/react-query";
+import { Rank } from "@/types/Rank";
 import Text from "../common/Text";
 import Button from "../common/Button";
 import RankPopup from "./RankPopup";
 import Icon from "../common/Icon";
 import RankTextComp from "./RankTextComp";
 import MyRankComp from "./MyRankComp";
+import RankBar from "./RankBar";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-);
-
-const labels = ["100포인트", "300포인트", "200포인트"];
-
-const data: ChartData<"bar", number[], string> = {
-  labels,
-  datasets: [
-    {
-      data: [65, 80, 59],
-      backgroundColor: ["#545763", "#2F3036", "#BABCC3"],
-      borderColor: ["#545763", "#2F3036", "#BABCC3"],
-      borderWidth: 1,
-    },
-  ],
-};
-
-const options: ChartOptions<"bar"> = {
-  scales: {
-    x: {
-      grid: {
-        display: false,
-      },
-      border: {
-        display: false,
-      },
-      ticks: {
-        color: "#898C9B",
-        font: {
-          size: 9,
-          weight: 400,
-        },
-      },
-    },
-    y: {
-      beginAtZero: true,
-      ticks: {
-        display: false,
-      },
-      grid: {
-        display: false,
-      },
-      border: {
-        display: false,
-      },
-    },
-  },
-  plugins: {
-    legend: {
-      display: false,
-    },
-  },
-};
-const team: Team["name"][] = [
+const teamNames = [
   "전체",
-  "LG트윈스",
+  "롯데자이언츠",
   "두산베어스",
+  "KIA타이거즈",
+  "삼성라이온즈",
   "SSG렌더스",
+  "NC다이노스",
+  "LG트윈스",
+  "키움히어로즈",
   "KT위즈",
   "한화이글스",
-  "NC다이노스",
-  "롯데자이언츠",
-  "KIA타이거즈",
-  "키움히어로즈",
-  "삼성라이온즈",
 ];
 
-interface Team {
-  name:
-    | "전체"
-    | "LG트윈스"
-    | "두산베어스"
-    | "SSG렌더스"
-    | "KT위즈"
-    | "한화이글스"
-    | "NC다이노스"
-    | "롯데자이언츠"
-    | "KIA타이거즈"
-    | "키움히어로즈"
-    | "삼성라이온즈";
-}
+const teamNumberMap: { [key: string]: number } = {
+  전체: 0,
+  롯데자이언츠: 1,
+  두산베어스: 2,
+  KIA타이거즈: 3,
+  삼성라이온즈: 4,
+  SSG렌더스: 5,
+  NC다이노스: 6,
+  LG트윈스: 7,
+  키움히어로즈: 8,
+  KT위즈: 9,
+  한화이글스: 10,
+};
 
 const RankingTab = () => {
-  const [teamTab, setTeamTab] = useState<Team["name"]>("전체");
-  const handleClickTeam = (value: Team["name"]) => {
-    setTeamTab(value);
-  };
+  const [teamId, setTeamId] = useState<number>(0);
+  const [teamTab, setTeamTab] = useState<string>("전체");
+  const [top, setTop] = useState<Rank[] | null>(null);
+  const [withUser, setWithUser] = useState<Rank[] | null>(null);
+  const [user, setUser] = useState<MyInfo | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+
+  const userMe = withUser?.find((my) => my.userId === user?.userId);
+  const firstRank = top?.find((element) => element.rank === 1);
+  const secondRank = top?.find((element) => element.rank === 2);
+  const thirdRank = top?.find((element) => element.rank === 2);
+
+  const handleClickTeam = (value: string) => {
+    setTeamTab(value);
+    setTeamId(teamNumberMap[value]);
+  };
+
+  const { data } = useQuery<ApiResponse>({
+    queryKey: ["getTopRank", { teamId }],
+    queryFn: () => getTopRank(teamId),
+  });
+
+  useEffect(() => {
+    if (data) {
+      setTop(data.top);
+      setWithUser(data.withUser);
+      setUser(data.user);
+    }
+    console.log("top:", top);
+    console.log("withUser:", withUser);
+    console.log("user:", user);
+  }, [data, top, user, withUser]);
 
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
   return (
     <Container>
       <TeamTabWrapper>
-        {team.map((element, index) => {
+        {teamNames.map((element, index) => {
           return (
             <Button
               style={{
@@ -145,31 +104,71 @@ const RankingTab = () => {
         </TextWrapper>
         <RankProfileWrapper>
           <RankWrapper>
-            <img src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg' />
-            <Text variant='title_02'>홍길동</Text>
+            <img
+              src={
+                secondRank?.image ||
+                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+              }
+            />
+            <Text variant='title_02'>{secondRank?.nickname}</Text>
             <div>2</div>
           </RankWrapper>
           <FirstRankWrapper>
-            <img src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg' />
-            <Text variant='title_02'>홍길동</Text>
+            <img src={firstRank?.image} />
+            <Text variant='title_02'>{firstRank?.nickname}</Text>
             <div>1</div>
           </FirstRankWrapper>
           <RankWrapper>
-            <img src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg' />
-            <Text variant='title_02'>홍길동</Text>
+            <img
+              src={
+                thirdRank?.image ||
+                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+              }
+            />
+            <Text variant='title_02'>{thirdRank?.nickname}</Text>
             <div>3</div>
           </RankWrapper>
         </RankProfileWrapper>
-        <BarWrapper>
-          <Bar data={data} options={options} />
-        </BarWrapper>
+        <RankBar data={top} />
       </RankTopWrapper>
       <RankTextWrapper>
-        <RankTextComp />
+        {withUser?.map((element) => {
+          if (userMe?.rank && element.rank < userMe.rank)
+            return (
+              <RankTextComp
+                key={element.userId}
+                rank={element.rank}
+                score={element.score}
+                image={element.image}
+                nickname={element.nickname}
+                userId={element.userId}
+              />
+            );
+          return null;
+        })}
         <MyRankWrapper>
-          <MyRankComp />
+          {user && withUser && (
+            <MyRankComp
+              totalGame={user.totalGame}
+              win={user.win}
+              withUser={userMe || null}
+            />
+          )}
         </MyRankWrapper>
-        <RankTextComp />
+        {withUser?.map((element) => {
+          if (userMe?.rank && element.rank > userMe.rank)
+            return (
+              <RankTextComp
+                key={element.userId}
+                rank={element.rank}
+                score={element.score}
+                image={element.image}
+                nickname={element.nickname}
+                userId={element.userId}
+              />
+            );
+          return null;
+        })}
         <ConfirmRank>
           <button type='button' onClick={handleOpen}>
             <Text variant='title_01' color='var(--gray-400)'>
@@ -182,7 +181,14 @@ const RankingTab = () => {
       </RankTextWrapper>
       <Overlay isVisible={isOpen} onClick={handleClose} />
 
-      <RankPopup isOpen={isOpen} handleClose={handleClose} />
+      <RankPopup
+        isOpen={isOpen}
+        handleClose={handleClose}
+        teamId={teamId}
+        withUser={userMe}
+        totalGame={user?.totalGame}
+        win={user?.win}
+      />
     </Container>
   );
 };
@@ -244,9 +250,11 @@ const TextWrapper = styled.div`
 `;
 const RankProfileWrapper = styled.div`
   display: flex;
-  margin: 0 10px;
   align-items: flex-end;
-  justify-content: space-between;
+  justify-content: center;
+  > :nth-child(2) {
+    margin: 0 20px;
+  }
 `;
 
 const RankWrapper = styled.div`
@@ -303,15 +311,6 @@ const FirstRankWrapper = styled.div`
   }
 `;
 
-const BarWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  > canvas {
-    width: 100% !important;
-    height: 120px !important;
-  }
-`;
-
 export const RankTextWrapper = styled.div`
   width: 100%;
   height: 370px;
@@ -344,6 +343,9 @@ const ConfirmRank = styled.span`
   > svg {
     width: 16px;
     height: 16px;
+  }
+  > button {
+    cursor: pointer;
   }
 `;
 
