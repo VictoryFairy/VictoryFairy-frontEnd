@@ -4,16 +4,17 @@ import MonthNav from "@/components/common/MonthNav";
 
 interface GalleryTabProps {
   data?: MyGame[];
+  onClick: (match: MyGame) => void;
 }
 
-const GalleryTab = ({ data }: GalleryTabProps) => {
+const GalleryTab = ({ data, onClick }: GalleryTabProps) => {
   return (
     <GalleryTabContainer>
       <MonthNav />
       <ImgContainer>
         {data?.map((item) => (
           <div className='img' key={item.id}>
-            <img src={item.image} alt='game' />
+            <img onClick={() => onClick(item)} src={item.image} alt='game' />
           </div>
         ))}
       </ImgContainer>

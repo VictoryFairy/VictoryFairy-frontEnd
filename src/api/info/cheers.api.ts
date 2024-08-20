@@ -6,7 +6,7 @@ import authAxiosInstance from "../authAxios";
 interface CheerSong {
   id: number;
   title: string;
-  lyrics_preview: string;
+  lyricsPreview: string;
   team: Team;
   player: Player | null;
   isLiked: boolean;

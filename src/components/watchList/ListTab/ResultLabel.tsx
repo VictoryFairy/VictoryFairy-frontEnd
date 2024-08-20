@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import { MyGame } from "@/types/Game";
 import { typography } from "../../../style/typography";
 
 interface ResultLabelProps {
-  status: "WIN" | "Lose" | "Tie" | "No game";
+  status: Pick<MyGame, "status">["status"];
   children: React.ReactNode;
 }
 
@@ -20,7 +21,7 @@ const ResultLabelContainer = styled.span<{ status: string }>`
   border-radius: 4px;
   padding: 4px 8px;
   height: 24px;
-  width: 66px;
+  min-width: 66px;
   white-space: nowrap;
 
   color: ${({ status }) =>
@@ -28,7 +29,7 @@ const ResultLabelContainer = styled.span<{ status: string }>`
 
   background-color: ${({ status, theme }) => {
     switch (status) {
-      case "WIN":
+      case "Win":
         return theme.colors.primary;
       case "Lose":
         return theme.colors.secondary;

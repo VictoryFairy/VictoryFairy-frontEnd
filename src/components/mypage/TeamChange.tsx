@@ -1,6 +1,9 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { usePopup } from "@/hooks/usePopup";
+import { profileChange } from "@/api/mypage/mypage.api";
+import { useAuthStore } from "@/store/authStore";
 import Button from "../common/Button";
 import Text from "../common/Text";
 
@@ -14,35 +17,35 @@ interface Team {
 
 const teams: Team[] = [
   {
-    id: 0,
+    id: 7,
     name: "LG Twins",
     bg: "var(--lg-twins-red)",
     color: "var(--lg-twins-black)",
     borderColor: "transparent",
   },
   {
-    id: 1,
+    id: 2,
     name: "Doosan Bears",
     bg: "var(--doosan-bears-navy)",
     color: "white",
     borderColor: "var(--doosan-bears-red)",
   },
   {
-    id: 2,
+    id: 10,
     name: "Hanwha Eagles",
     bg: "var(--hanwha-eagles-black)",
     color: "var(--hanwha-eagles-orange)",
     borderColor: "transparent",
   },
   {
-    id: 3,
+    id: 4,
     name: "SAMSUNG Lions",
     bg: "var(--samsung-lions-blue)",
     color: "white",
     borderColor: "transparent",
   },
   {
-    id: 4,
+    id: 9,
     name: "KT Wiz",
     bg: "var(--kt-wiz-black)",
     color: "var(--kt-wiz-red)",
@@ -63,21 +66,21 @@ const teams: Team[] = [
     borderColor: "transparent",
   },
   {
-    id: 7,
+    id: 3,
     name: "KIA Tigers",
     bg: "var(--kia-tigers-black)",
     color: "var(--kia-tigers-red)",
     borderColor: "transparent",
   },
   {
-    id: 8,
+    id: 1,
     name: "Lotte Giants",
     bg: "var(--lotte-giants-navy)",
     color: "var(--lotte-giants-red)",
     borderColor: "white",
   },
   {
-    id: 9,
+    id: 8,
     name: "Kiwoom Heroes",
     bg: "var(--kiwoom-heroes-magenta)",
     color: "white",
@@ -85,11 +88,18 @@ const teams: Team[] = [
   },
 ];
 const TeamChange = () => {
+  const navigate = useNavigate();
   const { Popup, isOpen, openPopup } = usePopup();
-  const handleBtnClick = () => {
-    openPopup();
-  };
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
+  const handleBtnClick = () => {
+    if (selectedTeam) {
+      profileChange("teamId", selectedTeam?.id);
+      updateTeamId(selectedTeam?.id);
+    }
+    navigate("/mypage");
+  };
+  const { updateTeamId } = useAuthStore();
+
   const handleTeamSelect = (team: Team) => {
     setSelectedTeam(team);
   };
@@ -100,6 +110,7 @@ const TeamChange = () => {
           title='응원팀 변경 완료'
           message='응원팀 변경이 완료되었습니다.'
           type='alert'
+          confirmFunc={handleBtnClick}
         />
       )}
       <SelectedTeamBox
@@ -126,7 +137,7 @@ const TeamChange = () => {
       <ButtonWrapper>
         <Button
           type='button'
-          onClick={handleBtnClick}
+          onClick={openPopup}
           disabled={selectedTeam === null}>
           <Text variant='title_02'>저장</Text>
         </Button>

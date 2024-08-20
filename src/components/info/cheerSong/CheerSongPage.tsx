@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 import { fetchCheerSongs, FetchLikedCheerSongs } from "@/api/info/cheers.api";
 import { useAuthStore } from "@/store/authStore";
@@ -21,16 +21,16 @@ const CheerSongPage = () => {
   const navigate = useNavigate();
   const observer = useRef<IntersectionObserver | null>(null);
   const lastElementRef = useRef<HTMLDivElement | null>(null);
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
-  useEffect(() => {
-    queryClient.resetQueries({
-      queryKey: ["cheerSongs", selectedTeamId, activeTab],
-    });
-    queryClient.resetQueries({
-      queryKey: ["likedCheerSongs", activeTab],
-    });
-  }, [selectedTeamId, activeTab, queryClient]);
+  // useEffect(() => {
+  //   queryClient.resetQueries({
+  //     queryKey: ["cheerSongs", selectedTeamId, activeTab],
+  //   });
+  //   queryClient.resetQueries({
+  //     queryKey: ["likedCheerSongs", activeTab],
+  //   });
+  // }, [selectedTeamId, activeTab, queryClient]);
 
   const {
     data: likedCheerSongsData,
@@ -52,6 +52,7 @@ const CheerSongPage = () => {
     },
     initialPageParam: 0,
     enabled: selectedTeamId === 0,
+    staleTime: Infinity,
     select: (data) => ({
       pages: data.pages.flatMap((page) => page.data),
     }),
@@ -78,6 +79,7 @@ const CheerSongPage = () => {
     },
     initialPageParam: 0,
     enabled: selectedTeamId !== 0,
+    staleTime: Infinity,
     select: (data) => ({
       pages: data.pages.flatMap((page) => page.data),
     }),
@@ -165,7 +167,7 @@ const CheerSongPage = () => {
                 id={cheerSong.id}
                 teamName={cheerSong.team.name as TeamName}
                 title={cheerSong.title}
-                lyricPreview={cheerSong.lyrics_preview}
+                lyricPreview={cheerSong.lyricsPreview}
                 isLiked={cheerSong.isLiked}
                 jerseyNumber={
                   cheerSong.player
@@ -187,7 +189,7 @@ const CheerSongPage = () => {
             id={cheerSong.id}
             teamName={cheerSong.team.name as TeamName}
             title={cheerSong.title}
-            lyricPreview={cheerSong.lyrics_preview}
+            lyricPreview={cheerSong.lyricsPreview}
             isLiked={cheerSong.isLiked}
             jerseyNumber={
               cheerSong.player
