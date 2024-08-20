@@ -9,6 +9,7 @@ import {
 import TitleSection from "../common/TitleSection";
 import InputField from "../common/InputField";
 import Button from "../common/Button";
+import Icon from "../common/Icon";
 
 interface ProfileProps {
   setstep: (step: number) => void;
@@ -79,11 +80,16 @@ const Profile = ({ setstep, handleSetUserInfo }: ProfileProps) => {
       <TitleSection title='프로필을 설정해주세요' />
       <Form onSubmit={handleSubmit(onSubmit)}>
         <InputWrapper>
-          <Avatar
-            alt='avatar'
-            src={image}
-            onClick={() => fileInput.current?.click()}
-          />
+          <AvatarWrapper>
+            <Avatar
+              alt='avatar'
+              src={image}
+              onClick={() => fileInput.current?.click()}
+            />
+            <IconWrapper>
+              <Icon icon='IcCamera' fill='white' />
+            </IconWrapper>
+          </AvatarWrapper>
           <HiddenFileInput
             type='file'
             accept='image/jpg,image/png,image/jpeg'
@@ -148,6 +154,24 @@ const HiddenFileInput = styled.input`
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
+`;
+const AvatarWrapper = styled.div`
+  position: relative;
+  width: 100px;
+  height: 100px;
+`;
+
+const IconWrapper = styled.div`
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  background-color: black;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export default Profile;
