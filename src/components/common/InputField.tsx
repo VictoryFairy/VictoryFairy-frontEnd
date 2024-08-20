@@ -6,6 +6,7 @@ import {
   UseFormWatch,
   UseFormSetValue,
 } from "react-hook-form";
+import Icon from "./Icon";
 
 interface InputFieldProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "name"> {
@@ -69,7 +70,7 @@ const InputField = ({
         )}
         {type === "password" && (
           <VisibilityToggle type='button' onClick={toggleVisibility}>
-            {isVisible ? "👁️" : "👁️‍🗨️"}
+            {isVisible ? <Icon icon='IcHide' /> : <Icon icon='IcShow' />}
           </VisibilityToggle>
         )}
       </InputWrapper>
