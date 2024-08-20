@@ -6,6 +6,7 @@ import { UserInfo } from "@/types/User";
 import TitleSection from "../common/TitleSection";
 import InputField from "../common/InputField";
 import Button from "../common/Button";
+import Icon from "../common/Icon";
 
 interface PasswordValidProps {
   setstep: (step: number) => void;
@@ -71,12 +72,15 @@ const PasswordValid = ({ setstep, handleSetUserInfo }: PasswordValidProps) => {
             setValue={setValue}
           />
           <ValidationMessage $isValid={lengthValid}>
+            <StyledIcon icon='IcArrowDown' />
             8글자 이상
           </ValidationMessage>
           <ValidationMessage $isValid={uppercaseValid}>
+            <StyledIcon icon='IcArrowDown' />
             대문자 1개 이상 포함
           </ValidationMessage>
           <ValidationMessage $isValid={specialCharValid}>
+            <StyledIcon icon='IcArrowDown' />
             특수문자 1개 이상 포함, 다음제외 : ( ), &lt; &gt;, &quot, ;
           </ValidationMessage>
         </InputWrapper>
@@ -114,8 +118,12 @@ const ButtonWrapper = styled.div`
 
 const ValidationMessage = styled.p<{ $isValid: boolean }>`
   color: ${(props) => (props.$isValid ? "black" : "gray")};
+  font-weight: ${(props) => (props.$isValid ? "bold" : "gray")};
   font-size: 14px;
   margin-top: 5px;
 `;
 
+const StyledIcon = styled(Icon)`
+  margin-right: 8px;
+`;
 export default PasswordValid;

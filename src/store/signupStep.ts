@@ -7,7 +7,7 @@ interface SignupStore {
 }
 
 export const useSignupStore = create<SignupStore>((set) => ({
-  step: 4,
+  step: 1,
   setstep: (step) => set({ step }),
   decreaseStep: () => set((state) => ({ step: Math.max(1, state.step - 1) })),
 }));
