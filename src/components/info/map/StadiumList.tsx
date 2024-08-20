@@ -47,7 +47,7 @@ const StadiumList = ({
             key={stadium.id}
             onClick={() => handleStadiumClick(stadium)}
             active={stadium.id === selectedStadiumId}>
-            {stadium.full_name}
+            {stadium.fullName}
           </TeamButton>
         ))}
       </TeamList>
