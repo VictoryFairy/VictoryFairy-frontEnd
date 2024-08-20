@@ -4,7 +4,16 @@ import { persist } from "zustand/middleware";
 interface UserState {
   nickname: string | null;
   supportTeam: string | null;
-  setUserInfo: (nickname: string | null, supportTeam: string | null) => void;
+  profile: string | null;
+  email: string | null;
+  setUserInfo: (
+    nickname: string | null,
+    supportTeam: string | null,
+    profile: string | null,
+    email: string | null,
+  ) => void;
+  updateNickname: (nickname: string) => void;
+  updateImage: (profile: string) => void;
   deleteUserInfo: () => void;
 }
 
@@ -13,9 +22,20 @@ export const useUserStore = create(
     (set) => ({
       nickname: null,
       supportTeam: null,
-      setUserInfo: (nickname, supportTeam) => set({ nickname, supportTeam }),
-      deleteUserInfo: () => set({ nickname: null, supportTeam: null }),
+      profile: null,
+      email: null,
+      setUserInfo: (nickname, supportTeam, profile, email) =>
+        set({ nickname, supportTeam, profile, email }),
+      deleteUserInfo: () =>
+        set({ nickname: null, supportTeam: null, profile: null, email: null }),
+      updateNickname: (nickname: string) => {
+        set({ nickname });
+      },
+      updateImage: (profile: string) => {
+        set({ profile });
+      },
     }),
+
     {
       name: "user-storage",
     },

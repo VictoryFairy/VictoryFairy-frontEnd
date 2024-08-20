@@ -10,6 +10,7 @@ interface PopupProps {
   confirmMessage?: string;
   confirmFunc?: () => void;
   comp?: React.ReactNode;
+  TF?: boolean;
 }
 
 const Popup = ({
@@ -20,6 +21,7 @@ const Popup = ({
   confirmMessage,
   confirmFunc,
   comp,
+  TF,
 }: PopupProps) => {
   const renderButtons = () => {
     switch (type) {
@@ -68,10 +70,17 @@ const Popup = ({
               </button>
               <button
                 type='button'
-                className='confirm-button'
+                className='confirm'
+                disabled={!TF}
                 onClick={() => {
                   confirmFunc?.();
                   closePopup();
+                }}
+                style={{
+                  backgroundColor: TF
+                    ? "var(--primary-color)"
+                    : "var(--gray-50)",
+                  color: TF ? "var(--white)" : "var(--gray-400)",
                 }}>
                 {confirmMessage}
               </button>

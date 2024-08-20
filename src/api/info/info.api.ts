@@ -3,7 +3,7 @@ import authAxiosInstance from "../authAxios";
 interface StadiumsResponse {
   id: number;
   name: string;
-  full_name: string;
+  fullName: string;
   latitude: number;
   longitude: number;
 }

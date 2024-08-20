@@ -20,6 +20,7 @@ export const usePopup = () => {
       confirmMessage,
       confirmFunc,
       comp,
+      TF = false,
     }: {
       title: string;
       message: string;
@@ -27,6 +28,7 @@ export const usePopup = () => {
       confirmMessage?: string;
       confirmFunc?: () => void;
       comp?: React.ReactNode;
+      TF?: boolean;
     }) => (
       <Popup
         title={title}
@@ -36,6 +38,7 @@ export const usePopup = () => {
         confirmMessage={confirmMessage}
         confirmFunc={confirmFunc}
         comp={comp}
+        TF={TF}
       />
     ),
     [closePopup],

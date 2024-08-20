@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Icon from "@/components/common/Icon";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteLikeCheerSong, postLikeCheerSong } from "@/api/info/cheers.api";
+import { getTeamId } from "@/utils/getTeamId";
 
 const teamColors = {
   롯데: "var(--lotte-giants-navy)",
@@ -52,6 +53,7 @@ const CheerSongList = ({
       lyricPreview: lyricPreview || jerseyNumber,
     };
 
+    console.log(selectedTeamId);
     const storedSearches = JSON.parse(
       localStorage.getItem("recentSearches") || "[]",
     ) as CheerSongListProps[];
@@ -73,7 +75,10 @@ const CheerSongList = ({
     mutationFn: postLikeCheerSong,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["cheerSongs", selectedTeamId, activeTab],
+        queryKey: ["cheerSongs", getTeamId(teamName), activeTab],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["likedCheerSongs", activeTab],
       });
     },
   });
@@ -82,7 +87,7 @@ const CheerSongList = ({
     mutationFn: deleteLikeCheerSong,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["cheerSongs", selectedTeamId, activeTab],
+        queryKey: ["cheerSongs", getTeamId(teamName), activeTab],
       });
       queryClient.invalidateQueries({
         queryKey: ["likedCheerSongs", activeTab],
