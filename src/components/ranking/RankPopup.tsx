@@ -14,7 +14,7 @@ interface PopupProps {
   handleClose: () => void;
   teamId: number;
   withUser?: Rank | null;
-  totalGame?: number;
+  totalGames?: number;
   win?: number;
 }
 
@@ -23,7 +23,7 @@ const RankPopup = ({
   handleClose,
   teamId,
   withUser,
-  totalGame,
+  totalGames,
   win,
 }: PopupProps) => {
   const [ranking, setRanking] = useState<Rank[]>([]);
@@ -71,7 +71,7 @@ const RankPopup = ({
           <MyRankComp
             withUser={withUser || null}
             win={win ?? 0}
-            totalGame={totalGame ?? 0}
+            totalGames={totalGames ?? 0}
           />
         </div>
       </RankPopupWrapper>
