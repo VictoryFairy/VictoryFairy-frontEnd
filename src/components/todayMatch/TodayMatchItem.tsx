@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { typography } from "@/style/typography";
-import { DailyMatchResponse } from "@/api/game/game";
+import { Game } from "@/types/Game";
 
 interface TodayMatchItemProps {
-  match: DailyMatchResponse;
+  match: Game;
 }
 
 const TodayMatchItem = ({ match }: TodayMatchItemProps) => {
