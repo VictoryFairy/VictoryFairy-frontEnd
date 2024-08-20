@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-boolean-value */
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import Text from "@/components/common/Text";
 import Button from "../components/common/Button";
 import onBoarding from "../assets/images/onboarding/onBoarding.png";
+import Text from "../components/common/Text";
 
 const Home = () => {
   const navigate = useNavigate();

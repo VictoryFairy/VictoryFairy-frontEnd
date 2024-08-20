@@ -2,14 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import Text from "@/components/common/Text";
 import SearchBar from "../components/common/SearchBar";
-import ArrowLeft from "../assets/Icons/arrow-left.svg?react";
 import CheerSongList, {
   CheerSongListProps,
   TeamName,
 } from "../components/info/cheerSong/CheerSongList";
 import { fetchSearchCheerSongs } from "../api/info/cheers.api";
+import Text from "../components/common/Text";
+import Icon from "../components/common/Icon";
 
 const SearchCheerSong = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -76,7 +76,8 @@ const SearchCheerSong = () => {
   return (
     <Container>
       <HeaderContainer>
-        <ArrowLeft
+        <Icon
+          icon='IcArrowLeft'
           fill='var(--primary-color)'
           onClick={() => navigate(-1)}
           cursor='pointer'
