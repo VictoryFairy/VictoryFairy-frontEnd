@@ -40,9 +40,9 @@ const RankBar = ({ data }: RankBarProps) => {
 
   useEffect(() => {
     const sortedData = [
-      { point: "Point 0", score: 500 },
       { point: "Point 0", score: 0 },
-      { point: "Point 0", score: 200 },
+      { point: "Point 0", score: 0 },
+      { point: "Point 0", score: 0 },
     ];
 
     data?.forEach((item) => {
@@ -106,6 +106,9 @@ const RankBar = ({ data }: RankBarProps) => {
     plugins: {
       legend: {
         display: false,
+      },
+      tooltip: {
+        enabled: false,
       },
     },
   };

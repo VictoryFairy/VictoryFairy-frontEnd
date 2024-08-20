@@ -2,7 +2,12 @@ import styled from "styled-components";
 import { Rank } from "@/types/Rank";
 import Text from "../common/Text";
 
-const RankTextComp = ({ rank, score, image, nickname }: Rank) => {
+const RankTextComp = ({
+  rank,
+  score,
+  image,
+  nickname,
+}: Omit<Rank, "user_id">) => {
   return (
     <RankText>
       <RankTextLeft>
