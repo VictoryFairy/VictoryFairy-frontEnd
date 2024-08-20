@@ -1,8 +1,19 @@
-export interface MypageUserInfo {
+interface User {
+  id: number;
   email: string;
   nickname: string;
+  image: string;
+}
+
+interface Record {
+  win: number;
+  lose: number;
+  tie: number;
+  cancel: number;
+  total: number;
   score: number;
-  registeredGames: number[];
-  supportTeam: string;
-  supportTeamId: number;
+}
+export interface MypageUserInfo {
+  user: User;
+  record: Record;
 }

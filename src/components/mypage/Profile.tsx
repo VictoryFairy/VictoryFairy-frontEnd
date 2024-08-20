@@ -1,45 +1,81 @@
-import { useEffect } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import styled from "styled-components";
-import { useQuery } from "@tanstack/react-query";
-import { getMemberInfo } from "../../api/auth/auth.api";
-import { MypageUserInfo } from "../../types/userInfo";
-import { useUserStore } from "../../store/userInfo";
 import Text from "@/components/common/Text";
+import { useQuery } from "@tanstack/react-query";
+import { MypageUserInfo } from "@/types/UserInfo";
+import { useAuthStore } from "@/store/authStore";
+import { getMemberInfo } from "../../api/auth/auth.api";
+import { useUserStore } from "../../store/userInfo";
+
+interface Record {
+  win: number;
+  lose: number;
+  tie: number;
+  cancel: number;
+  total: number;
+  score: number;
+}
+
+interface User {
+  id: number;
+  email: string;
+  nickname: string;
+  image: string;
+}
+
+const teamNames = [
+  "롯데자이언츠",
+  "두산베어스",
+  "KIA타이거즈",
+  "삼성라이온즈",
+  "SSG랜더스",
+  "NC다이노스",
+  "LG트윈스",
+  "키움히어로즈",
+  "KT위즈",
+  "한화이글스",
+];
 
 const Profile = () => {
-  // const [userInfo, setUserInfo] = useState<Omit<
-  //   MypageUserInfo,
-  //   "registeredGames"
-  // > | null>(null);
-
   const { data } = useQuery<MypageUserInfo>({
     queryKey: ["getMemberInfo"],
     queryFn: getMemberInfo,
+    refetchOnWindowFocus: true,
   });
 
+  const [record, setRecord] = useState<Record | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const { setUserInfo: setUserStoreInfo } = useUserStore();
-  const nickname = useUserStore((state) => state.nickname);
+  const teamId = useAuthStore((state) => state.teamId);
+
+  const updateUserStore = useCallback(() => {
+    if (data) {
+      setUserStoreInfo(
+        data.user.nickname,
+        teamNames[teamId - 1],
+        data.user.image,
+        data.user.email,
+      );
+      setRecord(data.record);
+      setUser(data.user);
+    }
+  }, [data, teamId, setUserStoreInfo]);
 
   useEffect(() => {
-    if (data) {
-      // const userInfos = {
-      //   email: data.email,
-      //   nickname: data.nickname,
-      //   score: data.score,
-      //   supportTeam: data.supportTeam,
-      //   supportTeamId: data.supportTeamId,
-      // };
-      // setUserInfo(userInfos);
-      setUserStoreInfo(data.nickname, data.supportTeam);
-    } else {
-      // setUserInfo(null);
+    updateUserStore();
+  }, [updateUserStore]);
+
+  const winPercentage = useMemo(() => {
+    if (record && record.total > 0) {
+      return ((record.win / record.total) * 100).toFixed(2);
     }
-  }, [data]);
+    return "0.00";
+  }, [record]);
 
   return (
     <Container>
       <Text variant='title_02' color='var(--primary-color)'>
-        {nickname}님, 안녕하세요!
+        {data?.user.nickname}님, 안녕하세요!
       </Text>
       <ProfileWrapper>
         <ProfileInfoWrapper>
@@ -47,22 +83,19 @@ const Profile = () => {
             승률
           </Text>
           <Text variant='display' color='var(--primary-color)'>
-            80
+            {winPercentage}
             <Text variant='title_02' color='var(--primary-color)'>
               %
             </Text>
           </Text>
         </ProfileInfoWrapper>
-        <img
-          src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg'
-          alt='#'
-        />
+        <img src={user?.image || "/default-image.png"} alt='Profile' />
         <ProfileInfoWrapper>
           <Text variant='subtitle_02' color='var(--primary-color)'>
             승요력
           </Text>
           <Text variant='display' color='var(--primary-color)'>
-            3000
+            {record?.score || "N/A"}
             <Text variant='title_02' color='var(--primary-color)'>
               P
             </Text>

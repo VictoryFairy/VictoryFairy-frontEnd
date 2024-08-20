@@ -1,14 +1,62 @@
+import { ChangeEvent, useEffect, useState, useCallback, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { profileChange } from "@/api/mypage/mypage.api";
 import styled from "styled-components";
+import { uploadProfileImage } from "@/api/auth/auth.api";
 import { usePopup } from "@/hooks/usePopup";
+import { useUserStore } from "@/store/userInfo";
 import Button from "../common/Button";
 import Text from "../common/Text";
 import Icon from "../common/Icon";
 
 const ProfileChange = () => {
+  const [image, setImage] = useState<string | null>(null);
+  const [name, setName] = useState<string>("");
   const { Popup, isOpen, openPopup } = usePopup();
-  const handleBtnClick = () => {
-    openPopup();
+  const { updateNickname, updateImage } = useUserStore();
+  const fileInput = useRef<HTMLInputElement | null>(null);
+  const onChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      try {
+        const formData = new FormData();
+        formData.append("file", file);
+        const profileImgUrl = await uploadProfileImage(formData);
+        setImage(profileImgUrl);
+      } catch (err) {
+        console.log(err);
+      }
+    }
   };
+  const navigate = useNavigate();
+  const { profile, nickname } = useUserStore((state) => ({
+    profile: state.profile,
+    nickname: state.nickname,
+  }));
+
+  useEffect(() => {
+    setImage(profile ?? null);
+    setName(nickname ?? "");
+  }, [profile, nickname]);
+
+  const handleBtnClick = useCallback(async () => {
+    if (name) {
+      await profileChange("nickname", name).then(() => {
+        updateNickname(name);
+      });
+    }
+    if (image) {
+      await profileChange("image", image).then(() => {
+        updateImage(image);
+      });
+    }
+    navigate("/mypage");
+  }, [name, updateNickname, updateImage, navigate, image, profile, nickname]);
+
+  const nickChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
+
   return (
     <Container>
       {isOpen && (
@@ -16,13 +64,21 @@ const ProfileChange = () => {
           title='프로필 설정 완료'
           message='프로필 설정이 완료되었습니다.'
           type='alert'
+          confirmFunc={handleBtnClick}
         />
       )}
       <Form>
         <ProfileWrapper>
           <Avatar
             alt='avatar'
-            src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg'
+            src={image ?? "/default-avatar.png"}
+            onClick={() => fileInput.current?.click()}
+          />
+          <HiddenFileInput
+            type='file'
+            accept='image/jpg,image/png,image/jpeg'
+            onChange={onChange}
+            ref={fileInput}
           />
           <CameraIconWrapper>
             <Icon icon='IcCamera' />
@@ -32,12 +88,11 @@ const ProfileChange = () => {
           <Text variant='caption' color='var(--gray-700)'>
             닉네임
           </Text>
-          <input value='홍길동' />
+          <input type='text' value={name} onChange={nickChange} />
           <Icon icon='IcCancel' />
         </InputWrapper>
-
         <ButtonWrapper>
-          <Button type='button' onClick={handleBtnClick}>
+          <Button type='button' onClick={openPopup}>
             저장
           </Button>
         </ButtonWrapper>
@@ -124,4 +179,8 @@ const ButtonWrapper = styled.div`
   justify-content: flex-end;
   margin-bottom: 10px;
 `;
+const HiddenFileInput = styled.input`
+  display: none;
+`;
+
 export default ProfileChange;
