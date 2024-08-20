@@ -1,21 +1,19 @@
 import styled from "styled-components";
+import { Rank } from "@/types/Rank";
 import Text from "../common/Text";
 
-const RankTextComp = () => {
+const RankTextComp = ({ rank, score, image, nickname }: Rank) => {
   return (
     <RankText>
       <RankTextLeft>
-        <span>15</span>
-        <img
-          src='https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/28/e4727123-666e-4603-a2fa-b2478b3130bd.jpg'
-          alt='#'
-        />
+        <span>{rank}</span>
+        <img src={image} alt='#' />
         <Text variant='title_01' color='var(--gray-400)'>
-          김예지
+          {nickname}
         </Text>
       </RankTextLeft>
       <Text variant='title_01' color='var(--gray-400)'>
-        00P
+        {score}
       </Text>
     </RankText>
   );

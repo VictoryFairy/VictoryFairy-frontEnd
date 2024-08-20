@@ -63,7 +63,7 @@ const RegisterButton = styled.button`
   height: 48px;
   width: 152px;
   border-radius: 36px;
-  background-color: var(--primary-color);
+  background-color: ${({ theme }) => theme.colors.primary};
   color: var(--white);
   position: absolute;
   right: 10%;

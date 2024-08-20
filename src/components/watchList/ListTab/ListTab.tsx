@@ -1,18 +1,20 @@
 import styled from "styled-components";
+import { MyGame } from "@/types/Game";
 import GameListItem from "../../common/GameListItem";
 import MonthNav from "../../common/MonthNav";
 
 interface GameListItemProps {
-  data?: any;
+  matches: MyGame[];
+  onClick: (match: MyGame) => void;
 }
 
-const ListTab = ({ data }: GameListItemProps) => {
+const ListTab = ({ matches, onClick }: GameListItemProps) => {
   return (
     <ListContainer>
       <MonthNav />
       <GameList>
-        {data.map((item: any) => (
-          <GameListItem key={item.id} data={item} />
+        {matches.map((match) => (
+          <GameListItem onClick={onClick} key={match.id} match={match} />
         ))}
       </GameList>
     </ListContainer>
