@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-boolean-value */
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import Text from "@/components/common/Text";
 import Button from "../components/common/Button";
 import onBoarding from "../assets/images/onboarding/onBoarding.png";
 
@@ -9,9 +10,11 @@ const Home = () => {
   return (
     <Container>
       <Image src={onBoarding} alt='환영 이미지' />
-      <Title>환영합니다!</Title>
-      <Subtitle>우리팀의 승리를 책임지는 승리요정!</Subtitle>
-      <Subtitle>지금 바로 시작해보세요.</Subtitle>
+      <Header as='h1' variant='headline'>
+        환영합니다!
+      </Header>
+      <Text variant='subtitle_03'>우리팀의 승리를 책임지는 승리요정!</Text>
+      <Text variant='subtitle_03'>지금 바로 시작해보세요.</Text>
 
       <ButtonContainer>
         <Button size='big' type='button' onClick={() => navigate("/signup")}>
@@ -48,16 +51,9 @@ const Image = styled.img`
   object-fit: cover;
   margin-bottom: 20px;
 `;
-
-const Title = styled.h1`
-  margin-bottom: 16px;
+const Header = styled(Text)`
+  margin-bottom: 20px;
 `;
-
-const Subtitle = styled.p`
-  margin: 4px 0;
-  text-align: center;
-`;
-
 const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
