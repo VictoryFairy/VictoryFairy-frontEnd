@@ -5,10 +5,6 @@ import { useState } from "react";
 import { typography } from "@/style/typography";
 import { MyGame } from "../../types/Game";
 import Icon from "./Icon";
-import WinIcon from "@/assets/Icons/win.svg?react";
-import LoseIcon from "@/assets/Icons/lose.svg?react";
-import TieIcon from "@/assets/Icons/tie.svg?react";
-import NoGameIcon from "@/assets/Icons/no-game.svg?react";
 
 interface CalendarProps {
   data?: MyGame[];
@@ -45,13 +41,16 @@ const CalendarContainer = ({ data, onClick, onMonthChange }: CalendarProps) => {
 
     if (match) {
       if (match.status === "Win") {
-        return <WinIcon />;
+        return <Icon icon='IcWin' />;
       }
       if (match.status === "Lose") {
-        return <LoseIcon />;
+        return <Icon icon='IcLose' />;
       }
       if (match.status === "Tie") {
-        return <TieIcon />;
+        return <Icon icon='IcTie' />;
+      }
+      if (match.status === "No game") {
+        return <Icon icon='IcNoGame' />;
       }
     }
     return null; // 일치하는 데이터가 없을 경우 아무것도 표시하지 않음
@@ -75,6 +74,9 @@ const CalendarContainer = ({ data, onClick, onMonthChange }: CalendarProps) => {
       }
       if (match.status === "Tie") {
         return "event-tile draw";
+      }
+      if (match.status === "No game") {
+        return "event-tile no-game";
       }
     }
     return `${isFutureDate ? "future" : ""} ${isSelected ? "selected" : ""}`;
@@ -118,7 +120,7 @@ const CalendarContainer = ({ data, onClick, onMonthChange }: CalendarProps) => {
             무승부
           </div>
           <div>
-            <NoGameIcon />
+            <Icon icon='IcNoGame' />
             경기 없음
           </div>
         </div>

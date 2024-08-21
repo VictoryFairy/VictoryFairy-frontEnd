@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { setCheerTeamFirst } from "@/utils/setCheerTeamFirst";
 import { useEffect } from "react";
+import { findCheerTeam } from "@/utils/findCheerTeam";
 import { Game } from "../../types/Game";
 import DailyMatchItem from "./DailyMatchItem";
 
@@ -15,7 +15,7 @@ const DailyMatch = ({
   selectedMatch,
   setSelectedMatch,
 }: DailyMatchProps) => {
-  const formatMatches = setCheerTeamFirst(matches);
+  const formatMatches = findCheerTeam(matches);
 
   useEffect(() => {
     setSelectedMatch(formatMatches!);
