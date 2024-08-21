@@ -5,15 +5,8 @@ import Icon from "@/components/common/Icon";
 import { useMemo, useState } from "react";
 import { getUserInfo } from "@/api/home/home.api";
 import { useQuery } from "@tanstack/react-query";
-
-interface Record {
-  win: number;
-  lose: number;
-  tie: number;
-  cancel: number;
-  total: number;
-  score: number;
-}
+import DonutChart from "@/components/main/DonutChart";
+import { Record } from "@/types/Record";
 
 const Rate = () => {
   const [imgChange, setImgChange] = useState<boolean>(true);
@@ -54,7 +47,11 @@ const Rate = () => {
         <div className='img'>
           <img alt='이미지' />
         </div>
-      ) : null}
+      ) : data ? (
+        <DonutChart record={data} />
+      ) : (
+        <p>No data available</p>
+      )}
 
       <ButtonGroup>
         <button type='button'>
@@ -79,6 +76,9 @@ const RateContainer = styled.div`
   padding: 0px 12px;
   position: relative;
   background-color: #fff;
+  > :nth-child(3) {
+    margin: 0 auto;
+  }
 
   &::before,
   &::after {
