@@ -29,6 +29,7 @@ export interface CheerSongListProps {
   selectedTeamId?: number;
   activeTab?: number;
   type?: string;
+  searchTerm?: string;
   setRecentSearches?: (data: CheerSongListProps[]) => void;
 }
 const CheerSongList = ({
@@ -42,6 +43,7 @@ const CheerSongList = ({
   activeTab,
   type,
   setRecentSearches,
+  searchTerm,
 }: CheerSongListProps) => {
   const navigate = useNavigate();
   const newlyricPreview = lyricPreview?.slice(0, 10);
@@ -80,6 +82,9 @@ const CheerSongList = ({
       queryClient.invalidateQueries({
         queryKey: ["likedCheerSongs", activeTab],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["searchCheerSongs", searchTerm],
+      });
     },
   });
 
@@ -91,6 +96,9 @@ const CheerSongList = ({
       });
       queryClient.invalidateQueries({
         queryKey: ["likedCheerSongs", activeTab],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["searchCheerSongs", searchTerm],
       });
     },
   });
