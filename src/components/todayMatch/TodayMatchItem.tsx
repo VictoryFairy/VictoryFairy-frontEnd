@@ -13,12 +13,10 @@ const TodayMatchItem = ({ match }: TodayMatchItemProps) => {
         <div>{match.homeTeam.name}</div>
         <div>{match.awayTeam.name}</div>
       </div>
-      {match.status === "경기 종료" && (
-        <div className='score'>
-          <div>{match.homeTeamScore}</div>
-          <div>{match.awayTeamScore}</div>
-        </div>
-      )}
+      <div className='score'>
+        <div>{match.homeTeamScore}</div>
+        <div>{match.awayTeamScore}</div>
+      </div>
     </TodayMatchItemContainer>
   );
 };
