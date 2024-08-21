@@ -68,11 +68,13 @@ const RankPopup = ({
           })}
         </RankTextWrapper>
         <div>
-          <MyRankComp
-            withUser={withUser || null}
-            win={win ?? 0}
-            totalGames={totalGames ?? 0}
-          />
+          {withUser?.profile_image ? (
+            <MyRankComp
+              withUser={withUser || null}
+              win={win ?? 0}
+              totalGames={totalGames ?? 0}
+            />
+          ) : null}
         </div>
       </RankPopupWrapper>
     </MotionPopup>
