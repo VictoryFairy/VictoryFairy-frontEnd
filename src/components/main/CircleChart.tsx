@@ -1,9 +1,23 @@
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Legend, ChartOptions } from "chart.js";
 import ChartDataLabels, { Context } from "chartjs-plugin-datalabels";
+import { useEffect } from "react";
 import styled from "styled-components";
 import { useAuthStore } from "@/store/authStore";
 import Text from "../common/Text";
+
+interface TeamStats {
+  total: number;
+  win: number;
+}
+
+interface TeamStatsData {
+  totalWin: number;
+  homeWin: number;
+  oppTeam: {
+    [teamId: string]: TeamStats;
+  };
+}
 
 const color = [
   ["#041E42", "#D00F31", "#898C9B", "#BABCC3"], // 1 롯데
@@ -19,20 +33,25 @@ const color = [
 ];
 ChartJS.register(ArcElement, Legend, ChartDataLabels);
 const lab = ["홈", "원정"];
-const CircleChart = () => {
+const CircleChart = ({ teamData }: { teamData: TeamStatsData }) => {
   const teamId = useAuthStore((state) => state.teamId);
 
+  useEffect(() => {
+    console.log("teamData:", teamData);
+  }, []);
   const data = {
     labels: ["   :홈", "   :원정"],
     datasets: [
       {
-        data: [300, 50],
+        data: [teamData.homeWin, teamData.totalWin - teamData.homeWin],
         backgroundColor: color[teamId - 1],
         hoverBackgroundColor: color[teamId - 1],
         borderWidth: 0,
       },
     ],
   };
+  const isDataEmpty =
+    teamData.homeWin === 0 && teamData.totalWin - teamData.homeWin === 0;
 
   const options: ChartOptions<"pie"> = {
     responsive: true,
@@ -71,7 +90,11 @@ const CircleChart = () => {
     <ChartContainer>
       <Text variant='title_02'>홈/원정 승률</Text>
       <PieWrapper>
-        <Pie data={data} options={options} />
+        {isDataEmpty ? (
+          <NoDataText>승이 없습니다.</NoDataText>
+        ) : (
+          <Pie data={data} options={options} />
+        )}
       </PieWrapper>
     </ChartContainer>
   );
@@ -93,6 +116,12 @@ const ChartContainer = styled.div`
 const PieWrapper = styled.div`
   width: 75%;
   margin: 20px auto;
+`;
+const NoDataText = styled.div`
+  text-align: center;
+  font-size: 16px;
+  color: #999;
+  margin-top: 50px;
 `;
 
 export default CircleChart;

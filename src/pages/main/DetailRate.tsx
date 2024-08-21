@@ -1,17 +1,62 @@
+import { getVersusRecord } from "@/api/home/home.api";
 import Text from "@/components/common/Text";
 import CircleChart from "@/components/main/CircleChart";
+import { useAuthStore } from "@/store/authStore";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
+const teamNames = [
+  "롯데자이언츠",
+  "두산베어스",
+  "KIA타이거즈",
+  "삼성라이온즈",
+  "SSG랜더스",
+  "NC다이노스",
+  "LG트윈스",
+  "키움히어로즈",
+  "KT위즈",
+  "한화이글스",
+];
+
+interface TeamStats {
+  total: number;
+  win: number;
+}
+
+interface TeamStatsData {
+  totalWin: number;
+  homeWin: number;
+  oppTeam: {
+    [teamId: string]: TeamStats;
+  };
+}
+
 const DetailRate = () => {
+  const teamId = useAuthStore((state) => state.teamId);
   const location = useLocation();
-  const { data } = location.state || {};
+  const { datas } = location.state || {};
+
   const winPercentage = () => {
-    if (data && data.total > 0) {
-      return ((data.win / data.total) * 100).toFixed(2);
+    if (datas && datas.total > 0) {
+      return ((datas.win / datas.total) * 100).toFixed(2);
     }
     return "0.00";
   };
+
+  const { data } = useQuery<TeamStatsData>({
+    queryKey: ["getVersusRecord"],
+    queryFn: getVersusRecord,
+  });
+
+  const teamIds = Object.keys(data?.oppTeam || {});
+
+  useEffect(() => {
+    console.log(data);
+    console.log(teamIds);
+  }, [data, teamIds]);
+
   return (
     <Container>
       <RateWrapper>
@@ -21,31 +66,33 @@ const DetailRate = () => {
           <Text variant='headline'>%</Text>
         </Text>
         <Text>
-          {data.total}전 {data.win}승 {data.lose}패 {data.tie}무
+          {datas.total}전 {datas.win}승 {datas.lose}패 {datas.tie}무
         </Text>
       </RateWrapper>
-      <CircleChart />
+      {data && <CircleChart teamData={data} />}
       <TeamRateWrapper>
         <Text variant='title_02'>각 구단 별 승률</Text>
         <TeamWrapper>
-          <Team>
-            <span>KIA 타이거즈</span>
-            <span>
-              50<Text variant='headline'>%</Text>
-            </span>
-          </Team>
-          <Team>
-            <span>KIA 타이거즈</span>
-            <span>
-              50<Text variant='headline'>%</Text>
-            </span>
-          </Team>
-          <Team>
-            <span>KIA 타이거즈</span>
-            <span>
-              50<Text variant='headline'>%</Text>
-            </span>
-          </Team>
+          {teamNames.map((element, index) => {
+            const teamNum = (index + 1).toString();
+
+            const total = data?.oppTeam[teamNum]?.total || 0;
+            const win = data?.oppTeam[teamNum]?.win || 0;
+            if (index + 1 !== teamId) {
+              return (
+                <Team key={index}>
+                  <span>{element}</span>
+                  <span>
+                    {Number.isNaN((win / total) * 100)
+                      ? "0"
+                      : `${((win / total) * 100).toFixed(0)}`}
+                    <Text variant='headline'>%</Text>
+                  </span>
+                </Team>
+              );
+            }
+            return null;
+          })}
         </TeamWrapper>
       </TeamRateWrapper>
     </Container>
@@ -53,6 +100,7 @@ const DetailRate = () => {
 };
 
 const Container = styled.div`
+  overflow: auto;
   height: 100%;
   max-width: 480px;
   margin: 0 -20px;
@@ -73,6 +121,7 @@ const RateWrapper = styled.div`
     margin-bottom: 5px;
   }
 `;
+
 const TeamRateWrapper = styled.div`
   width: 100%;
   height: 100%;
@@ -86,6 +135,7 @@ const TeamRateWrapper = styled.div`
 
 const TeamWrapper = styled.div`
   margin-top: 20px;
+  margin-bottom: 20px;
   border-radius: 8px;
   display: flex;
   justify-content: space-between;
@@ -101,7 +151,7 @@ const TeamWrapper = styled.div`
 const Team = styled.div`
   display: flex;
   flex-direction: column;
-
+  margin-top: 20px;
   :nth-child(1) {
     font-weight: 500;
     font-size: 14px;

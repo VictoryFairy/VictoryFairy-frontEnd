@@ -29,7 +29,7 @@ const Rate = () => {
         <button
           type='button'
           className='my-rate-button'
-          onClick={() => navigate("/DetailRate", { state: { data } })}>
+          onClick={() => navigate("/DetailRate", { state: { datas: data } })}>
           <Text variant='title_01'>내 승률</Text>
           <Icon icon='IcArrowRight' fill='var(--gray-900)' />
         </button>

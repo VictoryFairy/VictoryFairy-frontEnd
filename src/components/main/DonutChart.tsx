@@ -32,6 +32,7 @@ const DonutChart = ({ record }: DonutChartProps) => {
         data: [record.win, record.lose, record.tie, record.cancel],
         backgroundColor: color[teamId - 1],
         hoverBackgroundColor: color[teamId - 1],
+        borderWidth: 0,
       },
     ],
   };
@@ -43,6 +44,9 @@ const DonutChart = ({ record }: DonutChartProps) => {
       },
       tooltip: {
         enabled: false,
+      },
+      datalabels: {
+        display: false,
       },
     },
   };
