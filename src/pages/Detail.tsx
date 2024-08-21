@@ -1,67 +1,43 @@
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
+import { useQuery } from "@tanstack/react-query";
+import { useLocation } from "react-router-dom";
+import { getRegisteredGameById } from "@/api/register/register";
 // import GameListItem from "../components/common/GameListItem";
-import { MyGame } from "../types/Game";
 import InputField from "../components/common/InputField";
 import TextAreaField from "../components/common/TextAreaField";
 
-const DATA: MyGame = {
-  id: 1,
-  image:
-    "https://i.pinimg.com/736x/32/d9/e4/32d9e459886530093d03cd44731a48eb.jpg",
-  seat: "115블록 2열 13번",
-  review: "좋았다",
-  status: "Win",
-  game: {
-    id: "20240801SSLG0",
-    date: "2024-08-01",
-    time: "18:30:00",
-    status: "경기 종료",
-    homeTeam: {
-      id: 7,
-      name: "LG",
-    },
-    awayTeam: {
-      id: 4,
-      name: "삼성",
-    },
-    stadium: {
-      id: 1,
-      name: "잠실",
-      latitude: 0,
-      longitude: 0,
-      address: "no address",
-    },
-    homeTeamScore: 0,
-    awayTeamScore: 7,
-    winningTeam: {
-      id: 4,
-      name: "삼성",
-    },
-  },
-  cheeringTeam: {
-    id: 4,
-    name: "삼성",
-  },
-};
 // TODO: 토글버튼으로 수정하기/삭제하기
 const Detail = () => {
+  const location = useLocation();
+  const id = +location.pathname.split("/")[2];
+
+  const { data } = useQuery({
+    queryKey: ["registeredGame", id],
+    queryFn: () => getRegisteredGameById(id),
+  });
+  console.log(data);
+
   // UI만 잡고 직관 등록 후 작업 예정
   const { register, watch, setValue } = useForm({
     mode: "onChange",
   });
+
+  // TODO:이거도 리팩토링 해야함
+  if (!data) return null;
+
   return (
     <>
       {/* <GameListItem data={DATA} /> */}
       <DetailContainer>
         <div className='img'>
-          <img src={DATA.image} alt='img' />
+          <img src={data?.image} alt='img' />
         </div>
         <InputField
           name='text'
           label='응원팀'
           type='text'
-          value={DATA.cheeringTeam.name}
+          value={data?.cheeringTeam.name}
           register={register}
           watch={watch}
           setValue={setValue}
@@ -71,7 +47,7 @@ const Detail = () => {
           name='text'
           label='좌석'
           type='text'
-          value={DATA.seat}
+          value={data?.seat}
           register={register}
           watch={watch}
           setValue={setValue}
@@ -80,7 +56,7 @@ const Detail = () => {
         <TextAreaField
           name='text'
           label='메모'
-          value={DATA.review}
+          value={data?.review}
           register={register}
           watch={watch}
           setValue={setValue}

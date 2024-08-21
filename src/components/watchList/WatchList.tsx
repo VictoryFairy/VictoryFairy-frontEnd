@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { typography } from "@/style/typography";
-import { getRegisteredGameMonthly } from "@/api/register/register";
+import { getRegisteredGameByMonthly } from "@/api/register/register";
 import { useQuery } from "@tanstack/react-query";
 import { MyGame } from "@/types/Game";
 import moment from "moment";
@@ -20,7 +20,7 @@ const WatchList = () => {
   const { data } = useQuery({
     queryKey: ["registeredGame", selcetMonth],
     queryFn: () =>
-      getRegisteredGameMonthly(
+      getRegisteredGameByMonthly(
         selcetMonth.getFullYear(),
         selcetMonth.getMonth() + 1,
       ),

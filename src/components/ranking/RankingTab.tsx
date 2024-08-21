@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { ApiResponse, getTopRank, MyInfo } from "@/api/rank/rank.api";
+import {
+  ApiResponse,
+  getNearbyRank,
+  getTopRank,
+  MyInfo,
+} from "@/api/rank/rank.api";
 import { useQuery } from "@tanstack/react-query";
 import { Rank } from "@/types/Rank";
 import Text from "../common/Text";
@@ -43,35 +48,41 @@ const RankingTab = () => {
   const [teamId, setTeamId] = useState<number>(0);
   const [teamTab, setTeamTab] = useState<string>("전체");
   const [top, setTop] = useState<Rank[] | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
   const [withUser, setWithUser] = useState<Rank[] | null>(null);
   const [user, setUser] = useState<MyInfo | null>(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const userMe = withUser?.find((my) => my.user_id === user?.userId);
 
-  const userMe = withUser?.find((my) => my.userId === user?.userId);
   const firstRank = top?.find((element) => element.rank === 1);
   const secondRank = top?.find((element) => element.rank === 2);
-  const thirdRank = top?.find((element) => element.rank === 2);
+  const thirdRank = top?.find((element) => element.rank === 3);
 
   const handleClickTeam = (value: string) => {
     setTeamTab(value);
     setTeamId(teamNumberMap[value]);
   };
 
-  const { data } = useQuery<ApiResponse>({
+  const { data: topRank } = useQuery<Omit<ApiResponse, "user" | "withUser">>({
     queryKey: ["getTopRank", { teamId }],
     queryFn: () => getTopRank(teamId),
   });
 
+  const { data: nearBy } = useQuery<Omit<ApiResponse, "top">>({
+    queryKey: ["getNearbyRank", { teamId }],
+    queryFn: () => getNearbyRank(teamId),
+  });
+
   useEffect(() => {
-    if (data) {
-      setTop(data.top);
-      setWithUser(data.withUser);
-      setUser(data.user);
+    if (topRank) {
+      setTop(topRank.top);
+    }
+    if (nearBy) {
+      setUser(nearBy.user);
+      setWithUser(nearBy.nearBy);
     }
     console.log("top:", top);
-    console.log("withUser:", withUser);
-    console.log("user:", user);
-  }, [data, top, user, withUser]);
+    console.log("user", userMe);
+  }, [nearBy, topRank]);
 
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
@@ -149,7 +160,7 @@ const RankingTab = () => {
         <MyRankWrapper>
           {user && withUser && (
             <MyRankComp
-              totalGame={user.totalGame}
+              totalGames={user.totalGames}
               win={user.win}
               withUser={userMe || null}
             />
@@ -186,7 +197,7 @@ const RankingTab = () => {
         handleClose={handleClose}
         teamId={teamId}
         withUser={userMe}
-        totalGame={user?.totalGame}
+        totalGames={user?.totalGames}
         win={user?.win}
       />
     </Container>

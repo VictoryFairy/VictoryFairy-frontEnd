@@ -15,7 +15,6 @@ import { ThemeContextProvider } from "./context/ThemeContext";
 import Main from "./pages/main/Main";
 import MyPage from "./pages/MyPage";
 import Info from "./pages/Info";
-
 import Ranking from "./pages/Ranking";
 import TeamChange from "./components/mypage/TeamChange";
 import ProfileChange from "./components/mypage/ProfileChange";
@@ -26,8 +25,6 @@ import CheersongDetail from "./pages/CheersongDetail";
 import Detail from "./pages/Detail";
 import SelectMatch from "./pages/register/SelectMatch";
 import RegisterForm from "./pages/register/RegisterForm";
-
-// import { ThemeProvider } from "styled-components";
 
 const queryClient = new QueryClient();
 

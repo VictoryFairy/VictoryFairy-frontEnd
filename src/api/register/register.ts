@@ -1,3 +1,4 @@
+import { MyGame } from "@/types/Game";
 import authAxiosInstance from "../authAxios";
 
 export const postUploadImg = async (formData: any) => {
@@ -26,14 +27,32 @@ export const postRegisterGame = async (data: any) => {
   }
 };
 
-export const getRegisteredGameMonthly = async (year: number, month: number) => {
+export const getRegisteredGameByMonthly = async (
+  year: number,
+  month: number,
+) => {
   try {
-    const response = await authAxiosInstance.get("/registered-games", {
-      params: {
-        year,
-        month,
+    const response = await authAxiosInstance.get<MyGame[]>(
+      "/registered-games",
+      {
+        params: {
+          year,
+          month,
+        },
       },
-    });
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getRegisteredGameById = async (id: number) => {
+  try {
+    const response = await authAxiosInstance.get<MyGame>(
+      `/registered-games/${id}`,
+    );
     return response.data;
   } catch (error) {
     console.error(error);

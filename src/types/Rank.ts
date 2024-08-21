@@ -4,4 +4,6 @@ export interface Rank {
   image: string;
   nickname: string;
   userId?: number;
+  user_id: number;
+  profile_image?: string;
 }
