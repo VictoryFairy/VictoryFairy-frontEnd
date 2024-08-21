@@ -29,7 +29,7 @@ const DonutChart = ({ record }: DonutChartProps) => {
   const data = {
     datasets: [
       {
-        data: [10, 7, 8, 9],
+        data: [record.win, record.lose, record.tie, record.cancel],
         backgroundColor: color[teamId - 1],
         hoverBackgroundColor: color[teamId - 1],
       },
