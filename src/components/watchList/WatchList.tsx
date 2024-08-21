@@ -17,7 +17,7 @@ const WatchList = () => {
   const [activeSelect, setActiveSelect] = useState(0);
   const [selcetMonth, setSelcetMonth] = useState(new Date());
   const navigate = useNavigate();
-  const { data } = useQuery({
+  const { data, isSuccess } = useQuery({
     queryKey: ["registeredGame", selcetMonth],
     queryFn: () =>
       getRegisteredGameByMonthly(
@@ -56,7 +56,7 @@ const WatchList = () => {
       case 1:
         return (
           <ListTab
-            matches={data}
+            matches={isSuccess ? data : []}
             onClick={(match: MyGame) => handleClickMatch(match.id)}
           />
         );
