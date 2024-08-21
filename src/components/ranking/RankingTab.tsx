@@ -84,6 +84,7 @@ const RankingTab = () => {
     }
     console.log("top:", top);
     console.log("user", userMe);
+    console.log("nearby", nearBy);
   }, [nearBy, topRank]);
 
   const handleOpen = () => setIsOpen(true);
@@ -119,7 +120,7 @@ const RankingTab = () => {
           <RankWrapper>
             <img
               src={
-                secondRank?.profile_image ||
+                secondRank?.image ||
                 "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
               }
             />
@@ -127,14 +128,19 @@ const RankingTab = () => {
             <div>2</div>
           </RankWrapper>
           <FirstRankWrapper>
-            <img src={firstRank?.profile_image} />
+            <img
+              src={
+                firstRank?.profile_image ||
+                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+              }
+            />
             <Text variant='title_02'>{firstRank?.nickname}</Text>
             <div>1</div>
           </FirstRankWrapper>
           <RankWrapper>
             <img
               src={
-                thirdRank?.profile_image ||
+                thirdRank?.image ||
                 "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
               }
             />
