@@ -156,6 +156,15 @@ export const changePassword = async (data: ChangePasswordRequest) => {
   }
 };
 
+export const checkRefreshToken = async () => {
+  try {
+    await axiosInstance.post("/auth/token/check");
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
 export const getMemberInfo = async (): Promise<MypageUserInfo> => {
   try {
     const response = await authAxiosInstance.get<MypageUserInfo>("/users/me");
