@@ -1,23 +1,23 @@
 import styled from "styled-components";
 import { typography } from "@/style/typography";
-import SwitchIcon from "@/assets/Icons/switch.svg?react";
-import ArrowRight from "@/assets/Icons/arrow-right.svg?react";
-import Download from "@/assets/Icons/download.svg?react";
-import Share from "@/assets/Icons/share.svg?react";
+import Text from "@/components/common/Text";
+import Icon from "@/components/common/Icon";
 
 const Rate = () => {
   return (
     <RateContainer>
       <MyRate>
         <button type='button' className='my-rate-button'>
-          내 승률
-          <ArrowRight />
+          <Text variant='title_01'>내 승률</Text>
+          <Icon icon='IcArrowRight' fill='var(--gray-900)' />
         </button>
         <div>
-          <span>80%</span>
-          <SwitchIcon />
+          <Text variant='display'>80%</Text>
+          <Icon icon='IcSwitch' fill='var(--gray-900)' />
         </div>
-        <span className='my-rate-record'>11전 8승 2패 0무</span>
+        <Text variant='subtitle_03' className='my-rate-record'>
+          11전 8승 2패 0무
+        </Text>
       </MyRate>
       <hr />
       <div className='img'>
@@ -25,12 +25,12 @@ const Rate = () => {
       </div>
       <ButtonGroup>
         <button type='button'>
-          <Download />
-          이미지 저장
+          <Icon icon='IcDownload' fill='var(--gray-900)' />
+          <Text variant='title_01'>이미지 저장</Text>
         </button>
         <button type='button'>
-          <Share />
-          공유하기
+          <Icon icon='IcShare' fill='var(--gray-900)' />
+          <Text variant='title_01'>공유하기</Text>
         </button>
       </ButtonGroup>
     </RateContainer>
@@ -105,7 +105,6 @@ const MyRate = styled.div`
   .my-rate-button {
     display: flex;
     align-items: center;
-    ${typography.title_02}
     width: fit-content;
     background-color: var(--white);
     cursor: pointer;
@@ -117,7 +116,6 @@ const MyRate = styled.div`
   > div {
     display: flex;
     justify-content: space-between;
-    ${typography.display}
   }
   .my-rate-record {
     ${typography.subtitle_03}
@@ -134,7 +132,6 @@ const ButtonGroup = styled.div`
     gap: 10px;
     width: 100%;
     height: 42px;
-    ${typography.title_01}
     background-color: var(--white);
 
     svg {
