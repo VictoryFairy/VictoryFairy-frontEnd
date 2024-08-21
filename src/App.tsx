@@ -25,6 +25,7 @@ import CheersongDetail from "./pages/CheersongDetail";
 import Detail from "./pages/Detail";
 import SelectMatch from "./pages/register/SelectMatch";
 import RegisterForm from "./pages/register/RegisterForm";
+import DetailRate from "./pages/main/DetailRate";
 
 const queryClient = new QueryClient();
 
@@ -235,6 +236,16 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <RegisterForm />,
+      },
+    ],
+  },
+  {
+    path: "/DetailRate",
+    element: <Layout center={<MiddelWrapper>내 승률</MiddelWrapper>} />,
+    children: [
+      {
+        path: "/DetailRate",
+        element: <DetailRate />,
       },
     ],
   },

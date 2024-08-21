@@ -7,8 +7,10 @@ import { getUserInfo } from "@/api/home/home.api";
 import { useQuery } from "@tanstack/react-query";
 import DonutChart from "@/components/main/DonutChart";
 import { Record } from "@/types/Record";
+import { useNavigate } from "react-router-dom";
 
 const Rate = () => {
+  const navigate = useNavigate();
   const [imgChange, setImgChange] = useState<boolean>(true);
   const { data } = useQuery<Record>({
     queryKey: ["getUserInfo"],
@@ -24,7 +26,10 @@ const Rate = () => {
   return (
     <RateContainer>
       <MyRate>
-        <button type='button' className='my-rate-button'>
+        <button
+          type='button'
+          className='my-rate-button'
+          onClick={() => navigate("/DetailRate", { state: { datas: data } })}>
           <Text variant='title_01'>내 승률</Text>
           <Icon icon='IcArrowRight' fill='var(--gray-900)' />
         </button>
