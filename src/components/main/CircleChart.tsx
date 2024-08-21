@@ -43,7 +43,10 @@ const CircleChart = ({ teamData }: { teamData: TeamStatsData }) => {
     labels: ["   :홈", "   :원정"],
     datasets: [
       {
-        data: [teamData.homeWin, teamData.totalWin - teamData.homeWin],
+        data: [
+          teamData.homeWin * 100,
+          (teamData.totalWin - teamData.homeWin) * 100,
+        ],
         backgroundColor: color[teamId - 1],
         hoverBackgroundColor: color[teamId - 1],
         borderWidth: 0,
