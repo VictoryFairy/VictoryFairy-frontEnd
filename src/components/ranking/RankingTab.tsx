@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { ApiResponse, getTopRank, MyInfo } from "@/api/rank/rank.api";
+import {
+  ApiResponse,
+  getNearbyRank,
+  getTopRank,
+  MyInfo,
+} from "@/api/rank/rank.api";
 import { useQuery } from "@tanstack/react-query";
 import { Rank } from "@/types/Rank";
 import Text from "../common/Text";
@@ -43,35 +48,43 @@ const RankingTab = () => {
   const [teamId, setTeamId] = useState<number>(0);
   const [teamTab, setTeamTab] = useState<string>("전체");
   const [top, setTop] = useState<Rank[] | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
   const [withUser, setWithUser] = useState<Rank[] | null>(null);
   const [user, setUser] = useState<MyInfo | null>(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const userMe = withUser?.find((my) => my.user_id === user?.userId);
 
-  const userMe = withUser?.find((my) => my.userId === user?.userId);
   const firstRank = top?.find((element) => element.rank === 1);
   const secondRank = top?.find((element) => element.rank === 2);
-  const thirdRank = top?.find((element) => element.rank === 2);
+  const thirdRank = top?.find((element) => element.rank === 3);
+  const today = new Date();
 
+  const todayDay = `${today.getFullYear()}.${(today.getMonth() + 1).toString().padStart(2, "0")}.${today.getDate().toString().padStart(2, "0")}`;
   const handleClickTeam = (value: string) => {
     setTeamTab(value);
     setTeamId(teamNumberMap[value]);
   };
 
-  const { data } = useQuery<ApiResponse>({
+  const { data: topRank } = useQuery<Omit<ApiResponse, "user" | "withUser">>({
     queryKey: ["getTopRank", { teamId }],
     queryFn: () => getTopRank(teamId),
   });
 
+  const { data: nearBy } = useQuery<Omit<ApiResponse, "top">>({
+    queryKey: ["getNearbyRank", { teamId }],
+    queryFn: () => getNearbyRank(teamId),
+  });
+
   useEffect(() => {
-    if (data) {
-      setTop(data.top);
-      setWithUser(data.withUser);
-      setUser(data.user);
+    if (topRank) {
+      setTop(topRank.top);
+    }
+    if (nearBy) {
+      setUser(nearBy.user);
+      setWithUser(nearBy.nearBy);
     }
     console.log("top:", top);
-    console.log("withUser:", withUser);
-    console.log("user:", user);
-  }, [data, top, user, withUser]);
+    console.log("user", userMe);
+  }, [nearBy, topRank]);
 
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
@@ -98,7 +111,7 @@ const RankingTab = () => {
         <TextWrapper>
           <div>
             <Text variant='title_02'>오늘의 랭킹</Text>
-            <Text variant='caption'>2024.05.24 기준</Text>
+            <Text variant='caption'>{todayDay} 기준</Text>
           </div>
           <Text variant='caption'>오늘 경기에 대한 랭킹 정보만 보여집니다</Text>
         </TextWrapper>
@@ -106,7 +119,7 @@ const RankingTab = () => {
           <RankWrapper>
             <img
               src={
-                secondRank?.image ||
+                secondRank?.profile_image ||
                 "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
               }
             />
@@ -114,14 +127,14 @@ const RankingTab = () => {
             <div>2</div>
           </RankWrapper>
           <FirstRankWrapper>
-            <img src={firstRank?.image} />
+            <img src={firstRank?.profile_image} />
             <Text variant='title_02'>{firstRank?.nickname}</Text>
             <div>1</div>
           </FirstRankWrapper>
           <RankWrapper>
             <img
               src={
-                thirdRank?.image ||
+                thirdRank?.profile_image ||
                 "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
               }
             />
@@ -149,7 +162,7 @@ const RankingTab = () => {
         <MyRankWrapper>
           {user && withUser && (
             <MyRankComp
-              totalGame={user.totalGame}
+              totalGames={user.totalGames}
               win={user.win}
               withUser={userMe || null}
             />
@@ -186,7 +199,7 @@ const RankingTab = () => {
         handleClose={handleClose}
         teamId={teamId}
         withUser={userMe}
-        totalGame={user?.totalGame}
+        totalGames={user?.totalGames}
         win={user?.win}
       />
     </Container>

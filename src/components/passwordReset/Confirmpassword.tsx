@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { changePassword } from "@/api/auth/auth.api";
+import { usePopup } from "@/hooks/usePopup";
+import { useState } from "react";
 import Button from "../common/Button";
 import InputField from "../common/InputField";
 import TitleSection from "../common/TitleSection";
@@ -20,6 +22,8 @@ const Confirmpassword = ({
   email,
   setstep,
 }: ConfirmpasswordProps) => {
+  const { Popup, openPopup, isOpen } = usePopup();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const navigate = useNavigate();
   const { register, watch, handleSubmit, setValue } =
     useForm<ResetpasswordFormData>({
@@ -29,14 +33,10 @@ const Confirmpassword = ({
   const onSubmit = async (data: ResetpasswordFormData) => {
     try {
       await changePassword({ email, password: data.confirmPassword });
-      alert("비밀번호 변경이 완료되었습니다.");
-      setstep(1);
-      navigate("/login");
+      openPopup();
     } catch (err) {
-      alert("비밀번호 변경이 실패했습니다.");
-      setstep(1);
-      navigate("/login");
-      console.log(err);
+      setErrorMessage("비밀번호 변경 실패");
+      openPopup();
     }
   };
   const passwordValue = password;
@@ -85,6 +85,21 @@ const Confirmpassword = ({
           </Button>
         </ButtonWrapper>
       </Form>
+      {isOpen && (
+        <Popup
+          title={errorMessage ? "비밀번호변경 실패" : "비밀번호변경 성공"}
+          message={
+            errorMessage
+              ? "비밀번호 변경에 실패했습니다. 다시 시도해 주세요."
+              : "성공적으로 비밀번호변경이 완료되었습니다!"
+          }
+          type='alert'
+          confirmFunc={() => {
+            navigate("/login");
+            setstep(1);
+          }}
+        />
+      )}
     </Container>
   );
 };

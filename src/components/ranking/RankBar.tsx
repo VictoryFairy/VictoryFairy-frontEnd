@@ -12,6 +12,20 @@ import {
   ChartData,
 } from "chart.js";
 import styled from "styled-components";
+import { useAuthStore } from "@/store/authStore";
+
+const teamColor = [
+  ["#456089", "#041E42", "#BBC4D5"],
+  ["#4D5278", "#131230", "#BCBFCF"],
+  ["#F63B45", "#EC0029", "#FFC9CF"],
+  ["#1CB9FF", "#0059A6", "#B3E6FF"],
+  ["#E75152", "#BE262C", "#FBCCD2"],
+  ["#59A0D3", "#1D467D", "#BDDCEF"],
+  ["#E31D46", "#C40037", "#FBCBD6"],
+  ["#F8449F", "#D1187D", "#F9BFDF"],
+  ["#9D9D9D", "#000000", "#E9E9E9"],
+  ["#FFC41F", "#FF6600", "#FFEAB1"],
+];
 
 ChartJS.register(
   CategoryScale,
@@ -37,12 +51,13 @@ interface RankBarProps {
 const RankBar = ({ data }: RankBarProps) => {
   const [labels, setLabels] = useState<string[]>([]);
   const [datas, setDatas] = useState<number[]>([]);
+  const teamId = useAuthStore((state) => state.teamId);
 
   useEffect(() => {
     const sortedData = [
-      { point: "Point 0", score: 500 },
       { point: "Point 0", score: 0 },
-      { point: "Point 0", score: 200 },
+      { point: "Point 0", score: 0 },
+      { point: "Point 0", score: 0 },
     ];
 
     data?.forEach((item) => {
@@ -64,8 +79,8 @@ const RankBar = ({ data }: RankBarProps) => {
     datasets: [
       {
         data: datas,
-        backgroundColor: ["#545763", "#2F3036", "#BABCC3"],
-        borderColor: ["#545763", "#2F3036", "#BABCC3"],
+        backgroundColor: teamColor[teamId - 1],
+        borderColor: teamColor[teamId - 1],
         borderWidth: 1,
         barPercentage: 0.7,
         categoryPercentage: 0.8,
@@ -106,6 +121,9 @@ const RankBar = ({ data }: RankBarProps) => {
     plugins: {
       legend: {
         display: false,
+      },
+      tooltip: {
+        enabled: false,
       },
     },
   };

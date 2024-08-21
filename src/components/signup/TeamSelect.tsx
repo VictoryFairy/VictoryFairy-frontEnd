@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { UserInfo } from "@/types/User";
 import { signUp } from "@/api/auth/auth.api";
+import { usePopup } from "@/hooks/usePopup";
 import TitleSection from "../common/TitleSection";
 import Button from "../common/Button";
 
@@ -100,7 +101,8 @@ const TeamSelect = ({
 }: TeamSelectProps) => {
   const navigate = useNavigate();
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
-
+  const { Popup, openPopup, isOpen } = usePopup();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const handleTeamSelect = (team: Team) => {
     setSelectedTeam(team);
     handleSetUserInfo({ teamId: team.id });
@@ -116,13 +118,10 @@ const TeamSelect = ({
         password: userInfo.password,
       };
       await signUp(data);
-      navigate("/");
-      setstep(1);
+      openPopup();
     } catch (err) {
-      alert("회원가입 실패");
-      setstep(1);
-      navigate("/");
-      console.log(err);
+      setErrorMessage("회원가입 실패");
+      openPopup();
     }
   };
 
@@ -158,6 +157,21 @@ const TeamSelect = ({
           승리요정 시작하기
         </Button>
       </ButtonWrapper>
+      {isOpen && (
+        <Popup
+          title={errorMessage ? "회원가입 실패" : "회원가입 성공"}
+          message={
+            errorMessage
+              ? "회원가입에 실패했습니다. 다시 시도해 주세요."
+              : "성공적으로 회원가입이 완료되었습니다!"
+          }
+          type='alert'
+          confirmFunc={() => {
+            navigate("/");
+            setstep(1);
+          }}
+        />
+      )}
     </Container>
   );
 };

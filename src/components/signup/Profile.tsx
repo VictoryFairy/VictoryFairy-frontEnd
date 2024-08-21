@@ -67,6 +67,10 @@ const Profile = ({ setstep, handleSetUserInfo }: ProfileProps) => {
         setImage(profileImgUrl);
       } catch (err) {
         console.log(err);
+        setError("nickname", {
+          type: "manual",
+          message: "이미지의 크기를 줄여주세요....",
+        });
       }
     } else {
       setImage(

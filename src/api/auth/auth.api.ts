@@ -123,7 +123,7 @@ export const login = async (data: LoginRequest) => {
           case 401:
             throw new Error("아이디 또는 비밀번호가 틀렸습니다");
           default:
-            throw new Error("로그인 중 오류가 발생했습니다.");
+            throw new Error("로그인 중 서버 오류가 발생했습니다.");
         }
       }
     }
@@ -153,6 +153,15 @@ export const changePassword = async (data: ChangePasswordRequest) => {
         }
       }
     }
+  }
+};
+
+export const checkRefreshToken = async () => {
+  try {
+    await axiosInstance.post("/auth/token/check");
+  } catch (err) {
+    console.error(err);
+    throw err;
   }
 };
 
