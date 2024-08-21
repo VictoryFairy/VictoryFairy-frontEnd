@@ -45,13 +45,19 @@ interface RankData {
 
 interface RankBarProps {
   data: RankData[] | null;
+  tab: number;
 }
 
-const RankBar = ({ data }: RankBarProps) => {
+const RankBar = ({ data, tab }: RankBarProps) => {
   const [labels, setLabels] = useState<string[]>([]);
   const [datas, setDatas] = useState<number[]>([]);
   const teamId = useAuthStore((state) => state.teamId);
-
+  let propTab = 0;
+  if (tab === 0) {
+    propTab = teamId;
+  } else {
+    propTab = tab;
+  }
   useEffect(() => {
     const sortedData = [
       { point: "Point 0", score: 0 },
@@ -61,11 +67,20 @@ const RankBar = ({ data }: RankBarProps) => {
 
     data?.forEach((item) => {
       if (item.rank === 2) {
-        sortedData[0] = { point: `Point ${item.score}`, score: item.score };
+        sortedData[0] = {
+          point: `Point ${item.score}`,
+          score: item.score - 900,
+        };
       } else if (item.rank === 1) {
-        sortedData[1] = { point: `Point ${item.score}`, score: item.score };
+        sortedData[1] = {
+          point: `Point ${item.score}`,
+          score: item.score - 900,
+        };
       } else if (item.rank === 3) {
-        sortedData[2] = { point: `Point ${item.score}`, score: item.score };
+        sortedData[2] = {
+          point: `Point ${item.score}`,
+          score: item.score - 900,
+        };
       }
     });
 
@@ -78,8 +93,8 @@ const RankBar = ({ data }: RankBarProps) => {
     datasets: [
       {
         data: datas,
-        backgroundColor: teamColor[teamId - 1],
-        borderColor: teamColor[teamId - 1],
+        backgroundColor: teamColor[propTab - 1],
+        borderColor: teamColor[propTab - 1],
         borderWidth: 1,
         barPercentage: 0.7,
         categoryPercentage: 0.8,

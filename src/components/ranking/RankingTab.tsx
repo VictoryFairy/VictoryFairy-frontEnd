@@ -116,7 +116,9 @@ const RankingTab = () => {
             <Text variant='title_02'>오늘의 랭킹</Text>
             <Text variant='caption'>{todayDay} 기준</Text>
           </div>
-          <Text variant='caption'>오늘 경기에 대한 랭킹 정보만 보여집니다</Text>
+          <Text variant='caption'>
+            전체 경기에 대한 랭킹 정보를 제공합니다.
+          </Text>
         </TextWrapper>
         <RankProfileWrapper>
           <RankWrapper>
@@ -150,7 +152,7 @@ const RankingTab = () => {
             <div>3</div>
           </RankWrapper>
         </RankProfileWrapper>
-        <RankBar data={top} />
+        <RankBar data={top} tab={teamId} />
       </RankTopWrapper>
       <RankTextWrapper>
         {withUser?.map((element) => {
@@ -167,15 +169,22 @@ const RankingTab = () => {
             );
           return null;
         })}
+
         <MyRankWrapper>
-          {user && withUser && (
-            <MyRankComp
-              totalGames={user.totalGames}
-              win={user.win}
-              withUser={userMe || null}
-            />
-          )}
+          {withUser?.map((element) => {
+            if (user && userMe && withUser && element.rank === userMe.rank)
+              return (
+                <MyRankComp
+                  key={element.userId}
+                  totalGames={user.totalGames}
+                  win={user.win}
+                  withUser={userMe || null}
+                />
+              );
+            return null;
+          })}
         </MyRankWrapper>
+
         {withUser?.map((element) => {
           if (userMe?.rank && element.rank > userMe.rank)
             return (
@@ -190,6 +199,7 @@ const RankingTab = () => {
             );
           return null;
         })}
+
         <ConfirmRank>
           <button type='button' onClick={handleOpen}>
             <Text variant='title_01' color='var(--gray-400)'>
