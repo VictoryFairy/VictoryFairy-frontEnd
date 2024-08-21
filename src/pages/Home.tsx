@@ -1,12 +1,28 @@
 /* eslint-disable react/jsx-boolean-value */
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { checkRefreshToken } from "@/api/auth/auth.api";
 import Button from "../components/common/Button";
 import onBoarding from "../assets/images/onboarding/onBoarding.png";
 import Text from "../components/common/Text";
 
 const Home = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkToken = async () => {
+      try {
+        await checkRefreshToken();
+        navigate("/home");
+      } catch (err) {
+        navigate("/");
+      }
+    };
+
+    checkToken();
+  }, []);
+
   return (
     <Container>
       <Image src={onBoarding} alt='환영 이미지' />
