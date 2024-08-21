@@ -18,19 +18,17 @@ const DailyMatch = ({
   const formatMatches = setCheerTeamFirst(matches);
 
   useEffect(() => {
-    setSelectedMatch(formatMatches[0]);
+    setSelectedMatch(formatMatches!);
   }, [formatMatches, setSelectedMatch]);
 
   return (
     <DailyMatchContainer>
-      {formatMatches.map((match) => (
-        <DailyMatchItem
-          key={match.id}
-          match={match}
-          isSelected={selectedMatch?.id === match.id}
-          onSelect={() => setSelectedMatch(match)}
-        />
-      ))}
+      <DailyMatchItem
+        key={formatMatches?.id}
+        match={formatMatches!}
+        isSelected={selectedMatch?.id === formatMatches?.id}
+        onSelect={() => setSelectedMatch(formatMatches!)}
+      />
     </DailyMatchContainer>
   );
 };

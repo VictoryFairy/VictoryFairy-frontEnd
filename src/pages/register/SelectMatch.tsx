@@ -24,6 +24,15 @@ const SelectMatch = () => {
     }
   };
 
+  if (data?.length === 0) {
+    return (
+      <SelectMatchContainer>
+        <CalendarContainer onClick={(date) => handleClickDay(date)} />
+        <div>경기가 없습니다.</div>
+      </SelectMatchContainer>
+    );
+  }
+
   return (
     <SelectMatchContainer>
       <CalendarContainer onClick={(date) => handleClickDay(date)} />
