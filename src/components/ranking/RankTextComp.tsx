@@ -7,12 +7,13 @@ const RankTextComp = ({
   score,
   profile_image,
   nickname,
+  image,
 }: Omit<Rank, "user_id">) => {
   return (
     <RankText>
       <RankTextLeft>
         <span>{rank}</span>
-        <img src={profile_image} alt='#' />
+        <img src={profile_image || image} alt='#' />
         <Text variant='title_01' color='var(--gray-400)'>
           {nickname}
         </Text>
