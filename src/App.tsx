@@ -181,13 +181,7 @@ const router = createBrowserRouter([
     path: "/mypage/profile",
     element: (
       <Layout
-        left={
-          <ArrowLeft
-            fill='var(--primary-color)'
-            onClick={() => (window.location.href = "/mypage")}
-            cursor='pointer'
-          />
-        }
+        left={<BackButton />}
         center={<MiddelWrapper>프로필 설정</MiddelWrapper>}
       />
     ),
@@ -202,13 +196,7 @@ const router = createBrowserRouter([
     path: "/mypage/team",
     element: (
       <Layout
-        left={
-          <ArrowLeft
-            fill='var(--primary-color)'
-            onClick={() => (window.location.href = "/mypage")}
-            cursor='pointer'
-          />
-        }
+        left={<BackButton />}
         center={<MiddelWrapper>응원팀 변경</MiddelWrapper>}
       />
     ),
@@ -241,7 +229,12 @@ const router = createBrowserRouter([
   },
   {
     path: "/DetailRate",
-    element: <Layout center={<MiddelWrapper>내 승률</MiddelWrapper>} />,
+    element: (
+      <Layout
+        center={<MiddelWrapper>내 승률</MiddelWrapper>}
+        left={<BackButton />}
+      />
+    ),
     children: [
       {
         path: "/DetailRate",
