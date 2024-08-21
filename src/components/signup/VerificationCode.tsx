@@ -30,7 +30,7 @@ const VerificationCode = ({ email, setstep }: VerificationCodeProps) => {
 
       setstep(3);
     } catch (err) {
-      if (axios.isAxiosError(err)) {
+      if (err instanceof Error) {
         setError(err.message);
       }
     }
