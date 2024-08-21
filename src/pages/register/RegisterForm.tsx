@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { Game } from "@/types/Game";
+import { Game, MyGame } from "@/types/Game";
 import { useForm } from "react-hook-form";
 import TextAreaField from "@/components/common/TextAreaField";
 import Icon from "@/components/common/Icon";
@@ -10,7 +10,9 @@ import InputField from "@/components/common/InputField";
 import { postRegisterGame } from "@/api/register/register";
 import { uploadImg } from "@/utils/uploadImg";
 import { usePopup } from "@/hooks/usePopup";
-import CheerTeamSelect from "@/components/register/CheerTeamSelect";
+import { useAuthStore } from "@/store/authStore";
+import { getTeamName } from "@/utils/getTeamName";
+import ResultLabel from "@/components/watchList/ListTab/ResultLabel";
 import Text from "../../components/common/Text";
 import { GameListItemContainer } from "../../components/common/GameListItem";
 
@@ -22,8 +24,7 @@ const RegisterForm = () => {
   const inputImgRef = useRef<HTMLInputElement>(null);
   const { ref, ...rest } = register("img");
   useImperativeHandle(ref, () => inputImgRef.current);
-
-  const [cheeringTeamId, setCheeringTeamId] = useState<number | null>(null);
+  const { teamId } = useAuthStore();
 
   const { Popup, isOpen, openPopup } = usePopup();
 
@@ -42,7 +43,7 @@ const RegisterForm = () => {
       const { img, seat, review } = data;
 
       let image = null;
-      if (img && img.length > 0) {
+      if (img.size > 0) {
         image = await uploadImg(img);
       }
 
@@ -51,7 +52,7 @@ const RegisterForm = () => {
         image,
         seat,
         review,
-        cheeringTeamId,
+        cheeringTeamId: teamId,
       };
 
       await postRegisterGame(registerData);
@@ -96,6 +97,21 @@ const RegisterForm = () => {
     inputImgRef.current?.click();
   };
 
+  let result = "" as Pick<MyGame, "status">["status"];
+  if (match.winningTeam) {
+    if (match.winningTeam.id === teamId) {
+      result = "Win";
+    } else {
+      result = "Lose";
+    }
+  } else {
+    result = "Tie";
+  }
+  if (!match.homeTeamScore && !match.awayTeamScore) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    result = "No game";
+  }
+
   return (
     <RegisterFormContainer>
       {isOpen && (
@@ -107,6 +123,7 @@ const RegisterForm = () => {
         />
       )}
       <GameListItemContainer>
+        <ResultLabel status={result}>{result}</ResultLabel>
         <div className='game-info'>
           <div className='team-score'>
             <Text variant='subtitle_02'>{match.homeTeam.name}</Text>
@@ -119,8 +136,11 @@ const RegisterForm = () => {
         </div>
         <div className='vertical-line' />
         <div className='game-info-stadium'>
-          <Text variant='caption'>2024.05.24</Text>
-          <Text variant='caption'>{match.stadium.name} 야구장</Text>
+          <Text variant='caption'>{match.date}</Text>
+          <Text variant='caption'>
+            <Icon icon='IcLocation' width={16} height={16} />
+            {match.stadium.name} 야구장
+          </Text>
         </div>
       </GameListItemContainer>
 
@@ -146,10 +166,20 @@ const RegisterForm = () => {
             </ImgWrraper>
           )}
         </ImgUploadContainer>
-        <CheerTeamSelect
+        {/* <CheerTeamSelect
           setCheeringTeamId={setCheeringTeamId}
           homeTeam={match.homeTeam}
           awayTeam={match.awayTeam}
+        /> */}
+        <InputField
+          label='응원팀'
+          setValue={setValue}
+          register={register}
+          watch={watch}
+          name='cheerTeam'
+          type='input'
+          disabled
+          value={getTeamName(teamId)}
         />
         <InputField
           label='좌석'
