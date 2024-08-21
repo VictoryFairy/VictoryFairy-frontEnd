@@ -1,36 +1,66 @@
 import styled from "styled-components";
 import { typography } from "@/style/typography";
-import SwitchIcon from "@/assets/Icons/switch.svg?react";
-import ArrowRight from "@/assets/Icons/arrow-right.svg?react";
-import Download from "@/assets/Icons/download.svg?react";
-import Share from "@/assets/Icons/share.svg?react";
+import Text from "@/components/common/Text";
+import Icon from "@/components/common/Icon";
+import { useMemo, useState } from "react";
+import { getUserInfo } from "@/api/home/home.api";
+import { useQuery } from "@tanstack/react-query";
+import DonutChart from "@/components/main/DonutChart";
+import { Record } from "@/types/Record";
 
 const Rate = () => {
+  const [imgChange, setImgChange] = useState<boolean>(true);
+  const { data } = useQuery<Record>({
+    queryKey: ["getUserInfo"],
+    queryFn: getUserInfo,
+  });
+
+  const winPercentage = useMemo(() => {
+    if (data && data.total > 0) {
+      return ((data.win / data.total) * 100).toFixed(2);
+    }
+    return "0.00";
+  }, [data]);
   return (
     <RateContainer>
       <MyRate>
         <button type='button' className='my-rate-button'>
-          내 승률
-          <ArrowRight />
+          <Text variant='title_01'>내 승률</Text>
+          <Icon icon='IcArrowRight' fill='var(--gray-900)' />
         </button>
-        <div>
-          <span>80%</span>
-          <SwitchIcon />
+        <div
+          role='button' // 1. Add an appropriate ARIA role
+          tabIndex={0}
+          onClick={() => setImgChange(!imgChange)}>
+          <Text variant='display'>
+            {winPercentage}
+            <Text variant='headline'>%</Text>
+          </Text>
+          <Icon icon='IcSwitch' fill='var(--gray-900)' />
         </div>
-        <span className='my-rate-record'>11전 8승 2패 0무</span>
+        <Text variant='subtitle_03' className='my-rate-record'>
+          {data?.total}전 {data?.win}승 {data?.lose}패 {data?.tie}무
+        </Text>
       </MyRate>
       <hr />
-      <div className='img'>
-        <img alt='이미지' />
-      </div>
+      {imgChange ? (
+        <div className='img'>
+          <img alt='이미지' />
+        </div>
+      ) : data ? (
+        <DonutChart record={data} />
+      ) : (
+        <p>No data available</p>
+      )}
+
       <ButtonGroup>
         <button type='button'>
-          <Download />
-          이미지 저장
+          <Icon icon='IcDownload' fill='var(--gray-900)' />
+          <Text variant='title_01'>이미지 저장</Text>
         </button>
         <button type='button'>
-          <Share />
-          공유하기
+          <Icon icon='IcShare' fill='var(--gray-900)' />
+          <Text variant='title_01'>공유하기</Text>
         </button>
       </ButtonGroup>
     </RateContainer>
@@ -46,6 +76,9 @@ const RateContainer = styled.div`
   padding: 0px 12px;
   position: relative;
   background-color: #fff;
+  > :nth-child(3) {
+    margin: 0 auto;
+  }
 
   &::before,
   &::after {
@@ -105,7 +138,6 @@ const MyRate = styled.div`
   .my-rate-button {
     display: flex;
     align-items: center;
-    ${typography.title_02}
     width: fit-content;
     background-color: var(--white);
     cursor: pointer;
@@ -117,7 +149,6 @@ const MyRate = styled.div`
   > div {
     display: flex;
     justify-content: space-between;
-    ${typography.display}
   }
   .my-rate-record {
     ${typography.subtitle_03}
@@ -134,7 +165,6 @@ const ButtonGroup = styled.div`
     gap: 10px;
     width: 100%;
     height: 42px;
-    ${typography.title_01}
     background-color: var(--white);
 
     svg {

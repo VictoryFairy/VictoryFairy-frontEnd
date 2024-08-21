@@ -15,16 +15,16 @@ import styled from "styled-components";
 import { useAuthStore } from "@/store/authStore";
 
 const teamColor = [
-  ["#456089", "#041E42", "#BBC4D5"],
-  ["#4D5278", "#131230", "#BCBFCF"],
-  ["#F63B45", "#EC0029", "#FFC9CF"],
-  ["#1CB9FF", "#0059A6", "#B3E6FF"],
-  ["#E75152", "#BE262C", "#FBCCD2"],
-  ["#59A0D3", "#1D467D", "#BDDCEF"],
-  ["#E31D46", "#C40037", "#FBCBD6"],
-  ["#F8449F", "#D1187D", "#F9BFDF"],
-  ["#9D9D9D", "#000000", "#E9E9E9"],
-  ["#FFC41F", "#FF6600", "#FFEAB1"],
+  ["#456089", "#041E42", "#BBC4D5"], //1 롯데
+  ["#4D5278", "#131230", "#BCBFCF"], //2 두산
+  ["#F63B45", "#EC0029", "#FFC9CF"], //3 기아
+  ["#1CB9FF", "#0059A6", "#B3E6FF"], //4 삼성
+  ["#E75152", "#BE262C", "#FBCCD2"], //5 SSG
+  ["#59A0D3", "#1D467D", "#BDDCEF"], //6 NC
+  ["#E31D46", "#C40037", "#FBCBD6"], //7 LG
+  ["#F8449F", "#D1187D", "#F9BFDF"], //8 키움
+  ["#9D9D9D", "#000000", "#E9E9E9"], //9 KT
+  ["#FFC41F", "#FF6600", "#FFEAB1"], //10 한화
 ];
 
 ChartJS.register(

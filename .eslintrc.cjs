@@ -81,6 +81,7 @@ module.exports = {
     "no-new": "off",
     "react-hooks/exhaustive-deps": "off",
     "import/no-cycle": "off",
+    "no-nested-ternary": "off",
     "no-plusplus": "off",
   },
 };
