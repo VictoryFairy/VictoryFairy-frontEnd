@@ -131,6 +131,7 @@ const SearchCheerSong = () => {
                     ? cheerSong.player.jerseyNumber.toString()
                     : undefined
                 }
+                searchTerm={searchTerm}
               />
             ))}
           </div>

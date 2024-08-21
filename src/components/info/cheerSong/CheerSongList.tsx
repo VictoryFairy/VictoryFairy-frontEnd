@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Icon from "@/components/common/Icon";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteLikeCheerSong, postLikeCheerSong } from "@/api/info/cheers.api";
-import { getTeamId } from "@/utils/getTeamId";
 
 const teamColors = {
   롯데: "var(--lotte-giants-navy)",
@@ -29,6 +28,7 @@ export interface CheerSongListProps {
   selectedTeamId?: number;
   activeTab?: number;
   type?: string;
+  searchTerm?: string;
   setRecentSearches?: (data: CheerSongListProps[]) => void;
 }
 const CheerSongList = ({
@@ -41,6 +41,7 @@ const CheerSongList = ({
   selectedTeamId,
   activeTab,
   type,
+  searchTerm,
   setRecentSearches,
 }: CheerSongListProps) => {
   const navigate = useNavigate();
@@ -53,7 +54,7 @@ const CheerSongList = ({
       lyricPreview: lyricPreview || jerseyNumber,
     };
 
-    console.log(selectedTeamId);
+    console.log(selectedTeamId, activeTab);
     const storedSearches = JSON.parse(
       localStorage.getItem("recentSearches") || "[]",
     ) as CheerSongListProps[];
@@ -74,11 +75,20 @@ const CheerSongList = ({
   const likeMutation = useMutation({
     mutationFn: postLikeCheerSong,
     onSuccess: () => {
+      // queryClient.invalidateQueries({
+      //   queryKey: ["cheerSongs", getTeamId(teamName), activeTab],
+      // });
+      queryClient.invalidateQueries({ queryKey: ["cheerSongs"], exact: false });
+
+      // queryClient.invalidateQueries({
+      //   queryKey: ["likedCheerSongs", activeTab],
+      // });
       queryClient.invalidateQueries({
-        queryKey: ["cheerSongs", getTeamId(teamName), activeTab],
+        queryKey: ["likedCheerSongs"],
+        exact: false,
       });
       queryClient.invalidateQueries({
-        queryKey: ["likedCheerSongs", activeTab],
+        queryKey: ["searchCheerSongs", searchTerm],
       });
     },
   });
@@ -86,11 +96,20 @@ const CheerSongList = ({
   const unlikeMutation = useMutation({
     mutationFn: deleteLikeCheerSong,
     onSuccess: () => {
+      // queryClient.invalidateQueries({
+      //   queryKey: ["cheerSongs", getTeamId(teamName), activeTab],
+      // });
+      queryClient.invalidateQueries({ queryKey: ["cheerSongs"], exact: false });
+
+      // queryClient.invalidateQueries({
+      //   queryKey: ["likedCheerSongs", activeTab],
+      // });
       queryClient.invalidateQueries({
-        queryKey: ["cheerSongs", getTeamId(teamName), activeTab],
+        queryKey: ["likedCheerSongs"],
+        exact: false,
       });
       queryClient.invalidateQueries({
-        queryKey: ["likedCheerSongs", activeTab],
+        queryKey: ["searchCheerSongs", searchTerm],
       });
     },
   });
