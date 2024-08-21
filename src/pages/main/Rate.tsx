@@ -2,8 +2,32 @@ import styled from "styled-components";
 import { typography } from "@/style/typography";
 import Text from "@/components/common/Text";
 import Icon from "@/components/common/Icon";
+import { useMemo, useState } from "react";
+import { getUserInfo } from "@/api/home/home.api";
+import { useQuery } from "@tanstack/react-query";
+
+interface Record {
+  win: number;
+  lose: number;
+  tie: number;
+  cancel: number;
+  total: number;
+  score: number;
+}
 
 const Rate = () => {
+  const [imgChange, setImgChange] = useState<boolean>(true);
+  const { data } = useQuery<Record>({
+    queryKey: ["getUserInfo"],
+    queryFn: getUserInfo,
+  });
+
+  const winPercentage = useMemo(() => {
+    if (data && data.total > 0) {
+      return ((data.win / data.total) * 100).toFixed(2);
+    }
+    return "0.00";
+  }, [data]);
   return (
     <RateContainer>
       <MyRate>
@@ -11,18 +35,27 @@ const Rate = () => {
           <Text variant='title_01'>내 승률</Text>
           <Icon icon='IcArrowRight' fill='var(--gray-900)' />
         </button>
-        <div>
-          <Text variant='display'>80%</Text>
+        <div
+          role='button' // 1. Add an appropriate ARIA role
+          tabIndex={0}
+          onClick={() => setImgChange(!imgChange)}>
+          <Text variant='display'>
+            {winPercentage}
+            <Text variant='headline'>%</Text>
+          </Text>
           <Icon icon='IcSwitch' fill='var(--gray-900)' />
         </div>
         <Text variant='subtitle_03' className='my-rate-record'>
-          11전 8승 2패 0무
+          {data?.total}전 {data?.win}승 {data?.lose}패 {data?.tie}무
         </Text>
       </MyRate>
       <hr />
-      <div className='img'>
-        <img alt='이미지' />
-      </div>
+      {imgChange ? (
+        <div className='img'>
+          <img alt='이미지' />
+        </div>
+      ) : null}
+
       <ButtonGroup>
         <button type='button'>
           <Icon icon='IcDownload' fill='var(--gray-900)' />
