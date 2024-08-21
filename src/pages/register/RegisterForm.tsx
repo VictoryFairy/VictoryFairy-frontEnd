@@ -27,13 +27,24 @@ const RegisterForm = () => {
 
   const { Popup, isOpen, openPopup } = usePopup();
 
+  // 급하게 임시방편으로 만든 상태라 추후 리팩토링이 필요함
+  const [popupMessage, setPopupMessage] = useState({
+    title: "",
+    message: "",
+    type: "alert" as "alert" | "confirm",
+    confirmFunc: () => {},
+  });
+
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   const onSubmit = async (data: any) => {
     try {
       const { img, seat, review } = data;
 
-      const image = await uploadImg(img);
+      let image = null;
+      if (img && img.length > 0) {
+        image = await uploadImg(img);
+      }
 
       const registerData = {
         gameId: matchId,
@@ -44,9 +55,30 @@ const RegisterForm = () => {
       };
 
       await postRegisterGame(registerData);
+
+      // 성공 시 팝업 설정
+      setPopupMessage({
+        title: "직관 기록 완료",
+        message: "직관 기록이 성공적으로 완료되었습니다.",
+        type: "alert",
+        confirmFunc: () => {
+          window.location.href = "/home";
+        },
+      });
+
       openPopup();
     } catch (error) {
-      console.error("Error submitting registration:", error);
+      console.error("직관 기록 오류:", error);
+
+      // 에러 시 팝업 설정
+      setPopupMessage({
+        title: "직관 기록 실패",
+        message: "직관 기록 중 오류가 발생했습니다. 다시 시도해주세요.",
+        type: "alert",
+        confirmFunc: () => {},
+      });
+
+      openPopup();
     }
   };
 
@@ -60,7 +92,6 @@ const RegisterForm = () => {
     }
   };
 
-  // TODO: 이미지 업로드 후 submit시 이미지데이터가 보내지지 않는 문제 해결
   const handleClickImageUpload = () => {
     inputImgRef.current?.click();
   };
@@ -69,12 +100,10 @@ const RegisterForm = () => {
     <RegisterFormContainer>
       {isOpen && (
         <Popup
-          title='직관 기록 완료'
-          message='직관 기록이 성공적으로 완료되었습니다.'
-          type='alert'
-          confirmFunc={() => {
-            window.location.href = "/home";
-          }}
+          title={popupMessage.title}
+          message={popupMessage.message}
+          type={popupMessage.type}
+          confirmFunc={popupMessage.confirmFunc}
         />
       )}
       <GameListItemContainer>
