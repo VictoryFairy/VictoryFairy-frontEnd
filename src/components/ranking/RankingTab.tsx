@@ -160,7 +160,7 @@ const RankingTab = () => {
                 key={element.userId}
                 rank={element.rank}
                 score={element.score}
-                image={element.image}
+                profile_image={element.profile_image}
                 nickname={element.nickname}
                 userId={element.userId}
               />
@@ -183,7 +183,7 @@ const RankingTab = () => {
                 key={element.userId}
                 rank={element.rank}
                 score={element.score}
-                image={element.image}
+                profile_image={element.profile_image}
                 nickname={element.nickname}
                 userId={element.userId}
               />
