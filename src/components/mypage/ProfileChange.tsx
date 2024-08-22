@@ -61,6 +61,7 @@ const ProfileChange = () => {
       const { field, value } = variables;
       if (field === "nickname") {
         updateNickname(value);
+        console.log(data);
       } else if (field === "image") {
         updateImage(value);
       }
