@@ -1,28 +1,47 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta
+      name="viewport"
+      content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width"
+    />
+    <title>승요</title>
+    <link
+      href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css"
+      rel="stylesheet"
+      type="text/css"
+    />
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
-  <title>승요</title>
-  <link href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css" rel="stylesheet" type="text/css" />
-</head>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-J57YN7RT3P"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-J57YN7RT3P");
+    </script>
+  </head>
 
-<body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
-  <script type="module">
-    const mapClientId = import.meta.env.VITE_MAP_CLIENT_ID;
-    const script = document.createElement("script");
-    script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${mapClientId}`;
-    document.head.appendChild(script);
-  </script>
-  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-  <script type="module">
-    const kakaoKey = import.meta.env.VITE_KAKAO_KEY;
-    Kakao.init(kakaoKey);
-  </script>
-</body>
-
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script type="module">
+      const mapClientId = import.meta.env.VITE_MAP_CLIENT_ID;
+      const script = document.createElement("script");
+      script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${mapClientId}`;
+      document.head.appendChild(script);
+    </script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script type="module">
+      const kakaoKey = import.meta.env.VITE_KAKAO_KEY;
+      Kakao.init(kakaoKey);
+    </script>
+  </body>
 </html>
