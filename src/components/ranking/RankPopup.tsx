@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import { getRankList } from "@/api/rank/rank.api";
 import { Rank } from "@/types/Rank";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Text from "../common/Text";
 import { RankTextWrapper } from "./RankingTab";
 import RankTextComp from "./RankTextComp";
@@ -28,6 +28,7 @@ const RankPopup = ({
 }: PopupProps) => {
   const [ranking, setRanking] = useState<Rank[]>([]);
   const [isDraggingDisabled, setIsDraggingDisabled] = useState(false);
+  const scrollableRef = useRef<HTMLDivElement>(null);
 
   const { data } = useQuery<Rank[]>({
     queryKey: ["getRankList", { teamId }],
@@ -40,12 +41,27 @@ const RankPopup = ({
     }
   }, [data]);
 
-  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    const target = e.target as HTMLDivElement;
+  const handleScroll = () => {
+    const target = scrollableRef.current;
+    if (!target) return;
+
+    // 스크롤이 가능할 때 팝업 드래그를 막음
     const isAtTop = target.scrollTop === 0;
     const isAtBottom =
       target.scrollHeight - target.scrollTop === target.clientHeight;
     setIsDraggingDisabled(!(isAtTop || isAtBottom));
+  };
+
+  const handleTouchStart = () => {
+    const target = scrollableRef.current;
+    if (!target) return;
+
+    // 사용자가 리스트를 스크롤하고 있다면 드래그를 비활성화
+    const canScroll =
+      target.scrollHeight > target.clientHeight &&
+      (target.scrollTop > 0 ||
+        target.scrollTop < target.scrollHeight - target.clientHeight);
+    setIsDraggingDisabled(canScroll);
   };
 
   return (
@@ -55,7 +71,7 @@ const RankPopup = ({
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
       drag='y'
       dragConstraints={{ top: 0 }}
-      dragElastic={isDraggingDisabled ? 0 : 1} // 드래그 비활성화
+      dragElastic={isDraggingDisabled ? 0 : 1}
       onDragEnd={(_, info) => {
         if (info.point.y > 600) {
           handleClose();
@@ -65,7 +81,10 @@ const RankPopup = ({
         <Text variant='headline' color='#545F71'>
           전체 랭킹
         </Text>
-        <RankTextWrapper onScroll={handleScroll}>
+        <RankTextWrapper
+          ref={scrollableRef}
+          onScroll={handleScroll}
+          onTouchStart={handleTouchStart}>
           {ranking.map((element) => (
             <RankTextComp
               key={element.userId}
