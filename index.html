@@ -21,5 +21,10 @@
       script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${mapClientId}`;
       document.head.appendChild(script);
     </script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script type="module">
+      const kakaoKey = import.meta.env.VITE_KAKAO_KEY;
+      Kakao.init(kakaoKey);
+    </script>
   </body>
 </html>

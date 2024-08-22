@@ -9,10 +9,9 @@ import DonutChart from "@/components/main/DonutChart";
 import { Record } from "@/types/Record";
 import { useNavigate } from "react-router-dom";
 import { toPng } from "html-to-image";
-import onboarding from "@/assets/images/onboarding/onBoarding.png";
 
 const Rate = () => {
-  const rateRef = useRef(null);
+  const rateRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
   const [imgChange, setImgChange] = useState<boolean>(true);
   const { data } = useQuery<Record>({
@@ -46,6 +45,38 @@ const Rate = () => {
       console.error("이미지 저장에 실패했습니다.", error);
     }
   };
+  const handleKakaoShare = async () => {
+    if (!rateRef.current) {
+      return;
+    }
+
+    try {
+      Kakao.Link.sendDefault({
+        objectType: "feed",
+        content: {
+          title: "승리요정",
+          description: `나의 승률: ${winPercentage}%`,
+          imageUrl:
+            "https://images.unsplash.com/photo-1719937206590-6cb10b099e0f?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          link: {
+            mobileWebUrl: window.location.href,
+            webUrl: window.location.href,
+          },
+        },
+        buttons: [
+          {
+            title: "앱에서 보기",
+            link: {
+              mobileWebUrl: window.location.href,
+              webUrl: window.location.href,
+            },
+          },
+        ],
+      });
+    } catch (error) {
+      console.error("카카오톡 공유에 실패했습니다.", error);
+    }
+  };
   return (
     <RateContainer>
       <div ref={rateRef}>
@@ -74,7 +105,7 @@ const Rate = () => {
         <hr />
         {imgChange ? (
           <div className='img'>
-            <img alt='이미지' src={onboarding} />
+            <img alt='이미지' />
           </div>
         ) : data ? (
           <DonutChart record={data} />
@@ -91,7 +122,10 @@ const Rate = () => {
           <Icon icon='IcDownload' fill='var(--gray-900)' />
           <Text variant='title_01'>이미지 저장</Text>
         </button>
-        <button type='button' style={{ cursor: "pointer" }}>
+        <button
+          type='button'
+          onClick={handleKakaoShare}
+          style={{ cursor: "pointer" }}>
           <Icon icon='IcShare' fill='var(--gray-900)' />
           <Text variant='title_01'>공유하기</Text>
         </button>
