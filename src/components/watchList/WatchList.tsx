@@ -18,12 +18,13 @@ const WatchList = () => {
   const [selcetMonth, setSelcetMonth] = useState(new Date());
   const navigate = useNavigate();
   const { data, isSuccess } = useQuery({
-    queryKey: ["registeredGame", selcetMonth],
+    queryKey: ["registeredGame"],
     queryFn: () =>
       getRegisteredGameByMonthly(
         selcetMonth.getFullYear(),
         selcetMonth.getMonth() + 1,
       ),
+    staleTime: 1000 * 60 * 3,
   });
 
   const handleMonthChange = (date: Date) => {
