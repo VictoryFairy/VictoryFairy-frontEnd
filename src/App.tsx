@@ -5,6 +5,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import styled from "styled-components";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Layout from "./components/layout/Layout";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
@@ -247,6 +248,7 @@ const router = createBrowserRouter([
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
       <ThemeContextProvider>
         <RouterProvider router={router} />
       </ThemeContextProvider>
