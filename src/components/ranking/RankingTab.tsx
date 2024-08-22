@@ -214,7 +214,6 @@ const RankingTab = () => {
 
       <RankPopup
         isOpen={isOpen}
-        handleClose={handleClose}
         teamId={teamId}
         withUser={userMe}
         totalGames={user?.totalGames}

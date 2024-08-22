@@ -124,12 +124,13 @@ const ProfileWrapper = styled.div`
   height: 100%;
   display: flex;
   padding: 0 20px;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   > img {
     height: 100px;
     width: 100px;
     border-radius: 100%;
+    margin: 0 12%;
   }
 `;
 
