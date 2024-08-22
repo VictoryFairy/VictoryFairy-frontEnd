@@ -68,7 +68,7 @@ const RankPopup = ({
           })}
         </RankTextWrapper>
         <div>
-          {withUser?.profile_image ? (
+          {withUser?.image ? (
             <MyRankComp
               withUser={withUser || null}
               win={win ?? 0}
