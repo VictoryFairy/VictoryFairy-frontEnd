@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import { getRankList } from "@/api/rank/rank.api";
 import { Rank } from "@/types/Rank";
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState } from "react";
 import Text from "../common/Text";
 import RankTextComp from "./RankTextComp";
 import MyRankComp from "./MyRankComp";
@@ -11,7 +11,7 @@ import { RankTextWrapper } from "./RankingTab";
 
 interface PopupProps {
   isOpen: boolean;
-  handleClose: () => void;
+  // handleClose: () => void;
   teamId: number;
   withUser?: Rank | null;
   totalGames?: number;
@@ -20,15 +20,13 @@ interface PopupProps {
 
 const RankPopup = ({
   isOpen,
-  handleClose,
+  // handleClose,
   teamId,
   withUser,
   totalGames,
   win,
 }: PopupProps) => {
   const [ranking, setRanking] = useState<Rank[]>([]);
-  const [isDraggingDisabled, setIsDraggingDisabled] = useState(false);
-  const scrollableRef = useRef<HTMLDivElement | null>(null);
 
   const { data } = useQuery<Rank[]>({
     queryKey: ["getRankList", { teamId }],
@@ -41,48 +39,24 @@ const RankPopup = ({
     }
   }, [data]);
 
-  const handleScroll = useCallback(() => {
-    if (scrollableRef.current) {
-      const { scrollTop, scrollHeight, clientHeight } = scrollableRef.current;
-      const isScrollable = scrollHeight > clientHeight;
-      const isAtTop = scrollTop === 0;
-      const isAtBottom = scrollHeight - scrollTop === clientHeight;
-
-      setIsDraggingDisabled(!(isScrollable && (isAtTop || isAtBottom)));
-    }
-  }, []);
-
-  useEffect(() => {
-    if (scrollableRef.current) {
-      scrollableRef.current.addEventListener("scroll", handleScroll);
-      return () => {
-        scrollableRef.current?.removeEventListener("scroll", handleScroll);
-      };
-    }
-  }, [handleScroll]);
-
   return (
     <MotionPopup
       initial={{ y: "100%" }}
       animate={{ y: isOpen ? "0%" : "100%" }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      drag='y'
-      dragConstraints={{ top: 0 }}
-      dragElastic={isDraggingDisabled ? 0 : 1} // 드래그 비활성화
-      onDragEnd={(_, info) => {
-        if (info.point.y > 600) {
-          handleClose();
-        }
-      }}>
+      drag={false}
+      dragElastic={0}
+      // onDragEnd={(_, info) => {
+      //   if (info.point.y > 600) {
+      //     handleClose();
+      //   }
+      // }}
+    >
       <RankPopupWrapper>
         <Text variant='headline' color='#545F71'>
           전체 랭킹
         </Text>
-        <RankTextWrapper
-          ref={scrollableRef}
-          onScroll={handleScroll}
-          onTouchStart={handleScroll} // 모바일에서 터치 시작 시 스크롤 상태 체크
-        >
+        <RankTextWrapper>
           {ranking.map((element) => (
             <RankTextComp
               key={element.userId}
