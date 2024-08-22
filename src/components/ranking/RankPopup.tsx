@@ -5,9 +5,9 @@ import { getRankList } from "@/api/rank/rank.api";
 import { Rank } from "@/types/Rank";
 import { useEffect, useState, useRef } from "react";
 import Text from "../common/Text";
-import { RankTextWrapper } from "./RankingTab";
 import RankTextComp from "./RankTextComp";
 import MyRankComp from "./MyRankComp";
+import { RankTextWrapper } from "./RankingTab";
 
 interface PopupProps {
   isOpen: boolean;
@@ -28,7 +28,7 @@ const RankPopup = ({
 }: PopupProps) => {
   const [ranking, setRanking] = useState<Rank[]>([]);
   const [isDraggingDisabled, setIsDraggingDisabled] = useState(false);
-  const scrollableRef = useRef<HTMLDivElement>(null);
+  const scrollableRef = useRef<HTMLDivElement | null>(null);
 
   const { data } = useQuery<Rank[]>({
     queryKey: ["getRankList", { teamId }],
@@ -41,11 +41,8 @@ const RankPopup = ({
     }
   }, [data]);
 
-  const handleScroll = () => {
-    const target = scrollableRef.current;
-    if (!target) return;
-
-    // 스크롤이 가능할 때 팝업 드래그를 막음
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLDivElement;
     const isAtTop = target.scrollTop === 0;
     const isAtBottom =
       target.scrollHeight - target.scrollTop === target.clientHeight;
@@ -53,15 +50,16 @@ const RankPopup = ({
   };
 
   const handleTouchStart = () => {
-    const target = scrollableRef.current;
-    if (!target) return;
-
-    // 사용자가 리스트를 스크롤하고 있다면 드래그를 비활성화
-    const canScroll =
-      target.scrollHeight > target.clientHeight &&
-      (target.scrollTop > 0 ||
-        target.scrollTop < target.scrollHeight - target.clientHeight);
-    setIsDraggingDisabled(canScroll);
+    if (scrollableRef.current) {
+      const canScroll =
+        scrollableRef.current.scrollHeight >
+          scrollableRef.current.clientHeight &&
+        (scrollableRef.current.scrollTop > 0 ||
+          scrollableRef.current.scrollTop <
+            scrollableRef.current.scrollHeight -
+              scrollableRef.current.clientHeight);
+      setIsDraggingDisabled(canScroll);
+    }
   };
 
   return (
@@ -71,20 +69,18 @@ const RankPopup = ({
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
       drag='y'
       dragConstraints={{ top: 0 }}
-      dragElastic={isDraggingDisabled ? 0 : 1}
+      dragElastic={isDraggingDisabled ? 0 : 1} // 드래그 비활성화
       onDragEnd={(_, info) => {
         if (info.point.y > 600) {
           handleClose();
         }
-      }}>
+      }}
+      onTouchStart={handleTouchStart}>
       <RankPopupWrapper>
         <Text variant='headline' color='#545F71'>
           전체 랭킹
         </Text>
-        <RankTextWrapper
-          ref={scrollableRef}
-          onScroll={handleScroll}
-          onTouchStart={handleTouchStart}>
+        <RankTextWrapper ref={scrollableRef} onScroll={handleScroll}>
           {ranking.map((element) => (
             <RankTextComp
               key={element.userId}
