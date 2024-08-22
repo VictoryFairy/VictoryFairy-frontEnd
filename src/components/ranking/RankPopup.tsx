@@ -85,7 +85,7 @@ const RankPopup = ({
 const MotionPopup = styled(motion.div)`
   position: fixed;
   bottom: 0;
-  height: 50%;
+  height: 70%;
   margin: 0 auto;
   left: 0;
   right: 0;
@@ -105,7 +105,7 @@ const RankPopupWrapper = styled.div`
   > :nth-child(1) {
     padding-top: 20px;
     padding-left: 20px;
-    height: 15%;
+    height: 10%;
   }
   > :nth-child(2) {
     height: 45%;
@@ -113,7 +113,7 @@ const RankPopupWrapper = styled.div`
   }
   > :nth-child(3) {
     position: absolute;
-    height: 40%;
+    height: 30%;
     background-color: var(--white);
     width: 100%;
     bottom: 0;
