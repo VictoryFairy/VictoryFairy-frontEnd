@@ -43,7 +43,6 @@ const CheerSongList = ({
   type,
   searchTerm,
   setRecentSearches,
-  searchTerm,
 }: CheerSongListProps) => {
   const navigate = useNavigate();
   const newlyricPreview = lyricPreview?.slice(0, 10);

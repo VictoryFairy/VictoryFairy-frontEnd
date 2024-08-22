@@ -2,14 +2,17 @@ import styled from "styled-components";
 import { typography } from "@/style/typography";
 import Text from "@/components/common/Text";
 import Icon from "@/components/common/Icon";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { getUserInfo } from "@/api/home/home.api";
 import { useQuery } from "@tanstack/react-query";
 import DonutChart from "@/components/main/DonutChart";
 import { Record } from "@/types/Record";
 import { useNavigate } from "react-router-dom";
+import { toPng } from "html-to-image";
+import onboarding from "@/assets/images/onboarding/onBoarding.png";
 
 const Rate = () => {
+  const rateRef = useRef(null);
   const navigate = useNavigate();
   const [imgChange, setImgChange] = useState<boolean>(true);
   const { data } = useQuery<Record>({
@@ -23,47 +26,72 @@ const Rate = () => {
     }
     return "0.00";
   }, [data]);
+
+  const handleDownload = async () => {
+    if (!rateRef.current) {
+      return;
+    }
+
+    try {
+      const dataUrl = await toPng(rateRef.current, {
+        backgroundColor: "#ffffff",
+      });
+      const link = document.createElement("a");
+      link.href = dataUrl;
+      link.download = "승리요정.png";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("이미지 저장에 실패했습니다.", error);
+    }
+  };
   return (
     <RateContainer>
-      <MyRate>
-        <button
-          type='button'
-          className='my-rate-button'
-          onClick={() => navigate("/DetailRate", { state: { datas: data } })}>
-          <Text variant='title_01'>내 승률</Text>
-          <Icon icon='IcArrowRight' fill='var(--gray-900)' />
-        </button>
-        <div
-          role='button' // 1. Add an appropriate ARIA role
-          tabIndex={0}
-          onClick={() => setImgChange(!imgChange)}>
-          <Text variant='display'>
-            {winPercentage}
-            <Text variant='headline'>%</Text>
+      <div ref={rateRef}>
+        <MyRate>
+          <button
+            type='button'
+            className='my-rate-button'
+            onClick={() => navigate("/DetailRate", { state: { datas: data } })}>
+            <Text variant='title_01'>내 승률</Text>
+            <Icon icon='IcArrowRight' fill='var(--gray-900)' />
+          </button>
+          <div
+            role='button' // 1. Add an appropriate ARIA role
+            tabIndex={0}
+            onClick={() => setImgChange(!imgChange)}>
+            <Text variant='display'>
+              {winPercentage}
+              <Text variant='headline'>%</Text>
+            </Text>
+            <Icon icon='IcSwitch' fill='var(--gray-900)' />
+          </div>
+          <Text variant='subtitle_03' className='my-rate-record'>
+            {data?.total}전 {data?.win}승 {data?.lose}패 {data?.tie}무
           </Text>
-          <Icon icon='IcSwitch' fill='var(--gray-900)' />
-        </div>
-        <Text variant='subtitle_03' className='my-rate-record'>
-          {data?.total}전 {data?.win}승 {data?.lose}패 {data?.tie}무
-        </Text>
-      </MyRate>
-      <hr />
-      {imgChange ? (
-        <div className='img'>
-          <img alt='이미지' />
-        </div>
-      ) : data ? (
-        <DonutChart record={data} />
-      ) : (
-        <p>No data available</p>
-      )}
+        </MyRate>
+        <hr />
+        {imgChange ? (
+          <div className='img'>
+            <img alt='이미지' src={onboarding} />
+          </div>
+        ) : data ? (
+          <DonutChart record={data} />
+        ) : (
+          <p>No data available</p>
+        )}
+      </div>
 
       <ButtonGroup>
-        <button type='button'>
+        <button
+          type='button'
+          onClick={handleDownload}
+          style={{ cursor: "pointer" }}>
           <Icon icon='IcDownload' fill='var(--gray-900)' />
           <Text variant='title_01'>이미지 저장</Text>
         </button>
-        <button type='button'>
+        <button type='button' style={{ cursor: "pointer" }}>
           <Icon icon='IcShare' fill='var(--gray-900)' />
           <Text variant='title_01'>공유하기</Text>
         </button>
