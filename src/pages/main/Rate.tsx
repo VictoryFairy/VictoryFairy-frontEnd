@@ -31,7 +31,9 @@ const Rate = () => {
       return;
     }
     try {
-      const dataUrl = await toPng(rateRef.current);
+      const dataUrl = await toPng(rateRef.current, {
+        backgroundColor: "white",
+      });
       const link = document.createElement("a");
       link.href = dataUrl;
       link.download = "승리요정.png";
