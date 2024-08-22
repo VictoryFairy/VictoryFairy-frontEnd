@@ -23,7 +23,7 @@ const EmailValid = ({ setstep, handleSetUserInfo }: EmailValidProps) => {
     handleSubmit,
     setValue,
     setError,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
@@ -32,7 +32,7 @@ const EmailValid = ({ setstep, handleSetUserInfo }: EmailValidProps) => {
 
   const emailValue = watch("email");
 
-  const isButtonDisabled = !emailValue;
+  const isButtonDisabled = !emailValue || isSubmitting;
 
   const onSubmit = async (data: FormData) => {
     try {
