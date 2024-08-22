@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRegisteredGame } from "@/hooks/useRegisteredGame";
 import CalendarContainer from "../../components/common/Calendar";
 import DailyMatch from "../../components/dailyMatch/DailyMatch";
 import { useGame } from "../../hooks/useGame";
@@ -8,11 +9,12 @@ import Button from "../../components/common/Button";
 import { Game } from "../../types/Game";
 
 const SelectMatch = () => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [selectedMatch, setSelectedMatch] = useState<Game | null>(null);
+  const { data: registeredGame } = useRegisteredGame(selectedDate);
   const navigate = useNavigate();
 
-  const { data } = useGame(selectedDate);
+  const { data: matches } = useGame(selectedDate);
 
   const handleClickDay = (date: Date) => {
     setSelectedDate(date);
@@ -24,7 +26,7 @@ const SelectMatch = () => {
     }
   };
 
-  if (data?.length === 0) {
+  if (matches?.length === 0) {
     return (
       <SelectMatchContainer>
         <CalendarContainer onClick={(date) => handleClickDay(date)} />
@@ -35,12 +37,15 @@ const SelectMatch = () => {
 
   return (
     <SelectMatchContainer>
-      <CalendarContainer onClick={(date) => handleClickDay(date)} />
-      {data && (
+      <CalendarContainer
+        data={registeredGame}
+        onClick={(date) => handleClickDay(date)}
+      />
+      {matches && (
         <DailyMatch
           selectedMatch={selectedMatch}
           setSelectedMatch={setSelectedMatch}
-          matches={data}
+          matches={matches}
         />
       )}
       <Button onClick={handleClickButton} disabled={!selectedMatch} size='big'>

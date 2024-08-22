@@ -5,6 +5,7 @@ import { useState } from "react";
 import { typography } from "@/style/typography";
 import { MyGame } from "../../types/Game";
 import Icon from "./Icon";
+import Text from "./Text";
 
 interface CalendarProps {
   data?: MyGame[];
@@ -22,6 +23,19 @@ const CalendarContainer = ({ data, onClick, onMonthChange }: CalendarProps) => {
     date: Date,
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
+    // 이벤트 타일인지 확인
+    const match = data?.find(
+      (item: any) => moment(date).format("YYYY-MM-DD") === item.game.date,
+    );
+
+    if (match) {
+      // 만약 이벤트 타일이면 클릭 이벤트 무시
+      event.stopPropagation();
+      event.preventDefault();
+      return;
+    }
+
+    // 이벤트 타일이 아닌 경우에만 날짜 선택 및 클릭 이벤트 처리
     setSelectedDate(date);
     if (onClick) {
       onClick(date, event);
@@ -109,19 +123,19 @@ const CalendarContainer = ({ data, onClick, onMonthChange }: CalendarProps) => {
         <div className='explain'>
           <div>
             <Icon icon='IcWin' />
-            승리
+            <Text variant='subtitle_01'>승리</Text>
           </div>
           <div>
             <Icon icon='IcLose' />
-            패배
+            <Text variant='subtitle_01'>패배</Text>
           </div>
           <div>
             <Icon icon='IcTie' />
-            무승부
+            <Text variant='subtitle_01'>무승부</Text>
           </div>
           <div>
             <Icon icon='IcNoGame' />
-            경기 없음
+            <Text variant='subtitle_01'>경기 없음</Text>
           </div>
         </div>
       )}
@@ -137,17 +151,11 @@ const CalendarWrapper = styled.div`
   border: 1px solid var(--gray-100);
   border-radius: 8px;
 
-  ${typography.subtitle_01}
-
   .win {
-    circle {
-      fill: ${({ theme }) => theme.colors.primary};
-    }
+    fill: ${({ theme }) => theme.colors.primary};
   }
   .lose {
-    path {
-      fill: ${({ theme }) => theme.colors.secondary};
-    }
+    fill: ${({ theme }) => theme.colors.secondary};
   }
 
   .explain {
@@ -214,7 +222,6 @@ const CalendarStyle = styled(Calendar)`
     display: flex;
     justify-content: center;
     align-items: center;
-    ${typography.subtitle_02}
     color: var(--gray-400);
   }
 
@@ -233,8 +240,13 @@ const CalendarStyle = styled(Calendar)`
     padding: 0;
   }
   .event-tile {
+    position: relative;
+
     abbr {
-      display: none;
+      z-index: 1;
+    }
+    svg {
+      position: absolute;
     }
   }
   .img {
