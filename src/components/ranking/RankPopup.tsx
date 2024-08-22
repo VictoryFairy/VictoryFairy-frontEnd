@@ -113,7 +113,7 @@ const RankPopupWrapper = styled.div`
     height: 10%;
   }
   > :nth-child(2) {
-    height: 45%;
+    height: 55%;
     overflow-y: scroll;
   }
   > :nth-child(3) {
