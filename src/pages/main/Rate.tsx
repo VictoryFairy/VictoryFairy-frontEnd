@@ -30,11 +30,8 @@ const Rate = () => {
     if (!rateRef.current) {
       return;
     }
-
     try {
-      const dataUrl = await toPng(rateRef.current, {
-        backgroundColor: "#ffffff",
-      });
+      const dataUrl = await toPng(rateRef.current);
       const link = document.createElement("a");
       link.href = dataUrl;
       link.download = "승리요정.png";
@@ -105,7 +102,10 @@ const Rate = () => {
         <hr />
         {imgChange ? (
           <div className='img'>
-            <img alt='이미지' />
+            <img
+              alt='이미지'
+              src='https://sngyo-image.s3.ap-northeast-2.amazonaws.com/fairyImg/happy/4.png'
+            />
           </div>
         ) : data ? (
           <DonutChart record={data} />
