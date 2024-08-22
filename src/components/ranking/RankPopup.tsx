@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import { getRankList } from "@/api/rank/rank.api";
 import { Rank } from "@/types/Rank";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Text from "../common/Text";
 import { RankTextWrapper } from "./RankingTab";
 import RankTextComp from "./RankTextComp";
@@ -31,12 +31,23 @@ const RankPopup = ({
     queryKey: ["getRankList", { teamId }],
     queryFn: () => getRankList(teamId),
   });
+  const rankTextWrapperRef = useRef<HTMLDivElement>(null);
+  const [isScrolling, setIsScrolling] = useState(false);
+
   useEffect(() => {
     if (data) {
       setRanking(data);
     }
-    console.log(ranking);
-  }, [data, ranking]);
+  }, [data]);
+
+  const handleScrollStart = () => {
+    setIsScrolling(true);
+  };
+
+  const handleScrollEnd = () => {
+    setTimeout(() => setIsScrolling(false), 100); // 잠시 후 드래그 다시 활성화
+  };
+
   return (
     <MotionPopup
       initial={{ y: "100%" }}
@@ -44,6 +55,7 @@ const RankPopup = ({
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
       drag='y'
       dragConstraints={{ top: 0 }}
+      dragElastic={isScrolling ? 0 : 1} // 스크롤 중일 때는 드래그를 비활성화
       onDragEnd={(_, info) => {
         if (info.point.y > 600) {
           handleClose();
@@ -53,19 +65,24 @@ const RankPopup = ({
         <Text variant='headline' color='#545F71'>
           전체 랭킹
         </Text>
-        <RankTextWrapper>
-          {ranking.map((element) => {
-            return (
-              <RankTextComp
-                key={element.userId}
-                rank={element.rank}
-                score={element.score}
-                image={element.image}
-                nickname={element.nickname}
-                userId={element.userId}
-              />
-            );
-          })}
+        <RankTextWrapper
+          ref={rankTextWrapperRef}
+          onTouchStart={handleScrollStart} // 모바일 터치 시작
+          onTouchEnd={handleScrollEnd} // 모바일 터치 종료
+          onScroll={handleScrollStart} // 스크롤이 시작될 때
+          onWheel={handleScrollStart} // 마우스 휠 이벤트 (웹)
+          onMouseLeave={handleScrollEnd} // 마우스가 영역을 벗어날 때
+        >
+          {ranking.map((element) => (
+            <RankTextComp
+              key={element.userId}
+              rank={element.rank}
+              score={element.score}
+              image={element.image}
+              nickname={element.nickname}
+              userId={element.userId}
+            />
+          ))}
         </RankTextWrapper>
         <div>
           {withUser?.image ? (
@@ -120,4 +137,5 @@ const RankPopupWrapper = styled.div`
   justify-content: flex-start;
   height: 100%;
 `;
+
 export default RankPopup;
