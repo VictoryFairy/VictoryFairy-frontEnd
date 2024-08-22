@@ -26,6 +26,7 @@ import Detail from "./pages/Detail";
 import SelectMatch from "./pages/register/SelectMatch";
 import RegisterForm from "./pages/register/RegisterForm";
 import DetailRate from "./pages/main/DetailRate";
+import logo from "./assets/images/Logo/logo.png";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,11 @@ const MiddelWrapper = styled.div`
 
 const MyPageLeftWrapper = styled.div`
   ${typography.display}
+`;
+
+const LogoWrapper = styled.img`
+  width: 120px;
+  height: 32px;
 `;
 
 const BackButton = () => {
@@ -63,6 +69,16 @@ const BackButton = () => {
       cursor='pointer'
     />
   );
+};
+
+const Logo = () => {
+  const navigate = useNavigate();
+
+  const goHome = () => {
+    navigate("/");
+  };
+
+  return <LogoWrapper src={logo} onClick={goHome} />;
 };
 
 const router = createBrowserRouter([
@@ -108,7 +124,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/home",
-    element: <Layout />,
+    element: <Layout left={<Logo />} />,
     children: [
       {
         path: "/home",
