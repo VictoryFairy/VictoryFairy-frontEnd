@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { typography } from "@/style/typography";
 import { Game } from "@/types/Game";
+import Text from "../common/Text";
 
 interface TodayMatchItemProps {
   match: Game;
@@ -10,18 +10,17 @@ const TodayMatchItem = ({ match }: TodayMatchItemProps) => {
   return (
     <TodayMatchItemContainer>
       <div className='team'>
-        <div>{match.homeTeam.name}</div>
-        <div>{match.awayTeam.name}</div>
+        <Text variant='subtitle_02'>{match.homeTeam.name}</Text>
+        <Text variant='subtitle_02'>{match.awayTeam.name}</Text>
       </div>
       <div className='score'>
-        <div>{match.homeTeamScore}</div>
-        <div>{match.awayTeamScore}</div>
+        <Text variant='subtitle_02'>{match.homeTeamScore}</Text>
+        <Text variant='subtitle_02'>{match.awayTeamScore}</Text>
       </div>
     </TodayMatchItemContainer>
   );
 };
 const TodayMatchItemContainer = styled.div`
-  ${typography.subtitle_02}
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -29,8 +28,12 @@ const TodayMatchItemContainer = styled.div`
   padding: 8px 12px;
   min-width: 160px;
   background: #ffffff;
-  border: 1px solid #2f3036;
+  border: 1px solid var(--gray-100);
   border-radius: 8px;
+  overflow: hidden;
+  &:first-child {
+    border-color: 1px solid var(--primary);
+  }
 
   .team {
     display: flex;

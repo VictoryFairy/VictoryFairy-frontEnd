@@ -15,6 +15,7 @@
     "@types/navermaps": "^3.7.5",
     "@vitejs/plugin-react": "^4.3.1",
     "axios": "^1.7.3",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "eslint-config-airbnb-typescript": "^18.0.0",
     "framer-motion": "^11.3.27",
     "moment": "^2.30.1",

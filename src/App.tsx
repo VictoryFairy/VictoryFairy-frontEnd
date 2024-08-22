@@ -25,6 +25,7 @@ import CheersongDetail from "./pages/CheersongDetail";
 import Detail from "./pages/Detail";
 import SelectMatch from "./pages/register/SelectMatch";
 import RegisterForm from "./pages/register/RegisterForm";
+import DetailRate from "./pages/main/DetailRate";
 
 const queryClient = new QueryClient();
 
@@ -180,13 +181,7 @@ const router = createBrowserRouter([
     path: "/mypage/profile",
     element: (
       <Layout
-        left={
-          <ArrowLeft
-            fill='var(--primary-color)'
-            onClick={() => (window.location.href = "/mypage")}
-            cursor='pointer'
-          />
-        }
+        left={<BackButton />}
         center={<MiddelWrapper>프로필 설정</MiddelWrapper>}
       />
     ),
@@ -201,13 +196,7 @@ const router = createBrowserRouter([
     path: "/mypage/team",
     element: (
       <Layout
-        left={
-          <ArrowLeft
-            fill='var(--primary-color)'
-            onClick={() => (window.location.href = "/mypage")}
-            cursor='pointer'
-          />
-        }
+        left={<BackButton />}
         center={<MiddelWrapper>응원팀 변경</MiddelWrapper>}
       />
     ),
@@ -235,6 +224,21 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <RegisterForm />,
+      },
+    ],
+  },
+  {
+    path: "/DetailRate",
+    element: (
+      <Layout
+        center={<MiddelWrapper>내 승률</MiddelWrapper>}
+        left={<BackButton />}
+      />
+    ),
+    children: [
+      {
+        path: "/DetailRate",
+        element: <DetailRate />,
       },
     ],
   },

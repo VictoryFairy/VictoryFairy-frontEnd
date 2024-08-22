@@ -39,10 +39,10 @@ const Main = () => {
   );
 };
 const MainContainer = styled.div`
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
   padding-bottom: 120px;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Layer = styled.div`

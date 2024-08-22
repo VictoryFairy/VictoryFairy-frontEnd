@@ -49,6 +49,8 @@ export const postRegisterGame = async (data: any) => {
       switch (err.response?.status) {
         case 400:
           throw new Error("잘못된 요청입니다.");
+        case 409:
+          throw new Error("이미 등록된 경기입니다.");
         case 500:
           throw new Error(
             "서버 내부 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",

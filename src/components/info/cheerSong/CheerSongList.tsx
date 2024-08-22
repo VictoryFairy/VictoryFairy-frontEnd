@@ -43,6 +43,7 @@ const CheerSongList = ({
   type,
   searchTerm,
   setRecentSearches,
+  searchTerm,
 }: CheerSongListProps) => {
   const navigate = useNavigate();
   const newlyricPreview = lyricPreview?.slice(0, 10);
@@ -87,6 +88,7 @@ const CheerSongList = ({
         queryKey: ["likedCheerSongs"],
         exact: false,
       });
+
       queryClient.invalidateQueries({
         queryKey: ["searchCheerSongs", searchTerm],
       });
