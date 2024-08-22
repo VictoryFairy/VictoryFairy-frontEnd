@@ -51,7 +51,7 @@ const RankingTab = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [withUser, setWithUser] = useState<Rank[] | null>(null);
   const [user, setUser] = useState<MyInfo | null>(null);
-  const userMe = withUser?.find((my) => my.user_id === user?.userId);
+  const userMe = withUser?.find((my) => my.userId === user?.userId);
 
   const firstRank = top?.find((element) => element.rank === 1);
   const secondRank = top?.find((element) => element.rank === 2);
@@ -87,7 +87,7 @@ const RankingTab = () => {
     console.log("nearby", nearBy);
     console.log("s", secondRank);
     console.log("t", thirdRank);
-  }, [nearBy, topRank]);
+  }, [nearBy, topRank, top]);
 
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
@@ -124,7 +124,7 @@ const RankingTab = () => {
           <RankWrapper>
             <img
               src={
-                secondRank?.profile_image ||
+                secondRank?.image ||
                 "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
               }
             />
@@ -134,7 +134,7 @@ const RankingTab = () => {
           <FirstRankWrapper>
             <img
               src={
-                firstRank?.profile_image ||
+                firstRank?.image ||
                 "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
               }
             />
@@ -144,7 +144,7 @@ const RankingTab = () => {
           <RankWrapper>
             <img
               src={
-                thirdRank?.profile_image ||
+                thirdRank?.image ||
                 "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
               }
             />
@@ -162,7 +162,7 @@ const RankingTab = () => {
                 key={element.userId}
                 rank={element.rank}
                 score={element.score}
-                profile_image={element.profile_image}
+                image={element.image}
                 nickname={element.nickname}
                 userId={element.userId}
               />
@@ -172,7 +172,7 @@ const RankingTab = () => {
 
         <MyRankWrapper>
           {withUser?.map((element) => {
-            if (user && userMe && withUser && element.rank === userMe.rank)
+            if (user && userMe && element.userId === userMe.userId)
               return (
                 <MyRankComp
                   key={element.userId}
@@ -192,7 +192,7 @@ const RankingTab = () => {
                 key={element.userId}
                 rank={element.rank}
                 score={element.score}
-                profile_image={element.profile_image}
+                image={element.image}
                 nickname={element.nickname}
                 userId={element.userId}
               />
