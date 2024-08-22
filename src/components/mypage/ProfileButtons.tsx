@@ -109,6 +109,7 @@ const ProfileButtons = () => {
                 비밀번호
               </Text>
               <input
+                type='password'
                 onChange={onPasswordChange}
                 value={password}
                 style={{
@@ -156,7 +157,11 @@ const ProfileButtons = () => {
           <ArrowRight />
         </ProfileTeamWrapper>
       </ProfileWrapper>
-      <ProfileLastWrapper>
+      <ProfileLastWrapper
+        onClick={() => {
+          window.location.href =
+            "https://docs.google.com/forms/d/e/1FAIpQLSepo0-LOyIaJivXopayvuO-hWVrKy6xcSiLc5OaKHrMm42JZw/viewform";
+        }}>
         <Text variant='body_02' color='var(--primary-color)'>
           문의 사항
         </Text>
