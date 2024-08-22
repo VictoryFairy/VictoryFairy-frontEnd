@@ -2,6 +2,10 @@ import "sanitize.css";
 import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
+
+
+
+
 :root{
     --primary-color: #2F3036;
     --black: #000000;
@@ -83,6 +87,7 @@ button {
     padding: 0;
     border: none;
     background-color: transparent;
+    color: inherit;
 }
 
 
