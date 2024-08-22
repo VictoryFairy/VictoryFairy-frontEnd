@@ -53,12 +53,13 @@ const RankBar = ({ data, tab }: RankBarProps) => {
   const [datas, setDatas] = useState<number[]>([]);
   const teamId = useAuthStore((state) => state.teamId);
   let propTab = 0;
-  if (tab === 0) {
-    propTab = teamId;
-  } else {
-    propTab = tab;
-  }
+
   useEffect(() => {
+    if (tab === 0) {
+      propTab = teamId;
+    } else {
+      propTab = tab;
+    }
     const sortedData = [
       { point: "Point 0", score: 0 },
       { point: "Point 0", score: 0 },

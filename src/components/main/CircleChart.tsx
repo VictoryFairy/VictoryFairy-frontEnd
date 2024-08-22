@@ -44,8 +44,11 @@ const CircleChart = ({ teamData }: { teamData: TeamStatsData }) => {
     datasets: [
       {
         data: [
-          teamData.homeWin * 100,
-          (teamData.totalWin - teamData.homeWin) * 100,
+          ((teamData.homeWin / teamData.totalWin) * 100).toFixed(0),
+          (
+            ((teamData.totalWin - teamData.homeWin) / teamData.totalWin) *
+            100
+          ).toFixed(0),
         ],
         backgroundColor: color[teamId - 1],
         hoverBackgroundColor: color[teamId - 1],
@@ -71,6 +74,7 @@ const CircleChart = ({ teamData }: { teamData: TeamStatsData }) => {
             weight: "bold",
           },
         },
+        onClick: () => null,
       },
       datalabels: {
         display: true,

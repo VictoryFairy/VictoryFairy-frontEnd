@@ -5,7 +5,6 @@ import Text from "../common/Text";
 const RankTextComp = ({
   rank,
   score,
-  profile_image,
   nickname,
   image,
 }: Omit<Rank, "user_id">) => {
@@ -13,7 +12,7 @@ const RankTextComp = ({
     <RankText>
       <RankTextLeft>
         <span>{rank}</span>
-        <img src={profile_image || image} alt='#' />
+        <img src={image} alt='#' />
         <Text variant='title_01' color='var(--gray-400)'>
           {nickname}
         </Text>
