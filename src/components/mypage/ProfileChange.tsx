@@ -1,10 +1,11 @@
-import { ChangeEvent, useEffect, useState, useCallback, useRef } from "react";
+import { ChangeEvent, useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { profileChange } from "@/api/mypage/mypage.api";
 import styled from "styled-components";
 import { uploadProfileImage } from "@/api/auth/auth.api";
 import { usePopup } from "@/hooks/usePopup";
 import { useUserStore } from "@/store/userInfo";
+import { useMutation } from "@tanstack/react-query";
 import Button from "../common/Button";
 import Text from "../common/Text";
 import Icon from "../common/Icon";
@@ -39,19 +40,48 @@ const ProfileChange = () => {
     setName(nickname ?? "");
   }, [profile, nickname]);
 
-  const handleBtnClick = useCallback(async () => {
+  // const handleBtnClick = useCallback(async () => {
+  //   if (name) {
+  //     await profileChange("nickname", name).then(() => {
+  //       updateNickname(name);
+  //     });
+  //   }
+  //   if (image) {
+  //     await profileChange("image", image).then(() => {
+  //       updateImage(image);
+  //     });
+  //   }
+  //   navigate("/mypage");
+  // }, [name, updateNickname, updateImage, navigate, image, profile, nickname]);
+
+  const mutationProfileChange = useMutation({
+    mutationFn: (data: { field: string; value: string }) =>
+      profileChange(data.field, data.value),
+    onSuccess: (data, variables) => {
+      const { field, value } = variables;
+      if (field === "nickname") {
+        updateNickname(value);
+      } else if (field === "image") {
+        updateImage(value);
+      }
+    },
+    onError: (error) => {
+      console.error("프로필 변경 중 오류 발생:", error);
+    },
+  });
+
+  const handleBtnClick = async () => {
     if (name) {
-      await profileChange("nickname", name).then(() => {
-        updateNickname(name);
+      await mutationProfileChange.mutateAsync({
+        field: "nickname",
+        value: name,
       });
     }
     if (image) {
-      await profileChange("image", image).then(() => {
-        updateImage(image);
-      });
+      await mutationProfileChange.mutateAsync({ field: "image", value: image });
     }
     navigate("/mypage");
-  }, [name, updateNickname, updateImage, navigate, image, profile, nickname]);
+  };
 
   const nickChange = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);

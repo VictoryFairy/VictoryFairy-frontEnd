@@ -28,9 +28,10 @@ const RankPopup = ({
 }: PopupProps) => {
   const [ranking, setRanking] = useState<Rank[]>([]);
 
-  const { data } = useQuery<Rank[]>({
+  const { data, refetch: refetchRankList } = useQuery<Rank[]>({
     queryKey: ["getRankList", { teamId }],
     queryFn: () => getRankList(teamId),
+    staleTime: Infinity,
   });
 
   useEffect(() => {
@@ -38,6 +39,10 @@ const RankPopup = ({
       setRanking(data);
     }
   }, [data]);
+
+  useEffect(() => {
+    refetchRankList();
+  }, []);
 
   return (
     <MotionPopup

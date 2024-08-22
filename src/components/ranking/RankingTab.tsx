@@ -64,14 +64,20 @@ const RankingTab = () => {
     setTeamId(teamNumberMap[value]);
   };
 
-  const { data: topRank } = useQuery<Omit<ApiResponse, "user" | "withUser">>({
+  const { data: topRank, refetch: refetchTopRank } = useQuery<
+    Omit<ApiResponse, "user" | "withUser">
+  >({
     queryKey: ["getTopRank", { teamId }],
     queryFn: () => getTopRank(teamId),
+    staleTime: Infinity,
   });
 
-  const { data: nearBy } = useQuery<Omit<ApiResponse, "top">>({
+  const { data: nearBy, refetch: refetchNearBy } = useQuery<
+    Omit<ApiResponse, "top">
+  >({
     queryKey: ["getNearbyRank", { teamId }],
     queryFn: () => getNearbyRank(teamId),
+    staleTime: Infinity,
   });
 
   useEffect(() => {
@@ -87,7 +93,12 @@ const RankingTab = () => {
     console.log("nearby", nearBy);
     console.log("s", secondRank);
     console.log("t", thirdRank);
-  }, [nearBy, topRank, top]);
+  }, [nearBy, topRank]);
+
+  useEffect(() => {
+    refetchTopRank();
+    refetchNearBy();
+  }, []);
 
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
