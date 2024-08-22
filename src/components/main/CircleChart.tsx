@@ -90,6 +90,9 @@ const CircleChart = ({ teamData }: { teamData: TeamStatsData }) => {
         },
         padding: 10,
       },
+      tooltip: {
+        enabled: false,
+      },
     },
   };
 

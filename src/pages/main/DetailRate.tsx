@@ -108,6 +108,12 @@ const Container = styled.div`
   display: flex;
   background-color: var(--gray-50);
   flex-direction: column;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const RateWrapper = styled.div`
