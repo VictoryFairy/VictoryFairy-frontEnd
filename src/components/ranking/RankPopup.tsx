@@ -27,7 +27,7 @@ const RankPopup = ({
   win,
 }: PopupProps) => {
   const [ranking, setRanking] = useState<Rank[]>([]);
-  const [isDraggingDisabled, setIsDraggingDisabled] = useState(false);
+  const [canDrag, setCanDrag] = useState(true);
   const scrollableRef = useRef<HTMLDivElement | null>(null);
 
   const { data } = useQuery<Rank[]>({
@@ -41,24 +41,20 @@ const RankPopup = ({
     }
   }, [data]);
 
-  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    const target = e.target as HTMLDivElement;
-    const isAtTop = target.scrollTop === 0;
-    const isAtBottom =
-      target.scrollHeight - target.scrollTop === target.clientHeight;
-    setIsDraggingDisabled(!(isAtTop || isAtBottom));
+  const handleScroll = () => {
+    if (scrollableRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = scrollableRef.current;
+      const isScrollable = scrollHeight > clientHeight;
+      const isAtTop = scrollTop === 0;
+      const isAtBottom = scrollHeight - scrollTop === clientHeight;
+
+      setCanDrag(isScrollable && (isAtTop || isAtBottom));
+    }
   };
 
-  const handleTouchStart = () => {
-    if (scrollableRef.current) {
-      const canScroll =
-        scrollableRef.current.scrollHeight >
-          scrollableRef.current.clientHeight &&
-        (scrollableRef.current.scrollTop > 0 ||
-          scrollableRef.current.scrollTop <
-            scrollableRef.current.scrollHeight -
-              scrollableRef.current.clientHeight);
-      setIsDraggingDisabled(canScroll);
+  const handleDrag = (event: MouseEvent | TouchEvent | PointerEvent) => {
+    if (!canDrag) {
+      event.preventDefault();
     }
   };
 
@@ -69,18 +65,21 @@ const RankPopup = ({
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
       drag='y'
       dragConstraints={{ top: 0 }}
-      dragElastic={isDraggingDisabled ? 0 : 1} // 드래그 비활성화
+      dragElastic={1}
+      onDrag={handleDrag}
       onDragEnd={(_, info) => {
         if (info.point.y > 600) {
           handleClose();
         }
-      }}
-      onTouchStart={handleTouchStart}>
+      }}>
       <RankPopupWrapper>
         <Text variant='headline' color='#545F71'>
           전체 랭킹
         </Text>
-        <RankTextWrapper ref={scrollableRef} onScroll={handleScroll}>
+        <RankTextWrapper
+          ref={scrollableRef}
+          onScroll={handleScroll}
+          onTouchStart={handleScroll}>
           {ranking.map((element) => (
             <RankTextComp
               key={element.userId}
@@ -121,6 +120,11 @@ const MotionPopup = styled(motion.div)`
 `;
 
 const RankPopupWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
+
   > :nth-child(1) {
     padding-top: 20px;
     padding-left: 20px;
@@ -140,10 +144,6 @@ const RankPopupWrapper = styled.div`
     padding: 10px 20px 30px 20px;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
   }
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  height: 100%;
 `;
 
 export default RankPopup;
