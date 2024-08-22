@@ -113,7 +113,7 @@ const RankPopupWrapper = styled.div`
   }
   > :nth-child(3) {
     position: absolute;
-    height: 45%;
+    height: 40%;
     background-color: var(--white);
     width: 100%;
     bottom: 0;
