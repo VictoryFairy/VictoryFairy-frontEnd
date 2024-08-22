@@ -25,6 +25,12 @@ const Container = styled.div`
     width: 0;
     height: 0;
   }
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export default MyPage;
