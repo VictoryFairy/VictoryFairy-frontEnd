@@ -15,7 +15,7 @@ const MyRankComp = ({ totalGames, win, withUser }: MyRankCompType) => {
       <MyRank>
         <RankTextLeft>
           <span>{withUser?.rank}</span>
-          <img src={withUser?.profile_image} alt='#' />
+          <img src={withUser?.image} alt='#' />
           <Text variant='title_01'>{withUser?.nickname}</Text>
         </RankTextLeft>
         <RankTextRight>
