@@ -41,8 +41,8 @@ const CheerSongList = ({
   selectedTeamId,
   activeTab,
   type,
-  setRecentSearches,
   searchTerm,
+  setRecentSearches,
 }: CheerSongListProps) => {
   const navigate = useNavigate();
   const newlyricPreview = lyricPreview?.slice(0, 10);

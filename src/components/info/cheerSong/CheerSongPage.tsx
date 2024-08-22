@@ -15,9 +15,14 @@ import search from "../../../assets/Icons/search.svg";
 
 const CheerSongPage = () => {
   const { teamId } = useAuthStore();
-  const [selectedTeamId, setSelectedTeamId] = useState(teamId);
-  const [activeTab, setActiveTab] = useState(0); // 0: team, 1: player
-
+  // const [selectedTeamId, setSelectedTeamId] = useState(teamId);
+  // const [activeTab, setActiveTab] = useState(0); // 0: team, 1: player
+  const [selectedTeamId, setSelectedTeamId] = useState(() => {
+    return Number(localStorage.getItem("selectedTeamId")) || teamId;
+  });
+  const [activeTab, setActiveTab] = useState(() => {
+    return Number(localStorage.getItem("tab")) || 0;
+  });
   const navigate = useNavigate();
   const observer = useRef<IntersectionObserver | null>(null);
   const lastElementRef = useRef<HTMLDivElement | null>(null);
@@ -32,6 +37,13 @@ const CheerSongPage = () => {
   //   });
   // }, [selectedTeamId, activeTab, queryClient]);
 
+  useEffect(() => {
+    localStorage.setItem("selectedTeamId", String(selectedTeamId));
+  }, [selectedTeamId]);
+
+  useEffect(() => {
+    localStorage.setItem("tab", String(activeTab));
+  }, [activeTab]);
   const {
     data: likedCheerSongsData,
     fetchNextPage: fetchNextLikedPage,
