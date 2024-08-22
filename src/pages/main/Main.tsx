@@ -50,7 +50,7 @@ const Layer = styled.div`
   width: 100%;
   max-width: 480px;
   position: fixed;
-  bottom: 20%;
+  bottom: 125px;
   display: flex;
   justify-content: flex-end;
 `;
