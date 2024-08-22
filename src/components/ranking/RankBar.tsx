@@ -52,14 +52,15 @@ const RankBar = ({ data, tab }: RankBarProps) => {
   const [labels, setLabels] = useState<string[]>([]);
   const [datas, setDatas] = useState<number[]>([]);
   const teamId = useAuthStore((state) => state.teamId);
-  let propTab = 0;
+  const [propTab, setPropTab] = useState<number>(tab === 0 ? teamId : tab);
 
   useEffect(() => {
     if (tab === 0) {
-      propTab = teamId;
+      setPropTab(teamId);
     } else {
-      propTab = tab;
+      setPropTab(tab);
     }
+
     const sortedData = [
       { point: "Point 0", score: 0 },
       { point: "Point 0", score: 0 },
@@ -87,14 +88,14 @@ const RankBar = ({ data, tab }: RankBarProps) => {
 
     setLabels(sortedData.map((item) => item.point));
     setDatas(sortedData.map((item) => item.score));
-  }, [data]);
+  }, [data, tab, teamId]);
 
   const chartData: ChartData<"bar", number[], string> = {
     labels,
     datasets: [
       {
         data: datas,
-        backgroundColor: teamColor[propTab - 1],
+        backgroundColor: teamColor[propTab - 1], // propTab 값이 올바르게 설정되었는지 확인
         borderColor: teamColor[propTab - 1],
         borderWidth: 1,
         barPercentage: 0.7,
@@ -113,7 +114,6 @@ const RankBar = ({ data, tab }: RankBarProps) => {
           display: false,
         },
         ticks: {
-          color: "#898C9B",
           font: {
             size: 9,
             weight: 400,
