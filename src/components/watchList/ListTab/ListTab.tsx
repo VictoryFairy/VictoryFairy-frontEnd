@@ -6,12 +6,13 @@ import MonthNav from "../../common/MonthNav";
 interface GameListItemProps {
   matches: MyGame[];
   onClick: (match: MyGame) => void;
+  onMonthChange: (date: Date) => void;
 }
 
-const ListTab = ({ matches, onClick }: GameListItemProps) => {
+const ListTab = ({ matches, onClick, onMonthChange }: GameListItemProps) => {
   return (
     <ListContainer>
-      <MonthNav />
+      <MonthNav onMonthChange={onMonthChange} />
       <GameList>
         {matches.map((match) => (
           <GameListItem onClick={onClick} key={match.id} match={match} />

@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { typography } from "@/style/typography";
-import { getRegisteredGameByMonthly } from "@/api/register/register";
-import { useQuery } from "@tanstack/react-query";
 import { MyGame } from "@/types/Game";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { useRegisteredGame } from "@/hooks/useRegisteredGame";
 import ListTab from "./ListTab/ListTab";
 import FilterIcon from "@/assets/Icons/filter.svg?react";
 import SearchIcon from "@/assets/Icons/search.svg?react";
@@ -15,20 +14,13 @@ import GalleryTab from "./GalleryTab/GalleryTab";
 
 const WatchList = () => {
   const [activeSelect, setActiveSelect] = useState(0);
-  const [selcetMonth, setSelcetMonth] = useState(new Date());
+  const [selectMonth, setselectMonth] = useState(new Date());
   const navigate = useNavigate();
-  const { data, isSuccess } = useQuery({
-    queryKey: ["registeredGame"],
-    queryFn: () =>
-      getRegisteredGameByMonthly(
-        selcetMonth.getFullYear(),
-        selcetMonth.getMonth() + 1,
-      ),
-    staleTime: 1000 * 60 * 3,
-  });
+
+  const { data, isSuccess } = useRegisteredGame(selectMonth);
 
   const handleMonthChange = (date: Date) => {
-    setSelcetMonth(date);
+    setselectMonth(date);
   };
 
   const handleClickDay = (date: Date) => {
@@ -57,7 +49,8 @@ const WatchList = () => {
       case 1:
         return (
           <ListTab
-            matches={isSuccess ? data : []}
+            onMonthChange={handleMonthChange}
+            matches={isSuccess ? (data ?? []) : []}
             onClick={(match: MyGame) => handleClickMatch(match.id)}
           />
         );

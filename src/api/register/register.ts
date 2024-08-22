@@ -74,7 +74,7 @@ export const getRegisteredGameByMonthly = async (
 ) => {
   try {
     const response = await authAxiosInstance.get<MyGame[]>(
-      "/registered-games",
+      "/registered-games/monthly",
       {
         params: {
           year,
