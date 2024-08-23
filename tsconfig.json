@@ -1,5 +1,8 @@
 {
   "files": [],
+  "compilerOptions": {
+    "declaration": false // .d.ts 파일 생성 방지
+  },
   "include": ["custom.d.ts"],
   "references": [
     {
