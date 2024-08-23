@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import Icon from "../components/common/Icon";
 import { fetchCheerSongDetail } from "../api/info/cheers.api";
-import { typography } from "../style/typography";
+import Header from "../components/common/Header";
 
 const CheersongDetail = () => {
   const { id } = useParams();
@@ -29,21 +29,26 @@ const CheersongDetail = () => {
 
   return (
     <Container>
-      <Header>
-        <Icon
-          icon='IcArrowLeft'
-          cursor='pointer'
-          onClick={() => navigate(-1)}
-        />
-        <HeaderSection>{data?.title}</HeaderSection>
-        <HeaderSection>
-          {data?.isLiked ? (
-            <Icon icon='IcHeartFill' fill='red' />
-          ) : (
-            <Icon icon='IcHeart' />
-          )}
-        </HeaderSection>
-      </Header>
+      <Header
+        left={
+          <Icon
+            icon='IcArrowLeft'
+            cursor='pointer'
+            onClick={() => navigate(-1)}
+          />
+        }
+        center={<HeaderSection>{data?.title}</HeaderSection>}
+        right={
+          <HeaderSection>
+            {data?.isLiked ? (
+              <Icon icon='IcHeartFill' fill='red' />
+            ) : (
+              <Icon icon='IcHeart' />
+            )}
+          </HeaderSection>
+        }
+      />
+
       {videoId && (
         <VideoEmbed
           src={`https://www.youtube.com/embed/${videoId}`}
@@ -63,27 +68,28 @@ const Container = styled.div`
   flex-direction: column;
   min-height: 100vh;
   padding-bottom: 60px;
+  align-items: center;
 `;
 
-const Header = styled.div`
-  :nth-child(2) {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    ${typography.headline}
-  }
-  height: 64px;
-  position: fixed;
-  top: 0;
-  max-width: 440px;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: var(--white);
-  z-index: 1;
-`;
+// const Header = styled.div`
+//   :nth-child(2) {
+//     position: absolute;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+//     ${typography.headline}
+//   }
+//   height: 64px;
+//   position: fixed;
+//   top: 0;
+//   max-width: 440px;
+//   width: 100%;
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   background-color: var(--white);
+//   z-index: 1;
+// `;
 
 const HeaderSection = styled.div``;
 
