@@ -63,7 +63,12 @@ const RankingTab = () => {
     setTeamTab(value);
     setTeamId(teamNumberMap[value]);
   };
-
+  function textChange(text: string) {
+    if (text?.length > 4) {
+      return `${text.slice(0, 4)}..`;
+    }
+    return text;
+  }
   const { data: topRank, refetch: refetchTopRank } = useQuery<
     Omit<ApiResponse, "user" | "withUser">
   >({
@@ -139,7 +144,9 @@ const RankingTab = () => {
                 "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
               }
             />
-            <Text variant='title_02'>{secondRank?.nickname}</Text>
+            <Text variant='title_02'>
+              {textChange(secondRank?.nickname || "")}
+            </Text>
             <div>2</div>
           </RankWrapper>
           <FirstRankWrapper>
@@ -149,7 +156,9 @@ const RankingTab = () => {
                 "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
               }
             />
-            <Text variant='title_02'>{firstRank?.nickname}</Text>
+            <Text variant='title_02'>
+              {textChange(firstRank?.nickname || "")}
+            </Text>
             <div>1</div>
           </FirstRankWrapper>
           <RankWrapper>
@@ -159,7 +168,9 @@ const RankingTab = () => {
                 "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
               }
             />
-            <Text variant='title_02'>{thirdRank?.nickname}</Text>
+            <Text variant='title_02'>
+              {textChange(thirdRank?.nickname || "")}
+            </Text>
             <div>3</div>
           </RankWrapper>
         </RankProfileWrapper>
