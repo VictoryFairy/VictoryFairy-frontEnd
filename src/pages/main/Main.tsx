@@ -53,6 +53,7 @@ const Layer = styled.div`
   bottom: 125px;
   display: flex;
   justify-content: flex-end;
+  z-index: 100;
 `;
 
 const RegisterButton = styled.button`
@@ -68,6 +69,7 @@ const RegisterButton = styled.button`
   position: absolute;
   right: 10%;
   cursor: pointer;
+
   svg {
     fill: var(--white);
   }

@@ -17,8 +17,11 @@ const MONTHS = [
   "November",
   "December",
 ];
+interface MonthNavProps {
+  onMonthChange: (date: Date) => void;
+}
 
-const MonthNav = () => {
+const MonthNav = ({ onMonthChange }: MonthNavProps) => {
   const [date, setDate] = useState(new Date());
   return (
     <MonthNavContainer>
@@ -27,6 +30,7 @@ const MonthNav = () => {
           const newDate = new Date(date);
           newDate.setMonth(date.getMonth() - 1);
           setDate(newDate);
+          onMonthChange(newDate);
         }}
         fill='#2F3036'
       />
@@ -38,6 +42,7 @@ const MonthNav = () => {
           const newDate = new Date(date);
           newDate.setMonth(date.getMonth() + 1);
           setDate(newDate);
+          onMonthChange(newDate);
         }}
         fill='#2F3036'
       />
