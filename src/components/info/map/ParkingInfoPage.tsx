@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getParkingInfosByStadiumId } from "@/api/info/info.api";
-import { ParkingInfo } from "@/types/Stadium";
+import { getParkingInfosByStadiumId, getStadiums } from "@/api/info/info.api";
+import { ParkingInfo, Stadium } from "@/types/Stadium";
 import { useAuthStore } from "@/store/authStore";
 import { getStadiumId } from "@/utils/getStadiumId";
 import ParkingList from "./ParkingList";
@@ -18,23 +18,42 @@ const ParkingInfoPage = () => {
     "stadium"
   > | null>(null);
 
-  const { data } = useQuery<ParkingInfo[]>({
+  const { data: stadiums, isLoading: isLoadingStadiums } = useQuery<Stadium[]>({
+    queryKey: ["stadiums"],
+    queryFn: getStadiums,
+    staleTime: Infinity,
+  });
+
+  const { data: parkingInfos } = useQuery<ParkingInfo[]>({
     queryKey: ["parkingInfos", selectedStadiumId],
     queryFn: () => getParkingInfosByStadiumId(selectedStadiumId),
     enabled: !!selectedStadiumId,
     staleTime: Infinity,
   });
 
+  const [sortedStadiums, setSortedStadiums] = useState<Stadium[]>([]);
+
   useEffect(() => {
-    if (data) {
+    if (stadiums && sortedStadiums.length === 0) {
+      const sorted = [...stadiums].sort((a, b) => {
+        if (a.id === selectedStadiumId) return -1;
+        if (b.id === selectedStadiumId) return 1;
+        return 0;
+      });
+      setSortedStadiums(sorted);
+    }
+  }, [stadiums, sortedStadiums, selectedStadiumId]);
+
+  useEffect(() => {
+    if (parkingInfos) {
       setSelectedParking(null);
     }
-  }, [data]);
-  if (!data) return;
+  }, [parkingInfos]);
 
-  console.log(data);
-  const stadiumData = data?.[0].stadium;
-  const parkingSpots = data?.map((parkingInfo) => ({
+  if (isLoadingStadiums || !parkingInfos) return <div>로딩중...</div>;
+
+  const stadiumData = parkingInfos?.[0].stadium;
+  const parkingSpots = parkingInfos?.map((parkingInfo) => ({
     id: parkingInfo.id,
     name: parkingInfo.name,
     latitude: parkingInfo.latitude,
@@ -48,6 +67,7 @@ const ParkingInfoPage = () => {
       <StadiumList
         setSelectedStadiumId={setSelectedStadiumId}
         selectedStadiumId={selectedStadiumId}
+        stadiums={sortedStadiums}
       />
       <Map
         selectedStadium={stadiumData}

@@ -1,28 +1,21 @@
-import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 import { useRef, useEffect } from "react";
-import { getStadiums } from "@/api/info/info.api";
 import { Stadium } from "@/types/Stadium";
 
 interface StadiumListProps {
   selectedStadiumId: number;
   setSelectedStadiumId: (id: number) => void;
+  stadiums: Stadium[];
 }
 
 const StadiumList = ({
   setSelectedStadiumId,
   selectedStadiumId,
+  stadiums,
 }: StadiumListProps) => {
-  const { data, isLoading } = useQuery<Stadium[]>({
-    queryKey: ["stadiums"],
-    queryFn: getStadiums,
-    staleTime: Infinity, // 데이터가 무한히 stale 상태가 되지 않도록 설정
-  });
-
   const listRef = useRef<HTMLDivElement>(null);
   const scrollPosition = useRef<number>(0);
 
-  console.log(scrollPosition.current);
   const handleStadiumClick = (stadium: Stadium) => {
     setSelectedStadiumId(stadium.id);
     if (listRef.current) {
@@ -36,12 +29,10 @@ const StadiumList = ({
     }
   }, [selectedStadiumId]);
 
-  if (isLoading) return <div>로딩중...</div>;
-
   return (
     <TeamListContainer>
       <TeamList ref={listRef}>
-        {data?.map((stadium) => (
+        {stadiums.map((stadium) => (
           <TeamButton
             type='button'
             key={stadium.id}
