@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 import { Team } from "@/types/Team";
 import { getTeams } from "@/api/info/info.api";
+import { useEffect, useState } from "react";
 
 interface TeamListProps {
   selectedTeamId: number;
@@ -14,6 +15,18 @@ const TeamList = ({ setSelectedTeamId, selectedTeamId }: TeamListProps) => {
     queryFn: getTeams,
     staleTime: Infinity,
   });
+  const [sortedTeams, setSortedTeams] = useState<Team[]>([]);
+
+  useEffect(() => {
+    if (data && sortedTeams.length === 0) {
+      const sorted = [...data].sort((a, b) => {
+        if (a.id === selectedTeamId) return -1;
+        if (b.id === selectedTeamId) return 1;
+        return 0;
+      });
+      setSortedTeams(sorted);
+    }
+  }, [data, setSortedTeams, selectedTeamId]);
 
   if (isLoading) return <div>로딩중...</div>;
   if (!data) return null;
@@ -34,7 +47,7 @@ const TeamList = ({ setSelectedTeamId, selectedTeamId }: TeamListProps) => {
         {myCheerCategory.name}
       </FixedTeamButton>
       <TeamLists>
-        {data.map((team) => (
+        {sortedTeams.map((team) => (
           <TeamButton
             type='button'
             key={team.id}
