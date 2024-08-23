@@ -42,14 +42,14 @@ const Map = ({ selectedStadium, parkingSpots, selectedParking }: MapProps) => {
         map: mapInstance,
         icon: {
           content: markerSvg,
-          size: new naver.maps.Size(15, 15),
-          anchor: new naver.maps.Point(7, 7),
+          size: new naver.maps.Size(50, 50),
+          anchor: new naver.maps.Point(25, 50),
         },
       });
 
       const infoWindow = new naver.maps.InfoWindow({
         content: `
-          <div style="padding: 15px; min-width: 250px; border-radius: 8px; background-color: #fff; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+          <div style="padding: 15px; min-width: 150px; border-radius: 8px; background-color: #fff; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
             <h3 style="margin: 0 0 10px; font-size: 18px; color: #333;">${spot.name}</h3>
             <p style="margin: 0; font-size: 14px; color: #666;">${spot.address}</p>
           </div>
