@@ -5,7 +5,7 @@ interface ButtonProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "disabled"> {
   children: React.ReactNode;
   variant?: "default" | "disabled" | "error";
-  styleType?: "default" | "outline" | "text";
+  styletype?: "default" | "outline" | "text";
   size?: "small" | "big";
   disabled?: boolean;
 }
@@ -15,14 +15,14 @@ const Button = ({
   variant,
   size = "small",
   disabled,
-  styleType,
+  styletype,
   ...props
 }: ButtonProps) => {
   return (
     <ButtonContainer
       disabled={disabled}
       size={size}
-      styleType={styleType}
+      styletype={styletype}
       variant={variant}
       {...props}>
       {children}
@@ -30,7 +30,7 @@ const Button = ({
   );
 };
 const ButtonContainer = styled.button<
-  Pick<ButtonProps, "variant" | "size" | "styleType">
+  Pick<ButtonProps, "variant" | "size" | "styletype">
 >`
   display: flex;
   flex-direction: row;
@@ -41,10 +41,10 @@ const ButtonContainer = styled.button<
   width: 100%;
   cursor: pointer;
   ${({ size }) => size && buttonSize[size]}
-  ${({ variant, styleType, disabled }) =>
+  ${({ variant, styletype, disabled }) =>
     disabled
-      ? button.disabled[styleType || "default"]
-      : button[variant || "default"][styleType || "default"]}
+      ? button.disabled[styletype || "default"]
+      : button[variant || "default"][styletype || "default"]}
 `;
 
 export default Button;

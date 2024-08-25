@@ -26,7 +26,7 @@ const DailyMatch = ({
       <DailyMatchItem
         key={formatMatches?.id}
         match={formatMatches!}
-        isSelected={selectedMatch?.id === formatMatches?.id}
+        $isSelected={selectedMatch?.id === formatMatches?.id}
         onSelect={() => setSelectedMatch(formatMatches!)}
       />
     </DailyMatchContainer>

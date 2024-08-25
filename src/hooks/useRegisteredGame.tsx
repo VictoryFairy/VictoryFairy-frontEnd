@@ -6,7 +6,7 @@ import { AxiosError } from "axios";
 
 export const useRegisteredGame = (selectMonth: Date | null) => {
   const formattedDate = selectMonth
-    ? moment(selectMonth).format("YYYY-MM-DD")
+    ? moment(selectMonth).format("YYYY-MM")
     : null;
 
   const { data, isSuccess, isLoading, isError, error } = useQuery<
