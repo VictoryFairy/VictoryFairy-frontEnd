@@ -23,7 +23,7 @@ import ArrowLeft from "./assets/Icons/arrow-left.svg?react";
 import SearchCheerSong from "./pages/SearchCheerSong";
 import { useSignupStore } from "./store/signupStep";
 import CheersongDetail from "./pages/CheersongDetail";
-import Detail from "./pages/Detail";
+import Detail from "./pages/detail/Detail";
 import SelectMatch from "./pages/register/SelectMatch";
 import RegisterForm from "./pages/register/RegisterForm";
 import DetailRate from "./pages/main/DetailRate";
@@ -176,7 +176,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/detail",
-    element: <Layout />,
+
     children: [
       {
         path: ":id",
@@ -226,7 +226,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/select-match",
-    element: <Layout />,
+    element: <Layout left={<BackButton />} center='직관 기록' />,
     children: [
       {
         path: "/select-match",
