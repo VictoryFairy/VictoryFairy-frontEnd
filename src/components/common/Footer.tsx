@@ -7,7 +7,7 @@ import InfoIcon from "@/assets/Icons/info.svg?react";
 import MyPageIcon from "@/assets/Icons/mypage.svg?react";
 
 interface IconProps {
-  isActive?: boolean;
+  $isActive?: boolean;
 }
 
 const Footer = () => {
@@ -17,25 +17,25 @@ const Footer = () => {
     <FooterContainer>
       <IconWrapper
         onClick={() => navigate("/home")}
-        isActive={location.pathname === "/home"}>
+        $isActive={location.pathname === "/home"}>
         <HomeIcon />
         <span>홈</span>
       </IconWrapper>
       <IconWrapper
         onClick={() => navigate("/ranking")}
-        isActive={location.pathname === "/ranking"}>
+        $isActive={location.pathname === "/ranking"}>
         <RankingIcon />
         <span>랭킹</span>
       </IconWrapper>
       <IconWrapper
         onClick={() => navigate("/info")}
-        isActive={location.pathname === "/info"}>
+        $isActive={location.pathname === "/info"}>
         <InfoIcon />
         <span>정보</span>
       </IconWrapper>
       <IconWrapper
         onClick={() => navigate("/mypage")}
-        isActive={location.pathname.startsWith("/mypage")}>
+        $isActive={location.pathname.startsWith("/mypage")}>
         <MyPageIcon />
         <span>마이페이지</span>
       </IconWrapper>
@@ -56,8 +56,8 @@ const FooterContainer = styled.div`
 `;
 
 const IconWrapper = styled.div<IconProps>`
-  ${({ isActive }) =>
-    isActive
+  ${({ $isActive }) =>
+    $isActive
       ? css`
           ${typography.title_01}
           color: ${({ theme }) => theme.colors.primary};

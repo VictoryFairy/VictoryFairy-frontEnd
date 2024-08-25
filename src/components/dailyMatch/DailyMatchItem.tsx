@@ -6,13 +6,13 @@ import Icon from "../common/Icon";
 
 interface DailyMatchItemProps {
   match: Game;
-  isSelected: boolean;
+  $isSelected: boolean;
   onSelect: () => void;
 }
 
 const DailyMatchItem = ({
   match,
-  isSelected,
+  $isSelected,
   onSelect,
 }: DailyMatchItemProps) => {
   const isWinningTeam = (teamId: number) => {
@@ -20,8 +20,8 @@ const DailyMatchItem = ({
     return match.winningTeam.id === teamId;
   };
   return (
-    <DailyMatchItemContainer isSelected={isSelected}>
-      <Radio checked={isSelected} onChange={onSelect} />
+    <DailyMatchItemContainer $isSelected={$isSelected}>
+      <Radio checked={$isSelected} onChange={onSelect} />
       <div className='game-info'>
         <div
           className={`team-score ${isWinningTeam(match.homeTeam.id) ? "winning" : ""}`}>
@@ -52,7 +52,7 @@ const DailyMatchItem = ({
   );
 };
 
-const DailyMatchItemContainer = styled.div<{ isSelected: boolean }>`
+const DailyMatchItemContainer = styled.div<{ $isSelected: boolean }>`
   display: flex;
   align-items: center;
   gap: 16px;
@@ -60,8 +60,8 @@ const DailyMatchItemContainer = styled.div<{ isSelected: boolean }>`
   border-radius: 8px;
   height: 80px;
 
-  border: ${({ isSelected, theme }) =>
-    isSelected ? `1px solid ${theme.colors.primary}` : "1px solid #efefef"};
+  border: ${({ $isSelected, theme }) =>
+    $isSelected ? `1px solid ${theme.colors.primary}` : "1px solid #efefef"};
   .game-info {
     display: flex;
     flex-direction: column;

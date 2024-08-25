@@ -38,7 +38,7 @@ const Home = () => {
         </Button>
         <Button
           size='big'
-          styleType='text'
+          styletype='text'
           type='button'
           onClick={() => navigate("/login")}>
           로그인

@@ -19,7 +19,7 @@ const Tabs = ({
       {labels.map((label, index) => (
         <Tab
           key={index}
-          isActive={index === activeTab}
+          $isActive={index === activeTab}
           onClick={() => onTabClick?.(index)}>
           {label}
         </Tab>
@@ -36,10 +36,10 @@ const TabsContainer = styled.div<{ direction: "row" | "column" }>`
   flex-direction: ${({ direction }) => direction};
 `;
 
-const Tab = styled.span<{ isActive: boolean }>`
+const Tab = styled.span<{ $isActive: boolean }>`
   cursor: pointer;
-  color: ${({ isActive }) =>
-    isActive ? "var(--primary-color)" : "var(--gray-200)"};
+  color: ${({ $isActive }) =>
+    $isActive ? "var(--primary-color)" : "var(--gray-200)"};
 `;
 
 export default Tabs;

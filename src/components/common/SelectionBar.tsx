@@ -19,7 +19,7 @@ const SelectionBar = ({
       {labels.map((label, index) => (
         <Select
           key={index}
-          isActive={index === activeSelect}
+          $isActive={index === activeSelect}
           onClick={() => onSelectClick?.(index)}>
           {label}
         </Select>
@@ -40,7 +40,7 @@ const SelectionBarContainer = styled.div<{ direction: "row" | "column" }>`
   height: 48px;
 `;
 
-const Select = styled.span<{ isActive: boolean }>`
+const Select = styled.span<{ $isActive: boolean }>`
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -48,11 +48,11 @@ const Select = styled.span<{ isActive: boolean }>`
   padding: 4px 12px;
   gap: 10px;
   width: 100%;
-  background: ${({ isActive }) =>
-    isActive ? "var(--white)" : "var(--gray-50)"};
+  background: ${({ $isActive }) =>
+    $isActive ? "var(--white)" : "var(--gray-50)"};
   border-radius: 4px;
-  color: ${({ isActive }) =>
-    isActive ? "var(--primary-color)" : "var(--gray-200)"};
+  color: ${({ $isActive }) =>
+    $isActive ? "var(--primary-color)" : "var(--gray-200)"};
 `;
 
 export default SelectionBar;

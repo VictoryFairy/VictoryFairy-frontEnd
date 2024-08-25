@@ -226,7 +226,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/select-match",
-    element: <Layout left={<BackButton />} center='직관 기록' />,
+    element: <Layout left={<BackButton />} center='직관 기록' footer={false} />,
     children: [
       {
         path: "/select-match",
@@ -236,7 +236,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/register",
-    element: <Layout />,
+    element: <Layout footer={false} />,
     children: [
       {
         path: "/register",

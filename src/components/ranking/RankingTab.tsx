@@ -116,7 +116,7 @@ const RankingTab = () => {
               style={{
                 color: teamTab === element ? "var(--white)" : "var(--gray-400)",
               }}
-              styleType={teamTab === element ? "default" : "outline"}
+              styletype={teamTab === element ? "default" : "outline"}
               key={index}
               onClick={() => {
                 handleClickTeam(element);
@@ -232,7 +232,7 @@ const RankingTab = () => {
           <Icon icon='IcArrowRight' style={{ fill: "var(--gray-400)" }} />
         </ConfirmRank>
       </RankTextWrapper>
-      <Overlay isVisible={isOpen} onClick={handleClose} />
+      <Overlay $isVisible={isOpen} onClick={handleClose} />
 
       <RankPopup
         isOpen={isOpen}
@@ -401,14 +401,14 @@ const ConfirmRank = styled.span`
   }
 `;
 
-const Overlay = styled.div<{ isVisible: boolean }>`
+const Overlay = styled.div<{ $isVisible: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  display: ${({ isVisible }) => (isVisible ? "block" : "none")};
+  display: ${({ $isVisible }) => ($isVisible ? "block" : "none")};
   z-index: 1000;
 `;
 export default RankingTab;
