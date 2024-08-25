@@ -56,6 +56,7 @@ const SelectMatch = () => {
 };
 const SelectMatchContainer = styled.div`
   padding-bottom: 80px;
+  padding-top: 20px;
 `;
 
 export default SelectMatch;

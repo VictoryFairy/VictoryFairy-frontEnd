@@ -4,7 +4,8 @@ import Text from "./Text";
 import ResultLabel from "../watchList/ListTab/ResultLabel";
 import Icon from "./Icon";
 
-interface GameListItemProps {
+interface GameListItemProps
+  extends Omit<React.HTMLAttributes<HTMLLIElement>, "onClick"> {
   match: MyGame;
   onClick?: (match: MyGame) => void;
 }
