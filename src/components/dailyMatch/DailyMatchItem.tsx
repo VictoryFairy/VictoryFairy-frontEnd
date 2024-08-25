@@ -42,7 +42,7 @@ const DailyMatchItem = ({
       </div>
       <div className='vertical-line' />
       <div className='game-info-stadium'>
-        <Text variant='caption'>2024.05.24</Text>
+        <Text variant='caption'>{match.date}</Text>
         <div>
           <Icon icon='IcLocation' width={15} height={15} />
           <Text variant='caption'> {match.stadium.name} 야구장</Text>
@@ -60,8 +60,8 @@ const DailyMatchItemContainer = styled.div<{ isSelected: boolean }>`
   border-radius: 8px;
   height: 80px;
 
-  border: ${({ isSelected }) =>
-    isSelected ? "1px solid var(--primary-color)" : "1px solid #efefef"};
+  border: ${({ isSelected, theme }) =>
+    isSelected ? `1px solid ${theme.colors.primary}` : "1px solid #efefef"};
   .game-info {
     display: flex;
     flex-direction: column;

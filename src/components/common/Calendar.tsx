@@ -197,7 +197,7 @@ const CalendarStyle = styled(Calendar)`
   }
 
   .selected {
-    background: var(--primary-color);
+    background: ${({ theme }) => theme.colors.primary};
     color: var(--white);
     border-radius: 50%;
   }

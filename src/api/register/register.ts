@@ -2,6 +2,8 @@ import axios from "axios";
 import { MyGame } from "@/types/Game";
 import authAxiosInstance from "../authAxios";
 
+// api/register/register.ts
+
 export const postUploadImg = async (formData: FormData): Promise<any> => {
   try {
     const response = await authAxiosInstance.post(
@@ -99,4 +101,16 @@ export const getRegisteredGameById = async (id: number) => {
     console.error(error);
     throw error;
   }
+};
+
+export const updateRegisteredGame = async (id: number, updatedData: any) => {
+  const response = await authAxiosInstance.patch(
+    `/registered-games/${id}`,
+    updatedData,
+  );
+  return response.data;
+};
+
+export const deleteRegisteredGame = async (id: number) => {
+  await authAxiosInstance.delete(`/registered-games/${id}`);
 };
