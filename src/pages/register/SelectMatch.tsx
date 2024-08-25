@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRegisteredGame } from "@/hooks/useRegisteredGame";
 import CalendarContainer from "../../components/common/Calendar";
@@ -11,9 +11,10 @@ import { Game } from "../../types/Game";
 const SelectMatch = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [selectedMatch, setSelectedMatch] = useState<Game | null>(null);
-  const { data: registeredGame } = useRegisteredGame(selectedDate);
+
   const navigate = useNavigate();
 
+  const { data: registeredGame } = useRegisteredGame(selectedDate);
   const { data: matches } = useGame(selectedDate);
 
   const handleClickDay = (date: Date) => {
@@ -26,14 +27,11 @@ const SelectMatch = () => {
     }
   };
 
-  if (matches?.length === 0) {
-    return (
-      <SelectMatchContainer>
-        <CalendarContainer onClick={(date) => handleClickDay(date)} />
-        <div>경기가 없습니다.</div>
-      </SelectMatchContainer>
-    );
-  }
+  useEffect(() => {
+    if (!matches || matches.length === 0) {
+      setSelectedMatch(null);
+    }
+  }, [matches]);
 
   return (
     <SelectMatchContainer>
@@ -41,22 +39,34 @@ const SelectMatch = () => {
         data={registeredGame}
         onClick={(date) => handleClickDay(date)}
       />
-      {matches && (
+      {matches?.length ? (
         <DailyMatch
           selectedMatch={selectedMatch}
           setSelectedMatch={setSelectedMatch}
           matches={matches}
         />
+      ) : (
+        <div>경기가 없습니다.</div>
       )}
-      <Button onClick={handleClickButton} disabled={!selectedMatch} size='big'>
+      <Button
+        className='button'
+        onClick={handleClickButton}
+        disabled={!selectedMatch}
+        size='big'>
         직관 기록 하기
       </Button>
     </SelectMatchContainer>
   );
 };
 const SelectMatchContainer = styled.div`
-  padding-bottom: 80px;
+  height: 100%;
+
   padding-top: 20px;
+  position: relative;
+  .button {
+    position: absolute;
+    bottom: 0;
+  }
 `;
 
 export default SelectMatch;
