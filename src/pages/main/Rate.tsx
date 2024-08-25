@@ -9,11 +9,14 @@ import DonutChart from "@/components/main/DonutChart";
 import { Record } from "@/types/Record";
 import { useNavigate } from "react-router-dom";
 import { toPng } from "html-to-image";
+import { useAuthStore } from "@/store/authStore";
+import { getFairyImg } from "@/utils/getFairyImg";
 
 const Rate = () => {
   const rateRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
   const [imgChange, setImgChange] = useState<boolean>(true);
+  const { teamId } = useAuthStore();
   const { data } = useQuery<Record>({
     queryKey: ["getUserInfo"],
     queryFn: getUserInfo,
@@ -55,8 +58,7 @@ const Rate = () => {
         content: {
           title: "승리요정",
           description: `나의 승률: ${winPercentage}%`,
-          imageUrl:
-            "https://sngyo-image.s3.ap-northeast-2.amazonaws.com/fairyImg/happy/4.png",
+          imageUrl: getFairyImg(parseInt(winPercentage), teamId),
           link: {
             mobileWebUrl: window.location.href,
             webUrl: window.location.href,
@@ -76,6 +78,7 @@ const Rate = () => {
       console.error("카카오톡 공유에 실패했습니다.", error);
     }
   };
+
   return (
     <RateContainer>
       <div ref={rateRef}>
@@ -88,7 +91,7 @@ const Rate = () => {
             <Icon icon='IcArrowRight' fill='var(--gray-900)' />
           </button>
           <div
-            role='button' // 1. Add an appropriate ARIA role
+            role='button'
             tabIndex={0}
             onClick={() => setImgChange(!imgChange)}>
             <Text variant='display'>
@@ -106,7 +109,7 @@ const Rate = () => {
           <div className='img'>
             <img
               alt='이미지'
-              src='https://sngyo-image.s3.ap-northeast-2.amazonaws.com/fairyImg/happy/4.png'
+              src={getFairyImg(parseInt(winPercentage), teamId)}
             />
           </div>
         ) : data ? (
@@ -177,7 +180,6 @@ const RateContainer = styled.div`
   }
 
   .img {
-    background: var(--gray-50);
     border: none;
     width: 300px;
     height: 300px;
