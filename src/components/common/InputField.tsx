@@ -17,6 +17,7 @@ interface InputFieldProps
   setValue: UseFormSetValue<any>;
   error?: FieldError;
   maxLength?: number;
+  clearable?: boolean;
 }
 
 const InputField = ({
@@ -28,6 +29,7 @@ const InputField = ({
   register,
   watch,
   setValue,
+  clearable = true,
   error,
   ...inputProps
 }: InputFieldProps) => {
@@ -63,7 +65,7 @@ const InputField = ({
           {...register(name)}
           {...inputProps}
         />
-        {data && type !== "password" && (
+        {data && type !== "password" && clearable && (
           <ClearButton type='button' onClick={clearInput}>
             ×
           </ClearButton>
