@@ -37,7 +37,8 @@ const CustomRadio = styled.span<{ checked: boolean }>`
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background-color: ${({ checked }) => (checked ? "#2f3036" : "#fff")};
+  background-color: ${({ checked, theme }) =>
+    checked ? `${theme.colors.primary}` : "#fff"};
   transition: background-color 0.3s;
   border: ${({ checked }) =>
     checked ? "1px solid transparent" : "1px solid #2f3036"};
