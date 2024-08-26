@@ -3,17 +3,17 @@ import { useMutation } from "@tanstack/react-query";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { usePopup } from "@/hooks/usePopup";
-import { logout, passwordChk, withdrawal } from "@/api/mypage/mypage.api"; // passwordChk import
-import ArrowRight from "@/assets/Icons/arrow-right.svg?react";
+import { logout, passwordChk, withdrawal } from "@/api/mypage/mypage.api";
 import Text from "../common/Text";
 import { useUserStore } from "../../store/userInfo";
 import { useAuthStore } from "../../store/authStore";
+import Icon from "../common/Icon";
 
 const ProfileButtons = () => {
   const { Popup, isOpen, openPopup } = usePopup();
   const [popupText, setPopupText] = useState("");
-  const [password, setPassword] = useState(""); // 비밀번호 상태
-  const [isPasswordValid, setIsPasswordValid] = useState<boolean>(false); // 비밀번호 검증 결과
+  const [password, setPassword] = useState("");
+  const [isPasswordValid, setIsPasswordValid] = useState<boolean>(false);
 
   const handleLogoutClick = () => {
     openPopup();
@@ -55,7 +55,7 @@ const ProfileButtons = () => {
   const mutationPasswordChk = useMutation<any, Error, string>({
     mutationFn: passwordChk,
     onSuccess: (data) => {
-      setIsPasswordValid(data.isCorrect); // 비밀번호 검증 성공
+      setIsPasswordValid(data.isCorrect);
     },
     onError: (error) => {
       console.error("비밀번호 체크 중 오류 발생:", error);
@@ -141,7 +141,7 @@ const ProfileButtons = () => {
         <Text variant='body_02' color='var(--primary-color)'>
           프로필 설정
         </Text>
-        <ArrowRight />
+        <Icon icon='IcArrowRight' />
       </ProfileWrapper>
       <ProfileWrapper
         role='button'
@@ -154,7 +154,7 @@ const ProfileButtons = () => {
           <Text variant='subtitle_02' color='var(--primary-color)'>
             {supportTeam}
           </Text>
-          <ArrowRight />
+          <Icon icon='IcArrowRight' />
         </ProfileTeamWrapper>
       </ProfileWrapper>
       <ProfileLastWrapper
@@ -165,7 +165,7 @@ const ProfileButtons = () => {
         <Text variant='body_02' color='var(--primary-color)'>
           문의 사항
         </Text>
-        <ArrowRight />
+        <Icon icon='IcArrowRight' />
       </ProfileLastWrapper>
       <ProfileLogWrapper>
         <div

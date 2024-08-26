@@ -93,11 +93,6 @@ const RankingTab = () => {
       setUser(nearBy.user);
       setWithUser(nearBy.nearBy);
     }
-    console.log("top:", top);
-    console.log("user", userMe);
-    console.log("nearby", nearBy);
-    console.log("s", secondRank);
-    console.log("t", thirdRank);
   }, [nearBy, topRank]);
 
   useEffect(() => {

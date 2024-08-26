@@ -3,7 +3,6 @@ import Text from "@/components/common/Text";
 import CircleChart from "@/components/main/CircleChart";
 import { useAuthStore } from "@/store/authStore";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
@@ -49,13 +48,6 @@ const DetailRate = () => {
     queryKey: ["getVersusRecord"],
     queryFn: getVersusRecord,
   });
-
-  const teamIds = Object.keys(data?.oppTeam || {});
-
-  useEffect(() => {
-    console.log(data);
-    console.log(teamIds);
-  }, [data, teamIds]);
 
   return (
     <Container>

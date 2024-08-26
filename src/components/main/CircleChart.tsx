@@ -1,7 +1,6 @@
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Legend, ChartOptions } from "chart.js";
 import ChartDataLabels, { Context } from "chartjs-plugin-datalabels";
-import { useEffect } from "react";
 import styled from "styled-components";
 import { useAuthStore } from "@/store/authStore";
 import Text from "../common/Text";
@@ -36,9 +35,6 @@ const lab = ["홈", "원정"];
 const CircleChart = ({ teamData }: { teamData: TeamStatsData }) => {
   const teamId = useAuthStore((state) => state.teamId);
 
-  useEffect(() => {
-    console.log("teamData:", teamData);
-  }, []);
   const data = {
     labels: ["   :홈", "   :원정"],
     datasets: [

@@ -20,7 +20,7 @@ const MyRankComp = ({ totalGames, win, withUser }: MyRankCompType) => {
         </RankTextLeft>
         <RankTextRight>
           <Text variant='title_01' color='var(--primary-color)'>
-            {withUser?.score}P
+            {withUser?.score}
           </Text>
           <Button>
             <Text variant='subtitle_01' color='var(--white)'>
