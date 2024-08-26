@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { toPng } from "html-to-image";
 import { useAuthStore } from "@/store/authStore";
 import { getFairyImg } from "@/utils/getFairyImg";
+import { saveAs } from "file-saver";
 
 const Rate = () => {
   const rateRef = useRef<HTMLDivElement | null>(null);
@@ -29,6 +30,24 @@ const Rate = () => {
     return "0.00";
   }, [data]);
 
+  // const handleDownload = async () => {
+  //   if (!rateRef.current) {
+  //     return;
+  //   }
+  //   try {
+  //     const dataUrl = await toPng(rateRef.current, {
+  //       backgroundColor: "white",
+  //     });
+  //     const link = document.createElement("a");
+  //     link.href = dataUrl;
+  //     link.download = "승리요정.png";
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     document.body.removeChild(link);
+  //   } catch (error) {
+  //     console.error("이미지 저장에 실패했습니다.", error);
+  //   }
+  // };
   const handleDownload = async () => {
     if (!rateRef.current) {
       return;
@@ -37,12 +56,10 @@ const Rate = () => {
       const dataUrl = await toPng(rateRef.current, {
         backgroundColor: "white",
       });
-      const link = document.createElement("a");
-      link.href = dataUrl;
-      link.download = "승리요정.png";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+
+      const blob = await (await fetch(dataUrl)).blob();
+
+      saveAs(blob, "승리요정.png");
     } catch (error) {
       console.error("이미지 저장에 실패했습니다.", error);
     }
