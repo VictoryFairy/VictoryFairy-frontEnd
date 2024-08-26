@@ -127,6 +127,20 @@ const Map = ({ selectedStadium, parkingSpots, selectedParking }: MapProps) => {
     });
   }, [selectedStadium, parkingSpots, createMarker, mapInstance]);
 
+  // useEffect(() => {
+  //   if (!mapInstance || !selectedParking) return;
+
+  //   const parkingLocation = new window.naver.maps.LatLng(
+  //     selectedParking.latitude,
+  //     selectedParking.longitude,
+  //   );
+
+  //   mapInstance.panTo(parkingLocation, {
+  //     duration: 500,
+  //     easing: "easeOutCubic",
+  //   });
+  // }, [selectedParking, mapInstance]);
+
   useEffect(() => {
     if (!mapInstance || !selectedParking) return;
 
@@ -139,6 +153,30 @@ const Map = ({ selectedStadium, parkingSpots, selectedParking }: MapProps) => {
       duration: 500,
       easing: "easeOutCubic",
     });
+
+    const timer2 = setTimeout(() => {
+      const selectedMarker = markersRef.current.find((marker) =>
+        marker.getPosition().equals(parkingLocation),
+      );
+
+      if (selectedMarker) {
+        const infoWindow = new window.naver.maps.InfoWindow({
+          content: `
+            <div style="padding: 15px; min-width: 150px; border-radius: 8px; background-color: #fff; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+              <h3 style="margin: 0 0 10px; font-size: 18px; color: #333;">${selectedParking.name}</h3>
+              <p style="margin: 0; font-size: 14px; color: #666;">${selectedParking.address}</p>
+            </div>
+          `,
+          pixelOffset: new window.naver.maps.Point(0, 15),
+        });
+
+        infoWindow.open(mapInstance, selectedMarker);
+      }
+    }, 300);
+
+    return () => {
+      clearTimeout(timer2);
+    };
   }, [selectedParking, mapInstance]);
 
   return (
