@@ -75,7 +75,7 @@ const Rate = () => {
         content: {
           title: "승리요정",
           description: `나의 승률: ${winPercentage}%`,
-          imageUrl: getFairyImg(parseInt(winPercentage), teamId),
+          imageUrl: getFairyImg(parseInt(winPercentage, 10), teamId),
           link: {
             mobileWebUrl: window.location.href,
             webUrl: window.location.href,
@@ -126,7 +126,7 @@ const Rate = () => {
           <div className='img'>
             <img
               alt='이미지'
-              src={getFairyImg(parseInt(winPercentage), teamId)}
+              src={getFairyImg(parseInt(winPercentage, 10), teamId)}
             />
           </div>
         ) : data ? (
