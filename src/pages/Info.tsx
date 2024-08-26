@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Icon from "@/components/common/Icon";
+import { Tooltip } from "@/components/common/ToolTip";
 import ParkingInfoPage from "../components/info/map/ParkingInfoPage";
 import CheerSongPage from "../components/info/cheerSong/CheerSongPage";
 
@@ -24,7 +25,9 @@ const Info = () => {
           active={activeTab === "map"}
           onClick={() => handleTabChange("map")}>
           주차정보
-          <Icon icon='IcInfo' />
+          <Tooltip text='아래 주차장 리스트를 누르면 지도에서 위치를 확인할수 있어요!'>
+            <Icon icon='IcInfo' />
+          </Tooltip>
         </TabButton>
         <TabButton
           active={activeTab === "cheer"}
