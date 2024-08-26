@@ -48,11 +48,36 @@ const Rate = () => {
   //     console.error("이미지 저장에 실패했습니다.", error);
   //   }
   // };
+  // const handleDownload = async () => {
+  //   if (!rateRef.current) {
+  //     return;
+  //   }
+  //   try {
+  //     const dataUrl = await toPng(rateRef.current, {
+  //       backgroundColor: "white",
+  //     });
+
+  //     const blob = await (await fetch(dataUrl)).blob();
+
+  //     saveAs(blob, "승리요정.png");
+  //   } catch (error) {
+  //     console.error("이미지 저장에 실패했습니다.", error);
+  //   }
+  // };
   const handleDownload = async () => {
     if (!rateRef.current) {
       return;
     }
     try {
+      await toPng(rateRef.current, {
+        backgroundColor: "white",
+      });
+      await toPng(rateRef.current, {
+        backgroundColor: "white",
+      });
+      await toPng(rateRef.current, {
+        backgroundColor: "white",
+      });
       const dataUrl = await toPng(rateRef.current, {
         backgroundColor: "white",
       });
