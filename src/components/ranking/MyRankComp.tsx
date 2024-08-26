@@ -1,9 +1,7 @@
 import styled from "styled-components";
 import { MyInfo } from "@/api/rank/rank.api";
 import { Rank } from "@/types/Rank";
-import Icon from "../common/Icon";
 import Text from "../common/Text";
-import Button from "../common/Button";
 
 interface MyRankCompType extends MyInfo {
   withUser: Rank | null;
@@ -22,18 +20,6 @@ const MyRankComp = ({ totalGames, win, withUser }: MyRankCompType) => {
           <Text variant='title_01' color='var(--primary-color)'>
             {withUser?.score}
           </Text>
-          <Button>
-            <Text variant='subtitle_01' color='var(--white)'>
-              UP
-            </Text>
-            <Text variant='subtitle_01' color='var(--white)'>
-              <Icon
-                icon='IcArrowUp'
-                fill='var(--white)'
-                style={{ width: "12px", height: "12px", marginLeft: "3px" }}
-              />
-            </Text>
-          </Button>
         </RankTextRight>
       </MyRank>
       <MyRanks>
