@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import Icon from "@/components/common/Icon";
 import ParkingInfoPage from "../components/info/map/ParkingInfoPage";
 import CheerSongPage from "../components/info/cheerSong/CheerSongPage";
 
@@ -23,6 +24,7 @@ const Info = () => {
           active={activeTab === "map"}
           onClick={() => handleTabChange("map")}>
           주차정보
+          <Icon icon='IcInfo' />
         </TabButton>
         <TabButton
           active={activeTab === "cheer"}
