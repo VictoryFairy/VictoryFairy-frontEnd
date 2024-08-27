@@ -62,6 +62,7 @@ export const GameListItemContainer = styled.li`
   gap: 8px;
   height: 84px;
   justify-content: center;
+  border-bottom: 1px solid #efefef;
 
   .game-info {
     display: flex;
@@ -75,7 +76,7 @@ export const GameListItemContainer = styled.li`
   .vertical-line {
     width: 1px;
     height: 100%;
-    border: 1px solid #efefef;
+    border: 0.1px solid #efefef;
     margin-left: 16px;
   }
 
