@@ -15,42 +15,64 @@ const MONTHS = [
   "November",
   "December",
 ];
+
 interface MonthNavProps {
   onMonthChange: (date: Date) => void;
   selectMonth: Date;
 }
 
 const MonthNav = ({ onMonthChange, selectMonth }: MonthNavProps) => {
+  const currentDate = new Date();
+
+  const isPreviousDisabled = () => {
+    const previousMonth = new Date(selectMonth);
+    previousMonth.setMonth(selectMonth.getMonth() - 1);
+    return previousMonth.getFullYear() < currentDate.getFullYear();
+  };
+
+  const isNextDisabled = () => {
+    const nextMonth = new Date(selectMonth);
+    nextMonth.setMonth(selectMonth.getMonth() + 1);
+    return nextMonth > currentDate;
+  };
+
+  const handlePreviousMonth = () => {
+    if (isPreviousDisabled()) return;
+
+    const newDate = new Date(selectMonth);
+    newDate.setMonth(selectMonth.getMonth() - 1);
+    onMonthChange(newDate);
+  };
+
+  const handleNextMonth = () => {
+    if (isNextDisabled()) return;
+
+    const newDate = new Date(selectMonth);
+    newDate.setMonth(selectMonth.getMonth() + 1);
+    onMonthChange(newDate);
+  };
+
   return (
     <MonthNavContainer>
       <Icon
         icon='IcArrowLeft'
-        onClick={() => {
-          const newDate = new Date(selectMonth);
-          newDate.setMonth(selectMonth.getMonth() - 1);
-          onMonthChange(newDate);
-        }}
-        fill='#2F3036'
+        onClick={handlePreviousMonth}
+        fill={isPreviousDisabled() ? "#CCCCCC" : "#2F3036"} // Disabled color
+        cursor={isPreviousDisabled() ? "not-allowed" : "pointer"}
       />
       <span>
         {MONTHS[selectMonth.getMonth()]} {selectMonth.getFullYear()}
       </span>
       <Icon
         icon='IcArrowRight'
-        onClick={() => {
-          const newDate = new Date(selectMonth);
-          newDate.setMonth(selectMonth.getMonth() + 1);
-          // 이번 달 보다 큰 달로 넘어가면 이번 달로 설정
-          if (newDate > new Date()) {
-            newDate.setMonth(new Date().getMonth());
-          }
-          onMonthChange(newDate);
-        }}
-        fill='#2F3036'
+        onClick={handleNextMonth}
+        fill={isNextDisabled() ? "#CCCCCC" : "#2F3036"} // Disabled color
+        cursor={isNextDisabled() ? "not-allowed" : "pointer"}
       />
     </MonthNavContainer>
   );
 };
+
 const MonthNavContainer = styled.nav`
   display: flex;
   justify-content: space-between;
