@@ -3,7 +3,7 @@ import moment from "moment";
 import { getDailyMatch } from "../api/game/game";
 
 export const useGame = (date: Date | null) => {
-  const { data, isLoading } = useQuery({
+  const { data, isSuccess, isLoading } = useQuery({
     queryKey: ["dailyMatches", moment(date).format("YYYY-MM-DD")],
     queryFn: () =>
       date
@@ -15,6 +15,7 @@ export const useGame = (date: Date | null) => {
 
   return {
     data,
+    isSuccess,
     isLoading,
   };
 };
