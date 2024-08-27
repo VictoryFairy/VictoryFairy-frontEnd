@@ -16,6 +16,30 @@ const MapContainer = styled.div`
   height: 300px;
 `;
 
+const createCustomInfoWindow = (content: string) => {
+  const customInfo = new naver.maps.InfoWindow({
+    content: `
+      <div style="
+        background-color: #fff;
+        padding: 10px;
+        min-width: 150px;
+        border-radius: 8px;
+        border : 1px solid black;
+      
+      ">
+        ${content}
+      </div>
+    `,
+    backgroundColor: "transparent",
+    borderColor: "transparent",
+    anchorSize: new naver.maps.Size(0, 0),
+    anchorSkew: true,
+    pixelOffset: new naver.maps.Point(0, 5),
+  });
+
+  return customInfo;
+};
+
 const Map = ({ selectedStadium, parkingSpots, selectedParking }: MapProps) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const markersRef = useRef<naver.maps.Marker[]>([]);
@@ -27,11 +51,8 @@ const Map = ({ selectedStadium, parkingSpots, selectedParking }: MapProps) => {
 
       const markerSvg = `
       <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
-        <!-- Marker Background -->
         <circle cx="25" cy="25" r="20" fill="#4A90E2" stroke="#fff" stroke-width="3"/>
-        <!-- Shadow Effect -->
         <circle cx="25" cy="30" r="18" fill="rgba(0, 0, 0, 0.2)" />
-        <!-- Marker Icon -->
         <circle cx="25" cy="25" r="15" fill="#fff"/>
         <text x="25" y="30" font-family="Arial" font-size="18" fill="#4A90E2" text-anchor="middle" dominant-baseline="middle">P</text>
       </svg>
@@ -47,14 +68,10 @@ const Map = ({ selectedStadium, parkingSpots, selectedParking }: MapProps) => {
         },
       });
 
-      const infoWindow = new naver.maps.InfoWindow({
-        content: `
-          <div style="padding: 15px; min-width: 150px; border-radius: 8px; background-color: #fff; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
-            <h3 style="margin: 0 0 10px; font-size: 18px; color: #333;">${spot.name}</h3>
-            <p style="margin: 0; font-size: 14px; color: #666;">${spot.address}</p>
-          </div>
-        `,
-      });
+      const infoWindow = createCustomInfoWindow(`
+        <h3 style="margin: 0 0 5px; font-size: 15px; color: #333; text-align: center;">${spot.name}</h3>
+        <p style="margin: 0; font-size: 10px; color: #333; text-align: center;">${spot.address}</p>
+      `);
 
       naver.maps.Event.addListener(marker, "click", () => {
         if (!mapInstance) return;
@@ -70,24 +87,6 @@ const Map = ({ selectedStadium, parkingSpots, selectedParking }: MapProps) => {
     [mapInstance],
   );
 
-  // useEffect(() => {
-  //   if (!window.naver || !mapRef.current) return;
-
-  //   const mapOptions: naver.maps.MapOptions = {
-  //     center: new window.naver.maps.LatLng(
-  //       // selectedStadium.latitude,
-  //       // selectedStadium.longitude,
-  //       37.5665,
-  //       126.978,
-  //     ),
-  //     zoom: 15,
-  //   };
-  //   const newMapInstance = new window.naver.maps.Map(
-  //     mapRef.current,
-  //     mapOptions,
-  //   );
-  //   setMapInstance(newMapInstance);
-  // }, []);
   useEffect(() => {
     if (!window.naver || !mapRef.current || !selectedStadium) return;
 
@@ -127,20 +126,6 @@ const Map = ({ selectedStadium, parkingSpots, selectedParking }: MapProps) => {
     });
   }, [selectedStadium, parkingSpots, createMarker, mapInstance]);
 
-  // useEffect(() => {
-  //   if (!mapInstance || !selectedParking) return;
-
-  //   const parkingLocation = new window.naver.maps.LatLng(
-  //     selectedParking.latitude,
-  //     selectedParking.longitude,
-  //   );
-
-  //   mapInstance.panTo(parkingLocation, {
-  //     duration: 500,
-  //     easing: "easeOutCubic",
-  //   });
-  // }, [selectedParking, mapInstance]);
-
   useEffect(() => {
     if (!mapInstance || !selectedParking) return;
 
@@ -160,15 +145,10 @@ const Map = ({ selectedStadium, parkingSpots, selectedParking }: MapProps) => {
       );
 
       if (selectedMarker) {
-        const infoWindow = new window.naver.maps.InfoWindow({
-          content: `
-            <div style="padding: 15px; min-width: 150px; border-radius: 8px; background-color: #fff; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
-              <h3 style="margin: 0 0 10px; font-size: 18px; color: #333;">${selectedParking.name}</h3>
-              <p style="margin: 0; font-size: 14px; color: #666;">${selectedParking.address}</p>
-            </div>
-          `,
-          pixelOffset: new window.naver.maps.Point(0, 15),
-        });
+        const infoWindow = createCustomInfoWindow(`
+          <h3 style="margin: 0 0 5px; font-size: 15px; color: #333; text-align: center;">${selectedParking.name}</h3>
+          <p style="margin: 0; font-size: 10px; color: #333; text-align: center;">${selectedParking.address}</p>
+        `);
 
         infoWindow.open(mapInstance, selectedMarker);
       }

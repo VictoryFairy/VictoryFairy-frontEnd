@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import DonutChart from "@/components/main/DonutChart";
 import { Record } from "@/types/Record";
 import { useNavigate } from "react-router-dom";
-import { toPng } from "html-to-image";
+import { toSvg } from "html-to-image";
 import { useAuthStore } from "@/store/authStore";
 import { getFairyImg } from "@/utils/getFairyImg";
 import { saveAs } from "file-saver";
@@ -69,16 +69,7 @@ const Rate = () => {
       return;
     }
     try {
-      await toPng(rateRef.current, {
-        backgroundColor: "white",
-      });
-      await toPng(rateRef.current, {
-        backgroundColor: "white",
-      });
-      await toPng(rateRef.current, {
-        backgroundColor: "white",
-      });
-      const dataUrl = await toPng(rateRef.current, {
+      const dataUrl = await toSvg(rateRef.current, {
         backgroundColor: "white",
       });
 
