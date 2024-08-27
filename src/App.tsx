@@ -236,7 +236,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/register",
-    element: <Layout footer={false} />,
+    element: <Layout left={<BackButton />} center='직관 기록' footer={false} />,
     children: [
       {
         path: "/register",
