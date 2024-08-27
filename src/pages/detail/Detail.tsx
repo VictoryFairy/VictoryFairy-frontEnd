@@ -14,6 +14,7 @@ import styled from "styled-components";
 import { useEffect, useState, useRef } from "react";
 import Button from "@/components/common/Button";
 import { uploadImg } from "@/utils/uploadImg"; // Import the image upload utility
+import { usePopup } from "@/hooks/usePopup";
 import TextAreaField from "../../components/common/TextAreaField";
 import InputField from "../../components/common/InputField";
 
@@ -22,6 +23,8 @@ const Detail = () => {
   const id = +location.pathname.split("/")[2];
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+
+  const { Popup, isOpen, openPopup } = usePopup();
 
   const { data } = useQuery({
     queryKey: ["registeredGame", id],
@@ -42,6 +45,8 @@ const Detail = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["registeredGame", id] });
       queryClient.invalidateQueries({ queryKey: ["registeredGame"] });
+
+      openPopup();
     },
   });
 
@@ -49,7 +54,9 @@ const Detail = () => {
     mutationFn: () => deleteRegisteredGame(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["registeredGame"] });
-      navigate("/");
+      navigate("/home");
+
+      openPopup();
     },
   });
 
@@ -74,8 +81,6 @@ const Detail = () => {
 
   const onSubmit = (formData: any) => {
     updateMutation.mutate(formData);
-    setIsEditing(false);
-    window.alert("수정되었습니다.");
   };
 
   const handleEdit = () => {
@@ -83,9 +88,7 @@ const Detail = () => {
   };
 
   const handleDelete = () => {
-    if (window.confirm("정말 삭제하시겠습니까?")) {
-      deleteMutation.mutate();
-    }
+    openPopup();
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,13 +102,30 @@ const Detail = () => {
   };
 
   const handleClickImageUpload = () => {
-    inputImgRef.current?.click();
+    if (isEditing) {
+      inputImgRef.current?.click();
+    }
   };
 
   if (!data) return null;
 
   return (
     <Layout>
+      {isOpen && (
+        <Popup
+          title={isEditing ? "수정 완료" : "삭제 확인"}
+          message={
+            isEditing ? "수정이 완료되었습니다." : "정말 삭제하시겠습니까?"
+          }
+          type={isEditing ? "alert" : "confirm"}
+          confirmMessage={isEditing ? "확인" : "삭제"}
+          confirmFunc={
+            isEditing
+              ? () => setIsEditing(false)
+              : () => deleteMutation.mutate()
+          }
+        />
+      )}
       <Header>
         <div>
           <Icon icon='IcArrowLeft' onClick={() => navigate(-1)} />
@@ -128,6 +148,7 @@ const Detail = () => {
           onChange={handleImageChange}
         />
         <ImgUploadContainer
+          isEditing={isEditing}
           hasImage={!!previewImage}
           onClick={handleClickImageUpload}>
           {previewImage ? (
@@ -222,7 +243,10 @@ const DetailContainer = styled.form`
   }
 `;
 
-const ImgUploadContainer = styled.label<{ hasImage: boolean }>`
+const ImgUploadContainer = styled.label<{
+  hasImage: boolean;
+  isEditing: boolean;
+}>`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -232,7 +256,7 @@ const ImgUploadContainer = styled.label<{ hasImage: boolean }>`
   border-radius: 12px;
   height: 180px;
   width: 100%;
-  cursor: pointer;
+  cursor: ${({ isEditing }) => (isEditing ? "pointer" : "default")};
 `;
 
 const ImgWrraper = styled.div`

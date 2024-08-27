@@ -10,16 +10,17 @@ import SelectionBar from "../common/SelectionBar";
 import CalendarContainer from "../common/Calendar";
 import GalleryTab from "./GalleryTab/GalleryTab";
 import MonthNav from "../common/MonthNav";
+// import Icon from "../common/Icon";
 
 const WatchList = () => {
   const [activeSelect, setActiveSelect] = useState(0);
-  const [selectMonth, setselectMonth] = useState(new Date());
+  const [selectMonth, setSelectMonth] = useState(new Date());
   const navigate = useNavigate();
 
   const { data, isSuccess } = useRegisteredGame(selectMonth);
 
   const handleMonthChange = (date: Date) => {
-    setselectMonth(date);
+    setSelectMonth(date);
   };
 
   const handleClickDay = (date: Date) => {
@@ -77,7 +78,10 @@ const WatchList = () => {
     <WatchListContainer>
       <div className='watchList-header'>
         <h1>직관 리스트</h1>
-        <div className='icons' />
+        {/* <div className='icons'>
+          <Icon icon='IcFilter' />
+          <Icon icon='IcSearch' />
+        </div> */}
       </div>
       <SelectionBar
         labels={["달력", "리스트", "갤러리"]}

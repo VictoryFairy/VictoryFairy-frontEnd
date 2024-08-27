@@ -13,6 +13,7 @@ const TodayMatchItem = ({ match }: TodayMatchItemProps) => {
         <Text variant='subtitle_02'>{match.homeTeam.name}</Text>
         <Text variant='subtitle_02'>{match.awayTeam.name}</Text>
       </div>
+      {/* TODO:경기중 상태에서 왜 안떴지?? */}
       {match.status === "경기전" ? (
         <Text variant='subtitle_02'>{match.status}</Text>
       ) : (

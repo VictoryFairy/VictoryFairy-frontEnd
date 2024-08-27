@@ -41,7 +41,7 @@ const GalleryTabContainer = styled.div``;
 
 const ImgContainer = styled.div`
   display: grid;
-  //3x3
+  cursor: pointer;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
 

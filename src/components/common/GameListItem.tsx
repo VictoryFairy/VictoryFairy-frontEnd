@@ -55,6 +55,7 @@ const GameListItem = ({ match, onClick }: GameListItemProps) => {
   );
 };
 export const GameListItemContainer = styled.li`
+  cursor: pointer;
   display: flex;
   flex-direction: row;
   align-items: center;
