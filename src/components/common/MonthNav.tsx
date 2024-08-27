@@ -40,6 +40,10 @@ const MonthNav = ({ onMonthChange, selectMonth }: MonthNavProps) => {
         onClick={() => {
           const newDate = new Date(selectMonth);
           newDate.setMonth(selectMonth.getMonth() + 1);
+          // 이번 달 보다 큰 달로 넘어가면 이번 달로 설정
+          if (newDate > new Date()) {
+            newDate.setMonth(new Date().getMonth());
+          }
           onMonthChange(newDate);
         }}
         fill='#2F3036'
