@@ -94,7 +94,7 @@ const Popup = ({
 
   return (
     <ModalPortal>
-      <PopupWrapper onClick={closePopup}>
+      <PopupWrapper>
         <PopupContainer onClick={(e) => e.stopPropagation()}>
           <h1 className='title'>{title}</h1>
           <p
