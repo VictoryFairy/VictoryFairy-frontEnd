@@ -11,11 +11,11 @@ import Text from "@/components/common/Text";
 import Icon from "@/components/common/Icon";
 import DropDown from "@/components/detail/DropDown";
 import styled from "styled-components";
-import InputField from "../../components/common/InputField";
-import TextAreaField from "../../components/common/TextAreaField";
 import { useEffect, useState, useRef } from "react";
 import Button from "@/components/common/Button";
 import { uploadImg } from "@/utils/uploadImg"; // Import the image upload utility
+import TextAreaField from "../../components/common/TextAreaField";
+import InputField from "../../components/common/InputField";
 
 const Detail = () => {
   const location = useLocation();
@@ -48,7 +48,7 @@ const Detail = () => {
   const deleteMutation = useMutation({
     mutationFn: () => deleteRegisteredGame(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["registeredGame", id] });
+      queryClient.invalidateQueries({ queryKey: ["registeredGame"] });
       navigate("/");
     },
   });
