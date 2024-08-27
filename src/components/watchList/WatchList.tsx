@@ -6,11 +6,10 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { useRegisteredGame } from "@/hooks/useRegisteredGame";
 import ListTab from "./ListTab/ListTab";
-import FilterIcon from "@/assets/Icons/filter.svg?react";
-import SearchIcon from "@/assets/Icons/search.svg?react";
 import SelectionBar from "../common/SelectionBar";
 import CalendarContainer from "../common/Calendar";
 import GalleryTab from "./GalleryTab/GalleryTab";
+import MonthNav from "../common/MonthNav";
 
 const WatchList = () => {
   const [activeSelect, setActiveSelect] = useState(0);
@@ -44,22 +43,30 @@ const WatchList = () => {
             onClick={(date) => handleClickDay(date)}
             data={data}
             onMonthChange={handleMonthChange}
+            selectMonth={selectMonth}
           />
         );
       case 1:
         return (
           <ListTab
-            onMonthChange={handleMonthChange}
             matches={isSuccess ? (data ?? []) : []}
-            onClick={(match: MyGame) => handleClickMatch(match.id)}
-          />
+            onClick={(match: MyGame) => handleClickMatch(match.id)}>
+            <MonthNav
+              onMonthChange={handleMonthChange}
+              selectMonth={selectMonth}
+            />
+          </ListTab>
         );
       case 2:
         return (
           <GalleryTab
             onClick={(match: MyGame) => handleClickMatch(match.id)}
-            data={data}
-          />
+            data={data}>
+            <MonthNav
+              onMonthChange={handleMonthChange}
+              selectMonth={selectMonth}
+            />
+          </GalleryTab>
         );
       default:
         return null;
@@ -70,10 +77,7 @@ const WatchList = () => {
     <WatchListContainer>
       <div className='watchList-header'>
         <h1>직관 리스트</h1>
-        <div className='icons'>
-          <FilterIcon />
-          <SearchIcon />
-        </div>
+        <div className='icons' />
       </div>
       <SelectionBar
         labels={["달력", "리스트", "갤러리"]}
