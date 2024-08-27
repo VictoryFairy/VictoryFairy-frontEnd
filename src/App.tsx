@@ -19,7 +19,6 @@ import Info from "./pages/Info";
 import Ranking from "./pages/Ranking";
 import TeamChange from "./components/mypage/TeamChange";
 import ProfileChange from "./components/mypage/ProfileChange";
-import ArrowLeft from "./assets/Icons/arrow-left.svg?react";
 import SearchCheerSong from "./pages/SearchCheerSong";
 import { useSignupStore } from "./store/signupStep";
 import CheersongDetail from "./pages/CheersongDetail";
@@ -28,6 +27,7 @@ import SelectMatch from "./pages/register/SelectMatch";
 import RegisterForm from "./pages/register/RegisterForm";
 import DetailRate from "./pages/main/DetailRate";
 import logo from "./assets/images/Logo/logo.png";
+import Icon from "./components/common/Icon";
 
 const queryClient = new QueryClient();
 
@@ -63,13 +63,7 @@ const BackButton = () => {
     }
   };
 
-  return (
-    <ArrowLeft
-      fill='var(--primary-color)'
-      onClick={handleBack}
-      cursor='pointer'
-    />
-  );
+  return <Icon icon='IcArrowLeft' cursor='pointer' onClick={handleBack} />;
 };
 
 const Logo = () => {
@@ -236,7 +230,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/register",
-    element: <Layout footer={false} />,
+    element: <Layout left={<BackButton />} center='직관기록' footer={false} />,
     children: [
       {
         path: "/register",
