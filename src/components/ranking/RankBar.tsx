@@ -71,12 +71,12 @@ const RankBar = ({ data, tab }: RankBarProps) => {
       if (item.rank === 2) {
         sortedData[0] = {
           point: `Point ${item.score}`,
-          score: item.score - 900,
+          score: item.score - 800,
         };
       } else if (item.rank === 1) {
         sortedData[1] = {
           point: `Point ${item.score}`,
-          score: item.score - 900,
+          score: item.score - 700,
         };
       } else if (item.rank === 3) {
         sortedData[2] = {
