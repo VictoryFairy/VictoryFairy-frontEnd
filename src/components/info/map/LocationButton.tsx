@@ -62,7 +62,9 @@ const Button = styled.button`
   position: absolute;
   bottom: 20px;
   right: 20px;
-  padding: 5px 10px;
+  width: 35px;
+  height: 35px;
+  padding: 5px;
   background-color: #ffffff;
   border: 2px solid #dddddd;
   border-radius: 10px;

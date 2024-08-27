@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import DonutChart from "@/components/main/DonutChart";
 import { Record } from "@/types/Record";
 import { useNavigate } from "react-router-dom";
-import { toPng } from "html-to-image";
+import { toSvg } from "html-to-image";
 import { useAuthStore } from "@/store/authStore";
 import { getFairyImg } from "@/utils/getFairyImg";
 import { saveAs } from "file-saver";
@@ -48,12 +48,28 @@ const Rate = () => {
   //     console.error("이미지 저장에 실패했습니다.", error);
   //   }
   // };
+  // const handleDownload = async () => {
+  //   if (!rateRef.current) {
+  //     return;
+  //   }
+  //   try {
+  //     const dataUrl = await toPng(rateRef.current, {
+  //       backgroundColor: "white",
+  //     });
+
+  //     const blob = await (await fetch(dataUrl)).blob();
+
+  //     saveAs(blob, "승리요정.png");
+  //   } catch (error) {
+  //     console.error("이미지 저장에 실패했습니다.", error);
+  //   }
+  // };
   const handleDownload = async () => {
     if (!rateRef.current) {
       return;
     }
     try {
-      const dataUrl = await toPng(rateRef.current, {
+      const dataUrl = await toSvg(rateRef.current, {
         backgroundColor: "white",
       });
 

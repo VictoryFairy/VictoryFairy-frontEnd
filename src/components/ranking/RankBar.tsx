@@ -71,12 +71,12 @@ const RankBar = ({ data, tab }: RankBarProps) => {
       if (item.rank === 2) {
         sortedData[0] = {
           point: `Point ${item.score}`,
-          score: item.score - 900,
+          score: item.score - 800,
         };
       } else if (item.rank === 1) {
         sortedData[1] = {
           point: `Point ${item.score}`,
-          score: item.score - 900,
+          score: item.score - 700,
         };
       } else if (item.rank === 3) {
         sortedData[2] = {
@@ -95,7 +95,7 @@ const RankBar = ({ data, tab }: RankBarProps) => {
     datasets: [
       {
         data: datas,
-        backgroundColor: teamColor[propTab - 1], // propTab 값이 올바르게 설정되었는지 확인
+        backgroundColor: teamColor[propTab - 1],
         borderColor: teamColor[propTab - 1],
         borderWidth: 1,
         barPercentage: 0.7,
@@ -105,6 +105,8 @@ const RankBar = ({ data, tab }: RankBarProps) => {
   };
 
   const options: ChartOptions<"bar"> = {
+    responsive: false,
+    maintainAspectRatio: false,
     scales: {
       x: {
         grid: {
