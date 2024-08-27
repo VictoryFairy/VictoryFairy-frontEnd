@@ -7,7 +7,6 @@ interface TodayMatchItemProps {
 }
 
 const TodayMatchItem = ({ match }: TodayMatchItemProps) => {
-  console.log(match);
   return (
     <TodayMatchItemContainer>
       <div className='team'>
