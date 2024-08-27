@@ -1,18 +1,18 @@
 import styled from "styled-components";
 import { MyGame } from "@/types/Game";
-import MonthNav from "@/components/common/MonthNav";
 import Text from "@/components/common/Text";
 import Icon from "@/components/common/Icon";
 
 interface GalleryTabProps {
   data?: MyGame[];
   onClick: (match: MyGame) => void;
+  children: React.ReactNode;
 }
 
-const GalleryTab = ({ data, onClick }: GalleryTabProps) => {
+const GalleryTab = ({ data, onClick, children }: GalleryTabProps) => {
   return (
     <GalleryTabContainer>
-      <MonthNav />
+      {children}
       <ImgContainer>
         {data?.map((item) => (
           <div className='img' key={item.id}>

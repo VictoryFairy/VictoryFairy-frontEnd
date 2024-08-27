@@ -1,18 +1,17 @@
 import styled from "styled-components";
 import { MyGame } from "@/types/Game";
 import GameListItem from "../../common/GameListItem";
-import MonthNav from "../../common/MonthNav";
 
 interface GameListItemProps {
   matches: MyGame[];
   onClick: (match: MyGame) => void;
-  onMonthChange: (date: Date) => void;
+  children: React.ReactNode;
 }
 
-const ListTab = ({ matches, onClick, onMonthChange }: GameListItemProps) => {
+const ListTab = ({ matches, onClick, children }: GameListItemProps) => {
   return (
     <ListContainer>
-      <MonthNav onMonthChange={onMonthChange} />
+      {children}
       <GameList>
         {matches.map((match) => (
           <GameListItem onClick={onClick} key={match.id} match={match} />

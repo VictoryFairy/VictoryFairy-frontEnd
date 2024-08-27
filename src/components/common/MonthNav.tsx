@@ -1,7 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
-import ArrowLeftIcon from "@/assets/Icons/arrow-left.svg?react";
-import ArrowRightIcon from "@/assets/Icons/arrow-right.svg?react";
+import Icon from "./Icon";
 
 const MONTHS = [
   "January",
@@ -19,29 +17,33 @@ const MONTHS = [
 ];
 interface MonthNavProps {
   onMonthChange: (date: Date) => void;
+  selectMonth: Date;
 }
 
-const MonthNav = ({ onMonthChange }: MonthNavProps) => {
-  const [date, setDate] = useState(new Date());
+const MonthNav = ({ onMonthChange, selectMonth }: MonthNavProps) => {
   return (
     <MonthNavContainer>
-      <ArrowLeftIcon
+      <Icon
+        icon='IcArrowLeft'
         onClick={() => {
-          const newDate = new Date(date);
-          newDate.setMonth(date.getMonth() - 1);
-          setDate(newDate);
+          const newDate = new Date(selectMonth);
+          newDate.setMonth(selectMonth.getMonth() - 1);
           onMonthChange(newDate);
         }}
         fill='#2F3036'
       />
       <span>
-        {MONTHS[date.getMonth()]} {date.getFullYear()}
+        {MONTHS[selectMonth.getMonth()]} {selectMonth.getFullYear()}
       </span>
-      <ArrowRightIcon
+      <Icon
+        icon='IcArrowRight'
         onClick={() => {
-          const newDate = new Date(date);
-          newDate.setMonth(date.getMonth() + 1);
-          setDate(newDate);
+          const newDate = new Date(selectMonth);
+          newDate.setMonth(selectMonth.getMonth() + 1);
+          // 이번 달 보다 큰 달로 넘어가면 이번 달로 설정
+          if (newDate > new Date()) {
+            newDate.setMonth(new Date().getMonth());
+          }
           onMonthChange(newDate);
         }}
         fill='#2F3036'

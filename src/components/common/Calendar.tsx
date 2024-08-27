@@ -14,9 +14,15 @@ interface CalendarProps {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => void;
   onMonthChange?: (date: Date) => void; // Month 변경 핸들러 추가
+  selectMonth?: Date;
 }
 
-const CalendarContainer = ({ data, onClick, onMonthChange }: CalendarProps) => {
+const CalendarContainer = ({
+  data,
+  onClick,
+  onMonthChange,
+  selectMonth,
+}: CalendarProps) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const handleClickDay = (
@@ -44,6 +50,7 @@ const CalendarContainer = ({ data, onClick, onMonthChange }: CalendarProps) => {
 
   const handleMonthChange = (date: Date) => {
     if (onMonthChange) {
+      console.log(date);
       onMonthChange(date); // onMonthChange 핸들러 호출
     }
   };
@@ -115,6 +122,7 @@ const CalendarContainer = ({ data, onClick, onMonthChange }: CalendarProps) => {
         next2Label={null}
         prev2Label={null}
         onClickDay={handleClickDay}
+        value={selectMonth}
         onActiveStartDateChange={
           ({ activeStartDate }) => handleMonthChange(activeStartDate!) // onActiveStartDateChange 이벤트로 Month 변경 감지
         }
