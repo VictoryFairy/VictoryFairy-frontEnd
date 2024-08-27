@@ -10,7 +10,7 @@ import SelectionBar from "../common/SelectionBar";
 import CalendarContainer from "../common/Calendar";
 import GalleryTab from "./GalleryTab/GalleryTab";
 import MonthNav from "../common/MonthNav";
-import Icon from "../common/Icon";
+// import Icon from "../common/Icon";
 
 const WatchList = () => {
   const [activeSelect, setActiveSelect] = useState(0);
