@@ -6,7 +6,12 @@ import { Rank } from "@/types/Rank";
 import { useEffect, useState } from "react";
 import Text from "../common/Text";
 import RankTextComp from "./RankTextComp";
-import MyRankComp from "./MyRankComp";
+import MyRankComp, {
+  MyRank,
+  RankTextLeft,
+  RankTextRight,
+  MyRanks,
+} from "./MyRankComp";
 import { RankTextWrapper } from "./RankingTab";
 
 interface PopupProps {
@@ -27,7 +32,7 @@ const RankPopup = ({
   win,
 }: PopupProps) => {
   const [ranking, setRanking] = useState<Rank[]>([]);
-
+  const [userMe, setUserMe] = useState<Rank | null>(null);
   const { data, refetch: refetchRankList } = useQuery<Rank[]>({
     queryKey: ["getRankList", { teamId }],
     queryFn: () => getRankList(teamId),
@@ -38,6 +43,8 @@ const RankPopup = ({
     if (data) {
       setRanking(data);
     }
+    const me = JSON.parse(localStorage.getItem("userMe") || "{}");
+    setUserMe(me || "");
   }, [data]);
 
   useEffect(() => {
@@ -80,7 +87,38 @@ const RankPopup = ({
               win={win ?? 0}
               totalGames={totalGames ?? 0}
             />
-          ) : null}
+          ) : (
+            <>
+              <MyRank>
+                <RankTextLeft>
+                  <span>-</span>
+                  <img src={userMe?.image} alt='#' />
+                  <Text variant='title_01'>{userMe?.nickname}</Text>
+                </RankTextLeft>
+                <RankTextRight>
+                  <Text variant='title_01' color='var(--primary-color)'>
+                    -P
+                  </Text>
+                </RankTextRight>
+              </MyRank>
+              <MyRanks>
+                <Text variant='subtitle_01' color='var(--gray-900)'>
+                  나의 승률
+                </Text>
+                <Text variant='caption' color='var(--gray-900)'>
+                  -%
+                </Text>
+              </MyRanks>
+              <MyRanks>
+                <Text variant='subtitle_01' color='var(--gray-900)'>
+                  직관 경기 누적수
+                </Text>
+                <Text variant='caption' color='var(--gray-900)'>
+                  -회
+                </Text>
+              </MyRanks>
+            </>
+          )}
         </div>
       </RankPopupWrapper>
     </MotionPopup>

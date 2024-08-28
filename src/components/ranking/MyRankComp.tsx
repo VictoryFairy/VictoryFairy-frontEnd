@@ -44,7 +44,7 @@ const MyRankComp = ({ totalGames, win, withUser }: MyRankCompType) => {
   );
 };
 
-const MyRank = styled.div`
+export const MyRank = styled.div`
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -52,7 +52,7 @@ const MyRank = styled.div`
   border-bottom: 1px solid var(--gray-100);
   padding: 15px 0;
 `;
-const RankTextLeft = styled.div`
+export const RankTextLeft = styled.div`
   img {
     width: 28px;
     height: 28px;
@@ -61,7 +61,7 @@ const RankTextLeft = styled.div`
   }
 `;
 
-const RankTextRight = styled.div`
+export const RankTextRight = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -75,7 +75,7 @@ const RankTextRight = styled.div`
   }
 `;
 
-const MyRanks = styled.div`
+export const MyRanks = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;

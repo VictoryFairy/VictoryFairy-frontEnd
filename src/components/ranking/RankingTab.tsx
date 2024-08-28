@@ -107,6 +107,9 @@ const RankingTab = () => {
       setUser(nearBy.user);
       setWithUser(nearBy.nearBy);
     }
+    if (userMe) {
+      localStorage.setItem("userMe", JSON.stringify(userMe));
+    }
   }, [nearBy, topRank]);
 
   useEffect(() => {
