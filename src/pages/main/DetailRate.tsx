@@ -134,7 +134,6 @@ const TeamRateWrapper = styled.div`
 const TeamWrapper = styled.div`
   margin-top: 20px;
   margin-bottom: 20px;
-  border-radius: 8px;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -150,6 +149,8 @@ const Team = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 20px;
+  border-radius: 8px;
+
   :nth-child(1) {
     font-weight: 500;
     font-size: 14px;
