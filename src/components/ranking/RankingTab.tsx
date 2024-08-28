@@ -30,6 +30,20 @@ const teamNames = [
   "한화이글스",
 ];
 
+const teamColor = [
+  "black",
+  "#041E42",
+  "#131230",
+  "#EC0029",
+  "#0059A6",
+  "#BE262C",
+  "#1D467D",
+  "#C40037",
+  "#D1187D",
+  "#000000",
+  "#FF6600",
+];
+
 const teamNumberMap: { [key: string]: number } = {
   전체: 0,
   롯데자이언츠: 1,
@@ -144,7 +158,7 @@ const RankingTab = () => {
             </Text>
             <div>2</div>
           </RankWrapper>
-          <FirstRankWrapper>
+          <FirstRankWrapper $teamId={teamId}>
             <img
               src={
                 firstRank?.image ||
@@ -331,7 +345,7 @@ const RankWrapper = styled.div`
   }
 `;
 
-const FirstRankWrapper = styled.div`
+const FirstRankWrapper = styled.div<{ $teamId: number }>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -346,7 +360,7 @@ const FirstRankWrapper = styled.div`
     align-items: center;
     justify-content: center;
     color: var(--white);
-    background-color: var(--primary-color);
+    background-color: ${({ $teamId }) => teamColor[$teamId]};
   }
   > img {
     width: 100px;
