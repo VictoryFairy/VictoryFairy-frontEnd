@@ -171,6 +171,7 @@ const RankingTab = () => {
         </RankProfileWrapper>
         <RankBar data={top} tab={teamId} />
       </RankTopWrapper>
+
       <RankTextWrapper>
         {withUser?.map((element) => {
           if (userMe?.rank && element.rank < userMe.rank)
@@ -187,20 +188,19 @@ const RankingTab = () => {
           return null;
         })}
 
-        <MyRankWrapper>
-          {withUser?.map((element) => {
-            if (user && userMe && element.userId === userMe.userId)
-              return (
+        {withUser?.map((element) => {
+          if (user && userMe && element.userId === userMe.userId)
+            return (
+              <MyRankWrapper key={element.userId}>
                 <MyRankComp
-                  key={element.userId}
                   totalGames={user.totalGames}
                   win={user.win}
                   withUser={userMe || null}
                 />
-              );
-            return null;
-          })}
-        </MyRankWrapper>
+              </MyRankWrapper>
+            );
+          return null;
+        })}
 
         {withUser?.map((element) => {
           if (userMe?.rank && element.rank > userMe.rank)
