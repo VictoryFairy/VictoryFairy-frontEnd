@@ -1,10 +1,7 @@
 import styled, { css } from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 import { typography } from "@/style/typography";
-import HomeIcon from "@/assets/Icons/home.svg?react";
-import RankingIcon from "@/assets/Icons/ranking.svg?react";
-import InfoIcon from "@/assets/Icons/info.svg?react";
-import MyPageIcon from "@/assets/Icons/mypage.svg?react";
+import Icon from "./Icon";
 
 interface IconProps {
   $isActive?: boolean;
@@ -18,25 +15,25 @@ const Footer = () => {
       <IconWrapper
         onClick={() => navigate("/home")}
         $isActive={location.pathname === "/home"}>
-        <HomeIcon />
+        <Icon icon='IcHome' />
         <span>홈</span>
       </IconWrapper>
       <IconWrapper
         onClick={() => navigate("/ranking")}
         $isActive={location.pathname === "/ranking"}>
-        <RankingIcon />
+        <Icon icon='IcRanking' />
         <span>랭킹</span>
       </IconWrapper>
       <IconWrapper
         onClick={() => navigate("/info")}
         $isActive={location.pathname === "/info"}>
-        <InfoIcon />
+        <Icon icon='IcInfo' />
         <span>정보</span>
       </IconWrapper>
       <IconWrapper
         onClick={() => navigate("/mypage")}
         $isActive={location.pathname.startsWith("/mypage")}>
-        <MyPageIcon />
+        <Icon icon='IcMypage' />
         <span>마이페이지</span>
       </IconWrapper>
     </FooterContainer>
@@ -53,6 +50,7 @@ const FooterContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 10px;
 `;
 
 const IconWrapper = styled.div<IconProps>`
