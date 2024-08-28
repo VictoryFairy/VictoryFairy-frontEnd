@@ -84,12 +84,8 @@ const Profile = ({ setstep, handleSetUserInfo }: ProfileProps) => {
       <TitleSection title='프로필을 설정해주세요' />
       <Form onSubmit={handleSubmit(onSubmit)}>
         <InputWrapper>
-          <AvatarWrapper>
-            <Avatar
-              alt='avatar'
-              src={image}
-              onClick={() => fileInput.current?.click()}
-            />
+          <AvatarWrapper onClick={() => fileInput.current?.click()}>
+            <Avatar alt='avatar' src={image} />
             <IconWrapper>
               <Icon icon='IcCamera' fill='white' />
             </IconWrapper>
@@ -163,6 +159,7 @@ const AvatarWrapper = styled.div`
   position: relative;
   width: 100px;
   height: 100px;
+  cursor: pointer;
 `;
 
 const IconWrapper = styled.div`

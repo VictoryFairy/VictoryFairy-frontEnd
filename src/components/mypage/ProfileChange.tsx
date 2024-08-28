@@ -98,12 +98,8 @@ const ProfileChange = () => {
         />
       )}
       <Form>
-        <ProfileWrapper>
-          <Avatar
-            alt='avatar'
-            src={image ?? "/default-avatar.png"}
-            onClick={() => fileInput.current?.click()}
-          />
+        <ProfileWrapper onClick={() => fileInput.current?.click()}>
+          <Avatar alt='avatar' src={image ?? "/default-avatar.png"} />
           <HiddenFileInput
             type='file'
             accept='image/jpg,image/png,image/jpeg'
@@ -149,6 +145,7 @@ const ProfileWrapper = styled.div`
   justify-content: center;
   margin-top: 20px;
   margin-bottom: 20px;
+  cursor: pointer;
 `;
 
 const InputWrapper = styled.div`

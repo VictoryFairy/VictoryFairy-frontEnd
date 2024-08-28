@@ -34,7 +34,7 @@ const createCustomInfoWindow = (content: string) => {
     borderColor: "transparent",
     anchorSize: new naver.maps.Size(0, 0),
     anchorSkew: true,
-    pixelOffset: new naver.maps.Point(0, 5),
+    pixelOffset: new naver.maps.Point(0, 2),
   });
 
   return customInfo;
@@ -50,12 +50,11 @@ const Map = ({ selectedStadium, parkingSpots, selectedParking }: MapProps) => {
       if (!mapInstance) return null;
 
       const markerSvg = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
-        <circle cx="25" cy="25" r="20" fill="#4A90E2" stroke="#fff" stroke-width="3"/>
-        <circle cx="25" cy="30" r="18" fill="rgba(0, 0, 0, 0.2)" />
-        <circle cx="25" cy="25" r="15" fill="#fff"/>
-        <text x="25" y="30" font-family="Arial" font-size="18" fill="#4A90E2" text-anchor="middle" dominant-baseline="middle">P</text>
-      </svg>
+    <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="1" y="1" width="40" height="40" rx="20" fill="white"/>
+<rect x="1" y="1" width="40" height="40" rx="20" stroke="black" stroke-width="2"/>
+<path d="M14 31V11H22.3683C27.2155 11 30 13.8039 30 17.7403C30 21.732 27.1713 24.4807 22.2505 24.4807H18.4199V31H14ZM18.4199 21.1381H21.5433C24.1657 21.1381 25.4475 19.7569 25.4328 17.7403C25.4475 15.7514 24.1657 14.4116 21.5433 14.3978H18.4199V21.1381Z" fill="black"/>
+</svg>
     `;
 
       const marker = new window.naver.maps.Marker({

@@ -75,7 +75,7 @@ const Rate = () => {
 
       const blob = await (await fetch(dataUrl)).blob();
 
-      saveAs(blob, "승리요정.png");
+      saveAs(blob, "승리요정");
     } catch (error) {
       console.error("이미지 저장에 실패했습니다.", error);
     }
