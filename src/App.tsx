@@ -40,8 +40,8 @@ const MyPageLeftWrapper = styled.div`
 `;
 
 const LogoWrapper = styled.img`
-  width: 120px;
-  height: 32px;
+  width: 164px;
+  height: 48px;
 `;
 
 const BackButton = () => {
