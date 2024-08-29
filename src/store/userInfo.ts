@@ -19,15 +19,17 @@ interface UserState {
 
 export const useUserStore = create(
   persist<UserState>(
-    (set) => ({
+    (set, get) => ({
       nickname: null,
       supportTeam: null,
       profile: null,
       email: null,
       setUserInfo: (nickname, supportTeam, profile, email) =>
         set({ nickname, supportTeam, profile, email }),
-      deleteUserInfo: () =>
-        set({ nickname: null, supportTeam: null, profile: null, email: null }),
+      deleteUserInfo: () => {
+        set({ nickname: null, supportTeam: null, profile: null, email: null });
+        (get() as any).persist.clearStorage();
+      },
       updateNickname: (nickname: string) => {
         set({ nickname });
       },

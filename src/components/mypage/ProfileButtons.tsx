@@ -6,7 +6,7 @@ import { usePopup } from "@/hooks/usePopup";
 import { logout, passwordChk, withdrawal } from "@/api/mypage/mypage.api";
 import Text from "../common/Text";
 import { useUserStore } from "../../store/userInfo";
-import { useAuthStore } from "../../store/authStore";
+// import { useAuthStore } from "../../store/authStore";
 import Icon from "../common/Icon";
 
 const ProfileButtons = () => {
@@ -20,20 +20,19 @@ const ProfileButtons = () => {
   };
 
   const navigate = useNavigate();
-  const { supportTeam, deleteUserInfo } = useUserStore((state) => ({
+  const { supportTeam } = useUserStore((state) => ({
     supportTeam: state.supportTeam,
     deleteUserInfo: state.deleteUserInfo,
   }));
-  const { logoutAction } = useAuthStore((state) => ({
-    logoutAction: state.logoutAction,
-  }));
+  // const { logoutAction } = useAuthStore((state) => ({
+  //   logoutAction: state.logoutAction,
+  // }));
 
   const mutationLogout = useMutation<void, Error>({
     mutationFn: logout,
     onSuccess: () => {
-      logoutAction();
-      deleteUserInfo();
       navigate("/");
+      localStorage.clear();
     },
     onError: (error) => {
       console.error("로그아웃 중 오류 발생:", error);
@@ -43,9 +42,8 @@ const ProfileButtons = () => {
   const withdraw = useMutation<void, Error>({
     mutationFn: withdrawal,
     onSuccess: () => {
-      logoutAction();
-      deleteUserInfo();
       navigate("/");
+      localStorage.clear();
     },
     onError: (error) => {
       console.error("로그아웃 중 오류 발생:", error);
