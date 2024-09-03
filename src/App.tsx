@@ -26,7 +26,6 @@ import Detail from "./pages/detail/Detail";
 import SelectMatch from "./pages/register/SelectMatch";
 import RegisterForm from "./pages/register/RegisterForm";
 import DetailRate from "./pages/main/DetailRate";
-import logo from "./assets/images/Logo/logo.png";
 import Icon from "./components/common/Icon";
 
 const queryClient = new QueryClient();
@@ -73,7 +72,7 @@ const Logo = () => {
     navigate("/");
   };
 
-  return <LogoWrapper src={logo} onClick={goHome} />;
+  return <LogoWrapper src='/Logo/logo.png' onClick={goHome} />;
 };
 
 const router = createBrowserRouter([
