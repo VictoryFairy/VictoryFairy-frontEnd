@@ -4,7 +4,7 @@ import { typography } from "@/style/typography";
 import Icon from "./Icon";
 
 interface IconProps {
-  $isActive?: boolean;
+  $isActive: boolean;
 }
 
 const Footer = () => {
