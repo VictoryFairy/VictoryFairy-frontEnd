@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { useMutation } from "@tanstack/react-query";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -60,19 +60,27 @@ const ProfileButtons = () => {
     },
   });
 
+  const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   const onPasswordChange = useCallback(
-    async (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: React.ChangeEvent<HTMLInputElement>) => {
       const newPassword = e.target.value;
       setPassword(newPassword);
+
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current);
+      }
+
       if (newPassword) {
-        mutationPasswordChk.mutate(newPassword);
+        debounceTimeoutRef.current = setTimeout(() => {
+          mutationPasswordChk.mutate(newPassword);
+        }, 300);
       } else {
         setIsPasswordValid(false);
       }
     },
     [],
   );
-
   return (
     <Container>
       {isOpen && popupText === "로그아웃" && (

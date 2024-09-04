@@ -40,20 +40,6 @@ const ProfileChange = () => {
     setName(nickname ?? "");
   }, [profile, nickname]);
 
-  // const handleBtnClick = useCallback(async () => {
-  //   if (name) {
-  //     await profileChange("nickname", name).then(() => {
-  //       updateNickname(name);
-  //     });
-  //   }
-  //   if (image) {
-  //     await profileChange("image", image).then(() => {
-  //       updateImage(image);
-  //     });
-  //   }
-  //   navigate("/mypage");
-  // }, [name, updateNickname, updateImage, navigate, image, profile, nickname]);
-
   const mutationProfileChange = useMutation({
     mutationFn: (data: { field: string; value: string }) =>
       profileChange(data.field, data.value),
