@@ -37,12 +37,16 @@ const teamNames = [
 ];
 
 const Profile = () => {
-  const { data, refetch: refetchMemberInfo } = useQuery<MypageUserInfo>({
+  const { data } = useQuery<MypageUserInfo>({
     queryKey: ["getMemberInfo"],
     queryFn: getMemberInfo,
-    // refetchOnWindowFocus: true,
-    staleTime: Infinity,
+    refetchOnWindowFocus: true,
   });
+  // const { data, refetch: refetchMemberInfo } = useQuery<MypageUserInfo>({
+  //   queryKey: ["getMemberInfo"],
+  //   queryFn: getMemberInfo,
+  //   refetchOnWindowFocus: true,
+  // });
 
   const [record, setRecord] = useState<Record | null>(null);
   const [user, setUser] = useState<User | null>(null);
@@ -62,9 +66,9 @@ const Profile = () => {
     }
   }, [data, teamId]);
 
-  useEffect(() => {
-    refetchMemberInfo();
-  }, []);
+  // useEffect(() => {
+  //   refetchMemberInfo();
+  // }, []);
 
   useEffect(() => {
     updateUserStore();
