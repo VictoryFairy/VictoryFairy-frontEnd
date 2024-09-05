@@ -91,6 +91,7 @@ const TeamChange = () => {
   const navigate = useNavigate();
   const { Popup, isOpen, openPopup } = usePopup();
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
+  const { updateTeamId } = useAuthStore();
   const handleBtnClick = () => {
     if (selectedTeam) {
       profileChange("teamId", selectedTeam?.id);
@@ -98,7 +99,6 @@ const TeamChange = () => {
     }
     navigate("/mypage");
   };
-  const { updateTeamId } = useAuthStore();
 
   const handleTeamSelect = (team: Team) => {
     setSelectedTeam(team);

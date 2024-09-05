@@ -36,7 +36,7 @@ const ProfileChange = () => {
   }));
 
   useEffect(() => {
-    setImage(profile ?? null);
+    setImage(profile);
     setName(nickname ?? "");
   }, [profile, nickname]);
 
