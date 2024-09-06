@@ -12,7 +12,6 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { typography } from "./style/typography";
 import PasswordReset from "./pages/PasswordReset";
-import { ThemeContextProvider } from "./context/ThemeContext";
 import Main from "./pages/main/Main";
 import MyPage from "./pages/MyPage";
 import Info from "./pages/Info";
@@ -258,9 +257,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
-      <ThemeContextProvider>
-        <RouterProvider router={router} />
-      </ThemeContextProvider>
+      <RouterProvider router={router} />
     </QueryClientProvider>
   );
 };
