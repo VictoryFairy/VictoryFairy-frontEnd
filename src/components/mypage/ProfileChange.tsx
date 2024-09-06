@@ -13,7 +13,7 @@ import Icon from "../common/Icon";
 const ProfileChange = () => {
   const [image, setImage] = useState<string | null>(null);
   const [name, setName] = useState<string>("");
-  const { Popup, isOpen, openPopup } = usePopup();
+  const { renderPopup, openPopup } = usePopup();
   const { updateNickname, updateImage } = useUserStore();
   const fileInput = useRef<HTMLInputElement | null>(null);
   const onChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,16 +73,22 @@ const ProfileChange = () => {
     setName(e.target.value);
   };
 
+  const handleClickSave = () => {
+    openPopup({
+      title: "프로필 설정 완료",
+      message: "프로필 설정이 완료되었습니다.",
+      buttons: [
+        {
+          label: "확인",
+          variant: "confirm",
+          onClick: handleBtnClick,
+        },
+      ],
+    });
+  };
+
   return (
     <Container>
-      {isOpen && (
-        <Popup
-          title='프로필 설정 완료'
-          message='프로필 설정이 완료되었습니다.'
-          type='alert'
-          confirmFunc={handleBtnClick}
-        />
-      )}
       <Form>
         <ProfileWrapper onClick={() => fileInput.current?.click()}>
           <Avatar alt='avatar' src={image ?? "/default-avatar.png"} />
@@ -104,11 +110,12 @@ const ProfileChange = () => {
           <Icon icon='IcCancel' />
         </InputWrapper>
         <ButtonWrapper>
-          <Button type='button' onClick={openPopup}>
+          <Button type='button' onClick={handleClickSave}>
             저장
           </Button>
         </ButtonWrapper>
       </Form>
+      {renderPopup()}
     </Container>
   );
 };

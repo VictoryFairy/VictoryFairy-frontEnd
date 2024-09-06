@@ -89,9 +89,10 @@ const teams: Team[] = [
 ];
 const TeamChange = () => {
   const navigate = useNavigate();
-  const { Popup, isOpen, openPopup } = usePopup();
+  const { renderPopup, openPopup } = usePopup();
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
   const { updateTeamId } = useAuthStore();
+
   const handleBtnClick = () => {
     if (selectedTeam) {
       profileChange("teamId", selectedTeam?.id);
@@ -103,16 +104,22 @@ const TeamChange = () => {
   const handleTeamSelect = (team: Team) => {
     setSelectedTeam(team);
   };
+
+  const handleClickSave = () => {
+    openPopup({
+      title: "응원팀 변경 완료",
+      message: "응원팀 변경이 완료되었습니다.",
+      buttons: [
+        {
+          label: "확인",
+          variant: "confirm",
+          onClick: handleBtnClick,
+        },
+      ],
+    });
+  };
   return (
     <Container>
-      {isOpen && (
-        <Popup
-          title='응원팀 변경 완료'
-          message='응원팀 변경이 완료되었습니다.'
-          type='alert'
-          confirmFunc={handleBtnClick}
-        />
-      )}
       <SelectedTeamBox
         color={selectedTeam?.color || "transparent"}
         bg={selectedTeam?.bg}
@@ -137,11 +144,12 @@ const TeamChange = () => {
       <ButtonWrapper>
         <Button
           type='button'
-          onClick={openPopup}
+          onClick={handleClickSave}
           disabled={selectedTeam === null}>
           <Text variant='title_02'>저장</Text>
         </Button>
       </ButtonWrapper>
+      {renderPopup()}
     </Container>
   );
 };

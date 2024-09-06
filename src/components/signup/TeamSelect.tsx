@@ -101,8 +101,7 @@ const TeamSelect = ({
 }: TeamSelectProps) => {
   const navigate = useNavigate();
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
-  const { Popup, openPopup, isOpen } = usePopup();
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { openPopup, renderPopup, closePopup } = usePopup();
   const handleTeamSelect = (team: Team) => {
     setSelectedTeam(team);
     handleSetUserInfo({ teamId: team.id });
@@ -118,10 +117,32 @@ const TeamSelect = ({
         password: userInfo.password,
       };
       await signUp(data);
-      openPopup();
+      openPopup({
+        title: "회원가입 성공",
+        message: "성공적으로 회원가입이 완료되었습니다!",
+        buttons: [
+          {
+            label: "확인",
+            variant: "confirm",
+            onClick: () => {
+              navigate("/");
+              setstep(1);
+            },
+          },
+        ],
+      });
     } catch (err) {
-      setErrorMessage("회원가입 실패");
-      openPopup();
+      openPopup({
+        title: "회원가입 실패",
+        message: "회원가입에 실패했습니다. 다시 시도해 주세요.",
+        buttons: [
+          {
+            label: "확인",
+            variant: "confirm",
+            onClick: closePopup,
+          },
+        ],
+      });
     }
   };
 
@@ -157,21 +178,7 @@ const TeamSelect = ({
           승리요정 시작하기
         </Button>
       </ButtonWrapper>
-      {isOpen && (
-        <Popup
-          title={errorMessage ? "회원가입 실패" : "회원가입 성공"}
-          message={
-            errorMessage
-              ? "회원가입에 실패했습니다. 다시 시도해 주세요."
-              : "성공적으로 회원가입이 완료되었습니다!"
-          }
-          type='alert'
-          confirmFunc={() => {
-            navigate("/");
-            setstep(1);
-          }}
-        />
-      )}
+      {renderPopup()}
     </Container>
   );
 };
