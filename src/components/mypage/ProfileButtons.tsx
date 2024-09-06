@@ -7,15 +7,28 @@ import { logout, passwordChk, withdrawal } from "@/api/mypage/mypage.api";
 import Text from "../common/Text";
 import { useUserStore } from "../../store/userInfo";
 import Icon from "../common/Icon";
+import WithDrawPopup from "./WithDrawPopup";
 
 const ProfileButtons = () => {
+  const [isOpenDraw, setIsOpenDraw] = useState(false);
+
+  const openWithDrawPopup = useCallback(() => {
+    setIsOpenDraw(true);
+  }, []);
+
+  const closeWithDrawPopup = useCallback(() => {
+    setIsOpenDraw(false);
+  }, []);
   const { Popup, isOpen, openPopup } = usePopup();
-  const [popupText, setPopupText] = useState("");
   const [password, setPassword] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState<boolean>(false);
 
   const handleLogoutClick = () => {
     openPopup();
+  };
+
+  const handleWithDrawClik = () => {
+    openWithDrawPopup();
   };
 
   const navigate = useNavigate();
@@ -81,7 +94,7 @@ const ProfileButtons = () => {
   );
   return (
     <Container>
-      {isOpen && popupText === "로그아웃" && (
+      {isOpen && (
         <Popup
           title='확인'
           message='정말 로그아웃 하시겠습니까?'
@@ -92,16 +105,16 @@ const ProfileButtons = () => {
           }}
         />
       )}
-      {isOpen && popupText === "회원탈퇴" && (
-        <Popup
+      {isOpenDraw && (
+        <WithDrawPopup
           title='확인'
           message='탈퇴 후 복구가 불가능합니다.<br />탈퇴 하시려면 비밀번호를 입력해주세요.'
-          type='test'
           confirmMessage='탈퇴'
+          closePopup={closeWithDrawPopup}
           confirmFunc={() => {
             withdraw.mutate();
           }}
-          TF={isPasswordValid}
+          active={isPasswordValid}
           comp={
             <div
               style={{
@@ -176,7 +189,6 @@ const ProfileButtons = () => {
           role='button'
           tabIndex={0}
           onClick={() => {
-            setPopupText("로그아웃");
             handleLogoutClick();
           }}>
           <Text variant='subtitle_02' color='var(--red-600)'>
@@ -187,8 +199,7 @@ const ProfileButtons = () => {
           role='button'
           tabIndex={0}
           onClick={() => {
-            setPopupText("회원탈퇴");
-            handleLogoutClick();
+            handleWithDrawClik();
           }}>
           <Text variant='subtitle_02' color='var(--gray-400)'>
             회원탈퇴
