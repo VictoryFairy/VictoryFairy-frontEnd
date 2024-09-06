@@ -1,52 +1,31 @@
-import { useCallback, useState } from "react";
-import Popup from "../components/modal/Popup";
+import { useState, useCallback } from "react";
+import Popup, { PopupProps } from "@/components/modal/Popup";
 
+// 팝업 훅 정의
 export const usePopup = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [popupProps, setPopupProps] = useState<PopupProps | null>(null);
 
-  const openPopup = useCallback(() => {
+  // 팝업 열기 함수
+  const openPopup = useCallback((props: PopupProps) => {
+    setPopupProps(props);
     setIsOpen(true);
   }, []);
 
+  // 팝업 닫기 함수
   const closePopup = useCallback(() => {
     setIsOpen(false);
   }, []);
 
-  const PopupComponent = useCallback(
-    ({
-      title,
-      message,
-      type,
-      confirmMessage,
-      confirmFunc,
-      comp,
-      TF = false,
-    }: {
-      title: string;
-      message: string;
-      type: "confirm" | "alert" | "test";
-      confirmMessage?: string;
-      confirmFunc?: () => void;
-      comp?: React.ReactNode;
-      TF?: boolean;
-    }) => (
-      <Popup
-        title={title}
-        message={message}
-        closePopup={closePopup}
-        type={type as "confirm" | "alert" | "test"}
-        confirmMessage={confirmMessage}
-        confirmFunc={confirmFunc}
-        comp={comp}
-        TF={TF}
-      />
-    ),
-    [closePopup],
-  );
+  // 팝업 렌더 함수
+  const renderPopup = () => {
+    if (!isOpen || !popupProps) return null;
+    return <Popup {...popupProps} />;
+  };
 
   return {
-    Popup: PopupComponent,
     openPopup,
-    isOpen,
+    closePopup,
+    renderPopup,
   };
 };

@@ -1,107 +1,37 @@
 import styled from "styled-components";
-import { typography } from "@/style/typography";
 import ModalPortal from "./ModalPortal";
+import Text from "../common/Text";
 
-interface PopupProps {
-  title: string;
-  message: string;
-  closePopup: () => void;
-  type: "confirm" | "alert" | "test";
-  confirmMessage?: string;
-  confirmFunc?: () => void;
-  comp?: React.ReactNode;
-  TF?: boolean;
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  label: string;
+  variant: "cancel" | "confirm";
+  color?: string;
 }
 
-const Popup = ({
-  title,
-  message,
-  closePopup,
-  type,
-  confirmMessage,
-  confirmFunc,
-  comp,
-  TF,
-}: PopupProps) => {
-  const renderButtons = () => {
-    switch (type) {
-      case "confirm":
-        return (
-          <>
-            <button
-              type='button'
-              className='cancel-button'
-              onClick={closePopup}>
-              취소
-            </button>
-            <button
-              type='button'
-              className='confirm-button'
-              onClick={() => {
-                confirmFunc?.();
-                closePopup();
-              }}>
-              {confirmMessage}
-            </button>
-          </>
-        );
-      case "alert":
-        return (
-          <button
-            type='button'
-            className='confirm-button'
-            onClick={() => {
-              confirmFunc?.();
-              closePopup();
-            }}>
-            확인
-          </button>
-        );
-      case "test":
-        return (
-          <div className='test-wrapper'>
-            {comp}
-            <div className='button-wrapper'>
-              <button
-                type='button'
-                className='cancel-button'
-                onClick={closePopup}>
-                취소
-              </button>
-              <button
-                type='button'
-                className='confirm'
-                disabled={!TF}
-                onClick={() => {
-                  confirmFunc?.();
-                  closePopup();
-                }}
-                style={{
-                  backgroundColor: TF
-                    ? "var(--primary-color)"
-                    : "var(--gray-50)",
-                  color: TF ? "var(--white)" : "var(--gray-400)",
-                }}>
-                {confirmMessage}
-              </button>
-            </div>
-          </div>
-        );
-      default:
-        return null;
-    }
-  };
+export interface PopupProps {
+  title: string;
+  message: string;
+  buttons: ButtonProps[];
+}
 
+const Popup2 = ({ title, message, buttons }: PopupProps) => {
   return (
     <ModalPortal>
       <PopupWrapper>
         <PopupContainer onClick={(e) => e.stopPropagation()}>
-          <h1 className='title'>{title}</h1>
-          <p
-            className='message'
-            dangerouslySetInnerHTML={{ __html: message }}
-          />
-          <ButtonGroup>{renderButtons()}</ButtonGroup>
+          <Text variant='headline' as='h1'>
+            {title}
+          </Text>
+          <Text variant='body_long_02' as='p'>
+            {message}
+          </Text>
+          <ButtonGroup>
+            {buttons.map((button, index) => (
+              <Button key={index} {...button}>
+                <Text variant='body_02'>{button.label}</Text>
+              </Button>
+            ))}
+          </ButtonGroup>
         </PopupContainer>
       </PopupWrapper>
     </ModalPortal>
@@ -119,15 +49,6 @@ const PopupWrapper = styled.div`
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.5);
-
-  .title {
-    ${typography.headline}
-  }
-  .message {
-    margin-top: 8px;
-    ${typography.body_long_02}
-    color: var(--primary-color);
-  }
 `;
 
 const PopupContainer = styled.div`
@@ -139,6 +60,7 @@ const PopupContainer = styled.div`
   text-align: center;
   padding: 20px;
   border-radius: 12px;
+  gap: 8px;
 `;
 
 const ButtonGroup = styled.div`
@@ -146,36 +68,26 @@ const ButtonGroup = styled.div`
   gap: 12px;
   display: flex;
   width: 100%;
-  button {
-    width: 151px;
-    height: 48px;
-    ${typography.title_02}
-    border-radius: 8px;
-    width: 100%;
-    cursor: pointer;
-  }
-  .cancel-button {
-    opacity: 0.4;
-    border: 1px solid var(--primary-color);
-  }
-  .confirm-button {
-    background: var(--primary-color);
-    color: white;
-  }
-
-  .test-wrapper {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .button-wrapper {
-    display: flex;
-    margin-top: 20px;
-    :nth-child(1) {
-      margin-right: 10px;
-    }
-  }
 `;
 
-export default Popup;
+const Button = styled.button<{ variant: "cancel" | "confirm" }>`
+  ${({ variant, color }) =>
+    variant === "cancel"
+      ? `
+    opacity: 0.4;
+    border: 1px solid var(--primary-color);
+    color: ${color || "var(--primary-color)"};
+  `
+      : `
+    background: var(--primary-color);
+    color: ${color || "white"};
+  `}
+
+  width: 151px;
+  height: 48px;
+  border-radius: 8px;
+  width: 100%;
+  cursor: pointer;
+`;
+
+export default Popup2;
