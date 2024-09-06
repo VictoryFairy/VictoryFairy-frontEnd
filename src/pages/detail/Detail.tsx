@@ -1,3 +1,4 @@
+import { useState, useRef, useEffect } from "react";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -11,10 +12,9 @@ import Text from "@/components/common/Text";
 import Icon from "@/components/common/Icon";
 import DropDown from "@/components/detail/DropDown";
 import styled from "styled-components";
-import { useEffect, useState, useRef } from "react";
 import Button from "@/components/common/Button";
 import { uploadImg } from "@/utils/uploadImg"; // Import the image upload utility
-import { usePopup } from "@/hooks/usePopup";
+import { usePopup } from "@/hooks/usePopup"; // usePopup 사용
 import TextAreaField from "../../components/common/TextAreaField";
 import InputField from "../../components/common/InputField";
 
@@ -22,9 +22,11 @@ const Detail = () => {
   const location = useLocation();
   const id = +location.pathname.split("/")[2];
   const navigate = useNavigate();
+
   const queryClient = useQueryClient();
 
-  const { Popup, isOpen, openPopup } = usePopup();
+  const [isEditing, setIsEditing] = useState(false);
+  const { openPopup, renderPopup, closePopup } = usePopup(); // usePopup 사용
 
   const { data } = useQuery({
     queryKey: ["registeredGame", id],
@@ -46,7 +48,11 @@ const Detail = () => {
       queryClient.invalidateQueries({ queryKey: ["registeredGame", id] });
       queryClient.invalidateQueries({ queryKey: ["registeredGame"] });
 
-      openPopup();
+      openPopup({
+        title: "수정 완료",
+        message: "게임 정보가 성공적으로 수정되었습니다.",
+        buttons: [{ label: "확인", variant: "confirm", onClick: closePopup }],
+      });
     },
   });
 
@@ -56,11 +62,14 @@ const Detail = () => {
       queryClient.invalidateQueries({ queryKey: ["registeredGame"] });
       navigate("/home");
 
-      openPopup();
+      openPopup({
+        title: "삭제 완료",
+        message: "게임 정보가 삭제되었습니다.",
+        buttons: [{ label: "확인", variant: "confirm", onClick: closePopup }],
+      });
     },
   });
 
-  const [isEditing, setIsEditing] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(
     data?.image || null,
   );
@@ -88,7 +97,18 @@ const Detail = () => {
   };
 
   const handleDelete = () => {
-    openPopup();
+    openPopup({
+      title: "삭제 확인",
+      message: "정말로 게임 정보를 삭제하시겠습니까?",
+      buttons: [
+        { label: "취소", variant: "cancel", onClick: closePopup },
+        {
+          label: "삭제",
+          variant: "confirm",
+          onClick: () => deleteMutation.mutate(),
+        },
+      ],
+    });
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,21 +131,6 @@ const Detail = () => {
 
   return (
     <Layout>
-      {isOpen && (
-        <Popup
-          title={isEditing ? "수정 완료" : "삭제 확인"}
-          message={
-            isEditing ? "수정이 완료되었습니다." : "정말 삭제하시겠습니까?"
-          }
-          type={isEditing ? "alert" : "confirm"}
-          confirmMessage={isEditing ? "확인" : "삭제"}
-          confirmFunc={
-            isEditing
-              ? () => setIsEditing(false)
-              : () => deleteMutation.mutate()
-          }
-        />
-      )}
       <Header>
         <div>
           <Icon icon='IcArrowLeft' onClick={() => navigate(-1)} />
@@ -194,6 +199,7 @@ const Detail = () => {
           </Button>
         )}
       </DetailContainer>
+      {renderPopup()}
     </Layout>
   );
 };

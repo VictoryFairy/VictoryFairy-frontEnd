@@ -19,12 +19,27 @@ const ProfileButtons = () => {
   const closeWithDrawPopup = useCallback(() => {
     setIsOpenDraw(false);
   }, []);
-  const { Popup, isOpen, openPopup } = usePopup();
+  const { renderPopup, openPopup, closePopup } = usePopup();
   const [password, setPassword] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState<boolean>(false);
 
   const handleLogoutClick = () => {
-    openPopup();
+    openPopup({
+      title: "로그아웃",
+      message: "정말 로그아웃 하시겠습니까?",
+      buttons: [
+        {
+          label: "취소",
+          variant: "cancel",
+          onClick: closePopup,
+        },
+        {
+          label: "로그아웃",
+          variant: "confirm",
+          onClick: () => mutationLogout.mutate(),
+        },
+      ],
+    });
   };
 
   const handleWithDrawClik = () => {
@@ -94,17 +109,6 @@ const ProfileButtons = () => {
   );
   return (
     <Container>
-      {isOpen && (
-        <Popup
-          title='확인'
-          message='정말 로그아웃 하시겠습니까?'
-          type='confirm'
-          confirmMessage='로그아웃'
-          confirmFunc={() => {
-            mutationLogout.mutate();
-          }}
-        />
-      )}
       {isOpenDraw && (
         <WithDrawPopup
           title='확인'
@@ -206,6 +210,7 @@ const ProfileButtons = () => {
           </Text>
         </div>
       </ProfileLogWrapper>
+      {renderPopup()}
     </Container>
   );
 };

@@ -26,15 +26,7 @@ const RegisterForm = () => {
   useImperativeHandle(ref, () => inputImgRef.current);
   const { teamId } = useAuthStore();
 
-  const { Popup, isOpen, openPopup } = usePopup();
-
-  // 급하게 임시방편으로 만든 상태라 추후 리팩토링이 필요함
-  const [popupMessage, setPopupMessage] = useState({
-    title: "",
-    message: "",
-    type: "alert" as "alert" | "confirm",
-    confirmFunc: () => {},
-  });
+  const { openPopup, renderPopup, closePopup } = usePopup(); // 최신 usePopup 사용
 
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 
@@ -57,29 +49,28 @@ const RegisterForm = () => {
 
       await postRegisterGame(registerData);
 
-      // 성공 시 팝업 설정
-      setPopupMessage({
+      openPopup({
         title: "직관 기록 완료",
         message: "직관 기록이 성공적으로 완료되었습니다.",
-        type: "alert",
-        confirmFunc: () => {
-          window.location.href = "/home";
-        },
+        buttons: [
+          {
+            label: "확인",
+            variant: "confirm",
+            onClick: () => {
+              window.location.href = "/home";
+            },
+          },
+        ],
       });
-
-      openPopup();
     } catch (error) {
-      setPopupMessage({
+      openPopup({
         title: "직관 기록 실패",
         message:
           error instanceof Error
             ? error.message
             : "알 수 없는 오류가 발생했습니다.",
-        type: "alert",
-        confirmFunc: () => {},
+        buttons: [{ label: "확인", variant: "confirm", onClick: closePopup }],
       });
-
-      openPopup();
     }
   };
 
@@ -98,6 +89,7 @@ const RegisterForm = () => {
   };
 
   let result = "" as Pick<MyGame, "status">["status"];
+
   if (match.winningTeam) {
     if (match.winningTeam.id === teamId) {
       result = "Win";
@@ -108,20 +100,11 @@ const RegisterForm = () => {
     result = "Tie";
   }
   if (!match.homeTeamScore && !match.awayTeamScore) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     result = "No game";
   }
 
   return (
     <RegisterFormContainer>
-      {isOpen && (
-        <Popup
-          title={popupMessage.title}
-          message={popupMessage.message}
-          type={popupMessage.type}
-          confirmFunc={popupMessage.confirmFunc}
-        />
-      )}
       <GameListItemContainer>
         <ResultLabel status={result}>{result}</ResultLabel>
         <div className='game-info'>
@@ -166,11 +149,6 @@ const RegisterForm = () => {
             </ImgWrraper>
           )}
         </ImgUploadContainer>
-        {/* <CheerTeamSelect
-          setCheeringTeamId={setCheeringTeamId}
-          homeTeam={match.homeTeam}
-          awayTeam={match.awayTeam}
-        /> */}
         <InputField
           label='응원팀'
           setValue={setValue}
@@ -200,6 +178,7 @@ const RegisterForm = () => {
         />
         <Button size='big'>직관 기록 하기</Button>
       </Form>
+      {renderPopup()}
     </RegisterFormContainer>
   );
 };
