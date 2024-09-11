@@ -3,7 +3,7 @@ export interface MyGame {
   image: string;
   seat: string;
   review: string;
-  status: "Win" | "Lose" | "Tie" | "No game";
+  status: GameStatus;
   game: Game;
   cheeringTeam: Team;
 }
@@ -34,3 +34,5 @@ export interface Team {
   id: number;
   name: string;
 }
+
+export type GameStatus = "All" | "Win" | "Lose" | "Tie" | "No game";
