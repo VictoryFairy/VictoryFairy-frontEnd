@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Icon from "./Icon";
+import Text from "./Text";
 
 const MONTHS = [
   "January",
@@ -60,9 +61,9 @@ const MonthNav = ({ onMonthChange, selectMonth }: MonthNavProps) => {
         fill={isPreviousDisabled() ? "#CCCCCC" : "#2F3036"} // Disabled color
         cursor={isPreviousDisabled() ? "not-allowed" : "pointer"}
       />
-      <span>
+      <Text variant='title_02'>
         {MONTHS[selectMonth.getMonth()]} {selectMonth.getFullYear()}
-      </span>
+      </Text>
       <Icon
         icon='IcArrowRight'
         onClick={handleNextMonth}
@@ -76,7 +77,7 @@ const MonthNav = ({ onMonthChange, selectMonth }: MonthNavProps) => {
 const MonthNavContainer = styled.nav`
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  align-items: center;
   height: 56px;
 `;
 

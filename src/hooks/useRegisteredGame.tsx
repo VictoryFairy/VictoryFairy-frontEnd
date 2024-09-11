@@ -9,10 +9,13 @@ export const useRegisteredGame = (selectMonth: Date | null) => {
     ? moment(selectMonth).format("YYYY-MM")
     : null;
 
-  const { data, isSuccess, isLoading, isError, error } = useQuery<
-    MyGame[],
-    AxiosError
-  >({
+  const {
+    data: registeredGames,
+    isSuccess,
+    isLoading,
+    isError,
+    error,
+  } = useQuery<MyGame[], AxiosError>({
     queryKey: ["registeredGame", formattedDate],
     queryFn: () =>
       selectMonth
@@ -25,5 +28,5 @@ export const useRegisteredGame = (selectMonth: Date | null) => {
     staleTime: 1000 * 60 * 3,
   });
 
-  return { data, isSuccess, isLoading, isError, error };
+  return { registeredGames, isSuccess, isLoading, isError, error };
 };
