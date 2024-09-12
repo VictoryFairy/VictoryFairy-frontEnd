@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import {
   ApiResponse,
@@ -25,7 +25,9 @@ const RankingTab = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [withUser, setWithUser] = useState<Rank[] | null>(null);
   const [user, setUser] = useState<MyInfo | null>(null);
-  const userMe = withUser?.find((my) => my.userId === user?.userId);
+  const userMe = useMemo(() => {
+    return withUser?.find((my) => my.userId === user?.userId);
+  }, [withUser, user]);
 
   const firstRank = top?.find((element) => element.rank === 1);
   const secondRank = top?.find((element) => element.rank === 2);
@@ -64,14 +66,20 @@ const RankingTab = () => {
     if (topRank) {
       setTop(topRank.top);
     }
+  }, [topRank]);
+
+  useEffect(() => {
     if (nearBy) {
       setUser(nearBy.user);
       setWithUser(nearBy.nearBy);
     }
+  }, [nearBy]);
+
+  useEffect(() => {
     if (userMe) {
       localStorage.setItem("userMe", JSON.stringify(userMe));
     }
-  }, [nearBy, topRank]);
+  }, [userMe]);
 
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
