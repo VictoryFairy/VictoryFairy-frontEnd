@@ -32,14 +32,6 @@ const WatchList = () => {
     setSelectMonth(date);
   };
 
-  const handleClickDay = (date: Date) => {
-    registeredGames?.forEach((item: MyGame) => {
-      if (item.game.date === moment(date).format("YYYY-MM-DD")) {
-        navigate(`/detail/${item.id}`);
-      }
-    });
-  };
-
   const handleClickMatch = (id: number) => {
     navigate(`/detail/${id}`);
   };
@@ -92,7 +84,6 @@ const WatchList = () => {
         return (
           <CalendarTab
             onMonthChange={handleMonthChange}
-            selectMonth={selectMonth}
             registeredGames={isSuccess ? filteredRegisteredGames! : []}
           />
         );

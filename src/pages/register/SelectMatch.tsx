@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { useRegisteredGame } from "@/hooks/useRegisteredGame";
 import DailyMatch from "@/components/dailyMatch/DailyMatch";
 import Loading from "@/components/common/Loading";
-import CalendarContainer from "../../components/common/Calendar";
 import { useGame } from "../../hooks/useGame";
 import Button from "../../components/common/Button";
 import { Game } from "../../types/Game";
+import SelectMatchCalendar from "./SelectMatchCalendar";
 
 const SelectMatch = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -16,21 +16,13 @@ const SelectMatch = () => {
 
   const navigate = useNavigate();
 
-  const { data: registeredGame } = useRegisteredGame(selectMonth);
+  const { registeredGames } = useRegisteredGame(selectMonth);
   const { data: matches, isSuccess, isLoading } = useGame(selectedDate);
-
-  const handleClickDay = (date: Date) => {
-    setSelectedDate(date);
-  };
 
   const handleClickButton = () => {
     if (selectedMatch) {
       navigate(`/register`, { state: { match: selectedMatch } });
     }
-  };
-
-  const handleMonthChange = (date: Date) => {
-    setSelectMonth(date);
   };
 
   const renderMatches = () => {
@@ -57,14 +49,14 @@ const SelectMatch = () => {
 
   return (
     <SelectMatchContainer>
-      <CalendarContainer
-        data={registeredGame}
-        onClick={(date) => handleClickDay(date)}
-        onMonthChange={handleMonthChange}
+      <SelectMatchCalendar
+        registeredGames={registeredGames}
+        onMonthChange={(date) => setSelectMonth(date)}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
       />
 
       {renderMatches()}
-
       <Button
         className='button'
         onClick={handleClickButton}
@@ -75,6 +67,7 @@ const SelectMatch = () => {
     </SelectMatchContainer>
   );
 };
+
 const SelectMatchContainer = styled.div`
   height: 100%;
   padding-top: 20px;
@@ -85,6 +78,13 @@ const SelectMatchContainer = styled.div`
   }
   .loading {
     margin-top: 20px;
+  }
+  .calendar {
+    .selected {
+      background: ${({ theme }) => theme.colors.primary};
+      color: var(--white);
+      border-radius: 50%;
+    }
   }
 `;
 
