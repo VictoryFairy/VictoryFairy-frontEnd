@@ -8,6 +8,8 @@ import {
 } from "@/api/rank/rank.api";
 import { useQuery } from "@tanstack/react-query";
 import { Rank } from "@/types/Rank";
+import { teams } from "@/utils/getTeamInfo";
+
 import Text from "../common/Text";
 import Button from "../common/Button";
 import RankPopup from "./RankPopup";
@@ -15,48 +17,6 @@ import Icon from "../common/Icon";
 import RankTextComp from "./RankTextComp";
 import MyRankComp from "./MyRankComp";
 import RankBar from "./RankBar";
-
-const teamNames = [
-  "전체",
-  "롯데자이언츠",
-  "두산베어스",
-  "KIA타이거즈",
-  "삼성라이온즈",
-  "SSG렌더스",
-  "NC다이노스",
-  "LG트윈스",
-  "키움히어로즈",
-  "KT위즈",
-  "한화이글스",
-];
-
-const teamColor = [
-  "black",
-  "#041E42",
-  "#131230",
-  "#EC0029",
-  "#0059A6",
-  "#BE262C",
-  "#1D467D",
-  "#C40037",
-  "#D1187D",
-  "#000000",
-  "#FF6600",
-];
-
-const teamNumberMap: { [key: string]: number } = {
-  전체: 0,
-  롯데자이언츠: 1,
-  두산베어스: 2,
-  KIA타이거즈: 3,
-  삼성라이온즈: 4,
-  SSG렌더스: 5,
-  NC다이노스: 6,
-  LG트윈스: 7,
-  키움히어로즈: 8,
-  KT위즈: 9,
-  한화이글스: 10,
-};
 
 const RankingTab = () => {
   const [teamId, setTeamId] = useState<number>(0);
@@ -73,10 +33,15 @@ const RankingTab = () => {
   const today = new Date();
 
   const todayDay = `${today.getFullYear()}.${(today.getMonth() + 1).toString().padStart(2, "0")}.${today.getDate().toString().padStart(2, "0")}`;
-  const handleClickTeam = (value: string) => {
-    setTeamTab(value);
-    setTeamId(teamNumberMap[value]);
+
+  const handleClickTeam = (value: number) => {
+    const selectedTeam = teams.find((team) => team.id === value);
+    if (selectedTeam) {
+      setTeamTab(selectedTeam.name);
+      setTeamId(selectedTeam.id);
+    }
   };
+
   function textChange(text: string) {
     if (text?.length > 4) {
       return `${text.slice(0, 4)}..`;
@@ -113,18 +78,19 @@ const RankingTab = () => {
   return (
     <Container>
       <TeamTabWrapper>
-        {teamNames.map((element, index) => {
+        {teams.map((element, index) => {
           return (
             <Button
               style={{
-                color: teamTab === element ? "var(--white)" : "var(--gray-400)",
+                color:
+                  teamTab === element.name ? "var(--white)" : "var(--gray-400)",
               }}
-              styletype={teamTab === element ? "default" : "outline"}
+              styletype={teamTab === element.name ? "default" : "outline"}
               key={index}
               onClick={() => {
-                handleClickTeam(element);
+                handleClickTeam(element.id);
               }}>
-              <Text variant='subtitle_01'>{element}</Text>
+              <Text variant='subtitle_01'>{element.name}</Text>
             </Button>
           );
         })}
@@ -354,7 +320,7 @@ const FirstRankWrapper = styled.div<{ $teamId: number }>`
     align-items: center;
     justify-content: center;
     color: var(--white);
-    background-color: ${({ $teamId }) => teamColor[$teamId]};
+    background-color: ${({ $teamId }) => teams[$teamId].color};
   }
   > img {
     width: 100px;
