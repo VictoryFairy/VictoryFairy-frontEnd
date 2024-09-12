@@ -16,19 +16,24 @@ const DailyMatch = ({
   setSelectedMatch,
 }: DailyMatchProps) => {
   const formatMatches = findCheerTeam(matches);
-
   useEffect(() => {
     setSelectedMatch(formatMatches!);
   }, [formatMatches, setSelectedMatch]);
 
   return (
     <DailyMatchContainer>
-      <DailyMatchItem
-        key={formatMatches?.id}
-        match={formatMatches!}
-        $isSelected={selectedMatch?.id === formatMatches?.id}
-        onSelect={() => setSelectedMatch(formatMatches!)}
-      />
+      {formatMatches ? (
+        <DailyMatchItem
+          key={formatMatches.id}
+          match={formatMatches}
+          $isSelected={selectedMatch?.id === formatMatches.id}
+          onSelect={() => setSelectedMatch(formatMatches)}
+        />
+      ) : (
+        <div>
+          <p>경기가 없습니다.</p>
+        </div>
+      )}
     </DailyMatchContainer>
   );
 };

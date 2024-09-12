@@ -3,6 +3,7 @@ import { Game } from "../../types/Game";
 import Radio from "../common/Radio";
 import Text from "../common/Text";
 import Icon from "../common/Icon";
+import { motion } from "framer-motion";
 
 interface DailyMatchItemProps {
   match: Game;
@@ -19,8 +20,13 @@ const DailyMatchItem = ({
     if (match.winningTeam === null) return false;
     return match.winningTeam.id === teamId;
   };
+
   return (
-    <DailyMatchItemContainer $isSelected={$isSelected}>
+    <DailyMatchItemContainer
+      $isSelected={$isSelected}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}>
       <Radio checked={$isSelected} onChange={onSelect} />
       <div className='game-info'>
         <div
@@ -52,7 +58,7 @@ const DailyMatchItem = ({
   );
 };
 
-const DailyMatchItemContainer = styled.div<{ $isSelected: boolean }>`
+const DailyMatchItemContainer = styled(motion.div)<{ $isSelected: boolean }>`
   display: flex;
   align-items: center;
   gap: 16px;

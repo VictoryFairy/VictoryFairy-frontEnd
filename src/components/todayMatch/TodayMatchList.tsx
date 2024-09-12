@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { setCheerTeamFirst } from "@/utils/setCheerTeamFirst";
 import TodayMatchItem from "./TodayMatchItem";
-import { typography } from "../../style/typography";
 import { useGame } from "../../hooks/useGame";
+import Text from "../common/Text";
 
 const DATE = new Date();
 
@@ -11,7 +11,9 @@ const TodayMatchList = () => {
   const formatMatches = data && setCheerTeamFirst(data);
   return (
     <>
-      <Title>오늘의 경기</Title>
+      <Text as='h1' variant='title_02'>
+        오늘의 경기
+      </Text>
       <TodayMatchListContainer>
         {formatMatches?.map((match) => (
           <TodayMatchItem key={match.id} match={match} />
@@ -20,11 +22,6 @@ const TodayMatchList = () => {
     </>
   );
 };
-
-const Title = styled.h1`
-  all: unset;
-  ${typography.title_02}
-`;
 
 const TodayMatchListContainer = styled.div`
   display: flex;

@@ -24,6 +24,7 @@ const ListContainer = styled.div``;
 
 const GameList = styled.ul`
   width: 100%;
+  margin: 0;
 `;
 
 export default ListTab;
