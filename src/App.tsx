@@ -26,6 +26,7 @@ import SelectMatch from "./pages/register/SelectMatch";
 import RegisterForm from "./pages/register/RegisterForm";
 import DetailRate from "./pages/main/DetailRate";
 import Icon from "./components/common/Icon";
+import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
@@ -248,6 +249,16 @@ const router = createBrowserRouter([
       {
         path: "/DetailRate",
         element: <DetailRate />,
+      },
+    ],
+  },
+  {
+    path: "*",
+    element: <Layout footer={false} />,
+    children: [
+      {
+        path: "*",
+        element: <NotFound />,
       },
     ],
   },
