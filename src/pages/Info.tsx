@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import Icon from "@/components/common/Icon";
-import { Tooltip } from "@/components/common/ToolTip";
 import ParkingInfoPage from "../components/info/map/ParkingInfoPage";
 import CheerSongPage from "../components/info/cheerSong/CheerSongPage";
 
@@ -22,15 +20,15 @@ const Info = () => {
     <Container>
       <Tabs>
         <TabButton
-          active={activeTab === "map"}
+          $active={activeTab === "map"}
           onClick={() => handleTabChange("map")}>
           주차정보
-          <Tooltip text='아래 주차장 리스트를 누르면 지도에서 위치를 확인할수 있어요!'>
+          {/* <Tooltip text='아래 주차장 리스트를 누르면 지도에서 위치를 확인할수 있어요!'>
             <Icon icon='IcInfo' />
-          </Tooltip>
+          </Tooltip> */}
         </TabButton>
         <TabButton
-          active={activeTab === "cheer"}
+          $active={activeTab === "cheer"}
           onClick={() => handleTabChange("cheer")}>
           응원가
         </TabButton>
@@ -51,13 +49,13 @@ const Tabs = styled.div`
   gap: 20px;
 `;
 
-const TabButton = styled.button<{ active: boolean }>`
+const TabButton = styled.button<{ $active: boolean }>`
   padding: 15px 0;
   border: none;
   background: transparent;
-  color: ${({ active }) => (active ? "#000" : "#888")};
+  color: ${({ $active }) => ($active ? "#000" : "#888")};
   font-size: 18px;
-  font-weight: ${({ active }) => (active ? "bold" : "normal")};
+  font-weight: ${({ $active }) => ($active ? "bold" : "normal")};
   cursor: pointer;
 `;
 

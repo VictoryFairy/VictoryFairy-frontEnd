@@ -18,13 +18,15 @@ const ParkingInfoPage = () => {
     "stadium"
   > | null>(null);
 
-  const { data: stadiums, isLoading: isLoadingStadiums } = useQuery<Stadium[]>({
+  const { data: stadiums } = useQuery<Stadium[]>({
     queryKey: ["stadiums"],
     queryFn: getStadiums,
     staleTime: Infinity,
   });
 
-  const { data: parkingInfos } = useQuery<ParkingInfo[]>({
+  const { data: parkingInfos, isLoading: parkingInfosLoading } = useQuery<
+    ParkingInfo[]
+  >({
     queryKey: ["parkingInfos", selectedStadiumId],
     queryFn: () => getParkingInfosByStadiumId(selectedStadiumId),
     enabled: !!selectedStadiumId,
@@ -50,8 +52,6 @@ const ParkingInfoPage = () => {
     }
   }, [parkingInfos]);
 
-  if (isLoadingStadiums || !parkingInfos) return <div>로딩중...</div>;
-
   const stadiumData = parkingInfos?.[0].stadium;
   const parkingSpots = parkingInfos?.map((parkingInfo) => ({
     id: parkingInfo.id,
@@ -73,6 +73,7 @@ const ParkingInfoPage = () => {
         selectedStadium={stadiumData}
         parkingSpots={parkingSpots}
         selectedParking={selectedParking}
+        parkingInfosLoading={parkingInfosLoading}
       />
 
       <ParkingList

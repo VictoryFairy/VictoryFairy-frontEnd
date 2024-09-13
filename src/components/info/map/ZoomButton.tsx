@@ -26,16 +26,16 @@ const ZoomButton = ({ mapInstance, zoomType }: ZoomButtonProps) => {
   };
 
   return (
-    <Button onClick={handleZoom} zoomType={zoomType}>
+    <Button onClick={handleZoom} $zoomType={zoomType}>
       {zoomType === "in" ? "+" : "−"}
     </Button>
   );
 };
 
-const Button = styled.button<{ zoomType: "in" | "out" }>`
+const Button = styled.button<{ $zoomType: "in" | "out" }>`
   position: absolute;
   right: 20px;
-  top: ${({ zoomType }) => (zoomType === "in" ? "10px" : "55px")};
+  top: ${({ $zoomType }) => ($zoomType === "in" ? "10px" : "55px")};
   width: 30px;
   height: 30px;
   background-color: #ffffff;
@@ -60,16 +60,16 @@ const Button = styled.button<{ zoomType: "in" | "out" }>`
     transform: translateY(1px);
   }
 
-  ${({ zoomType }) =>
-    zoomType === "out" &&
+  ${({ $zoomType }) =>
+    $zoomType === "out" &&
     `
     border-top: none;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
   `}
 
-  ${({ zoomType }) =>
-    zoomType === "in" &&
+  ${({ $zoomType }) =>
+    $zoomType === "in" &&
     `
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;

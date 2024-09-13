@@ -9,7 +9,6 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { Rank } from "@/types/Rank";
 import { teams } from "@/utils/getTeamInfo";
-
 import Text from "../common/Text";
 import Button from "../common/Button";
 import RankPopup from "./RankPopup";

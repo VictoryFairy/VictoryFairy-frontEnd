@@ -4,7 +4,7 @@ import { ParkingInfo } from "@/types/Stadium";
 import Icon from "@/components/common/Icon";
 
 interface ParkingListProps {
-  parkingSpots: Omit<ParkingInfo, "stadium">[];
+  parkingSpots: Omit<ParkingInfo, "stadium">[] | undefined;
   onSelectParking: (spot: Omit<ParkingInfo, "stadium">) => void;
 }
 
@@ -16,6 +16,7 @@ const ParkingList = ({ parkingSpots, onSelectParking }: ParkingListProps) => {
     onSelectParking(spot);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+  if (!parkingSpots) return;
   return (
     <ParkingListContainer ref={itemRefs}>
       {parkingSpots.length === 0 && <div>주차 정보가 없습니다</div>}

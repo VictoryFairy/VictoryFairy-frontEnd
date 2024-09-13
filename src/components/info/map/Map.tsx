@@ -5,9 +5,10 @@ import LocationButton from "./LocationButton";
 import ZoomButton from "./ZoomButton";
 
 interface MapProps {
-  selectedStadium: Stadium;
-  parkingSpots: Omit<ParkingInfo, "stadium">[];
+  selectedStadium: Stadium | undefined;
+  parkingSpots: Omit<ParkingInfo, "stadium">[] | undefined;
   selectedParking: Omit<ParkingInfo, "stadium"> | null;
+  parkingInfosLoading: boolean;
 }
 
 const MapContainer = styled.div`
@@ -40,7 +41,12 @@ const createCustomInfoWindow = (content: string) => {
   return customInfo;
 };
 
-const Map = ({ selectedStadium, parkingSpots, selectedParking }: MapProps) => {
+const Map = ({
+  selectedStadium,
+  parkingSpots,
+  selectedParking,
+  parkingInfosLoading,
+}: MapProps) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const markersRef = useRef<naver.maps.Marker[]>([]);
   const [mapInstance, setMapInstance] = useState<naver.maps.Map | null>(null);
@@ -119,7 +125,7 @@ const Map = ({ selectedStadium, parkingSpots, selectedParking }: MapProps) => {
     markersRef.current.forEach((marker) => marker.setMap(null));
     markersRef.current = [];
 
-    parkingSpots.forEach((spot) => {
+    parkingSpots!.forEach((spot) => {
       const marker = createMarker(spot);
       if (marker) markersRef.current.push(marker);
     });
@@ -158,6 +164,9 @@ const Map = ({ selectedStadium, parkingSpots, selectedParking }: MapProps) => {
     };
   }, [selectedParking, mapInstance]);
 
+  if (parkingInfosLoading) {
+    return <div>로딩중..</div>;
+  }
   return (
     <MapContainer>
       <div ref={mapRef} style={{ width: "100%", height: "100%" }} />

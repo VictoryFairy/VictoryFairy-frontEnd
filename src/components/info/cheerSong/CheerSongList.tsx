@@ -25,8 +25,8 @@ export interface CheerSongListProps {
   lyricPreview?: string;
   jerseyNumber?: string;
   isLiked?: boolean;
-  selectedTeamId?: number;
-  activeTab?: number;
+  // selectedTeamId?: number;
+  // activeTab?: number;
   type?: string;
   searchTerm?: string;
   setRecentSearches?: (data: CheerSongListProps[]) => void;
@@ -38,8 +38,8 @@ const CheerSongList = ({
   lyricPreview,
   jerseyNumber,
   isLiked,
-  selectedTeamId,
-  activeTab,
+  // selectedTeamId,
+  // activeTab,
   type,
   searchTerm,
   setRecentSearches,
@@ -54,7 +54,6 @@ const CheerSongList = ({
       lyricPreview: lyricPreview || jerseyNumber,
     };
 
-    console.log(selectedTeamId, activeTab);
     const storedSearches = JSON.parse(
       localStorage.getItem("recentSearches") || "[]",
     ) as CheerSongListProps[];
@@ -92,6 +91,9 @@ const CheerSongList = ({
         queryKey: ["searchCheerSongs", searchTerm],
       });
     },
+    onError: () => {
+      alert("좋아요 실패했습니다");
+    },
   });
 
   const unlikeMutation = useMutation({
@@ -112,6 +114,9 @@ const CheerSongList = ({
       queryClient.invalidateQueries({
         queryKey: ["searchCheerSongs", searchTerm],
       });
+    },
+    onError: () => {
+      alert("좋아요 취소에 실패했습니다");
     },
   });
   const handleAddLike = () => {
@@ -138,7 +143,7 @@ const CheerSongList = ({
   return (
     <Container>
       <CheersInfo>
-        <TeamLogo teamName={teamName}>{teamName}</TeamLogo>
+        <TeamLogo teamname={teamName}>{teamName}</TeamLogo>
         <InfoWrapper>
           <CheersName onClick={handleNavigate}>{title}</CheersName>
           <Description>
@@ -196,10 +201,10 @@ const InfoWrapper = styled.div`
   align-items: flex-start;
 `;
 
-const TeamLogo = styled.div<{ teamName: TeamName }>`
+const TeamLogo = styled.div<{ teamname: TeamName }>`
   width: 60px;
   height: 35px;
-  background-color: ${({ teamName }) => teamColors[teamName]};
+  background-color: ${({ teamname }) => teamColors[teamname]};
   color: #ffffff;
   display: flex;
   align-items: center;
