@@ -209,6 +209,8 @@ const TeamButton = styled.button<{
   cursor: pointer;
   font-size: 15px;
   font-weight: bold;
+  height: 80px;
+  opacity: ${(props) => (props.selected ? 1 : 0.5)};
 `;
 
 const ButtonWrapper = styled.div`

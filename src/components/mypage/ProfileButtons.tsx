@@ -11,7 +11,11 @@ import WithDrawPopup from "./WithDrawPopup";
 
 const ProfileButtons = () => {
   const [isOpenDraw, setIsOpenDraw] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
+  };
   const openWithDrawPopup = useCallback(() => {
     setIsOpenDraw(true);
   }, []);
@@ -129,19 +133,47 @@ const ProfileButtons = () => {
               <Text variant='caption' color='var(--gray-700)'>
                 비밀번호
               </Text>
-              <input
-                type='password'
-                onChange={onPasswordChange}
-                value={password}
+              <div
                 style={{
                   width: "100%",
-                  height: "40px",
-                  border: "none",
-                  borderBottom: "1px solid var(--gray-400)",
-                  outline: "none",
-                  margin: "5px 0",
-                }}
-              />
+                  position: "relative",
+                }}>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  onChange={onPasswordChange}
+                  value={password}
+                  style={{
+                    width: "100%",
+                    height: "40px",
+                    border: "none",
+                    borderBottom: "1px solid var(--gray-400)",
+                    outline: "none",
+                    margin: "5px 0",
+                    paddingRight: "40px",
+                  }}
+                />
+                <button
+                  type='button'
+                  onClick={togglePasswordVisibility}
+                  style={{
+                    position: "absolute",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    right: "10px", // 오른쪽 끝으로 위치
+                    top: "50%", // 수직 중앙으로 위치
+                    transform: "translateY(-50%)", // 중앙 정렬
+                    width: "20px",
+                    height: "20px",
+                  }}>
+                  {showPassword ? (
+                    <Icon icon='IcShow' />
+                  ) : (
+                    <Icon icon='IcHide' />
+                  )}
+                </button>
+              </div>
+
               {isPasswordValid === false && (
                 <Text variant='caption' color='var(--red-600)'>
                   입력하신 비밀번호가 일치하지 않습니다.
@@ -222,7 +254,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: left;
   background-color: var(--white);
-  margin-top: 15px;
+  margin: 15px 0;
   padding: 10px 20px;
   > span {
     margin: 20px 0;

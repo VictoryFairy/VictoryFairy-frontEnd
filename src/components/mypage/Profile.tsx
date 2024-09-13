@@ -91,24 +91,28 @@ const Profile = () => {
           <Text variant='subtitle_02' color='var(--primary-color)'>
             승률
           </Text>
-          <Text variant='display' color='var(--primary-color)'>
-            {winPercentage}
+          <div>
+            <Text variant='display' color='var(--primary-color)'>
+              {winPercentage}
+            </Text>
             <Text variant='title_02' color='var(--primary-color)'>
               %
             </Text>
-          </Text>
+          </div>
         </ProfileInfoWrapper>
         <img src={user?.image || "/default-image.png"} alt='Profile' />
         <ProfileInfoWrapper>
           <Text variant='subtitle_02' color='var(--primary-color)'>
             승요력
           </Text>
-          <Text variant='display' color='var(--primary-color)'>
-            {record?.score || "N/A"}
+          <div>
+            <Text variant='display' color='var(--primary-color)'>
+              {record?.score || "N/A"}
+            </Text>
             <Text variant='title_02' color='var(--primary-color)'>
               P
             </Text>
-          </Text>
+          </div>
         </ProfileInfoWrapper>
       </ProfileWrapper>
     </Container>
@@ -148,12 +152,14 @@ const ProfileInfoWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
   :nth-child(2) {
     height: 46px;
     display: flex;
     align-items: center;
-    > span {
-      padding-left: 2px;
+    justify-content: center;
+    :nth-child(2) {
+      margin-left: 2px;
     }
   }
 `;
