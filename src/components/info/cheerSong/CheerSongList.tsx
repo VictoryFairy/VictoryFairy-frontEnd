@@ -143,7 +143,7 @@ const CheerSongList = ({
   return (
     <Container>
       <CheersInfo>
-        <TeamLogo teamName={teamName}>{teamName}</TeamLogo>
+        <TeamLogo teamname={teamName}>{teamName}</TeamLogo>
         <InfoWrapper>
           <CheersName onClick={handleNavigate}>{title}</CheersName>
           <Description>
@@ -201,10 +201,10 @@ const InfoWrapper = styled.div`
   align-items: flex-start;
 `;
 
-const TeamLogo = styled.div<{ teamName: TeamName }>`
+const TeamLogo = styled.div<{ teamname: TeamName }>`
   width: 60px;
   height: 35px;
-  background-color: ${({ teamName }) => teamColors[teamName]};
+  background-color: ${({ teamname }) => teamColors[teamname]};
   color: #ffffff;
   display: flex;
   align-items: center;

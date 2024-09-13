@@ -48,7 +48,7 @@ const TeamList = ({ setSelectedTeamId, selectedTeamId }: TeamListProps) => {
       <FixedTeamButton
         type='button'
         onClick={() => handleTeamClick(myCheerCategory)}
-        active={myCheerCategory.id === selectedTeamId}>
+        $active={myCheerCategory.id === selectedTeamId}>
         {myCheerCategory.name}
       </FixedTeamButton>
       <TeamLists>
@@ -57,7 +57,7 @@ const TeamList = ({ setSelectedTeamId, selectedTeamId }: TeamListProps) => {
             type='button'
             key={team.id}
             onClick={() => handleTeamClick(team)}
-            active={team.id === selectedTeamId}>
+            $active={team.id === selectedTeamId}>
             {team.name}
           </TeamButton>
         ))}
@@ -74,13 +74,13 @@ const TeamListContainer = styled.div`
   background-color: white;
 `;
 
-const FixedTeamButton = styled.button<{ active: boolean }>`
+const FixedTeamButton = styled.button<{ $active: boolean }>`
   flex-shrink: 0;
   margin-right: 10px;
   padding: 8px 16px;
   border: 2px solid gainsboro;
-  background-color: ${(props) => (props.active ? "#333" : "#fff")};
-  color: ${(props) => (props.active ? "#fff" : "#333")};
+  background-color: ${(props) => (props.$active ? "#333" : "#fff")};
+  color: ${(props) => (props.$active ? "#fff" : "#333")};
   border-radius: 10px;
   cursor: pointer;
   font-size: 14px;
@@ -98,13 +98,13 @@ const TeamLists = styled.div`
   }
 `;
 
-const TeamButton = styled.button<{ active: boolean }>`
+const TeamButton = styled.button<{ $active: boolean }>`
   flex-shrink: 0;
   margin-right: 10px;
   padding: 8px 16px;
   border: 2px solid gainsboro;
-  background-color: ${(props) => (props.active ? "#333" : "#fff")};
-  color: ${(props) => (props.active ? "#fff" : "#333")};
+  background-color: ${(props) => (props.$active ? "#333" : "#fff")};
+  color: ${(props) => (props.$active ? "#fff" : "#333")};
   border-radius: 10px;
   cursor: pointer;
   font-size: 14px;

@@ -37,7 +37,7 @@ const StadiumList = ({
             type='button'
             key={stadium.id}
             onClick={() => handleStadiumClick(stadium)}
-            active={stadium.id === selectedStadiumId}>
+            $active={stadium.id === selectedStadiumId}>
             {stadium.fullName}
           </TeamButton>
         ))}
@@ -64,12 +64,12 @@ const TeamList = styled.div`
   }
 `;
 
-const TeamButton = styled.button<{ active: boolean }>`
+const TeamButton = styled.button<{ $active: boolean }>`
   margin-right: 10px;
   padding: 8px 16px;
   border: 2px solid gainsboro;
-  background-color: ${(props) => (props.active ? "#333" : "#fff")};
-  color: ${(props) => (props.active ? "#fff" : "#333")};
+  background-color: ${(props) => (props.$active ? "#333" : "#fff")};
+  color: ${(props) => (props.$active ? "#fff" : "#333")};
   border-radius: 10px;
   cursor: pointer;
   font-size: 14px;

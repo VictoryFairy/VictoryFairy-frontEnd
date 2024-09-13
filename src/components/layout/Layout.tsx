@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import Header, { HeaderProps } from "../common/Header";
 import Footer from "../common/Footer";
+import ErrorBoundary from "../common/ErrorBoundary";
 
 interface LayoutProps extends HeaderProps {
   footer?: boolean;
@@ -9,13 +10,15 @@ interface LayoutProps extends HeaderProps {
 
 const Layout = ({ left, center, right, footer = true }: LayoutProps) => {
   return (
-    <LayoutConatiner>
-      <Header left={left} center={center} right={right} />
-      <MainWrapper>
-        <Outlet />
-      </MainWrapper>
-      {footer && <Footer />}
-    </LayoutConatiner>
+    <ErrorBoundary>
+      <LayoutConatiner>
+        <Header left={left} center={center} right={right} />
+        <MainWrapper>
+          <Outlet />
+        </MainWrapper>
+        {footer && <Footer />}
+      </LayoutConatiner>
+    </ErrorBoundary>
   );
 };
 
