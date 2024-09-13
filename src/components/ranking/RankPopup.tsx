@@ -33,10 +33,10 @@ const RankPopup = ({
 }: PopupProps) => {
   const [ranking, setRanking] = useState<Rank[]>([]);
   const [userMe, setUserMe] = useState<Rank | null>(null);
-  const { data, refetch: refetchRankList } = useQuery<Rank[]>({
+  const { data } = useQuery<Rank[]>({
     queryKey: ["getRankList", { teamId }],
     queryFn: () => getRankList(teamId),
-    staleTime: Infinity,
+    refetchOnWindowFocus: true,
   });
 
   useEffect(() => {
@@ -47,23 +47,13 @@ const RankPopup = ({
     setUserMe(me || "");
   }, [data]);
 
-  useEffect(() => {
-    refetchRankList();
-  }, []);
-
   return (
     <MotionPopup
       initial={{ y: "100%" }}
       animate={{ y: isOpen ? "0%" : "100%" }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
       drag={false}
-      dragElastic={0}
-      // onDragEnd={(_, info) => {
-      //   if (info.point.y > 600) {
-      //     handleClose();
-      //   }
-      // }}
-    >
+      dragElastic={0}>
       <RankPopupWrapper>
         <Text variant='headline' color='#545F71'>
           전체 랭킹
