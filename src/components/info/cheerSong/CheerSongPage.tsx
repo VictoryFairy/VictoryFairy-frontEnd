@@ -44,11 +44,13 @@ const CheerSongPage = () => {
   useEffect(() => {
     localStorage.setItem("tab", String(activeTab));
   }, [activeTab]);
+
   const {
     data: likedCheerSongsData,
     fetchNextPage: fetchNextLikedPage,
     hasNextPage: hasNextLikedPage,
     isFetchingNextPage: isFetchingNextLikedPage,
+    isError: isLikedCheerSongsError,
   } = useInfiniteQuery({
     queryKey: ["likedCheerSongs", activeTab],
     queryFn: async ({ pageParam = 0 }) => {
@@ -75,6 +77,7 @@ const CheerSongPage = () => {
     fetchNextPage: fetchNextCheerPage,
     hasNextPage: hasNextCheerPage,
     isFetchingNextPage: isFetchingNextCheerPage,
+    isError: isCheerSongsError,
   } = useInfiniteQuery({
     queryKey: ["cheerSongs", selectedTeamId, activeTab],
     queryFn: async ({ pageParam = 0 }) => {
@@ -134,6 +137,10 @@ const CheerSongPage = () => {
     isFetchingNextLikedPage,
   ]);
 
+  if (isCheerSongsError || isLikedCheerSongsError) {
+    return <div>서버에 에러가 발생했습니다</div>;
+  }
+
   return (
     <Container>
       <SearchBarWrapper onClick={() => navigate("/search-cheerSong")}>
@@ -173,8 +180,6 @@ const CheerSongPage = () => {
           ) : (
             likedCheerSongsData?.pages.map((cheerSong) => (
               <CheerSongList
-                selectedTeamId={selectedTeamId}
-                activeTab={activeTab}
                 key={cheerSong.id}
                 id={cheerSong.id}
                 teamName={cheerSong.team.name as TeamName}
@@ -195,8 +200,6 @@ const CheerSongPage = () => {
       {selectedTeamId !== 0 &&
         cheerSongsData?.pages.map((cheerSong) => (
           <CheerSongList
-            selectedTeamId={selectedTeamId}
-            activeTab={activeTab}
             key={cheerSong.id}
             id={cheerSong.id}
             teamName={cheerSong.team.name as TeamName}

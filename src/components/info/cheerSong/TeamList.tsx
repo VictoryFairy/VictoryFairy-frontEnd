@@ -10,7 +10,11 @@ interface TeamListProps {
 }
 
 const TeamList = ({ setSelectedTeamId, selectedTeamId }: TeamListProps) => {
-  const { data, isLoading } = useQuery<Team[]>({
+  const {
+    data: teamName,
+    isLoading,
+    isError,
+  } = useQuery<Team[]>({
     queryKey: ["teams"],
     queryFn: getTeams,
     staleTime: Infinity,
@@ -18,18 +22,19 @@ const TeamList = ({ setSelectedTeamId, selectedTeamId }: TeamListProps) => {
   const [sortedTeams, setSortedTeams] = useState<Team[]>([]);
 
   useEffect(() => {
-    if (data && sortedTeams.length === 0) {
-      const sorted = [...data].sort((a, b) => {
+    if (teamName && sortedTeams.length === 0) {
+      const sorted = [...teamName].sort((a, b) => {
         if (a.id === selectedTeamId) return -1;
         if (b.id === selectedTeamId) return 1;
         return 0;
       });
       setSortedTeams(sorted);
     }
-  }, [data, setSortedTeams, selectedTeamId]);
+  }, [teamName, setSortedTeams, selectedTeamId]);
 
   if (isLoading) return <div>로딩중...</div>;
-  if (!data) return null;
+  if (isError) return <div>서버 에러입니다</div>;
+  if (!teamName) return null;
 
   const myCheerCategory = { id: 0, name: "My 응원가" };
   // const cheersCat = [myCheerCategory, ...data];

@@ -25,8 +25,8 @@ export interface CheerSongListProps {
   lyricPreview?: string;
   jerseyNumber?: string;
   isLiked?: boolean;
-  selectedTeamId?: number;
-  activeTab?: number;
+  // selectedTeamId?: number;
+  // activeTab?: number;
   type?: string;
   searchTerm?: string;
   setRecentSearches?: (data: CheerSongListProps[]) => void;
@@ -38,8 +38,8 @@ const CheerSongList = ({
   lyricPreview,
   jerseyNumber,
   isLiked,
-  selectedTeamId,
-  activeTab,
+  // selectedTeamId,
+  // activeTab,
   type,
   searchTerm,
   setRecentSearches,
@@ -54,7 +54,6 @@ const CheerSongList = ({
       lyricPreview: lyricPreview || jerseyNumber,
     };
 
-    console.log(selectedTeamId, activeTab);
     const storedSearches = JSON.parse(
       localStorage.getItem("recentSearches") || "[]",
     ) as CheerSongListProps[];
@@ -92,6 +91,9 @@ const CheerSongList = ({
         queryKey: ["searchCheerSongs", searchTerm],
       });
     },
+    onError: () => {
+      alert("좋아요 실패했습니다");
+    },
   });
 
   const unlikeMutation = useMutation({
@@ -112,6 +114,9 @@ const CheerSongList = ({
       queryClient.invalidateQueries({
         queryKey: ["searchCheerSongs", searchTerm],
       });
+    },
+    onError: () => {
+      alert("좋아요 취소에 실패했습니다");
     },
   });
   const handleAddLike = () => {
