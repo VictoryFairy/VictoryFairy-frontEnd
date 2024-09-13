@@ -197,7 +197,7 @@ const CameraIconWrapper = styled.div`
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 `;
 const HiddenFileInput = styled.input`
   display: none;
