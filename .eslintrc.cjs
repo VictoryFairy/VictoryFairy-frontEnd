@@ -83,5 +83,7 @@ module.exports = {
     "import/no-cycle": "off",
     "no-nested-ternary": "off",
     "no-plusplus": "off",
+    "react/no-unused-state": "off",
+    "react/destructuring-assignment": "off",
   },
 };

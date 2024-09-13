@@ -27,36 +27,41 @@ const SearchCheerSong = () => {
     setRecentSearches(storedSearches);
   }, []);
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
-      queryKey: ["searchCheerSongs", searchTerm],
-      queryFn: async ({ pageParam = 0 }) => {
-        const response = await fetchSearchCheerSongs({
-          pageParam,
-          q: searchTerm,
-        });
-        return response;
-      },
-      getNextPageParam: (lastPage) => {
-        return lastPage.meta.hasNextData ? lastPage.meta.cursor : undefined;
-      },
-      initialPageParam: 0,
-      enabled: !!searchTerm,
-    });
+  const {
+    data: searchSongsData,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isError,
+  } = useInfiniteQuery({
+    queryKey: ["searchCheerSongs", searchTerm],
+    queryFn: async ({ pageParam = 0 }) => {
+      const response = await fetchSearchCheerSongs({
+        pageParam,
+        q: searchTerm,
+      });
+      return response;
+    },
+    getNextPageParam: (lastPage) => {
+      return lastPage.meta.hasNextData ? lastPage.meta.cursor : undefined;
+    },
+    initialPageParam: 0,
+    enabled: !!searchTerm,
+    select: (data) => ({
+      pages: data.pages.flatMap((page) => page.data),
+    }),
+  });
 
   useEffect(() => {
-    if (observer.current) observer.current.disconnect();
-
     const handleObserver = (entries: IntersectionObserverEntry[]) => {
       const target = entries[0];
+
       if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
         fetchNextPage();
       }
     };
 
-    observer.current = new IntersectionObserver(handleObserver, {
-      rootMargin: "100px",
-    });
+    observer.current = new IntersectionObserver(handleObserver);
 
     if (lastElementRef.current) {
       observer.current.observe(lastElementRef.current);
@@ -73,6 +78,9 @@ const SearchCheerSong = () => {
 
   const handleSearch = () => {};
 
+  if (isError) {
+    return <div>서버 에러입니다</div>;
+  }
   return (
     <Container>
       <HeaderContainer>
@@ -116,26 +124,23 @@ const SearchCheerSong = () => {
         </>
       )}
       <div className='list'>
-        {data?.pages.map((page, index) => (
-          <div key={index}>
-            {page.data.map((cheerSong) => (
-              <CheerSongList
-                key={cheerSong.id}
-                id={cheerSong.id}
-                teamName={cheerSong.team.name as TeamName}
-                title={cheerSong.title}
-                lyricPreview={cheerSong.lyricsPreview}
-                isLiked={cheerSong.isLiked}
-                jerseyNumber={
-                  cheerSong.player
-                    ? cheerSong.player.jerseyNumber.toString()
-                    : undefined
-                }
-                searchTerm={searchTerm}
-              />
-            ))}
-          </div>
+        {searchSongsData?.pages.map((cheerSong) => (
+          <CheerSongList
+            key={cheerSong.id}
+            id={cheerSong.id}
+            teamName={cheerSong.team.name as TeamName}
+            title={cheerSong.title}
+            lyricPreview={cheerSong.lyricsPreview}
+            isLiked={cheerSong.isLiked}
+            jerseyNumber={
+              cheerSong.player
+                ? cheerSong.player.jerseyNumber.toString()
+                : undefined
+            }
+            searchTerm={searchTerm}
+          />
         ))}
+
         {isFetchingNextPage && <div>Loading more...</div>}
         <div ref={lastElementRef} />
       </div>
