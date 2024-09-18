@@ -91,6 +91,10 @@ const RankingTab = () => {
               style={{
                 color:
                   teamTab === element.name ? "var(--white)" : "var(--gray-400)",
+                border:
+                  teamTab === element.name
+                    ? "none"
+                    : "1px solid var(--gray-100)",
               }}
               styletype={teamTab === element.name ? "default" : "outline"}
               key={index}
