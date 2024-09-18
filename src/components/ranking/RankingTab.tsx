@@ -125,7 +125,7 @@ const RankingTab = () => {
               }
             />
             <Text variant='title_02'>
-              {textChange(secondRank?.nickname || "")}
+              {textChange(secondRank?.nickname || "-")}
             </Text>
             <div>2</div>
           </RankWrapper>
@@ -137,7 +137,7 @@ const RankingTab = () => {
               }
             />
             <Text variant='title_02'>
-              {textChange(firstRank?.nickname || "")}
+              {textChange(firstRank?.nickname || "-")}
             </Text>
             <div>1</div>
           </FirstRankWrapper>
@@ -149,7 +149,7 @@ const RankingTab = () => {
               }
             />
             <Text variant='title_02'>
-              {textChange(thirdRank?.nickname || "")}
+              {textChange(thirdRank?.nickname || "-")}
             </Text>
             <div>3</div>
           </RankWrapper>

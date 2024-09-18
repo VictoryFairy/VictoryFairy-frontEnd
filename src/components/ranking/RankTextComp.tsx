@@ -11,7 +11,7 @@ const RankTextComp = ({
   return (
     <RankText>
       <RankTextLeft>
-        <span>{rank}</span>
+        <Text variant='title_01'>{rank}</Text>
         <img src={image} alt='#' />
         <Text variant='title_01' color='var(--gray-400)'>
           {nickname}

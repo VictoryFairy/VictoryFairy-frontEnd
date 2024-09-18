@@ -117,13 +117,18 @@ const RankBar = ({ data, tab }: RankBarProps) => {
         },
         ticks: {
           font: {
-            size: 9,
-            weight: 400,
+            family: "Spoqa Han Sans Neo",
+            size: 12,
+            weight: "normal",
+            lineHeight: 1.33,
           },
+          color: "rgba(137, 140, 155, 1)",
+          align: "center",
         },
       },
       y: {
         beginAtZero: true,
+        min: -10,
         ticks: {
           display: false,
         },
