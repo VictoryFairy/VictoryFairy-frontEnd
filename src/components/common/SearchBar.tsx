@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import search from "@/assets/Icons/search.svg";
 import { typography } from "@/style/typography";
+import Icon from "./Icon";
 
 interface SearchBarProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
@@ -48,7 +48,7 @@ const SearchBar = ({
         onKeyDown={handleKeyDown}
         {...inputProps}
       />
-      <SearchIcon src={search} onClick={onSearch} />
+      <Icon icon='IcSearch' cursor='pointer' />
     </SearchBarWrapper>
   );
 };
@@ -66,12 +66,7 @@ const SearchInput = styled.input`
   border: none;
   background: transparent;
   outline: none;
-  ${typography.title_01}
-`;
-
-const SearchIcon = styled.img`
-  color: #888;
-  cursor: pointer;
+  ${typography.body_01}
 `;
 
 export default SearchBar;

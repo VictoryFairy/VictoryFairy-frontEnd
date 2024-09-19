@@ -8,10 +8,10 @@ import { useAuthStore } from "@/store/authStore";
 import SelectionBar from "@/components/common/SelectionBar";
 import Text from "@/components/common/Text";
 import { typography } from "@/style/typography";
+import Icon from "@/components/common/Icon";
 import TeamList from "./TeamList";
 import CheerSongList, { TeamName } from "./CheerSongList";
 import empty from "../../../assets/images/cheersEmpty/Group 625793.png";
-import search from "../../../assets/Icons/search.svg";
 
 const CheerSongPage = () => {
   const { teamId } = useAuthStore();
@@ -145,7 +145,7 @@ const CheerSongPage = () => {
     <Container>
       <SearchBarWrapper onClick={() => navigate("/search-cheerSong")}>
         <SearchInput placeholder='선수명, 제목, 가사를 입력해주세요' />
-        <SearchIcon src={search} />
+        <Icon icon='IcSearch' cursor='pointer' />
       </SearchBarWrapper>
       <TeamList
         selectedTeamId={selectedTeamId}
@@ -165,7 +165,13 @@ const CheerSongPage = () => {
         <div>
           {likedCheerSongsData?.pages.length === 0 ? (
             <EmptyState>
-              <img src={empty} alt='No liked cheer songs' />
+              <img
+                src={empty}
+                alt='No liked cheer songs'
+                style={{
+                  width: "300px",
+                }}
+              />
               <div
                 style={{
                   display: "flex",
@@ -228,7 +234,7 @@ const Container = styled.div`
 
   .line {
     width: 100%;
-    height: 20px;
+    height: 16px;
     background-color: var(--gray-50);
   }
   .selectContainer {
@@ -258,12 +264,7 @@ const SearchInput = styled.input`
   border: none;
   background: transparent;
   outline: none;
-  ${typography.title_01}
-`;
-
-const SearchIcon = styled.img`
-  color: #888;
-  cursor: pointer;
+  ${typography.body_01}
 `;
 
 const EmptyState = styled.div`
@@ -272,7 +273,7 @@ const EmptyState = styled.div`
   gap: 20px;
   justify-content: center;
   align-items: center;
-  height: 200px;
+  height: 300px;
 `;
 
 export default CheerSongPage;
