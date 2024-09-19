@@ -98,7 +98,7 @@ const InputContainer = styled.div`
 const InputLabel = styled.label`
   display: block;
   margin-bottom: 8px;
-  font-weight: bold;
+  ${typography.caption}
 `;
 
 const InputWrapper = styled.div`
