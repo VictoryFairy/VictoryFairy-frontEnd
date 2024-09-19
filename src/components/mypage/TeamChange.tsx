@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { usePopup } from "@/hooks/usePopup";
@@ -91,8 +91,15 @@ const TeamChange = () => {
   const navigate = useNavigate();
   const { renderPopup, openPopup } = usePopup();
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
-  const { updateTeamId } = useAuthStore();
-
+  const { updateTeamId, teamId } = useAuthStore();
+  useEffect(() => {
+    if (teamId) {
+      const team = teams.find((element) => element.id === teamId);
+      if (team) {
+        setSelectedTeam(team);
+      }
+    }
+  }, []);
   const handleBtnClick = () => {
     if (selectedTeam) {
       profileChange("teamId", selectedTeam?.id);

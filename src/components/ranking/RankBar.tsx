@@ -171,7 +171,7 @@ const BarWrapper = styled.div`
   padding-right: 10px;
   > canvas {
     width: 100% !important;
-    animation: ${fadeIn} 1s ease-out; /* Apply the fade-in animation */
+    animation: ${fadeIn} 0.8s ease-out;
   }
 `;
 
