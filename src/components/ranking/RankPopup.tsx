@@ -25,7 +25,6 @@ interface PopupProps {
 
 const RankPopup = ({
   isOpen,
-  // handleClose,
   teamId,
   withUser,
   totalGames,
@@ -33,6 +32,8 @@ const RankPopup = ({
 }: PopupProps) => {
   const [ranking, setRanking] = useState<Rank[]>([]);
   const [userMe, setUserMe] = useState<Rank | null>(null);
+  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+
   const { data } = useQuery<Rank[]>({
     queryKey: ["getRankList", { teamId }],
     queryFn: () => getRankList(teamId),
@@ -47,6 +48,9 @@ const RankPopup = ({
     setUserMe(me || "");
   }, [data]);
 
+  const handleRankClick = (userId: number) => {
+    setSelectedUserId(userId);
+  };
   return (
     <MotionPopup
       initial={{ y: "100%" }}
@@ -67,6 +71,8 @@ const RankPopup = ({
               image={element.image}
               nickname={element.nickname}
               userId={element.userId}
+              onClick={() => handleRankClick(element.userId!)}
+              isSelected={selectedUserId === element.userId}
             />
           ))}
         </RankTextWrapper>
