@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { typography } from "@/style/typography";
 import ParkingInfoPage from "../components/info/map/ParkingInfoPage";
 import CheerSongPage from "../components/info/cheerSong/CheerSongPage";
 
@@ -46,16 +47,13 @@ const Container = styled.div`
 `;
 const Tabs = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 16px;
 `;
 
 const TabButton = styled.button<{ $active: boolean }>`
-  padding: 15px 0;
-  border: none;
-  background: transparent;
+  margin: 15px 0;
+  ${typography.display}
   color: ${({ $active }) => ($active ? "#000" : "#888")};
-  font-size: 18px;
-  font-weight: ${({ $active }) => ($active ? "bold" : "normal")};
   cursor: pointer;
 `;
 
