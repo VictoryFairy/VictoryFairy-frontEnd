@@ -3,9 +3,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import styled from "styled-components";
 import { UserInfo } from "@/types/User";
+import { typography } from "@/style/typography";
 import TitleSection from "../common/TitleSection";
 import InputField from "../common/InputField";
 import Button from "../common/Button";
+import Icon from "../common/Icon";
 
 interface PasswordValidProps {
   setstep: (step: number) => void;
@@ -70,13 +72,26 @@ const PasswordValid = ({ setstep, handleSetUserInfo }: PasswordValidProps) => {
             watch={watch}
             setValue={setValue}
           />
+          <p className='message'>비밀번호에 다음 사항들을 포함해 주세요:</p>
           <ValidationMessage $isValid={lengthValid}>
+            <StyledIcon
+              icon='IcArrowDown'
+              fill={lengthValid ? "black" : "gray"}
+            />
             8글자 이상
           </ValidationMessage>
           <ValidationMessage $isValid={uppercaseValid}>
+            <StyledIcon
+              icon='IcArrowDown'
+              fill={uppercaseValid ? "black" : "gray"}
+            />
             대문자 1개 이상 포함
           </ValidationMessage>
           <ValidationMessage $isValid={specialCharValid}>
+            <StyledIcon
+              icon='IcArrowDown'
+              fill={specialCharValid ? "black" : "gray"}
+            />
             특수문자 1개 이상 포함, 다음제외 : ( ), &lt; &gt;, &quot, ;
           </ValidationMessage>
         </InputWrapper>
@@ -105,6 +120,10 @@ const Form = styled.form`
 
 const InputWrapper = styled.div`
   flex: 1;
+  .message {
+    margin-bottom: 12px;
+    ${typography.body_01}
+  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -117,5 +136,7 @@ const ValidationMessage = styled.p<{ $isValid: boolean }>`
   font-size: 14px;
   margin-top: 5px;
 `;
-
+const StyledIcon = styled(Icon)`
+  margin-right: 8px;
+`;
 export default PasswordValid;

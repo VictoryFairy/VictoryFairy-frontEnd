@@ -59,11 +59,11 @@ const EmailValid = ({ setstep, handleSetUserInfo }: EmailValidProps) => {
             name='email'
             label='이메일'
             placeholder='이메일 입력'
-            maxLength={50}
             register={register}
             watch={watch}
             setValue={setValue}
             error={errors.email}
+            hasLabel={false}
           />
         </InputWrapper>
         <ButtonWrapper>

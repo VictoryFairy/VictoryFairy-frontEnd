@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
+import { typography } from "@/style/typography";
 import Button from "../components/common/Button";
 import TitleSection from "../components/common/TitleSection";
 import InputField from "../components/common/InputField";
@@ -99,9 +100,9 @@ const InputWrapper = styled.div`
   flex: 1;
 `;
 const ForgotPasswordLink = styled(Link)`
-  color: black;
   display: flex;
   justify-content: flex-end;
+  ${typography.subtitle_01}
 `;
 const ButtonWrapper = styled.div``;
 
