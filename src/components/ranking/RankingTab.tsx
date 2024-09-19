@@ -91,6 +91,10 @@ const RankingTab = () => {
               style={{
                 color:
                   teamTab === element.name ? "var(--white)" : "var(--gray-400)",
+                border:
+                  teamTab === element.name
+                    ? "none"
+                    : "1px solid var(--gray-100)",
               }}
               styletype={teamTab === element.name ? "default" : "outline"}
               key={index}
@@ -121,7 +125,7 @@ const RankingTab = () => {
               }
             />
             <Text variant='title_02'>
-              {textChange(secondRank?.nickname || "")}
+              {textChange(secondRank?.nickname || "-")}
             </Text>
             <div>2</div>
           </RankWrapper>
@@ -133,7 +137,7 @@ const RankingTab = () => {
               }
             />
             <Text variant='title_02'>
-              {textChange(firstRank?.nickname || "")}
+              {textChange(firstRank?.nickname || "-")}
             </Text>
             <div>1</div>
           </FirstRankWrapper>
@@ -145,7 +149,7 @@ const RankingTab = () => {
               }
             />
             <Text variant='title_02'>
-              {textChange(thirdRank?.nickname || "")}
+              {textChange(thirdRank?.nickname || "-")}
             </Text>
             <div>3</div>
           </RankWrapper>
@@ -249,7 +253,7 @@ const TeamTabWrapper = styled.div`
 `;
 
 const RankTopWrapper = styled.div`
-  height: 384px;
+  height: 400px;
   border-radius: 12px;
   padding: 20px;
   margin-top: 20px;

@@ -12,7 +12,7 @@ const MyRankComp = ({ totalGames, win, withUser }: MyRankCompType) => {
     <>
       <MyRank>
         <RankTextLeft>
-          <span>{withUser?.rank}</span>
+          <Text variant='title_01'>{withUser?.rank}</Text>
           <img src={withUser?.image} alt='#' />
           <Text variant='title_01'>{withUser?.nickname}</Text>
         </RankTextLeft>
@@ -28,7 +28,7 @@ const MyRankComp = ({ totalGames, win, withUser }: MyRankCompType) => {
         </Text>
         <Text variant='caption' color='var(--gray-900)'>
           {Number.isNaN((win / totalGames) * 100)
-            ? "데이터 없음"
+            ? "-%"
             : `${((win / totalGames) * 100).toFixed(2)}%`}
         </Text>
       </MyRanks>

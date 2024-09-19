@@ -160,9 +160,9 @@ const ProfileButtons = () => {
                     background: "none",
                     border: "none",
                     cursor: "pointer",
-                    right: "10px", // 오른쪽 끝으로 위치
-                    top: "50%", // 수직 중앙으로 위치
-                    transform: "translateY(-50%)", // 중앙 정렬
+                    right: "10px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
                     width: "20px",
                     height: "20px",
                   }}>

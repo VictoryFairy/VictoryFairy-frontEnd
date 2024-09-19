@@ -2,16 +2,25 @@ import styled from "styled-components";
 import { Rank } from "@/types/Rank";
 import Text from "../common/Text";
 
+interface RankComp extends Rank {
+  isSelected: boolean;
+  onClick: () => void;
+}
+
 const RankTextComp = ({
   rank,
   score,
   nickname,
   image,
-}: Omit<Rank, "user_id">) => {
+  isSelected,
+  onClick,
+}: Omit<RankComp, "user_id">) => {
   return (
-    <RankText>
+    <RankText onClick={onClick} isSelected={isSelected}>
       <RankTextLeft>
-        <span>{rank}</span>
+        <Text variant='title_01' color='var(--gray-400)'>
+          {rank}
+        </Text>
         <img src={image} alt='#' />
         <Text variant='title_01' color='var(--gray-400)'>
           {nickname}
@@ -24,7 +33,7 @@ const RankTextComp = ({
   );
 };
 
-const RankText = styled.div`
+const RankText = styled.div<{ isSelected: boolean }>`
   width: 100%;
   height: 48px;
   border-radius: 8px;
@@ -32,6 +41,13 @@ const RankText = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: ${(props) =>
+    props.isSelected ? "rgb(245,245,245,1)" : "var(--white)"};
+  > :nth-child(1) > span,
+  span {
+    color: ${(props) =>
+      props.isSelected ? "var(--black)" : "var(--gray-400)"};
+  }
 `;
 
 const RankTextLeft = styled.div`

@@ -243,6 +243,7 @@ const router = createBrowserRouter([
       <Layout
         center={<MiddelWrapper>내 승률</MiddelWrapper>}
         left={<BackButton />}
+        footer={false}
       />
     ),
     children: [

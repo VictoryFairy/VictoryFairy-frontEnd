@@ -11,7 +11,7 @@ import {
   ChartOptions,
   ChartData,
 } from "chart.js";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { useAuthStore } from "@/store/authStore";
 
 const teamColor = [
@@ -27,6 +27,16 @@ const teamColor = [
   ["#FFC41F", "#FF6600", "#FFEAB1"], // 10 한화
 ];
 
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px); /* Slide in from below */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -123,7 +133,6 @@ const RankBar = ({ data, tab }: RankBarProps) => {
         },
       },
       y: {
-        beginAtZero: true,
         ticks: {
           display: false,
         },
@@ -146,6 +155,7 @@ const RankBar = ({ data, tab }: RankBarProps) => {
         display: false,
       },
     },
+    animation: false,
   };
 
   return (
@@ -161,7 +171,7 @@ const BarWrapper = styled.div`
   padding-right: 10px;
   > canvas {
     width: 100% !important;
-    height: 120px !important;
+    animation: ${fadeIn} 0.8s ease-out;
   }
 `;
 
