@@ -253,7 +253,7 @@ const TeamTabWrapper = styled.div`
 `;
 
 const RankTopWrapper = styled.div`
-  height: 384px;
+  height: 400px;
   border-radius: 12px;
   padding: 20px;
   margin-top: 20px;
