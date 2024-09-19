@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useRef } from "react";
 import { ParkingInfo } from "@/types/Stadium";
 import Icon from "@/components/common/Icon";
+import { typography } from "@/style/typography";
 
 interface ParkingListProps {
   parkingSpots: Omit<ParkingInfo, "stadium">[] | undefined;
@@ -33,7 +34,6 @@ const ParkingList = ({ parkingSpots, onSelectParking }: ParkingListProps) => {
           <RightContent>
             <Icon
               icon='IcNaver'
-              fill='#03C75A'
               onClick={() => (window.location.href = spot.link)}
             />
             <Icon icon='IcArrowRight' />
@@ -76,17 +76,16 @@ const RightContent = styled.div`
 const ParkingInf = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 8px;
 `;
 
 const ParkingName = styled.span`
-  font-size: 14px;
-  font-weight: bold;
-  color: #333;
+  ${typography.subtitle_03}
 `;
 
 const ParkingAddress = styled.span`
-  font-size: 12px;
-  color: #666;
+  ${typography.body_01}
+  color :#898C9B
 `;
 
 export default ParkingList;

@@ -53,7 +53,7 @@ const LocationButton = ({ mapInstance }: LocationButtonProps) => {
 
   return (
     <Button onClick={moveToMyLocation} disabled={isLoading}>
-      {isLoading ? <Spinner /> : <Icon icon='IcLocation' />}
+      {isLoading ? <Spinner /> : <Icon icon='IcCurrentLocation' />}
     </Button>
   );
 };
@@ -66,9 +66,7 @@ const Button = styled.button`
   height: 35px;
   padding: 5px;
   background-color: #ffffff;
-  border: 2px solid #dddddd;
   border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   font-size: 14px;
   font-weight: bold;
