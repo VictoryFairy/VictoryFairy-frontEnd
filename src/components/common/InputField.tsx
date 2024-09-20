@@ -110,7 +110,8 @@ const StyledInput = styled.input<{ $hasError?: boolean }>`
   padding: 10px 0px;
   outline: none;
   border: none;
-  border-bottom: 1px solid ${(props) => (props.$hasError ? "red" : "#ccc")};
+  border-bottom: none;
+  box-shadow: inset 0 -1px 0 0 ${(props) => (props.$hasError ? "red" : "#ccc")};
   ${typography.body_02};
 `;
 
