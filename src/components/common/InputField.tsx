@@ -113,6 +113,10 @@ const StyledInput = styled.input<{ $hasError?: boolean }>`
   border-bottom: none;
   box-shadow: inset 0 -1px 0 0 ${(props) => (props.$hasError ? "red" : "#ccc")};
   ${typography.body_02};
+  border-radius: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 `;
 
 const CharCount = styled.span`
