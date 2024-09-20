@@ -6,6 +6,7 @@ import {
   UseFormWatch,
   UseFormSetValue,
 } from "react-hook-form";
+import { typography } from "@/style/typography";
 import Icon from "./Icon";
 
 interface InputFieldProps
@@ -18,6 +19,7 @@ interface InputFieldProps
   error?: FieldError;
   maxLength?: number;
   clearable?: boolean;
+  hasLabel?: boolean;
 }
 
 const InputField = ({
@@ -30,6 +32,7 @@ const InputField = ({
   watch,
   setValue,
   clearable = true,
+  hasLabel = true,
   error,
   ...inputProps
 }: InputFieldProps) => {
@@ -47,7 +50,7 @@ const InputField = ({
   return (
     <InputContainer>
       <div className='labelWrapper'>
-        <InputLabel htmlFor={name}>{label}</InputLabel>
+        {hasLabel && <InputLabel htmlFor={name}>{label}</InputLabel>}
         {maxLength && (
           <CharCount>
             {currentLength}/{maxLength}
@@ -95,7 +98,7 @@ const InputContainer = styled.div`
 const InputLabel = styled.label`
   display: block;
   margin-bottom: 8px;
-  font-weight: bold;
+  ${typography.caption}
 `;
 
 const InputWrapper = styled.div`
@@ -107,7 +110,9 @@ const StyledInput = styled.input<{ $hasError?: boolean }>`
   padding: 10px 0px;
   outline: none;
   border: none;
-  border-bottom: 1px solid ${(props) => (props.$hasError ? "red" : "#ccc")};
+  border-bottom: none;
+  box-shadow: inset 0 -1px 0 0 ${(props) => (props.$hasError ? "red" : "#ccc")};
+  ${typography.body_02};
 `;
 
 const CharCount = styled.span`

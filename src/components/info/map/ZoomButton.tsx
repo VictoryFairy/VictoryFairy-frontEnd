@@ -1,3 +1,4 @@
+import Icon from "@/components/common/Icon";
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -27,7 +28,7 @@ const ZoomButton = ({ mapInstance, zoomType }: ZoomButtonProps) => {
 
   return (
     <Button onClick={handleZoom} $zoomType={zoomType}>
-      {zoomType === "in" ? "+" : "−"}
+      {zoomType === "in" ? <Icon icon='IcPlus' /> : <Icon icon='IcMinus' />}
     </Button>
   );
 };
@@ -39,10 +40,7 @@ const Button = styled.button<{ $zoomType: "in" | "out" }>`
   width: 30px;
   height: 30px;
   background-color: #ffffff;
-
-  border: 1px solid #dddddd;
   border-radius: 4px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   font-size: 24px;
   font-weight: bold;

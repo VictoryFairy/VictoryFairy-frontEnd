@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Team } from "@/types/Team";
 import { getTeams } from "@/api/info/info.api";
 import { useEffect, useState } from "react";
+import { getFullTemName } from "@/utils/getFullTeamName";
 
 interface TeamListProps {
   selectedTeamId: number;
@@ -18,6 +19,7 @@ const TeamList = ({ setSelectedTeamId, selectedTeamId }: TeamListProps) => {
     queryKey: ["teams"],
     queryFn: getTeams,
     staleTime: Infinity,
+    select: (teams) => getFullTemName(teams),
   });
   const [sortedTeams, setSortedTeams] = useState<Team[]>([]);
 
@@ -72,16 +74,16 @@ const TeamListContainer = styled.div`
   overflow: hidden;
   margin-bottom: 20px;
   background-color: white;
+  gap: 20px;
 `;
 
 const FixedTeamButton = styled.button<{ $active: boolean }>`
   flex-shrink: 0;
-  margin-right: 10px;
   padding: 8px 16px;
-  border: 2px solid gainsboro;
+  border: 1px solid gainsboro;
   background-color: ${(props) => (props.$active ? "#333" : "#fff")};
   color: ${(props) => (props.$active ? "#fff" : "#333")};
-  border-radius: 10px;
+  border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
   white-space: nowrap;
@@ -89,6 +91,7 @@ const FixedTeamButton = styled.button<{ $active: boolean }>`
 
 const TeamLists = styled.div`
   display: flex;
+  gap: 20px;
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
@@ -100,12 +103,11 @@ const TeamLists = styled.div`
 
 const TeamButton = styled.button<{ $active: boolean }>`
   flex-shrink: 0;
-  margin-right: 10px;
   padding: 8px 16px;
-  border: 2px solid gainsboro;
+  border: 1px solid gainsboro;
   background-color: ${(props) => (props.$active ? "#333" : "#fff")};
   color: ${(props) => (props.$active ? "#fff" : "#333")};
-  border-radius: 10px;
+  border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
   white-space: nowrap;

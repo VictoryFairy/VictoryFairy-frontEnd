@@ -159,7 +159,6 @@ const CheerSongList = ({
             {isLiked ? (
               <Icon
                 icon='IcHeartFill'
-                fill='red'
                 cursor='pointer'
                 onClick={handleRemoveLike}
               />
@@ -209,8 +208,9 @@ const TeamLogo = styled.div<{ teamname: TeamName }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
-  font-weight: bold;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: medium;
   margin-right: 12px;
 `;
 

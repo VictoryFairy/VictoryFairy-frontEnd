@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useRef, useEffect } from "react";
 import { Stadium } from "@/types/Stadium";
+import { typography } from "@/style/typography";
 
 interface StadiumListProps {
   selectedStadiumId: number;
@@ -67,12 +68,12 @@ const TeamList = styled.div`
 const TeamButton = styled.button<{ $active: boolean }>`
   margin-right: 10px;
   padding: 8px 16px;
-  border: 2px solid gainsboro;
+  border: 1px solid gainsboro;
   background-color: ${(props) => (props.$active ? "#333" : "#fff")};
   color: ${(props) => (props.$active ? "#fff" : "#333")};
-  border-radius: 10px;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
+  ${typography.subtitle_01}
   white-space: nowrap;
 
   &:last-child {
