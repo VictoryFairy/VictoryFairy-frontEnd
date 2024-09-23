@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useEffect } from "react";
-import { findCheerTeam } from "@/utils/findCheerTeam";
+import { setCheerTeamFirst } from "@/utils/setCheerTeamFirst";
 import { Game } from "../../types/Game";
 import DailyMatchItem from "./DailyMatchItem";
 
@@ -15,25 +15,23 @@ const DailyMatch = ({
   selectedMatch,
   setSelectedMatch,
 }: DailyMatchProps) => {
-  const formatMatches = findCheerTeam(matches);
+  const formatMatches = setCheerTeamFirst(matches);
+
   useEffect(() => {
-    setSelectedMatch(formatMatches!);
-  }, [formatMatches, setSelectedMatch]);
+    setSelectedMatch(formatMatches[0]);
+  }, [matches, setSelectedMatch]);
 
   return (
     <DailyMatchContainer>
-      {formatMatches ? (
-        <DailyMatchItem
-          key={formatMatches.id}
-          match={formatMatches}
-          $isSelected={selectedMatch?.id === formatMatches.id}
-          onSelect={() => setSelectedMatch(formatMatches)}
-        />
-      ) : (
-        <div>
-          <p>경기가 없습니다.</p>
-        </div>
-      )}
+      {formatMatches &&
+        formatMatches.map((match) => (
+          <DailyMatchItem
+            key={match.id}
+            match={match}
+            $isSelected={selectedMatch?.id === match.id}
+            onSelect={() => setSelectedMatch(match)}
+          />
+        ))}
     </DailyMatchContainer>
   );
 };
