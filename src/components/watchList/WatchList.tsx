@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useState, useMemo } from "react";
 import { GameStatus, MyGame } from "@/types/Game";
-import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { useRegisteredGame } from "@/hooks/useRegisteredGame";
 import ListTab from "./ListTab/ListTab";

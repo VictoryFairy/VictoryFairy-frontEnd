@@ -1,9 +1,9 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
 import { Game } from "../../types/Game";
 import Radio from "../common/Radio";
 import Text from "../common/Text";
 import Icon from "../common/Icon";
-import { motion } from "framer-motion";
 
 interface DailyMatchItemProps {
   match: Game;
