@@ -3,21 +3,29 @@ import { useState, useEffect, useRef } from "react";
 import { Team } from "@/types/Game";
 import Icon from "../common/Icon";
 import Text from "../common/Text";
+import { UseFormSetValue, UseFormWatch } from "react-hook-form";
 
 interface CheerTeamSelectProps {
   setCheeringTeamId: (id: number) => void;
   awayTeam: Team;
   homeTeam: Team;
+  name: string;
+  watch: UseFormWatch<any>;
+  setValue: UseFormSetValue<any>;
 }
 
 const CheerTeamSelect = ({
   setCheeringTeamId,
   awayTeam,
   homeTeam,
+  name,
+  setValue,
+  watch,
 }: CheerTeamSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [cheeringTeam, setCheeringTeam] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const cheeringTeamId = watch(name);
 
   const handleClickSelect = () => {
     setIsOpen(!isOpen);
@@ -42,9 +50,16 @@ const CheerTeamSelect = ({
 
   const handleSelectItem = (team: Team) => {
     setCheeringTeamId(team.id);
-    setCheeringTeam(team.name);
+    setValue(name, team.id);
     setIsOpen(false);
   };
+
+  const selectedTeam =
+    cheeringTeamId === homeTeam.id
+      ? homeTeam.name
+      : cheeringTeamId === awayTeam.id
+        ? awayTeam.name
+        : null;
 
   return (
     <CheerTeamSelectContainer ref={dropdownRef}>
@@ -56,10 +71,10 @@ const CheerTeamSelect = ({
         onClick={handleClickSelect}
         className='select'
         tabIndex={0}>
-        {cheeringTeam === null ? (
+        {selectedTeam === null ? (
           <Text variant='subtitle_02'>응원팀을 선택해주세요</Text>
         ) : (
-          <Text variant='subtitle_02'>{cheeringTeam}</Text>
+          <Text variant='subtitle_02'>{selectedTeam}</Text>
         )}
         <Icon icon='IcArrowDown' />
       </div>

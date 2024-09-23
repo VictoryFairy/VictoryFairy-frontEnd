@@ -1,30 +1,27 @@
 import { useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
-import { Game, MyGame } from "@/types/Game";
+import { Game } from "@/types/Game";
 import { postRegisterGame } from "@/api/register/register";
-import { useAuthStore } from "@/store/authStore";
 import { usePopup } from "@/hooks/usePopup";
-import { GameListItemContainer } from "@/components/common/GameListItem";
-import ResultLabel from "@/components/common/ResultLabel";
-import Text from "@/components/common/Text";
+import GameListItem from "@/components/common/GameListItem";
 import styled from "styled-components";
-import Icon from "@/components/common/Icon";
 import { uploadImg } from "@/utils/uploadImg";
 import RegisterFormFields from "@/components/register/RegisterFormFields";
+import { useState } from "react";
 
 const RegisterForm = () => {
   const location = useLocation();
   const { match } = location.state as { match: Game };
   const matchId = match.id;
   const { register, watch, handleSubmit, setValue } = useForm();
-  const { teamId } = useAuthStore();
+  const [cheeringTeamId, setCheeringTeamId] = useState<number | null>(null);
   const { openPopup, renderPopup, closePopup } = usePopup();
 
   const onSubmit = async (data: any) => {
     try {
       const { img, seat, review } = data;
       let image = null;
-      if (img.size > 0) {
+      if (img) {
         image = await uploadImg(img);
       }
 
@@ -33,7 +30,7 @@ const RegisterForm = () => {
         image,
         seat,
         review,
-        cheeringTeamId: teamId,
+        cheeringTeamId,
       };
 
       await postRegisterGame(registerData);
@@ -63,44 +60,38 @@ const RegisterForm = () => {
     }
   };
 
-  let result = "" as Pick<MyGame, "status">["status"];
-  if (match.winningTeam) {
-    result = match.winningTeam.id === teamId ? "Win" : "Lose";
-  } else if (!match.homeTeamScore && !match.awayTeamScore) {
-    result = "No game";
-  } else {
-    result = "Tie";
-  }
+  const getResult = () => {
+    if (cheeringTeamId === null) return null;
+    if (match.winningTeam) {
+      return match.winningTeam.id === cheeringTeamId ? "Win" : "Lose";
+    } else if (!match.homeTeamScore && !match.awayTeamScore) {
+      return "No game";
+    } else {
+      return "Tie";
+    }
+  };
 
   return (
     <RegisterFormContainer>
-      <GameListItemContainer>
-        <ResultLabel status={result}>{result}</ResultLabel>
-        <div className='game-info'>
-          <div className='team-score'>
-            <Text variant='subtitle_02'>{match.homeTeam.name}</Text>
-            <Text variant='subtitle_02'>{match.homeTeamScore}</Text>
-          </div>
-          <div className='team-score'>
-            <Text variant='subtitle_02'>{match.awayTeam.name}</Text>
-            <Text variant='subtitle_02'>{match.awayTeamScore}</Text>
-          </div>
-        </div>
-        <div className='vertical-line' />
-        <div className='game-info-stadium'>
-          <Text variant='caption'>{match.date}</Text>
-          <Text variant='caption'>
-            <Icon icon='IcLocation' width={16} height={16} />
-            {match.stadium.name} 야구장
-          </Text>
-        </div>
-      </GameListItemContainer>
-
+      <GameListItem
+        result={getResult() || null}
+        status={match.status}
+        isWinningTeam={match.winningTeam}
+        homeTeam={match.homeTeam}
+        homeTeamScore={match.homeTeamScore}
+        awayTeam={match.awayTeam}
+        awayTeamScore={match.awayTeamScore}
+        date={match.date}
+        stadium={match.stadium}
+      />
       <RegisterFormFields
         onSubmit={handleSubmit(onSubmit)}
         watch={watch}
         register={register}
         setValue={setValue}
+        homeTeam={match.homeTeam}
+        awayTeam={match.awayTeam}
+        setCheeringTeamId={setCheeringTeamId}
       />
 
       {renderPopup()}

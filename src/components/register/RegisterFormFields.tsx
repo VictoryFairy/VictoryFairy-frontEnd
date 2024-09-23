@@ -2,17 +2,20 @@ import TextAreaField from "@/components/common/TextAreaField";
 import InputField from "@/components/common/InputField";
 import Button from "@/components/common/Button";
 import { useRef, useState } from "react";
-import { useAuthStore } from "@/store/authStore";
-import { getTeamName } from "@/utils/getTeamName";
 import styled from "styled-components";
 import Icon from "@/components/common/Icon";
 import Text from "@/components/common/Text";
+import CheerTeamSelect from "./CheerTeamSelect";
+import { Team } from "@/types/Team";
 
 interface RegisterFormFieldsProps {
   onSubmit: (data: any) => void;
   watch: any;
   register: any;
   setValue: any;
+  homeTeam: Team;
+  awayTeam: Team;
+  setCheeringTeamId: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
 const RegisterFormFields = ({
@@ -20,6 +23,9 @@ const RegisterFormFields = ({
   watch,
   register,
   setValue,
+  homeTeam,
+  awayTeam,
+  setCheeringTeamId,
 }: RegisterFormFieldsProps) => {
   const inputImgRef = useRef<HTMLInputElement>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -62,15 +68,13 @@ const RegisterFormFields = ({
           </ImgWrraper>
         )}
       </ImgUploadContainer>
-      <InputField
-        label='응원팀'
+      <CheerTeamSelect
+        setCheeringTeamId={setCheeringTeamId}
+        homeTeam={homeTeam}
+        awayTeam={awayTeam}
         setValue={setValue}
-        register={register}
         watch={watch}
-        name='cheerTeam'
-        type='input'
-        disabled
-        value={getTeamName(useAuthStore().teamId)}
+        name='cheeringTeamId'
       />
       <InputField
         label='좌석'
@@ -89,7 +93,9 @@ const RegisterFormFields = ({
         watch={watch}
         name='review'
       />
-      <Button size='big'>직관 기록 하기</Button>
+      <Button size='big' type='submit' disabled={!watch("cheeringTeamId")}>
+        직관 기록 하기
+      </Button>
     </Form>
   );
 };
