@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { MyGame } from "@/types/Game";
-import { typography } from "../../../style/typography";
+import { typography } from "../../style/typography";
 
 interface ResultLabelProps {
   status: Pick<MyGame, "status">["status"];
