@@ -127,6 +127,7 @@ export const login = async (data: LoginRequest) => {
         }
       }
     }
+    throw new Error("서버에 문제가 발생했습니다. 나중에 다시 시도해 주세요.");
   }
 };
 

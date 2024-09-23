@@ -18,15 +18,17 @@ const ParkingInfoPage = () => {
     "stadium"
   > | null>(null);
 
-  const { data: stadiums } = useQuery<Stadium[]>({
+  const { data: stadiums, isError: isStadiumsError } = useQuery<Stadium[]>({
     queryKey: ["stadiums"],
     queryFn: getStadiums,
     staleTime: Infinity,
   });
 
-  const { data: parkingInfos, isLoading: parkingInfosLoading } = useQuery<
-    ParkingInfo[]
-  >({
+  const {
+    data: parkingInfos,
+    isLoading: parkingInfosLoading,
+    isError: isParkinginfosError,
+  } = useQuery<ParkingInfo[]>({
     queryKey: ["parkingInfos", selectedStadiumId],
     queryFn: () => getParkingInfosByStadiumId(selectedStadiumId),
     enabled: !!selectedStadiumId,
@@ -62,6 +64,9 @@ const ParkingInfoPage = () => {
     link: parkingInfo.link,
   }));
 
+  if (isStadiumsError || isParkinginfosError) {
+    throw new Error("서버문제로 인한 에러.");
+  }
   return (
     <div style={{ marginBottom: "70px" }}>
       <StadiumList

@@ -138,7 +138,7 @@ const CheerSongPage = () => {
   ]);
 
   if (isCheerSongsError || isLikedCheerSongsError) {
-    return <div>서버에 에러가 발생했습니다</div>;
+    throw new Error("서버문제로 인한 에러.");
   }
 
   return (
