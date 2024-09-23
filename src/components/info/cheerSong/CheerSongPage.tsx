@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useInfiniteQuery } from "@tanstack/react-query";
-
 import { fetchCheerSongs, FetchLikedCheerSongs } from "@/api/info/cheers.api";
 import { useAuthStore } from "@/store/authStore";
 import SelectionBar from "@/components/common/SelectionBar";
@@ -252,7 +251,7 @@ const SearchBarWrapper = styled.div`
   align-items: center;
   background-color: #f8f8f8;
   border-radius: 10px;
-  padding: 0 20px;
+  padding: 0 10px;
   height: 35px;
   margin: 0 20px;
   margin-bottom: 20px;

@@ -196,7 +196,7 @@ const CheersInfo = styled.div`
 const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 3px;
   align-items: flex-start;
 `;
 
@@ -223,7 +223,7 @@ const CheersName = styled.span`
 
 const Description = styled.span`
   font-size: 14px;
-  color: #666666;
+  color: #898c9b;
 `;
 
 const IconWrapper = styled.div`
