@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { MyGame } from "@/types/Game";
-import GameListItem from "../../common/GameListItem";
 import { HTMLAttributes } from "react";
+import GameListItem from "../../common/GameListItem";
 
 interface GameListItemProps
   extends Omit<HTMLAttributes<HTMLUListElement>, "onClick"> {
@@ -17,6 +17,7 @@ const ListTab = ({ matches, onClick, children }: GameListItemProps) => {
       <GameList>
         {matches.map((match) => (
           <GameListItem
+            key={match.id}
             onClick={() => onClick(match.id)}
             result={match.status}
             isWinningTeam={match.game.winningTeam}

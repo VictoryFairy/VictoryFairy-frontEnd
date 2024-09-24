@@ -5,8 +5,8 @@ import { useRef, useState } from "react";
 import styled from "styled-components";
 import Icon from "@/components/common/Icon";
 import Text from "@/components/common/Text";
-import CheerTeamSelect from "./CheerTeamSelect";
 import { Team } from "@/types/Team";
+import CheerTeamSelect from "./CheerTeamSelect";
 
 interface RegisterFormFieldsProps {
   onSubmit: (data: any) => void;
@@ -15,7 +15,6 @@ interface RegisterFormFieldsProps {
   setValue: any;
   homeTeam: Team;
   awayTeam: Team;
-  setCheeringTeamId: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
 const RegisterFormFields = ({
@@ -25,7 +24,6 @@ const RegisterFormFields = ({
   setValue,
   homeTeam,
   awayTeam,
-  setCheeringTeamId,
 }: RegisterFormFieldsProps) => {
   const inputImgRef = useRef<HTMLInputElement>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -57,7 +55,7 @@ const RegisterFormFields = ({
       />
 
       <ImgUploadContainer
-        hasImage={!!previewImage}
+        $hasImage={!!previewImage}
         onClick={handleClickImageUpload}>
         {previewImage ? (
           <PreviewImage src={previewImage} alt='직관 사진' />
@@ -69,7 +67,6 @@ const RegisterFormFields = ({
         )}
       </ImgUploadContainer>
       <CheerTeamSelect
-        setCheeringTeamId={setCheeringTeamId}
         homeTeam={homeTeam}
         awayTeam={awayTeam}
         setValue={setValue}
@@ -111,13 +108,13 @@ const Form = styled.form`
   }
 `;
 
-const ImgUploadContainer = styled.label<{ hasImage: boolean }>`
+const ImgUploadContainer = styled.label<{ $hasImage: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: ${({ hasImage }) =>
-    hasImage ? "none" : "1px dashed var(--gray-200)"};
+  border: ${({ $hasImage }) =>
+    $hasImage ? "none" : "1px dashed var(--gray-200)"};
   border-radius: 12px;
   height: 180px;
   width: 100%;

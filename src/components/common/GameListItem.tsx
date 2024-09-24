@@ -1,9 +1,9 @@
 import styled from "styled-components";
+import { Game, Team } from "@/types/Game";
+import { HTMLAttributes } from "react";
 import Text from "./Text";
 import ResultLabel from "./ResultLabel";
 import Icon from "./Icon";
-import { Game, Team } from "@/types/Game";
-import { HTMLAttributes } from "react";
 
 interface GameListItemProps
   extends Omit<HTMLAttributes<HTMLUListElement>, "onClick"> {
@@ -36,7 +36,7 @@ const GameListItem = ({
 
   const isWinnigTeam = (teamId: number) => {
     if (!isWinningTeam) return false;
-    if (isWinningTeam.id == teamId) {
+    if (isWinningTeam.id === teamId) {
       return true;
     }
     return false;
