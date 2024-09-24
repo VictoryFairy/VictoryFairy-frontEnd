@@ -31,8 +31,8 @@ const WatchList = () => {
     setSelectMonth(date);
   };
 
-  const handleClickMatch = (id: number) => {
-    navigate(`/detail/${id}`);
+  const handleClickMatch = (matchId: number) => {
+    navigate(`/detail/${matchId}`);
   };
 
   const handleClickSearch = () =>
@@ -90,7 +90,7 @@ const WatchList = () => {
         return (
           <ListTab
             matches={isSuccess ? filteredRegisteredGames! : []}
-            onClick={(match: MyGame) => handleClickMatch(match.id)}>
+            onClick={(matchId) => handleClickMatch(matchId)}>
             <MonthNav
               onMonthChange={handleMonthChange}
               selectMonth={selectMonth}

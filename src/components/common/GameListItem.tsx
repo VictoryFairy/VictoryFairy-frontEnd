@@ -3,9 +3,10 @@ import Text from "./Text";
 import ResultLabel from "./ResultLabel";
 import Icon from "./Icon";
 import { Game, Team } from "@/types/Game";
+import { HTMLAttributes } from "react";
 
 interface GameListItemProps
-  extends Omit<React.HTMLAttributes<HTMLLIElement>, "onClick"> {
+  extends Omit<HTMLAttributes<HTMLUListElement>, "onClick"> {
   result: string | null;
   isWinningTeam: Team;
   homeTeam: Team;
@@ -15,6 +16,7 @@ interface GameListItemProps
   date: string;
   stadium: Pick<Game, "stadium">["stadium"];
   status: Pick<Game, "status">["status"];
+  onClick?: () => void;
 }
 
 const GameListItem = ({
@@ -27,6 +29,7 @@ const GameListItem = ({
   date,
   stadium,
   status,
+  onClick,
 }: GameListItemProps) => {
   // 경기 중 일때 ???
   // 응원팀 선택 전 일때 ???
@@ -40,7 +43,10 @@ const GameListItem = ({
   };
 
   return (
-    <GameListItemContainer>
+    <GameListItemContainer
+      onClick={() => {
+        if (onClick) onClick();
+      }}>
       <ResultLabel status={status} result={result} />
       <div className='game-info'>
         <div

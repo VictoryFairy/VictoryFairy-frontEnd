@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import { MyGame } from "@/types/Game";
 import GameListItem from "../../common/GameListItem";
+import { HTMLAttributes } from "react";
 
-interface GameListItemProps {
+interface GameListItemProps
+  extends Omit<HTMLAttributes<HTMLUListElement>, "onClick"> {
   matches: MyGame[];
-  onClick: (match: MyGame) => void;
   children: React.ReactNode;
+  onClick: (id: number) => void;
 }
 
 const ListTab = ({ matches, onClick, children }: GameListItemProps) => {
@@ -14,7 +16,18 @@ const ListTab = ({ matches, onClick, children }: GameListItemProps) => {
       {children}
       <GameList>
         {matches.map((match) => (
-          <GameListItem onClick={onClick} key={match.id} match={match} />
+          <GameListItem
+            onClick={() => onClick(match.id)}
+            result={match.status}
+            isWinningTeam={match.game.winningTeam}
+            homeTeam={match.game.homeTeam}
+            homeTeamScore={match.game.homeTeamScore}
+            awayTeam={match.game.awayTeam}
+            awayTeamScore={match.game.awayTeamScore}
+            date={match.game.date}
+            stadium={match.game.stadium}
+            status={match.game.status}
+          />
         ))}
       </GameList>
     </ListContainer>
