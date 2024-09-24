@@ -7,19 +7,17 @@ import GameListItem from "@/components/common/GameListItem";
 import styled from "styled-components";
 import { uploadImg } from "@/utils/uploadImg";
 import RegisterFormFields from "@/components/register/RegisterFormFields";
-import { useState } from "react";
 
 const RegisterForm = () => {
   const location = useLocation();
   const { match } = location.state as { match: Game };
   const matchId = match.id;
   const { register, watch, handleSubmit, setValue } = useForm();
-  const [cheeringTeamId, setCheeringTeamId] = useState<number | null>(null);
   const { openPopup, renderPopup, closePopup } = usePopup();
 
   const onSubmit = async (data: any) => {
     try {
-      const { img, seat, review } = data;
+      const { img, seat, review, cheeringTeamId } = data;
       let image = null;
       if (img) {
         image = await uploadImg(img);
@@ -61,14 +59,14 @@ const RegisterForm = () => {
   };
 
   const getResult = () => {
-    if (cheeringTeamId === null) return null;
+    if (watch("cheeringTeamId") === undefined) return null;
     if (match.winningTeam) {
-      return match.winningTeam.id === cheeringTeamId ? "Win" : "Lose";
-    } else if (!match.homeTeamScore && !match.awayTeamScore) {
-      return "No game";
-    } else {
-      return "Tie";
+      return match.winningTeam.id === watch("cheeringTeamId") ? "Win" : "Lose";
     }
+    if (!match.homeTeamScore && !match.awayTeamScore) {
+      return "No game";
+    }
+    return "Tie";
   };
 
   return (
@@ -91,7 +89,6 @@ const RegisterForm = () => {
         setValue={setValue}
         homeTeam={match.homeTeam}
         awayTeam={match.awayTeam}
-        setCheeringTeamId={setCheeringTeamId}
       />
 
       {renderPopup()}
