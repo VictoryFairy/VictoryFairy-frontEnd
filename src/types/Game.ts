@@ -35,4 +35,4 @@ export interface Team {
   name: string;
 }
 
-export type GameStatus = "All" | "Win" | "Lose" | "Tie" | "No game";
+export type GameStatus = "All" | "Win" | "Lose" | "Tie" | "No game" | null;
