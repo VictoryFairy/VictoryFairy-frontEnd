@@ -1,26 +1,26 @@
 import styled from "styled-components";
 import { useState, useEffect, useRef } from "react";
 import { Team } from "@/types/Game";
+import { UseFormSetValue, UseFormWatch } from "react-hook-form";
 import Icon from "../common/Icon";
 import Text from "../common/Text";
-import { UseFormSetValue, UseFormWatch } from "react-hook-form";
 
 interface CheerTeamSelectProps {
-  setCheeringTeamId: (id: number) => void;
   awayTeam: Team;
   homeTeam: Team;
   name: string;
   watch: UseFormWatch<any>;
   setValue: UseFormSetValue<any>;
+  defaultValue?: number;
 }
 
 const CheerTeamSelect = ({
-  setCheeringTeamId,
   awayTeam,
   homeTeam,
   name,
   setValue,
   watch,
+  defaultValue,
 }: CheerTeamSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -30,7 +30,11 @@ const CheerTeamSelect = ({
   const handleClickSelect = () => {
     setIsOpen(!isOpen);
   };
-
+  useEffect(() => {
+    if (defaultValue) {
+      setValue(name, defaultValue);
+    }
+  }, [defaultValue, name, setValue]);
   // 드롭다운 바깥쪽을 클릭하면 드롭다운을 닫음
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -49,7 +53,6 @@ const CheerTeamSelect = ({
   }, []);
 
   const handleSelectItem = (team: Team) => {
-    setCheeringTeamId(team.id);
     setValue(name, team.id);
     setIsOpen(false);
   };
