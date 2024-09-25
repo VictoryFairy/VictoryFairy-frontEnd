@@ -78,7 +78,10 @@ const Profile = ({ setstep, handleSetUserInfo }: ProfileProps) => {
       );
     }
   };
-
+  const handleSkip = () => {
+    handleSetUserInfo({ profilePicture: "", nickname: "" });
+    setstep(4);
+  };
   return (
     <Container>
       <TitleSection title='프로필을 설정해주세요' />
@@ -110,6 +113,9 @@ const Profile = ({ setstep, handleSetUserInfo }: ProfileProps) => {
         </div>
 
         <ButtonWrapper>
+          <Button type='button' styletype='text' onClick={handleSkip}>
+            <span className='next'>건너뛰기</span>
+          </Button>
           <Button type='submit' disabled={isButtonDisabled}>
             확인
           </Button>
@@ -153,7 +159,12 @@ const HiddenFileInput = styled.input`
 
 const ButtonWrapper = styled.div`
   display: flex;
+  flex-direction: column;
+  gap: 10px;
   justify-content: flex-end;
+  .next {
+    border-bottom: 1px solid black;
+  }
 `;
 const AvatarWrapper = styled.div`
   position: relative;

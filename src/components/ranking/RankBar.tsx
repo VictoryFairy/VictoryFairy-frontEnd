@@ -108,7 +108,7 @@ const RankBar = ({ data, tab }: RankBarProps) => {
         backgroundColor: teamColor[propTab - 1],
         borderColor: teamColor[propTab - 1],
         borderWidth: 1,
-        barPercentage: 0.7,
+        barPercentage: 0.8,
         categoryPercentage: 0.8,
       },
     ],
@@ -127,9 +127,12 @@ const RankBar = ({ data, tab }: RankBarProps) => {
         },
         ticks: {
           font: {
-            size: 9,
-            weight: 400,
+            family: "'Spoqa Han Sans Neo', sans-serif",
+            size: 12,
+            weight: "normal",
+            lineHeight: 1.33,
           },
+          color: "rgb(137,140,155,1)",
         },
       },
       y: {
