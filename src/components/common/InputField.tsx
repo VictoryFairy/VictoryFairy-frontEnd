@@ -43,8 +43,28 @@ const InputField = ({
   const data = watch(name) as string;
   const currentLength = data ? data.length : 0;
 
-  const clearInput = () => {
-    setValue(name, "");
+  const clearInput = () => setValue(name, "");
+
+  const renderClearButton = () => {
+    if (data && type !== "password" && clearable) {
+      return (
+        <ClearButton type='button' onClick={clearInput}>
+          ×
+        </ClearButton>
+      );
+    }
+    return null;
+  };
+
+  const renderVisibilityToggle = () => {
+    if (type === "password") {
+      return (
+        <VisibilityToggle type='button' onClick={toggleVisibility}>
+          {isVisible ? <Icon icon='IcHide' /> : <Icon icon='IcShow' />}
+        </VisibilityToggle>
+      );
+    }
+    return null;
   };
 
   return (
@@ -68,17 +88,10 @@ const InputField = ({
           {...register(name)}
           {...inputProps}
         />
-        {data && type !== "password" && clearable && (
-          <ClearButton type='button' onClick={clearInput}>
-            ×
-          </ClearButton>
-        )}
-        {type === "password" && (
-          <VisibilityToggle type='button' onClick={toggleVisibility}>
-            {isVisible ? <Icon icon='IcHide' /> : <Icon icon='IcShow' />}
-          </VisibilityToggle>
-        )}
+        {renderClearButton()}
+        {renderVisibilityToggle()}
       </InputWrapper>
+
       {error && <ErrorMessage>{error.message}</ErrorMessage>}
     </InputContainer>
   );
