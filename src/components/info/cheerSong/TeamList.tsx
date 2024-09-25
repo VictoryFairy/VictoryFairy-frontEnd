@@ -87,11 +87,12 @@ const FixedTeamButton = styled.button<{ $active: boolean }>`
   cursor: pointer;
   font-size: 14px;
   white-space: nowrap;
+  margin-left: 20px;
 `;
 
 const TeamLists = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 10px;
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
