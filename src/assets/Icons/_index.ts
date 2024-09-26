@@ -1,3 +1,4 @@
+/// <reference types="vite-plugin-svgr/client" />
 export { default as IcArrowDown } from "./arrow-down.svg?react";
 export { default as IcArrowLeft } from "./arrow-left.svg?react";
 export { default as IcArrowRight } from "./arrow-right.svg?react";

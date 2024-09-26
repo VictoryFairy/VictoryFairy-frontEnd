@@ -13,7 +13,7 @@
     "emitDeclarationOnly": true,
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "esModuleInterop": true,
     "moduleDetection": "force",
     "noEmit": false,
     "jsx": "react-jsx",
@@ -25,5 +25,5 @@
     "noFallthroughCasesInSwitch": true
   },
   "extends": "./tsconfig.paths.json",
-  "include": ["src", ".eslintrc.cjs", "vite.config.ts", "custom.d.ts"]
+  "include": ["src", ".eslintrc.cjs", "vite.config.ts", "image.d.ts"]
 }

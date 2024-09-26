@@ -1,9 +1,10 @@
 {
   "files": [],
   "compilerOptions": {
-    "declaration": false // .d.ts 파일 생성 방지
+    "outDir": "./dist",
+    "declaration": true // .d.ts 파일 생성 방지
   },
-  "include": ["custom.d.ts"],
+  "include": ["image.d.ts"],
   "references": [
     {
       "path": "./tsconfig.app.json"

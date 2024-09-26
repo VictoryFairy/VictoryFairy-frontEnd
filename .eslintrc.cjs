@@ -42,6 +42,7 @@ module.exports = {
   },
   plugins: ["react", "prettier"],
   rules: {
+    complexity: ["error", { max: 10 }],
     "react/function-component-definition": [
       2,
       {
