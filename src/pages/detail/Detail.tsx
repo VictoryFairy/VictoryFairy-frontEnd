@@ -133,19 +133,19 @@ const Detail = () => {
   if (!registeredGame) return null;
 
   const getResult = () => {
+    // 서버 API 수정 후, registeredGame.status로 변경
     if (watch("cheeringTeamId") === undefined) return null;
     if (registeredGame.game.winningTeam) {
       return registeredGame.game.winningTeam.id === watch("cheeringTeamId")
         ? "Win"
         : "Lose";
     }
-    if (
-      !registeredGame.game.homeTeamScore &&
-      !registeredGame.game.awayTeamScore
-    ) {
+    if (registeredGame.game.status === "우천취소") {
       return "No game";
     }
-    return "Tie";
+    if (registeredGame.status === "Tie") {
+      return "Tie";
+    }
   };
 
   return (
