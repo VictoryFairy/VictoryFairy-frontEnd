@@ -9,8 +9,7 @@
   <meta name="theme-color" content="#ffffff" />
   <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
   <title>승요</title>
-  <link href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css" rel="preload" type="text/css" crossorigin
-    as="style" />
+  <link rel="preload" href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css" as="font" type="font/woff2" />
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-J57YN7RT3P"></script>
@@ -21,6 +20,11 @@
     }
     gtag("js", new Date());
     gtag("config", "G-J57YN7RT3P");
+  </script>
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+  <script type="module">
+    const kakaoKey = import.meta.env.VITE_KAKAO_KEY;
+    Kakao.init(kakaoKey);
   </script>
 </head>
 
@@ -33,11 +37,7 @@
     script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${mapClientId}`;
     document.head.appendChild(script);
   </script>
-  <script src="https://developers.kakao.com/sdk/js/kakao.js" defer></script>
-  <script type="module">
-    const kakaoKey = import.meta.env.VITE_KAKAO_KEY;
-    Kakao.init(kakaoKey);
-  </script>
+
 </body>
 
 </html>
