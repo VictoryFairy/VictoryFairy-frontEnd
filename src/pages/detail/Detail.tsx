@@ -133,19 +133,17 @@ const Detail = () => {
   if (!registeredGame) return null;
 
   const getResult = () => {
-    // 서버 API 수정 후, registeredGame.status로 변경
     if (watch("cheeringTeamId") === undefined) return null;
-    if (registeredGame.game.winningTeam) {
-      return registeredGame.game.winningTeam.id === watch("cheeringTeamId")
-        ? "Win"
-        : "Lose";
+    if (registeredGame.game.status === "우천취소") return "No Game";
+    if (watch("cheeringTeamId") === registeredGame.game.winningTeam.id) {
+      return "Win";
     }
-    if (registeredGame.game.status === "우천취소") {
-      return "No game";
-    }
-    if (registeredGame.status === "Tie") {
+    if (
+      registeredGame.game.status === "경기종료" &&
+      registeredGame.game.winningTeam === null
+    )
       return "Tie";
-    }
+    return "Lose";
   };
 
   return (
@@ -163,7 +161,7 @@ const Detail = () => {
       </Header>
       <GameListItem
         className='match'
-        result={getResult() || null} // 서버 API 수정 후, registeredGame.status로 변경
+        result={$isEditing ? getResult() : registeredGame.status} // 서버 API 수정 후, registeredGame.status로 변경
         isWinningTeam={registeredGame.game.winningTeam}
         homeTeam={registeredGame.game.homeTeam}
         homeTeamScore={registeredGame.game.homeTeamScore}
