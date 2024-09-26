@@ -3,8 +3,8 @@ import { Rank } from "@/types/Rank";
 import Text from "../common/Text";
 
 interface RankComp extends Rank {
-  isSelected: boolean;
-  onClick: () => void;
+  isSelected?: boolean;
+  onClick?: () => void;
 }
 
 const RankTextComp = ({
@@ -16,7 +16,7 @@ const RankTextComp = ({
   onClick,
 }: Omit<RankComp, "user_id">) => {
   return (
-    <RankText onClick={onClick} isSelected={isSelected}>
+    <RankText onClick={onClick} isSelected={isSelected!}>
       <RankTextLeft>
         <Text variant='title_01' color='var(--gray-400)'>
           {rank}

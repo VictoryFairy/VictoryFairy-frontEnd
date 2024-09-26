@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { Calendar as CalendarStyle, CalendarProps } from "react-calendar";
 import { typography } from "@/style/typography";
-import Icon from "./Icon";
 import moment from "moment";
+import Icon from "./Icon";
 import Text from "./Text";
 
 const Calendar = ({ ...props }: CalendarProps) => {
