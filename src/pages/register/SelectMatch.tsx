@@ -57,13 +57,16 @@ const SelectMatch = () => {
       />
 
       {renderMatches()}
-      <Button
-        className='button'
-        onClick={handleClickButton}
-        disabled={!selectedMatch}
-        size='big'>
-        직관 기록 하기
-      </Button>
+
+      {selectedMatch && (
+        <Button
+          className='button'
+          onClick={handleClickButton}
+          disabled={!selectedMatch}
+          size='big'>
+          직관 기록 하기
+        </Button>
+      )}
     </SelectMatchContainer>
   );
 };
@@ -72,19 +75,19 @@ const SelectMatchContainer = styled.div`
   height: 100%;
   padding-top: 20px;
   position: relative;
-  .button {
-    position: absolute;
-    bottom: 0;
-  }
+
   .loading {
     margin-top: 20px;
   }
+
   .calendar {
     .selected {
       background: ${({ theme }) => theme.colors.primary};
       color: var(--white);
       border-radius: 50%;
     }
+  }
+  .button {
   }
 `;
 

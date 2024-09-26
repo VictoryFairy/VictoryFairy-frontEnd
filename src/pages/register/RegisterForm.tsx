@@ -1,41 +1,25 @@
-import { useLocation } from "react-router-dom";
-import styled from "styled-components";
-import { Game, MyGame } from "@/types/Game";
 import { useForm } from "react-hook-form";
-import TextAreaField from "@/components/common/TextAreaField";
-import Icon from "@/components/common/Icon";
-import Button from "@/components/common/Button";
-import { useImperativeHandle, useRef, useState } from "react";
-import InputField from "@/components/common/InputField";
+import { useLocation } from "react-router-dom";
+import { Game } from "@/types/Game";
 import { postRegisterGame } from "@/api/register/register";
-import { uploadImg } from "@/utils/uploadImg";
 import { usePopup } from "@/hooks/usePopup";
-import { useAuthStore } from "@/store/authStore";
-import { getTeamName } from "@/utils/getTeamName";
-import ResultLabel from "@/components/watchList/ListTab/ResultLabel";
-import Text from "../../components/common/Text";
-import { GameListItemContainer } from "../../components/common/GameListItem";
+import GameListItem from "@/components/common/GameListItem";
+import styled from "styled-components";
+import { uploadImg } from "@/utils/uploadImg";
+import RegisterFormFields from "@/components/register/RegisterFormFields";
 
 const RegisterForm = () => {
   const location = useLocation();
   const { match } = location.state as { match: Game };
   const matchId = match.id;
   const { register, watch, handleSubmit, setValue } = useForm();
-  const inputImgRef = useRef<HTMLInputElement>(null);
-  const { ref, ...rest } = register("img");
-  useImperativeHandle(ref, () => inputImgRef.current);
-  const { teamId } = useAuthStore();
-
-  const { openPopup, renderPopup, closePopup } = usePopup(); // 최신 usePopup 사용
-
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const { openPopup, renderPopup, closePopup } = usePopup();
 
   const onSubmit = async (data: any) => {
     try {
-      const { img, seat, review } = data;
-
+      const { img, seat, review, cheeringTeamId } = data;
       let image = null;
-      if (img.size > 0) {
+      if (img) {
         image = await uploadImg(img);
       }
 
@@ -44,7 +28,7 @@ const RegisterForm = () => {
         image,
         seat,
         review,
-        cheeringTeamId: teamId,
+        cheeringTeamId,
       };
 
       await postRegisterGame(registerData);
@@ -74,110 +58,39 @@ const RegisterForm = () => {
     }
   };
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { files } = event.target;
-    if (files && files.length > 0) {
-      const file = files[0];
-      const imageUrl = URL.createObjectURL(file);
-      setPreviewImage(imageUrl);
-      setValue("img", file);
+  const getResult = () => {
+    if (watch("cheeringTeamId") === undefined) return null;
+    if (match.winningTeam) {
+      return match.winningTeam.id === watch("cheeringTeamId") ? "Win" : "Lose";
     }
-  };
-
-  const handleClickImageUpload = () => {
-    inputImgRef.current?.click();
-  };
-
-  let result = "" as Pick<MyGame, "status">["status"];
-
-  if (match.winningTeam) {
-    if (match.winningTeam.id === teamId) {
-      result = "Win";
-    } else {
-      result = "Lose";
+    if (!match.homeTeamScore && !match.awayTeamScore) {
+      return "No game";
     }
-  } else {
-    result = "Tie";
-  }
-  if (!match.homeTeamScore && !match.awayTeamScore) {
-    result = "No game";
-  }
+    return "Tie";
+  };
 
   return (
     <RegisterFormContainer>
-      <GameListItemContainer>
-        <ResultLabel status={result}>{result}</ResultLabel>
-        <div className='game-info'>
-          <div className='team-score'>
-            <Text variant='subtitle_02'>{match.homeTeam.name}</Text>
-            <Text variant='subtitle_02'>{match.homeTeamScore}</Text>
-          </div>
-          <div className='team-score'>
-            <Text variant='subtitle_02'>{match.awayTeam.name}</Text>
-            <Text variant='subtitle_02'>{match.awayTeamScore}</Text>
-          </div>
-        </div>
-        <div className='vertical-line' />
-        <div className='game-info-stadium'>
-          <Text variant='caption'>{match.date}</Text>
-          <Text variant='caption'>
-            <Icon icon='IcLocation' width={16} height={16} />
-            {match.stadium.name} 야구장
-          </Text>
-        </div>
-      </GameListItemContainer>
+      <GameListItem
+        result={getResult() || null}
+        status={match.status}
+        isWinningTeam={match.winningTeam}
+        homeTeam={match.homeTeam}
+        homeTeamScore={match.homeTeamScore}
+        awayTeam={match.awayTeam}
+        awayTeamScore={match.awayTeamScore}
+        date={match.date}
+        stadium={match.stadium}
+      />
+      <RegisterFormFields
+        onSubmit={handleSubmit(onSubmit)}
+        watch={watch}
+        register={register}
+        setValue={setValue}
+        homeTeam={match.homeTeam}
+        awayTeam={match.awayTeam}
+      />
 
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          className='img-input'
-          type='file'
-          accept='image/jpg, image/jpeg, image/png'
-          {...rest}
-          ref={inputImgRef}
-          onChange={handleImageChange}
-        />
-
-        <ImgUploadContainer
-          hasImage={!!previewImage}
-          onClick={handleClickImageUpload}>
-          {previewImage ? (
-            <PreviewImage src={previewImage} alt='직관 사진' />
-          ) : (
-            <ImgWrraper>
-              <Icon icon='IcCamera' width={24} height={24} />
-              <Text variant='caption'>직관 사진을 업로드해주세요</Text>
-            </ImgWrraper>
-          )}
-        </ImgUploadContainer>
-        <InputField
-          label='응원팀'
-          setValue={setValue}
-          register={register}
-          watch={watch}
-          name='cheerTeam'
-          type='input'
-          disabled
-          value={getTeamName(teamId)}
-        />
-        <InputField
-          label='좌석'
-          placeholder='123존 12열 1번'
-          setValue={setValue}
-          register={register}
-          watch={watch}
-          name='seat'
-          type='input'
-        />
-        <TextAreaField
-          label='메모'
-          placeholder='직관 한 마디!'
-          setValue={setValue}
-          register={register}
-          watch={watch}
-          name='review'
-        />
-        <Button size='big'>직관 기록 하기</Button>
-      </Form>
       {renderPopup()}
     </RegisterFormContainer>
   );
@@ -185,48 +98,6 @@ const RegisterForm = () => {
 
 const RegisterFormContainer = styled.div`
   padding-bottom: 80px;
-  .img-input {
-    display: none;
-  }
-`;
-
-const ImgUploadContainer = styled.label<{ hasImage: boolean }>`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: ${({ hasImage }) =>
-    hasImage ? "none" : "1px dashed var(--gray-200)"};
-  border-radius: 12px;
-  height: 180px;
-  width: 100%;
-  cursor: pointer;
-`;
-
-const ImgWrraper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: var(--gray-200);
-  gap: 10px;
-
-  svg {
-    fill: var(--gray-200);
-  }
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  padding: 32px 20px;
-  gap: 20px;
-`;
-
-const PreviewImage = styled.img`
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-  object-fit: cover;
 `;
 
 export default RegisterForm;
