@@ -5,8 +5,7 @@ import Text from "@/components/common/Text";
 import Icon from "@/components/common/Icon";
 import { useNavigate } from "react-router-dom";
 import Loading from "@/components/common/Loading";
-// import Rate from "./Rate";
-// import Watch from "./Watch";
+
 const Rate = lazy(() => import("./Rate"));
 const Watch = lazy(() => import("./Watch"));
 

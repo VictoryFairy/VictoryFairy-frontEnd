@@ -1,4 +1,8 @@
-export const getFairyImg = (rate: number, teamId: number) => {
+export const getFairyImg = (
+  rate: number,
+  teamId: number,
+  format: "png" | "webp",
+) => {
   let fairyStatus = "";
 
   if (rate > 30) {
@@ -7,6 +11,6 @@ export const getFairyImg = (rate: number, teamId: number) => {
     fairyStatus = "sad";
   }
 
-  const imgUrl = `https://sngyo-image.s3.ap-northeast-2.amazonaws.com/fairyImg/${fairyStatus}/${teamId}.png`;
+  const imgUrl = `https://sngyo-image.s3.ap-northeast-2.amazonaws.com/fairyImg/${fairyStatus}/${teamId}.${format}`;
   return imgUrl;
 };
