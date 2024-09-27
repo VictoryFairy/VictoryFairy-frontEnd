@@ -57,7 +57,7 @@ const Rate = () => {
         content: {
           title: "승리요정",
           description: `나의 승률: ${winPercentage}%`,
-          imageUrl: getFairyImg(parseInt(winPercentage, 10), teamId),
+          imageUrl: getFairyImg(parseInt(winPercentage, 10), teamId, "png"),
           link: {
             mobileWebUrl: window.location.href,
             webUrl: window.location.href,
@@ -106,10 +106,20 @@ const Rate = () => {
         <hr />
         {imgChange ? (
           <div className='img'>
-            <img
-              alt='이미지'
-              src={getFairyImg(parseInt(winPercentage, 10), teamId)}
-            />
+            <picture>
+              <source
+                srcSet={getFairyImg(
+                  parseInt(winPercentage, 10),
+                  teamId,
+                  "webp",
+                )}
+                type='image/webp'
+              />
+              <img
+                alt='이미지'
+                src={getFairyImg(parseInt(winPercentage, 10), teamId, "png")}
+              />
+            </picture>
           </div>
         ) : data ? (
           <DonutChart record={data} />
