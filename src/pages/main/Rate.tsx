@@ -35,7 +35,7 @@ const Rate = () => {
     }
     try {
       const dataUrl = await toPng(rateRef.current, {
-        includeQueryParams: true,
+        cacheBust: true,
         style: {
           margin: "0",
         },
@@ -53,7 +53,7 @@ const Rate = () => {
 
       const blob = await (await fetch(dataUrl)).blob();
 
-      saveAs(blob, "승리요정");
+      saveAs(blob, "승리요정.png");
     } catch (error) {
       console.error("이미지 저장에 실패했습니다.", error);
     }
@@ -70,7 +70,7 @@ const Rate = () => {
         content: {
           title: "승리요정",
           description: `나의 승률: ${winPercentage}%`,
-          imageUrl: getFairyImg(parseInt(winPercentage, 10), teamId, "webp"),
+          imageUrl: getFairyImg(parseInt(winPercentage, 10), teamId, "png"),
           link: {
             mobileWebUrl: window.location.href,
             webUrl: window.location.href,
@@ -119,20 +119,11 @@ const Rate = () => {
         <hr />
         {imgChange ? (
           <div className='img'>
-            <picture>
-              <source
-                srcSet={getFairyImg(
-                  parseInt(winPercentage, 10),
-                  teamId,
-                  "webp",
-                )}
-                type='image/webp'
-              />
-              <img
-                alt='요정'
-                src={getFairyImg(parseInt(winPercentage, 10), teamId, "png")}
-              />
-            </picture>
+            <img
+              className='fairy-img'
+              alt='요정'
+              src={getFairyImg(parseInt(winPercentage, 10), teamId, "webp")}
+            />
           </div>
         ) : data ? (
           <DonutChart record={data} />
