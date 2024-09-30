@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { typography } from "@/style/typography";
 import Text from "@/components/common/Text";
 import Icon from "@/components/common/Icon";
 import { useMemo, useRef, useState } from "react";
@@ -8,10 +7,10 @@ import { useQuery } from "@tanstack/react-query";
 import DonutChart from "@/components/main/DonutChart";
 import { Record } from "@/types/Record";
 import { useNavigate } from "react-router-dom";
-import { toSvg } from "html-to-image";
 import { useAuthStore } from "@/store/authStore";
 import { getFairyImg } from "@/utils/getFairyImg";
-import { saveAs } from "file-saver";
+import saveAs from "file-saver";
+import { toPng } from "html-to-image";
 
 const Rate = () => {
   const rateRef = useRef<HTMLDivElement | null>(null);
@@ -35,8 +34,21 @@ const Rate = () => {
       return;
     }
     try {
-      const dataUrl = await toSvg(rateRef.current, {
-        backgroundColor: "white",
+      const dataUrl = await toPng(rateRef.current, {
+        includeQueryParams: true,
+        style: {
+          margin: "0",
+        },
+        filter: (node) => {
+          // 버튼 그룹과 SVG는 제외
+          if (node.classList && node.classList.contains("button-group")) {
+            return false;
+          }
+          if (node.tagName === "svg") {
+            return false;
+          }
+          return true; // 나머지는 포함
+        },
       });
 
       const blob = await (await fetch(dataUrl)).blob();
@@ -46,6 +58,7 @@ const Rate = () => {
       console.error("이미지 저장에 실패했습니다.", error);
     }
   };
+
   const handleKakaoShare = async () => {
     if (!rateRef.current) {
       return;
@@ -57,7 +70,7 @@ const Rate = () => {
         content: {
           title: "승리요정",
           description: `나의 승률: ${winPercentage}%`,
-          imageUrl: getFairyImg(parseInt(winPercentage, 10), teamId, "png"),
+          imageUrl: getFairyImg(parseInt(winPercentage, 10), teamId, "webp"),
           link: {
             mobileWebUrl: window.location.href,
             webUrl: window.location.href,
@@ -79,16 +92,16 @@ const Rate = () => {
   };
 
   return (
-    <RateContainer>
-      <div ref={rateRef}>
+    <RateContainer ref={rateRef}>
+      <div>
         <MyRate>
-          <button
+          <MyRateButton
             type='button'
             className='my-rate-button'
             onClick={() => navigate("/DetailRate", { state: { datas: data } })}>
-            <Text variant='title_01'>내 승률</Text>
+            <Text variant='title_02'>내 승률</Text>
             <Icon icon='IcArrowRight' fill='var(--gray-900)' />
-          </button>
+          </MyRateButton>
           <div
             role='button'
             tabIndex={0}
@@ -99,7 +112,7 @@ const Rate = () => {
             </Text>
             <Icon icon='IcSwitch' fill='var(--gray-900)' />
           </div>
-          <Text variant='subtitle_03' className='my-rate-record'>
+          <Text variant='subtitle_03'>
             {data?.total}전 {data?.win}승 {data?.lose}패 {data?.tie}무
           </Text>
         </MyRate>
@@ -116,7 +129,7 @@ const Rate = () => {
                 type='image/webp'
               />
               <img
-                alt='이미지'
+                alt='요정'
                 src={getFairyImg(parseInt(winPercentage, 10), teamId, "png")}
               />
             </picture>
@@ -127,8 +140,7 @@ const Rate = () => {
           <p>No data available</p>
         )}
       </div>
-
-      <ButtonGroup>
+      <ButtonGroup className='button-group'>
         <button
           type='button'
           onClick={handleDownload}
@@ -148,45 +160,12 @@ const Rate = () => {
   );
 };
 const RateContainer = styled.div`
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  margin: 20px 12px;
+  background-image: url("/ticket.webp");
+  background-size: 330px 494px;
+  width: 330px;
+  height: 494px;
+  margin: 0 auto;
   padding: 0px 12px;
-  position: relative;
-  background-color: #fff;
-  > :nth-child(3) {
-    margin: 0 auto;
-  }
-
-  &::before,
-  &::after {
-    content: "";
-    position: absolute;
-    top: 25%;
-    transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-    background-color: #fff;
-    border-radius: 15px;
-    z-index: 1;
-  }
-
-  &::before {
-    border-right: 1px solid #e5e5e5;
-    left: -13px;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
-  }
-
-  &::after {
-    border-left: 1px solid #e5e5e5;
-    right: -13px;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
-  }
 
   .img {
     border: none;
@@ -199,12 +178,13 @@ const RateContainer = styled.div`
       border-radius: 8px;
       width: 100%;
       height: 100%;
+      object-fit: cover;
     }
   }
   hr {
-    margin-top: 13px;
-    width: 90%;
-    border: 1px dashed #2f3036;
+    margin-top: 10px;
+    width: 80%;
+    border: 1px dashed var(--gray-200);
   }
 `;
 
@@ -213,25 +193,22 @@ const MyRate = styled.div`
   flex-direction: column;
   padding: 0px 20px;
   gap: 8px;
-  padding-top: 20px;
+  padding-top: 24px;
 
-  .my-rate-button {
-    display: flex;
-    align-items: center;
-    width: fit-content;
-    background-color: var(--white);
-    cursor: pointer;
-    svg {
-      width: 16px;
-      height: 16px;
-    }
-  }
   > div {
     display: flex;
     justify-content: space-between;
   }
-  .my-rate-record {
-    ${typography.subtitle_03}
+`;
+const MyRateButton = styled.button`
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  background-color: var(--white);
+  cursor: pointer;
+  svg {
+    width: 16px;
+    height: 16px;
   }
 `;
 const ButtonGroup = styled.div`
@@ -244,7 +221,6 @@ const ButtonGroup = styled.div`
     justify-content: center;
     gap: 10px;
     width: 100%;
-    height: 42px;
     background-color: var(--white);
 
     svg {

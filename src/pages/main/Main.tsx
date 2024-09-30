@@ -42,13 +42,13 @@ const Main = () => {
 };
 const MainContainer = styled.div`
   padding-bottom: 120px;
+
   &::-webkit-scrollbar {
     display: none;
   }
 `;
 
 const Layer = styled.div`
-  background-color: rgb(43, 110, 176);
   width: 100%;
   max-width: 480px;
   position: fixed;
