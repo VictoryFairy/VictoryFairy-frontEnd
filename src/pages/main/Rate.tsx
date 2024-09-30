@@ -35,9 +35,20 @@ const Rate = () => {
     }
     try {
       const dataUrl = await toPng(rateRef.current, {
-        cacheBust: true,
-        backgroundColor: "white",
-        quality: 1,
+        includeQueryParams: true,
+        style: {
+          margin: "0",
+        },
+        filter: (node) => {
+          // 버튼 그룹과 SVG는 제외
+          if (node.classList && node.classList.contains("button-group")) {
+            return false;
+          }
+          if (node.tagName === "svg") {
+            return false;
+          }
+          return true; // 나머지는 포함
+        },
       });
 
       const blob = await (await fetch(dataUrl)).blob();
@@ -81,8 +92,8 @@ const Rate = () => {
   };
 
   return (
-    <RateContainer>
-      <div ref={rateRef}>
+    <RateContainer ref={rateRef}>
+      <div>
         <MyRate>
           <MyRateButton
             type='button'
@@ -128,8 +139,8 @@ const Rate = () => {
         ) : (
           <p>No data available</p>
         )}
-      </div>{" "}
-      <ButtonGroup>
+      </div>
+      <ButtonGroup className='button-group'>
         <button
           type='button'
           onClick={handleDownload}
@@ -173,7 +184,7 @@ const RateContainer = styled.div`
   hr {
     margin-top: 10px;
     width: 80%;
-    border: 1px dashed #2f3036;
+    border: 1px dashed var(--gray-200);
   }
 `;
 
