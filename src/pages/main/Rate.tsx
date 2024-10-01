@@ -11,6 +11,7 @@ import { useAuthStore } from "@/store/authStore";
 import { getFairyImg } from "@/utils/getFairyImg";
 import saveAs from "file-saver";
 import { toPng } from "html-to-image";
+import { sendGaEvent } from "@/utils/sendGaEvent";
 
 const Rate = () => {
   const rateRef = useRef<HTMLDivElement | null>(null);
@@ -30,6 +31,7 @@ const Rate = () => {
   }, [data]);
 
   const handleDownload = async () => {
+    sendGaEvent("승률페이지", "이미지 저장 버튼", "이미지 저장 버튼 클릭");
     if (!rateRef.current) {
       return;
     }
@@ -63,7 +65,7 @@ const Rate = () => {
     if (!rateRef.current) {
       return;
     }
-
+    sendGaEvent("승률페이지", "카카오톡 공유 버튼", "카카오톡 공유 버튼 클릭");
     try {
       Kakao.Link.sendDefault({
         objectType: "feed",
@@ -98,14 +100,20 @@ const Rate = () => {
           <MyRateButton
             type='button'
             className='my-rate-button'
-            onClick={() => navigate("/DetailRate", { state: { datas: data } })}>
+            onClick={() => {
+              sendGaEvent("승률페이지", "내 승률 버튼", "내 승률 버튼 클릭");
+              navigate("/DetailRate", { state: { datas: data } });
+            }}>
             <Text variant='title_02'>내 승률</Text>
             <Icon icon='IcArrowRight' fill='var(--gray-900)' />
           </MyRateButton>
           <div
             role='button'
             tabIndex={0}
-            onClick={() => setImgChange(!imgChange)}>
+            onClick={() => {
+              sendGaEvent("승률페이지", "스위치 버튼", "스위치 버튼 클릭");
+              setImgChange(!imgChange);
+            }}>
             <Text variant='display'>
               {winPercentage}
               <Text variant='headline'>%</Text>

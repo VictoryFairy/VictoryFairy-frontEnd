@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 import { typography } from "@/style/typography";
+import { sendGaEvent } from "@/utils/sendGaEvent";
 import Icon from "./Icon";
 
 interface IconProps {
@@ -13,25 +14,37 @@ const Footer = () => {
   return (
     <FooterContainer>
       <IconWrapper
-        onClick={() => navigate("/home")}
+        onClick={() => {
+          sendGaEvent("footer", "홈", "홈 탭 클릭");
+          navigate("/home");
+        }}
         $isActive={location.pathname === "/home"}>
         <Icon icon='IcHome' />
         <span>홈</span>
       </IconWrapper>
       <IconWrapper
-        onClick={() => navigate("/ranking")}
+        onClick={() => {
+          sendGaEvent("footer", "랭킹", "랭킹 탭 클릭");
+          navigate("/ranking");
+        }}
         $isActive={location.pathname === "/ranking"}>
         <Icon icon='IcRanking' />
         <span>랭킹</span>
       </IconWrapper>
       <IconWrapper
-        onClick={() => navigate("/info")}
+        onClick={() => {
+          sendGaEvent("footer", "직관", "직관 탭 클릭");
+          navigate("/info");
+        }}
         $isActive={location.pathname === "/info"}>
         <Icon icon='IcInfo' />
         <span>정보</span>
       </IconWrapper>
       <IconWrapper
-        onClick={() => navigate("/mypage")}
+        onClick={() => {
+          sendGaEvent("footer", "마이페이지", "마이페이지 탭 클릭");
+          navigate("/mypage");
+        }}
         $isActive={location.pathname.startsWith("/mypage")}>
         <Icon icon='IcMypage' />
         <span>마이페이지</span>
