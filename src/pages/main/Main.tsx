@@ -5,6 +5,7 @@ import Text from "@/components/common/Text";
 import Icon from "@/components/common/Icon";
 import { useNavigate } from "react-router-dom";
 import Loading from "@/components/common/Loading";
+import { DetailHelmet } from "../helmets/DetailHelmet";
 
 const Rate = lazy(() => import("./Rate"));
 const Watch = lazy(() => import("./Watch"));
@@ -25,6 +26,12 @@ const Main = () => {
 
   return (
     <MainContainer>
+      <DetailHelmet
+        title='승률'
+        eventDetail='승리요정 메인'
+        pageTitle='승률 및 내 직관'
+        url='sngyo.com/home'
+      />
       <Tabs
         labels={["승률", "내 직관"]}
         activeTab={activeTab}
