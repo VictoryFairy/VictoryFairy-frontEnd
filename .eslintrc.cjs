@@ -42,6 +42,7 @@ module.exports = {
   },
   plugins: ["react", "prettier"],
   rules: {
+    complexity: ["error", { max: 10 }],
     "react/function-component-definition": [
       2,
       {
@@ -83,7 +84,6 @@ module.exports = {
     "import/no-cycle": "off",
     "no-nested-ternary": "off",
     "no-plusplus": "off",
-    "react/no-unused-state": "off",
-    "react/destructuring-assignment": "off",
+    "no-alert": "off",
   },
 };

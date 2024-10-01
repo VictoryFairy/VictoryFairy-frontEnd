@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useState, useMemo } from "react";
 import { GameStatus, MyGame } from "@/types/Game";
-import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { useRegisteredGame } from "@/hooks/useRegisteredGame";
 import ListTab from "./ListTab/ListTab";
@@ -32,8 +31,8 @@ const WatchList = () => {
     setSelectMonth(date);
   };
 
-  const handleClickMatch = (id: number) => {
-    navigate(`/detail/${id}`);
+  const handleClickMatch = (matchId: number) => {
+    navigate(`/detail/${matchId}`);
   };
 
   const handleClickSearch = () =>
@@ -91,7 +90,7 @@ const WatchList = () => {
         return (
           <ListTab
             matches={isSuccess ? filteredRegisteredGames! : []}
-            onClick={(match: MyGame) => handleClickMatch(match.id)}>
+            onClick={(matchId) => handleClickMatch(matchId)}>
             <MonthNav
               onMonthChange={handleMonthChange}
               selectMonth={selectMonth}

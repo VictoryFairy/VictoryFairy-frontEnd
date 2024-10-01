@@ -1,54 +1,81 @@
 import styled from "styled-components";
-import { MyGame } from "@/types/Game";
+import { Game, Team } from "@/types/Game";
+import { HTMLAttributes } from "react";
 import Text from "./Text";
-import ResultLabel from "../watchList/ListTab/ResultLabel";
+import ResultLabel from "./ResultLabel";
 import Icon from "./Icon";
 
 interface GameListItemProps
-  extends Omit<React.HTMLAttributes<HTMLLIElement>, "onClick"> {
-  match: MyGame;
-  onClick?: (match: MyGame) => void;
+  extends Omit<HTMLAttributes<HTMLUListElement>, "onClick"> {
+  result: string | null;
+  isWinningTeam: Team;
+  homeTeam: Team;
+  homeTeamScore: number;
+  awayTeam: Team;
+  awayTeamScore: number;
+  date: string;
+  stadium: Pick<Game, "stadium">["stadium"];
+  status: Pick<Game, "status">["status"];
+  onClick?: () => void;
 }
-// TODO : registerForm에서 재사용 할 수 있도록 리팩토링
-// 문제는 내 직관 탭에서의 데이터와 registerForm에서의 데이터가 다르다는 것
-// resultlabel을 데이터에 따라 다르게 렌더링 시켜야한다
-const GameListItem = ({ match, onClick }: GameListItemProps) => {
-  const isWinningTeam = (teamId: number) => {
-    if (match.game.winningTeam === null) return false;
-    return match.game.winningTeam.id === teamId;
-  };
 
-  const handleClick = () => {
-    onClick?.(match);
+const GameListItem = ({
+  result,
+  isWinningTeam,
+  homeTeam,
+  homeTeamScore,
+  awayTeam,
+  awayTeamScore,
+  date,
+  stadium,
+  status,
+  onClick,
+}: GameListItemProps) => {
+  // 경기 중 일때 ???
+  // 응원팀 선택 전 일때 ???
+
+  const isWinnigTeam = (teamId: number) => {
+    if (!isWinningTeam) return false;
+    if (isWinningTeam.id === teamId) {
+      return true;
+    }
+    return false;
   };
 
   return (
-    <GameListItemContainer onClick={handleClick}>
-      <ResultLabel status={match.status}>{match.status}</ResultLabel>
+    <GameListItemContainer
+      onClick={() => {
+        if (onClick) onClick();
+      }}>
+      <ResultLabel status={status} result={result} />
       <div className='game-info'>
         <div
-          className={`team-score ${isWinningTeam(match.game.homeTeam.id) ? "winning" : ""}`}>
-          <Text variant='subtitle_02'>{match.game.homeTeam.name}</Text>
-          <Text variant='subtitle_02'>{match.game.homeTeamScore}</Text>
-          {isWinningTeam(match.game.homeTeam.id) && (
+          className={`team-score ${
+            isWinnigTeam(homeTeam.id) ? "winning" : ""
+          }`}>
+          <Text variant='subtitle_02'>{homeTeam.name}</Text>
+          <Text variant='subtitle_02'>{homeTeamScore}</Text>
+          {isWinnigTeam(homeTeam.id) && (
             <Icon icon='IcPolygon' width={10} height={10} />
           )}
         </div>
         <div
-          className={`team-score ${isWinningTeam(match.game.awayTeam.id) ? "winning" : ""}`}>
-          <Text variant='subtitle_02'>{match.game.awayTeam.name}</Text>
-          <Text variant='subtitle_02'>{match.game.awayTeamScore}</Text>
-          {isWinningTeam(match.game.awayTeam.id) && (
+          className={`team-score ${
+            isWinnigTeam(awayTeam.id) ? "winning" : ""
+          }`}>
+          <Text variant='subtitle_02'>{awayTeam.name}</Text>
+          <Text variant='subtitle_02'>{awayTeamScore}</Text>
+          {isWinnigTeam(awayTeam.id) && (
             <Icon icon='IcPolygon' width={10} height={10} />
           )}
         </div>
       </div>
       <div className='vertical-line' />
       <div className='game-info-stadium'>
-        <Text variant='caption'>{match.game.date}</Text>
+        <Text variant='caption'>{date}</Text>
         <Text variant='caption'>
           <Icon icon='IcLocation' width={15} height={15} />
-          {match.game.stadium.name} 야구장
+          {stadium.name} 야구장
         </Text>
       </div>
     </GameListItemContainer>

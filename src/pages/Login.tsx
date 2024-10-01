@@ -103,6 +103,7 @@ const ForgotPasswordLink = styled(Link)`
   display: flex;
   justify-content: flex-end;
   ${typography.subtitle_01}
+  color: black;
 `;
 const ButtonWrapper = styled.div``;
 

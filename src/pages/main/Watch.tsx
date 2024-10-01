@@ -6,6 +6,7 @@ const Watch = () => {
   return (
     <WatchContainer>
       <TodayMatchList />
+      <hr />
       <WatchList />
     </WatchContainer>
   );
@@ -13,10 +14,14 @@ const Watch = () => {
 const WatchContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding: 20px 0px;
   gap: 12px;
   width: 100%;
+  hr {
+    height: 16px;
+    margin: 0px -20px;
+    background-color: #efefef;
+    border: none;
+  }
 `;
 
 export default Watch;

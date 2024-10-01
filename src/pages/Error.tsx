@@ -1,7 +1,7 @@
 import Text from "@/components/common/Text";
 import Button from "@/components/common/Button";
 import styled from "styled-components";
-import onBoarding from "../assets/images/onboarding/onBoarding.png";
+import onBoarding from "@/assets/images/onboarding/onBoarding.png";
 
 const Error = () => {
   return (

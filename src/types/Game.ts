@@ -12,7 +12,7 @@ export interface Game {
   id: string;
   date: string;
   time: string;
-  status: string;
+  status: "경기중" | "경기전" | "경기종료" | "우천취소";
   homeTeam: Team;
   awayTeam: Team;
   stadium: {
@@ -35,4 +35,4 @@ export interface Team {
   name: string;
 }
 
-export type GameStatus = "All" | "Win" | "Lose" | "Tie" | "No game";
+export type GameStatus = "All" | "Win" | "Lose" | "Tie" | "No game" | null;

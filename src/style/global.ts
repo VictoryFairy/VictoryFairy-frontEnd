@@ -79,7 +79,7 @@ body{
     padding: 0;
     margin:0;
     min-height: 100vh;
-    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+    font-family: 'Spoqa Han Sans Neo', sans-serif;
 }
 
 button {

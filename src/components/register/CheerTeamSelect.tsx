@@ -1,28 +1,40 @@
 import styled from "styled-components";
 import { useState, useEffect, useRef } from "react";
 import { Team } from "@/types/Game";
+import { UseFormSetValue, UseFormWatch } from "react-hook-form";
 import Icon from "../common/Icon";
 import Text from "../common/Text";
 
 interface CheerTeamSelectProps {
-  setCheeringTeamId: (id: number) => void;
   awayTeam: Team;
   homeTeam: Team;
+  name: string;
+  watch: UseFormWatch<any>;
+  setValue: UseFormSetValue<any>;
+  defaultValue?: number;
 }
 
 const CheerTeamSelect = ({
-  setCheeringTeamId,
   awayTeam,
   homeTeam,
+  name,
+  setValue,
+  watch,
+  defaultValue,
 }: CheerTeamSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [cheeringTeam, setCheeringTeam] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const cheeringTeamId = watch(name);
 
   const handleClickSelect = () => {
     setIsOpen(!isOpen);
   };
-
+  useEffect(() => {
+    if (defaultValue) {
+      setValue(name, defaultValue);
+    }
+  }, [defaultValue, name, setValue]);
   // 드롭다운 바깥쪽을 클릭하면 드롭다운을 닫음
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -41,10 +53,16 @@ const CheerTeamSelect = ({
   }, []);
 
   const handleSelectItem = (team: Team) => {
-    setCheeringTeamId(team.id);
-    setCheeringTeam(team.name);
+    setValue(name, team.id);
     setIsOpen(false);
   };
+
+  const selectedTeam =
+    cheeringTeamId === homeTeam.id
+      ? homeTeam.name
+      : cheeringTeamId === awayTeam.id
+        ? awayTeam.name
+        : null;
 
   return (
     <CheerTeamSelectContainer ref={dropdownRef}>
@@ -56,10 +74,10 @@ const CheerTeamSelect = ({
         onClick={handleClickSelect}
         className='select'
         tabIndex={0}>
-        {cheeringTeam === null ? (
+        {selectedTeam === null ? (
           <Text variant='subtitle_02'>응원팀을 선택해주세요</Text>
         ) : (
-          <Text variant='subtitle_02'>{cheeringTeam}</Text>
+          <Text variant='subtitle_02'>{selectedTeam}</Text>
         )}
         <Icon icon='IcArrowDown' />
       </div>

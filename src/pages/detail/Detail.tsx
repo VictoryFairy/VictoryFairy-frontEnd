@@ -15,6 +15,7 @@ import styled from "styled-components";
 import Button from "@/components/common/Button";
 import { uploadImg } from "@/utils/uploadImg"; // Import the image upload utility
 import { usePopup } from "@/hooks/usePopup"; // usePopup 사용
+import CheerTeamSelect from "@/components/register/CheerTeamSelect";
 import TextAreaField from "../../components/common/TextAreaField";
 import InputField from "../../components/common/InputField";
 
@@ -25,10 +26,10 @@ const Detail = () => {
 
   const queryClient = useQueryClient();
 
-  const [isEditing, setIsEditing] = useState(false);
+  const [$isEditing, setIsEditing] = useState(false);
   const { openPopup, renderPopup, closePopup } = usePopup(); // usePopup 사용
 
-  const { data } = useQuery({
+  const { data: registeredGame } = useQuery({
     queryKey: ["registeredGame", id],
     queryFn: () => getRegisteredGameById(id),
   });
@@ -71,29 +72,31 @@ const Detail = () => {
   });
 
   const [previewImage, setPreviewImage] = useState<string | null>(
-    data?.image || null,
+    registeredGame?.image || null,
   );
 
   const inputImgRef = useRef<HTMLInputElement>(null);
   const { ref, ...rest } = register("img");
 
   useEffect(() => {
-    if (data) {
+    if (registeredGame) {
       reset({
-        cheeringTeam: data.cheeringTeam.name,
-        seat: data.seat,
-        review: data.review,
+        cheeringTeamId: registeredGame.cheeringTeam.id,
+        cheeringTeamName: registeredGame.cheeringTeam.name,
+        seat: registeredGame.seat,
+        review: registeredGame.review,
       });
-      setPreviewImage(data.image);
+      setPreviewImage(registeredGame.image);
     }
-  }, [data, reset]);
+  }, [registeredGame, reset]);
 
   const onSubmit = (formData: any) => {
     updateMutation.mutate(formData);
+    setIsEditing(!$isEditing);
   };
 
   const handleEdit = () => {
-    setIsEditing(!isEditing);
+    setIsEditing(!$isEditing);
   };
 
   const handleDelete = () => {
@@ -122,12 +125,26 @@ const Detail = () => {
   };
 
   const handleClickImageUpload = () => {
-    if (isEditing) {
+    if ($isEditing) {
       inputImgRef.current?.click();
     }
   };
 
-  if (!data) return null;
+  if (!registeredGame) return null;
+
+  const getResult = () => {
+    if (watch("cheeringTeamId") === undefined) return null;
+    if (registeredGame.game.status === "우천취소") return "No Game";
+    if (watch("cheeringTeamId") === registeredGame.game.winningTeam.id) {
+      return "Win";
+    }
+    if (
+      registeredGame.game.status === "경기종료" &&
+      registeredGame.game.winningTeam === null
+    )
+      return "Tie";
+    return "Lose";
+  };
 
   return (
     <Layout>
@@ -136,13 +153,24 @@ const Detail = () => {
           <Icon icon='IcArrowLeft' onClick={() => navigate(-1)} />
         </div>
         <div>
-          <Text variant='headline'>{`${data.game.date} ${data.game.homeTeam.name} vs ${data.game.awayTeam.name}`}</Text>
+          <Text variant='headline'>{`${registeredGame.game.date} ${registeredGame.game.homeTeam.name} vs ${registeredGame.game.awayTeam.name}`}</Text>
         </div>
         <div>
           <DropDown onEdit={handleEdit} onDelete={handleDelete} />
         </div>
       </Header>
-      <GameListItem className='match' match={data} />
+      <GameListItem
+        className='match'
+        result={$isEditing ? getResult() : registeredGame.status} // 서버 API 수정 후, registeredGame.status로 변경
+        isWinningTeam={registeredGame.game.winningTeam}
+        homeTeam={registeredGame.game.homeTeam}
+        homeTeamScore={registeredGame.game.homeTeamScore}
+        awayTeam={registeredGame.game.awayTeam}
+        awayTeamScore={registeredGame.game.awayTeamScore}
+        date={registeredGame.game.date}
+        stadium={registeredGame.game.stadium}
+        status={registeredGame.game.status}
+      />
       <DetailContainer onSubmit={handleSubmit(onSubmit)}>
         <input
           className='img-input'
@@ -153,8 +181,8 @@ const Detail = () => {
           onChange={handleImageChange}
         />
         <ImgUploadContainer
-          isEditing={isEditing}
-          hasImage={!!previewImage}
+          $isEditing={$isEditing}
+          $hasImage={!!previewImage}
           onClick={handleClickImageUpload}>
           {previewImage ? (
             <PreviewImage src={previewImage} alt='직관 사진' />
@@ -165,16 +193,27 @@ const Detail = () => {
             </ImgWrraper>
           )}
         </ImgUploadContainer>
-        <InputField
-          name='cheeringTeam'
-          label='응원팀'
-          type='text'
-          register={register}
-          watch={watch}
-          setValue={setValue}
-          disabled
-          clearable={false}
-        />
+        {$isEditing ? (
+          <CheerTeamSelect
+            homeTeam={registeredGame.game.homeTeam}
+            awayTeam={registeredGame.game.awayTeam}
+            setValue={setValue}
+            watch={watch}
+            name='cheeringTeamId'
+            defaultValue={registeredGame.cheeringTeam.id}
+          />
+        ) : (
+          <InputField
+            name='cheeringTeamName'
+            label='응원팀'
+            type='text'
+            register={register}
+            watch={watch}
+            setValue={setValue}
+            disabled
+            clearable={false}
+          />
+        )}
         <InputField
           name='seat'
           label='좌석'
@@ -182,7 +221,7 @@ const Detail = () => {
           register={register}
           watch={watch}
           setValue={setValue}
-          disabled={!isEditing}
+          disabled={!$isEditing}
           clearable={false}
         />
         <TextAreaField
@@ -191,9 +230,9 @@ const Detail = () => {
           register={register}
           watch={watch}
           setValue={setValue}
-          disabled={!isEditing}
+          disabled={!$isEditing}
         />
-        {isEditing && (
+        {$isEditing && (
           <Button size='big' type='submit'>
             <Text variant='title_02'>수정완료</Text>
           </Button>
@@ -250,19 +289,19 @@ const DetailContainer = styled.form`
 `;
 
 const ImgUploadContainer = styled.label<{
-  hasImage: boolean;
-  isEditing: boolean;
+  $hasImage: boolean;
+  $isEditing: boolean;
 }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: ${({ hasImage }) =>
-    hasImage ? "none" : "1px dashed var(--gray-200)"};
+  border: ${({ $hasImage }) =>
+    $hasImage ? "none" : "1px dashed var(--gray-200)"};
   border-radius: 12px;
   height: 180px;
   width: 100%;
-  cursor: ${({ isEditing }) => (isEditing ? "pointer" : "default")};
+  cursor: ${({ $isEditing }) => ($isEditing ? "pointer" : "default")};
 `;
 
 const ImgWrraper = styled.div`

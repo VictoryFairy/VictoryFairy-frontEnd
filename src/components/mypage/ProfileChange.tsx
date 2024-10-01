@@ -43,7 +43,7 @@ const ProfileChange = () => {
   const mutationProfileChange = useMutation({
     mutationFn: (data: { field: string; value: string }) =>
       profileChange(data.field, data.value),
-    onSuccess: (data, variables) => {
+    onSuccess: (_, variables) => {
       const { field, value } = variables;
       if (field === "nickname") {
         updateNickname(value);

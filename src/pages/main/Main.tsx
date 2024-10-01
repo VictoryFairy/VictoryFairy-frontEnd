@@ -1,11 +1,13 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, Suspense, lazy } from "react";
 import Tabs from "@/components/common/Tabs";
 import Text from "@/components/common/Text";
 import Icon from "@/components/common/Icon";
 import { useNavigate } from "react-router-dom";
-import Rate from "./Rate";
-import Watch from "./Watch";
+import Loading from "@/components/common/Loading";
+
+const Rate = lazy(() => import("./Rate"));
+const Watch = lazy(() => import("./Watch"));
 
 const Main = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -28,7 +30,7 @@ const Main = () => {
         activeTab={activeTab}
         onTabClick={setActiveTab}
       />
-      {renderContent()}
+      <Suspense fallback={<Loading />}>{renderContent()}</Suspense>
       <Layer>
         <RegisterButton onClick={() => navigate("/select-match")}>
           <Icon icon='IcEdit' />
@@ -40,13 +42,13 @@ const Main = () => {
 };
 const MainContainer = styled.div`
   padding-bottom: 120px;
+
   &::-webkit-scrollbar {
     display: none;
   }
 `;
 
 const Layer = styled.div`
-  background-color: rgb(43, 110, 176);
   width: 100%;
   max-width: 480px;
   position: fixed;

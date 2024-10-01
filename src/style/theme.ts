@@ -82,29 +82,19 @@ const samsungLions: Theme = {
   },
 };
 
+const themes: { [key: string]: Theme } = {
+  LG: lgTwins,
+  두산: doosanBears,
+  SSG: ssgLanders,
+  KT: ktWiz,
+  한화: hanwhaEagles,
+  NC: ncDinos,
+  롯데: lotteGiants,
+  KIA: kiaTigers,
+  키움: kiwoomHeroes,
+  삼성: samsungLions,
+};
+
 export const getTheme = (team: string) => {
-  switch (team) {
-    case "LG":
-      return lgTwins;
-    case "두산":
-      return doosanBears;
-    case "SSG":
-      return ssgLanders;
-    case "KT":
-      return ktWiz;
-    case "한화":
-      return hanwhaEagles;
-    case "NC":
-      return ncDinos;
-    case "롯데":
-      return lotteGiants;
-    case "KIA":
-      return kiaTigers;
-    case "키움":
-      return kiwoomHeroes;
-    case "삼성":
-      return samsungLions;
-    default:
-      return defaultTheme;
-  }
+  return themes[team] || defaultTheme;
 };

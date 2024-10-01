@@ -3,7 +3,6 @@ import { MyGame } from "@/types/Game";
 import moment from "moment";
 import Calendar from "@/components/common/Calendar";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 
 interface CalendarProps {
   registeredGames: MyGame[];
