@@ -25,6 +25,7 @@ export default defineConfig({
         name: "Victory-fairy",
         short_name: "Victory-fairy",
         theme_color: "#ffffff",
+        id: "com.sngyo.sngyo",
         icons: [
           {
             src: "pwa-64x64.png",
