@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
 import { resolve } from "path";
 import { VitePWA } from "vite-plugin-pwa";
+import prerender from "@prerenderer/rollup-plugin";
 // https://vitejs.dev/config/
 // export default defineConfig({
 //   plugins: [react(), svgr()],
@@ -16,6 +17,17 @@ export default defineConfig({
     plugins: [
         react(),
         svgr(),
+        prerender({
+            routes: ["/home", "/ranking", "/info"],
+            renderer: "@prerenderer/renderer-puppeteer",
+            rendererOptions: {
+                maxConcurrentRoutes: 1,
+                renderAfterTime: 500,
+            },
+            postProcess: function (route) {
+                route.html = route.html.replace(/<script type="module" src="\/src\.[a-z0-9]+\.js"><\/script>/, "");
+            },
+        }),
         VitePWA({
             registerType: "autoUpdate",
             includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.svg"],
@@ -23,6 +35,7 @@ export default defineConfig({
                 name: "Victory-fairy",
                 short_name: "Victory-fairy",
                 theme_color: "#ffffff",
+                id: "com.sngyo.Victoryfairy",
                 icons: [
                     {
                         src: "pwa-64x64.png",
