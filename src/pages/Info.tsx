@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { typography } from "@/style/typography";
 import ParkingInfoPage from "../components/info/map/ParkingInfoPage";
 import CheerSongPage from "../components/info/cheerSong/CheerSongPage";
+import { DetailHelmet } from "./helmets/DetailHelmet";
 
 const Info = () => {
   const [activeTab, setActiveTab] = useState<"map" | "cheer">(() => {
@@ -19,6 +20,12 @@ const Info = () => {
 
   return (
     <Container>
+      <DetailHelmet
+        title='주차정보'
+        eventDetail='주차정보 및 응원가'
+        pageTitle='주차정보 및 응원가'
+        url='sngyo.com/info'
+      />
       <Tabs>
         <TabButton
           $active={activeTab === "map"}
