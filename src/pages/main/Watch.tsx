@@ -17,7 +17,6 @@ const WatchContainer = styled.div`
   gap: 12px;
   width: 100%;
   hr {
-    width: 100vw;
     height: 16px;
     margin: 0px -20px;
     background-color: #efefef;
