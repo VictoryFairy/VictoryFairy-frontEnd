@@ -8,3 +8,5 @@ status = 200
   to = "/robots.txt"
   status = 200
 
+[build]
+  command = "npx puppeteer browsers install chrome && npx run build"
