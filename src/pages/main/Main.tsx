@@ -22,10 +22,10 @@ const Main = () => {
 
   const handleClickTab = (tab: number) => {
     if (tab === 0) {
-      sendGaEvent("탭", "승률", "승률 탭 클릭");
+      sendGaEvent("탭", "승률 탭 클릭", "승률 탭");
     }
     if (tab === 1) {
-      sendGaEvent("탭", "내 직관", "내 직관 탭 클릭");
+      sendGaEvent("탭", "내 직관 탭 클릭", "내 직관");
     }
     setActiveTab(tab);
   };

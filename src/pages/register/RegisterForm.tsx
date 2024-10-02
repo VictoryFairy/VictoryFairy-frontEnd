@@ -17,7 +17,11 @@ const RegisterForm = () => {
   const { openPopup, renderPopup, closePopup } = usePopup();
 
   const onSubmit = async (data: any) => {
-    sendGaEvent("직관 기록 페이지", "직관 기록 하기", "직관 기록 하기 클릭");
+    sendGaEvent(
+      "직관 기록 페이지",
+      "직관 기록 하기 완료",
+      "직관 기록 하기 버튼",
+    );
     try {
       const { img, seat, review, cheeringTeamId } = data;
       let image = null;

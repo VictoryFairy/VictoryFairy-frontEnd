@@ -15,7 +15,7 @@ const Footer = () => {
     <FooterContainer>
       <IconWrapper
         onClick={() => {
-          sendGaEvent("footer", "홈", "홈 탭 클릭");
+          sendGaEvent("footer", "홈 탭 클릭", "홈");
           navigate("/home");
         }}
         $isActive={location.pathname === "/home"}>
@@ -24,7 +24,7 @@ const Footer = () => {
       </IconWrapper>
       <IconWrapper
         onClick={() => {
-          sendGaEvent("footer", "랭킹", "랭킹 탭 클릭");
+          sendGaEvent("footer", "랭킹 탭 클릭", "랭킹");
           navigate("/ranking");
         }}
         $isActive={location.pathname === "/ranking"}>
@@ -33,7 +33,7 @@ const Footer = () => {
       </IconWrapper>
       <IconWrapper
         onClick={() => {
-          sendGaEvent("footer", "직관", "직관 탭 클릭");
+          sendGaEvent("footer", "직관 탭 클릭", "직관");
           navigate("/info");
         }}
         $isActive={location.pathname === "/info"}>
@@ -42,7 +42,7 @@ const Footer = () => {
       </IconWrapper>
       <IconWrapper
         onClick={() => {
-          sendGaEvent("footer", "마이페이지", "마이페이지 탭 클릭");
+          sendGaEvent("footer", "마이페이지 탭 클릭", "마이페이지");
           navigate("/mypage");
         }}
         $isActive={location.pathname.startsWith("/mypage")}>

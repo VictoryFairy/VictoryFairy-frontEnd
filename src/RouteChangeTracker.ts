@@ -8,7 +8,11 @@ const RouteChangeTracker = () => {
 
   useEffect(() => {
     if (import.meta.env.VITE_GA_ID) {
-      ReactGA.initialize(import.meta.env.VITE_GA_ID);
+      ReactGA.initialize(import.meta.env.VITE_GA_ID, {
+        // gaOptions: {
+        //   debug_mode: true,
+        // },
+      });
       setInitialized(true);
     }
   }, []);

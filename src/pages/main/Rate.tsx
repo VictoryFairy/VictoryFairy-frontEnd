@@ -31,7 +31,7 @@ const Rate = () => {
   }, [data]);
 
   const handleDownload = async () => {
-    sendGaEvent("승률페이지", "이미지 저장 버튼", "이미지 저장 버튼 클릭");
+    sendGaEvent("승률페이지", "이미지 저장 버튼 클릭", "이미지 저장 버튼");
     if (!rateRef.current) {
       return;
     }
@@ -65,7 +65,7 @@ const Rate = () => {
     if (!rateRef.current) {
       return;
     }
-    sendGaEvent("승률페이지", "카카오톡 공유 버튼", "카카오톡 공유 버튼 클릭");
+    sendGaEvent("승률페이지", "카카오톡 공유 버튼 클릭", "카카오톡 공유 버튼");
     try {
       Kakao.Link.sendDefault({
         objectType: "feed",
@@ -101,7 +101,7 @@ const Rate = () => {
             type='button'
             className='my-rate-button'
             onClick={() => {
-              sendGaEvent("승률페이지", "내 승률 버튼", "내 승률 버튼 클릭");
+              sendGaEvent("승률페이지", "내 승률 버튼 클릭", "내 승률 버튼");
               navigate("/DetailRate", { state: { datas: data } });
             }}>
             <Text variant='title_02'>내 승률</Text>
@@ -111,7 +111,7 @@ const Rate = () => {
             role='button'
             tabIndex={0}
             onClick={() => {
-              sendGaEvent("승률페이지", "스위치 버튼", "스위치 버튼 클릭");
+              sendGaEvent("승률페이지", "스위치 버튼 클릭", "스위치 버튼");
               setImgChange(!imgChange);
             }}>
             <Text variant='display'>
