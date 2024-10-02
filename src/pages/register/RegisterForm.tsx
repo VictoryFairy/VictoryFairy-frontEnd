@@ -7,6 +7,7 @@ import GameListItem from "@/components/common/GameListItem";
 import styled from "styled-components";
 import { uploadImg } from "@/utils/uploadImg";
 import RegisterFormFields from "@/components/register/RegisterFormFields";
+import { sendGaEvent } from "@/utils/sendGaEvent";
 
 const RegisterForm = () => {
   const location = useLocation();
@@ -16,6 +17,7 @@ const RegisterForm = () => {
   const { openPopup, renderPopup, closePopup } = usePopup();
 
   const onSubmit = async (data: any) => {
+    sendGaEvent("직관 기록 페이지", "직관 기록 하기", "직관 기록 하기 클릭");
     try {
       const { img, seat, review, cheeringTeamId } = data;
       let image = null;

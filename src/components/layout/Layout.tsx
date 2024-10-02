@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
+import RouteChangeTracker from "@/RouteChangeTracker";
 import Header, { HeaderProps } from "../common/Header";
 import Footer from "../common/Footer";
 import ErrorBoundary from "../common/ErrorBoundary";
@@ -9,6 +10,7 @@ interface LayoutProps extends HeaderProps {
 }
 
 const Layout = ({ left, center, right, footer = true }: LayoutProps) => {
+  RouteChangeTracker();
   return (
     <ErrorBoundary>
       <LayoutConatiner>

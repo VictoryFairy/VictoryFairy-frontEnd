@@ -5,6 +5,7 @@ import Text from "@/components/common/Text";
 import Icon from "@/components/common/Icon";
 import { useNavigate } from "react-router-dom";
 import Loading from "@/components/common/Loading";
+import { sendGaEvent } from "@/utils/sendGaEvent";
 import { DetailHelmet } from "../helmets/DetailHelmet";
 
 const Rate = lazy(() => import("./Rate"));
@@ -13,6 +14,21 @@ const Watch = lazy(() => import("./Watch"));
 const Main = () => {
   const [activeTab, setActiveTab] = useState(0);
   const navigate = useNavigate();
+
+  const handleClickRegister = () => {
+    sendGaEvent("버튼 클릭", "직관 기록하기 버튼 클릭", "직관 기록하기 버튼");
+    navigate("/select-match");
+  };
+
+  const handleClickTab = (tab: number) => {
+    if (tab === 0) {
+      sendGaEvent("탭", "승률", "승률 탭 클릭");
+    }
+    if (tab === 1) {
+      sendGaEvent("탭", "내 직관", "내 직관 탭 클릭");
+    }
+    setActiveTab(tab);
+  };
   const renderContent = () => {
     switch (activeTab) {
       case 0:
@@ -35,11 +51,11 @@ const Main = () => {
       <Tabs
         labels={["승률", "내 직관"]}
         activeTab={activeTab}
-        onTabClick={setActiveTab}
+        onTabClick={handleClickTab}
       />
       <Suspense fallback={<Loading />}>{renderContent()}</Suspense>
       <Layer>
-        <RegisterButton onClick={() => navigate("/select-match")}>
+        <RegisterButton onClick={() => handleClickRegister()}>
           <Icon icon='IcEdit' />
           <Text variant='title_02'>직관 기록하기</Text>
         </RegisterButton>

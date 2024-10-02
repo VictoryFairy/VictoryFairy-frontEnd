@@ -7,3 +7,6 @@ status = 200
   from = "/robots.txt"
   to = "/robots.txt"
   status = 200
+
+[build]
+  command = "npx puppeteer browsers install chrome && npx vite build"

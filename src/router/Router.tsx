@@ -1,4 +1,3 @@
-// src/router/router.tsx
 import { createBrowserRouter, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Suspense, lazy } from "react";
