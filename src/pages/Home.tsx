@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { checkRefreshToken } from "@/api/auth/auth.api";
+import { sendGaEvent } from "@/utils/sendGaEvent";
 import Button from "../components/common/Button";
 import onBoarding from "../assets/images/onboarding/onBoarding.png";
 import Text from "../components/common/Text";
@@ -23,6 +24,11 @@ const Home = () => {
     checkToken();
   }, []);
 
+  const handleClickSignUp = () => {
+    sendGaEvent("초기페이지", "회원가입 클릭", "회원가입 버튼");
+    navigate("/signup");
+  };
+
   return (
     <Container>
       <Image src={onBoarding} alt='환영 이미지' />
@@ -33,7 +39,7 @@ const Home = () => {
       <Text variant='subtitle_03'>지금 바로 시작해보세요.</Text>
 
       <ButtonContainer>
-        <Button size='big' type='button' onClick={() => navigate("/signup")}>
+        <Button size='big' type='button' onClick={handleClickSignUp}>
           회원가입
         </Button>
         <Button

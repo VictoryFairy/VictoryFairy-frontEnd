@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { UserInfo } from "@/types/User";
 import { signUp } from "@/api/auth/auth.api";
 import { usePopup } from "@/hooks/usePopup";
+import { sendGaEvent } from "@/utils/sendGaEvent";
 import TitleSection from "../common/TitleSection";
 import Button from "../common/Button";
 
@@ -108,6 +109,7 @@ const TeamSelect = ({
   };
 
   const handleClick = async () => {
+    sendGaEvent("회원가입 페이지", "회원가입 완료 클릭", "회원가입 완료");
     try {
       const data = {
         email: userInfo.email,
