@@ -33,7 +33,7 @@ const Footer = () => {
       </IconWrapper>
       <IconWrapper
         onClick={() => {
-          sendGaEvent("footer", "직관 탭 클릭", "직관");
+          sendGaEvent("footer", "정보 탭 클릭", "정보");
           navigate("/info");
         }}
         $isActive={location.pathname === "/info"}>
