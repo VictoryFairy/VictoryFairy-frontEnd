@@ -22,14 +22,14 @@ export const DetailHelmet = ({
       <meta property='og:title' content={pageTitle} />
       <meta property='og:url' content={url} />
       <meta property='og:description' content={eventDetail} />
-      <meta property='og:image' content='/logo.png' />
+      <meta property='og:image' content='/Logo/logo.png' />
       <meta property='og:image:alt' content='승리요정 이벤트 이미지' />
 
       {/* Twitter */}
       <meta name='twitter:title' content={pageTitle} />
       <meta name='twitter:url' content={url} />
       <meta name='twitter:description' content={eventDetail} />
-      <meta name='twitter:image' content='/logo.png' />
+      <meta name='twitter:image' content='/Logo/logo.png' />
       <meta name='twitter:image:alt' content='승리요정 이벤트 이미지' />
 
       {/* 일반 메타 태그 */}
@@ -40,10 +40,10 @@ export const DetailHelmet = ({
       <script type='application/ld+json'>
         {`{
           "@context": "https://schema.org",
-          "name": "${pageTitle}",
+          "name": "승요"
           "description": "${eventDetail}",
           "url": "${url}",
-          "image": "${"/logo.png"}"
+          "image": "${"/Logo/logo.png"}"
         }`}
       </script>
     </Helmet>
