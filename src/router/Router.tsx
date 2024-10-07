@@ -68,7 +68,7 @@ const Logo = () => {
     navigate("/");
   };
 
-  return <LogoWrapper src={logo} onClick={goHome} />;
+  return <LogoWrapper alt='승리요정' src={logo} onClick={goHome} />;
 };
 
 const Router = createBrowserRouter([
