@@ -19,7 +19,19 @@ const RouteChangeTracker = () => {
 
   useEffect(() => {
     if (initialized) {
-      ReactGA.send({ hitType: "pageview", page: location.pathname });
+      // 현재 경로를 pagePath로 저장
+      let pagePath = location.pathname;
+
+      // "/detail/id" 패턴을 "/detail"로 변환
+      if (/^\/detail\/\d+$/.test(pagePath)) {
+        pagePath = "/detail"; // 모든 detail/id를 detail로 통합
+      }
+      if (/^\/cheerSongDetail\/\d+$/.test(pagePath)) {
+        pagePath = "/cheerSongDetail"; // 모든 detail/id를 detail로 통합
+      }
+
+      // GA4에 수정된 경로로 페이지뷰 이벤트 전송
+      ReactGA.send({ hitType: "pageview", page: pagePath });
     }
   }, [initialized, location]);
 };

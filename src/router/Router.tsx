@@ -6,6 +6,7 @@ import Layout from "../components/layout/Layout";
 import Icon from "../components/common/Icon";
 import { useSignupStore } from "../store/signupStep";
 import { typography } from "../style/typography";
+import logo from "../assets/images/Logo/logo.webp";
 
 const Home = lazy(() => import("../pages/Home"));
 const Signup = lazy(() => import("../pages/Signup"));
@@ -67,7 +68,7 @@ const Logo = () => {
     navigate("/");
   };
 
-  return <LogoWrapper src='/Logo/logo.png' onClick={goHome} />;
+  return <LogoWrapper src={logo} onClick={goHome} />;
 };
 
 const Router = createBrowserRouter([
