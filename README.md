@@ -1,81 +1,37 @@
-## 데일리 스크럼
+![썸네일](https://github.com/user-attachments/assets/700c050a-6cdd-48e2-a8ef-611e0f47bee7)
 
-- 매일 2시
-- 오늘 할 일 공유
 
-## 이슈 관리
+# 프로젝트 소개
 
-- 라벨 붙이기
-- 백로그 연동
+안녕하세요! 야구 직관 기록 서비스 ‘승리요정’ 팀입니다!
 
-## PR
+야구 직관을 기록하고 개인의 직관 승률을 확인할 수 있는 웹 서비스 승리요정을 런칭했습니다.
 
-- 프론트는 3명 같이 리뷰 후 머지
-- 백엔드는 2명 같이 리뷰 후 머지
+승리요정 바로가기 https://www.sngyo.com/
 
-## 활동 규칙
+# 대표기능
+**1. 직관 기록 관리**
+   나만의 직관을 쉽게 기록하고, 내가 언제 어디서 경기를 관람했는지 한눈에 볼 수 있어요.
+   ![image](https://github.com/user-attachments/assets/789eb285-b900-44b3-b9c0-795718b6d776)
+   
+**2. 팀별 승률 분석**
+   각 팀과의 직관 승률을 분석해 어떤 팀과의 경기에서 강한지 알 수 있어, 더 전략적인 응원을 할 수 있어요.
+   ![image](https://github.com/user-attachments/assets/72e627c3-a056-49f4-a9c9-9ebe130ee31e)
+   
+**3. 랭킹**
+   우리 팀 내에서 내가 몇 번째 승리요정인지 확인하며 친구들과 경쟁의 재미를 느껴보세요!
+   ![image](https://github.com/user-attachments/assets/51337e6c-b66a-40d9-a37b-a084f3540403)
 
-- 14~19시 지키기
-- 멘토링 날에는 멘토링 전에 1800~1900 저녁 먹고 오기
-- 사소한 것도 질문하고 공유하자
-- PR이 올라오면 24시간 내에 리뷰하기(주말은 선택)
-- 사소한 회의도 기록하기
 
-## Git Flow의 기본 브랜치 명
+# 팀원소개
+<div align="center">
 
-⇒ {접두사}/{분야}/{#issue} (ex. Feature/FE/#24)
+|          <img src="https://github.com/user-attachments/assets/44258dbb-1aac-42a6-b2aa-9400cb6b35c9" width="100"/>          |         <img src="https://github.com/user-attachments/assets/eaa00101-80f1-491d-8e23-de5354061169" width="100"/>         |          <img src="https://github.com/user-attachments/assets/6d402968-19ca-4f14-b83a-511a64fe8346" width="100"/>           |
+| :-----------------------------------------: | :---------------------------------------: | :------------------------------------------: |
+| [남기주 - BE](https://github.com/Capoomaru) | [박해준 - BE](https://github.com/JEM1224) | [성민석 - FE](https://github.com/navyjeongs) |
 
-| 브랜치 접두사 | 의미                                                                            |
-| ------------- | ------------------------------------------------------------------------------- |
-| Feature       | 기능추가(테스트코드 포함), CSS 등 사용자 UI 디자인 변경                         |
-| Fix           | 버그 수정                                                                       |
-| Refactor      | 기능 변경 없이 코드수정된 경우                                                  |
-| Test          | 테스트 코드만 추가하거나 수정할 때                                              |
-| Config        | 환경설정 및 라이브러리 설정(패키지 매니저 수정)                                 |
-| Chore         | 파일 혹은 폴더명 수정하거나 옮기는 경우 그 외 기타 수정(코드 포맷팅), 오타 정정 |
-| Docs          | 문서 작성 및 수정(README 수정)                                                  |
+</div>
 
-제목 : {깃모지}(공백한칸){제목}
+# 기술스택
+![sngyo](https://github.com/user-attachments/assets/e586a5dd-8322-4e2a-b96e-c781e5174889)
 
-- 변경사항1
-- 변경사항2
-- 구현하면서 고려했던 사항
-
-예시
-✨ 아이디 입력 input 구현
-
-- 아이디 input 구현
-- 리렌더링 방지
-
-<h2>커밋 단위</h2>
-<p>이슈 → 단계별로 알아서 계획 세우고 잘 커밋하기!</p>
-<p>gitmoji → extension vscode 설치</p>
-<p>commitlint gitmoji</p>
-<h2>사용할 수 있는 깃모지</h2>
-
-| 유형                     | 이모지 |                    |
-| ------------------------ | ------ | ------------------ |
-| 기능 개발(Feature)       | ✨     | :sparkles:         |
-| 버그 수정(Fix)           | 🐛     | :bug:              |
-| 리팩토링(Refactor)       | ♻️     | :recycle:          |
-| 테스트 코드(Test)        | ✅     | :white_check_mark: |
-| 성능 개선                | ⚡️    |                    |
-| 코드 구조 개선           | 🎨     |                    |
-| 프로젝트 시작            | 🎉     |                    |
-| 린트, 컴파일러 오류 고침 | 🚨     |                    |
-| 문서 작성 및 수정(Docs)  | 📝     | :memo:             |
-| CI 빌드 시스템 구축      | 👷     |                    |
-| CI 빌드 수정             | 💚     |                    |
-| Config                   | 🔧     |                    |
-| 오타 수정                | ✏️     |                    |
-|                          |        |                    |
-
-## PR 제목
-
-{브랜치명}: 제목
-
-ex) Feature/#12: 제목
-
-## 이슈 제목
-
-ex) [Feature] 제목
