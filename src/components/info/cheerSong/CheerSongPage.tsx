@@ -8,9 +8,9 @@ import SelectionBar from "@/components/common/SelectionBar";
 import Text from "@/components/common/Text";
 import { typography } from "@/style/typography";
 import Icon from "@/components/common/Icon";
+import empty from "@/assets/images/cheersEmpty/empty.webp";
 import TeamList from "./TeamList";
 import CheerSongList, { TeamName } from "./CheerSongList";
-import empty from "../../../assets/images/cheersEmpty/Group 625793.png";
 
 const CheerSongPage = () => {
   const { teamId } = useAuthStore();

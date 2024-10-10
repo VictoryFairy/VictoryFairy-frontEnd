@@ -52,7 +52,10 @@ const LocationButton = ({ mapInstance }: LocationButtonProps) => {
   }, [mapInstance]);
 
   return (
-    <Button onClick={moveToMyLocation} disabled={isLoading}>
+    <Button
+      onClick={moveToMyLocation}
+      disabled={isLoading}
+      aria-label='내 위치로 이동'>
       {isLoading ? <Spinner /> : <Icon icon='IcCurrentLocation' />}
     </Button>
   );

@@ -27,7 +27,7 @@ const ZoomButton = ({ mapInstance, zoomType }: ZoomButtonProps) => {
   };
 
   return (
-    <Button onClick={handleZoom} $zoomType={zoomType}>
+    <Button onClick={handleZoom} $zoomType={zoomType} aria-label='줌인 줌아웃 '>
       {zoomType === "in" ? <Icon icon='IcPlus' /> : <Icon icon='IcMinus' />}
     </Button>
   );
