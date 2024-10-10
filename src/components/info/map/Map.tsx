@@ -1,6 +1,7 @@
 import { useEffect, useRef, useCallback, useState } from "react";
 import styled from "styled-components";
 import { ParkingInfo, Stadium } from "@/types/Stadium";
+import Loading from "@/components/common/Loading";
 import LocationButton from "./LocationButton";
 import ZoomButton from "./ZoomButton";
 
@@ -26,7 +27,6 @@ const createCustomInfoWindow = (content: string) => {
         min-width: 150px;
         border-radius: 8px;
         border : 1px solid black;
-      
       ">
         ${content}
       </div>
@@ -51,6 +51,46 @@ const Map = ({
   const markersRef = useRef<naver.maps.Marker[]>([]);
   const [mapInstance, setMapInstance] = useState<naver.maps.Map | null>(null);
 
+  const loadMapScript = () => {
+    return new Promise<void>((resolve, reject) => {
+      if (window.naver) {
+        resolve();
+        return;
+      }
+
+      const script = document.createElement("script");
+      script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${import.meta.env.VITE_MAP_CLIENT_ID}`;
+      script.async = true;
+
+      script.onload = () => {
+        resolve();
+        console.log("로드성공");
+      };
+      script.onerror = () => {
+        reject(new Error("Naver Maps API 로드 실패"));
+      };
+
+      document.head.appendChild(script);
+    });
+  };
+
+  const initMap = () => {
+    if (!mapRef.current || !selectedStadium) return;
+
+    const mapOptions: naver.maps.MapOptions = {
+      center: new naver.maps.LatLng(
+        selectedStadium.latitude,
+        selectedStadium.longitude,
+      ),
+      zoom: 15,
+    };
+
+    const newMapInstance = new naver.maps.Map(mapRef.current, mapOptions);
+
+    console.log(newMapInstance);
+    setMapInstance(newMapInstance);
+  };
+  // 마커 생성 함수
   const createMarker = useCallback(
     (spot: any) => {
       if (!mapInstance) return null;
@@ -93,20 +133,13 @@ const Map = ({
   );
 
   useEffect(() => {
-    if (!window.naver || !mapRef.current || !selectedStadium) return;
-
-    const mapOptions: naver.maps.MapOptions = {
-      center: new window.naver.maps.LatLng(
-        selectedStadium.latitude,
-        selectedStadium.longitude,
-      ),
-      zoom: 15,
-    };
-    const newMapInstance = new window.naver.maps.Map(
-      mapRef.current,
-      mapOptions,
-    );
-    setMapInstance(newMapInstance);
+    loadMapScript()
+      .then(() => {
+        initMap();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }, [selectedStadium]);
 
   useEffect(() => {
@@ -122,15 +155,18 @@ const Map = ({
       easing: "easeOutCubic",
     });
 
+    // 기존 마커 제거
     markersRef.current.forEach((marker) => marker.setMap(null));
     markersRef.current = [];
 
-    parkingSpots!.forEach((spot) => {
+    // 새로운 마커 생성
+    parkingSpots?.forEach((spot) => {
       const marker = createMarker(spot);
       if (marker) markersRef.current.push(marker);
     });
   }, [selectedStadium, parkingSpots, createMarker, mapInstance]);
 
+  // selectedParking 변경 시 해당 주차장을 강조
   useEffect(() => {
     if (!mapInstance || !selectedParking) return;
 
@@ -144,7 +180,7 @@ const Map = ({
       easing: "easeOutCubic",
     });
 
-    const timer2 = setTimeout(() => {
+    const timer = setTimeout(() => {
       const selectedMarker = markersRef.current.find((marker) =>
         marker.getPosition().equals(parkingLocation),
       );
@@ -160,13 +196,18 @@ const Map = ({
     }, 300);
 
     return () => {
-      clearTimeout(timer2);
+      clearTimeout(timer);
     };
   }, [selectedParking, mapInstance]);
 
   if (parkingInfosLoading) {
-    return <div>로딩중..</div>;
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   }
+
   return (
     <MapContainer>
       <div ref={mapRef} style={{ width: "100%", height: "100%" }} />

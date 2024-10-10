@@ -1,9 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense, lazy } from "react";
 import styled from "styled-components";
 import { typography } from "@/style/typography";
-import ParkingInfoPage from "../components/info/map/ParkingInfoPage";
-import CheerSongPage from "../components/info/cheerSong/CheerSongPage";
+import Loading from "@/components/common/Loading";
 import { DetailHelmet } from "./helmets/DetailHelmet";
+
+const ParkingInfoPage = lazy(
+  () => import("../components/info/map/ParkingInfoPage"),
+);
+const CheerSongPage = lazy(
+  () => import("../components/info/cheerSong/CheerSongPage"),
+);
 
 const Info = () => {
   const [activeTab, setActiveTab] = useState<"map" | "cheer">(() => {
@@ -31,9 +37,6 @@ const Info = () => {
           $active={activeTab === "map"}
           onClick={() => handleTabChange("map")}>
           주차정보
-          {/* <Tooltip text='아래 주차장 리스트를 누르면 지도에서 위치를 확인할수 있어요!'>
-            <Icon icon='IcInfo' />
-          </Tooltip> */}
         </TabButton>
         <TabButton
           $active={activeTab === "cheer"}
@@ -42,8 +45,10 @@ const Info = () => {
         </TabButton>
       </Tabs>
 
-      {activeTab === "map" && <ParkingInfoPage />}
-      {activeTab === "cheer" && <CheerSongPage />}
+      <Suspense fallback={<Loading />}>
+        {activeTab === "map" && <ParkingInfoPage />}
+        {activeTab === "cheer" && <CheerSongPage />}
+      </Suspense>
     </Container>
   );
 };
@@ -52,6 +57,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
 const Tabs = styled.div`
   display: flex;
   gap: 16px;
