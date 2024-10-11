@@ -81,6 +81,13 @@ body{
     min-height: 100vh;
     font-family: 'Spoqa Han Sans Neo', sans-serif;
 }
+
+@font-face {
+  font-family: 'Spoqa Han Sans Neo'; 
+  src: url('//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css') format('woff2'); 
+  font-display: swap;  
+}
+
 button {
     margin: 0;
     padding: 0;
