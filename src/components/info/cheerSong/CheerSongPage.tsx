@@ -143,7 +143,7 @@ const CheerSongPage = () => {
   return (
     <Container>
       <SearchBarWrapper onClick={() => navigate("/search-cheerSong")}>
-        <SearchInput placeholder='선수명, 제목, 가사를 입력해주세요' />
+        <SearchInput placeholder='선수명,제목,가사를 입력해주세요' />
         <Icon icon='IcSearch' cursor='pointer' />
       </SearchBarWrapper>
       <TeamList

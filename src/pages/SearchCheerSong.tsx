@@ -92,7 +92,7 @@ const SearchCheerSong = () => {
         />
         <HeaderSection>
           <SearchBar
-            placeholder='선수명, 제목, 가사를 검색해주세요'
+            placeholder='선수명,제목,가사를 검색해주세요'
             searchTerm={searchTerm}
             onSearchChange={handleSearchChange}
             onSearch={handleSearch}
