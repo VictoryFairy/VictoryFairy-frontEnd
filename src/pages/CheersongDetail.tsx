@@ -10,15 +10,15 @@ const CheersongDetail = () => {
   const navigate = useNavigate();
   const newId = parseInt(id!, 10);
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["cheerSongDetail", id],
     queryFn: () => fetchCheerSongDetail(newId),
     enabled: !!id,
   });
 
-  const formatLyrics = (lyrics: string) => {
-    return lyrics.replace(/\n/g, "<br />");
-  };
+  // const formatLyrics = (lyrics: string) => {
+  //   return lyrics.replace(/\n/g, "<br />");
+  // };
 
   const getYouTubeVideoId = (url: string) => {
     const match = url.match(/[?&]v=([^&]+)/);
@@ -49,17 +49,23 @@ const CheersongDetail = () => {
         }
       />
 
-      {videoId && (
-        <VideoEmbed
-          src={`https://www.youtube.com/embed/${videoId}`}
-          allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-          allowFullScreen
-          title='응원가 비디오입니다.'
-        />
+      {isLoading ? (
+        <SkeletonVideo />
+      ) : (
+        videoId && (
+          <VideoEmbed
+            src={`https://www.youtube.com/embed/${videoId}`}
+            allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+            allowFullScreen
+            title='응원가 비디오입니다.'
+          />
+        )
       )}
-      <Lyrics
+
+      {/* <Lyrics
         dangerouslySetInnerHTML={{ __html: formatLyrics(data?.lyrics || "") }}
-      />
+      /> */}
+      <Lyrics>{data?.lyrics}</Lyrics>
     </Container>
   );
 };
@@ -101,10 +107,21 @@ const VideoEmbed = styled.iframe`
   margin-top: 20px;
 `;
 
+// const Lyrics = styled.div`
+//   text-align: center;
+//   margin-top: 20px;
+//   padding: 16px;
+// `;
 const Lyrics = styled.div`
   text-align: center;
   margin-top: 20px;
   padding: 16px;
+  white-space: pre-wrap; /* 줄바꿈과 연속된 공백을 유지 */
 `;
-
+const SkeletonVideo = styled.div`
+  width: 100%;
+  height: 315px;
+  margin-top: 20px;
+  background-color: #e0e0e0;
+`;
 export default CheersongDetail;
