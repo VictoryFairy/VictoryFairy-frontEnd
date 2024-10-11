@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import SearchBar from "../components/common/SearchBar";
 import CheerSongList, {
   CheerSongListProps,
@@ -14,8 +15,6 @@ import Icon from "../components/common/Icon";
 const SearchCheerSong = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
-  const observer = useRef<IntersectionObserver | null>(null);
-  const lastElementRef = useRef<HTMLDivElement | null>(null);
   const [recentSearches, setRecentSearches] = useState<CheerSongListProps[]>(
     [],
   );
@@ -52,25 +51,12 @@ const SearchCheerSong = () => {
     }),
   });
 
-  useEffect(() => {
-    const handleObserver = (entries: IntersectionObserverEntry[]) => {
-      const target = entries[0];
-
-      if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
-        fetchNextPage();
-      }
-    };
-
-    observer.current = new IntersectionObserver(handleObserver);
-
-    if (lastElementRef.current) {
-      observer.current.observe(lastElementRef.current);
+  const { lastElementRef } = useIntersectionObserver((entries) => {
+    const target = entries[0];
+    if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
     }
-
-    return () => {
-      if (observer.current) observer.current.disconnect();
-    };
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+  });
 
   const handleSearchChange = (term: string) => {
     setSearchTerm(term);

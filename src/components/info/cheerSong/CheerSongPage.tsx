@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -9,6 +9,7 @@ import Text from "@/components/common/Text";
 import { typography } from "@/style/typography";
 import Icon from "@/components/common/Icon";
 import empty from "@/assets/images/cheersEmpty/empty.webp";
+import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import TeamList from "./TeamList";
 import CheerSongList, { TeamName } from "./CheerSongList";
 
@@ -23,8 +24,6 @@ const CheerSongPage = () => {
     return Number(localStorage.getItem("tab")) || 0;
   });
   const navigate = useNavigate();
-  const observer = useRef<IntersectionObserver | null>(null);
-  const lastElementRef = useRef<HTMLDivElement | null>(null);
   // const queryClient = useQueryClient();
 
   // useEffect(() => {
@@ -99,42 +98,16 @@ const CheerSongPage = () => {
     }),
   });
 
-  useEffect(() => {
-    const handleObserver = (entries: IntersectionObserverEntry[]) => {
-      const target = entries[0];
-
-      if (
-        target.isIntersecting &&
-        hasNextCheerPage &&
-        !isFetchingNextCheerPage
-      ) {
+  const { lastElementRef } = useIntersectionObserver((entries) => {
+    const target = entries[0];
+    if (target.isIntersecting) {
+      if (hasNextCheerPage && !isFetchingNextCheerPage) {
         fetchNextCheerPage();
-      } else if (
-        target.isIntersecting &&
-        hasNextLikedPage &&
-        !isFetchingNextLikedPage
-      ) {
+      } else if (hasNextLikedPage && !isFetchingNextLikedPage) {
         fetchNextLikedPage();
       }
-    };
-
-    observer.current = new IntersectionObserver(handleObserver);
-
-    if (lastElementRef.current) {
-      observer.current.observe(lastElementRef.current);
     }
-
-    return () => {
-      if (observer.current) observer.current.disconnect();
-    };
-  }, [
-    fetchNextCheerPage,
-    hasNextCheerPage,
-    isFetchingNextCheerPage,
-    fetchNextLikedPage,
-    hasNextLikedPage,
-    isFetchingNextLikedPage,
-  ]);
+  });
 
   if (isCheerSongsError || isLikedCheerSongsError) {
     throw new Error("서버문제로 인한 에러.");
