@@ -81,7 +81,6 @@ body{
     min-height: 100vh;
     font-family: 'Spoqa Han Sans Neo', sans-serif;
 }
-
 button {
     margin: 0;
     padding: 0;

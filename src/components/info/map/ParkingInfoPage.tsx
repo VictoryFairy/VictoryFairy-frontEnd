@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense, lazy } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getParkingInfosByStadiumId, getStadiums } from "@/api/info/info.api";
 import { ParkingInfo, Stadium } from "@/types/Stadium";
 import { useAuthStore } from "@/store/authStore";
 import { getStadiumId } from "@/utils/getStadiumId";
+import Loading from "@/components/common/Loading";
 import ParkingList from "./ParkingList";
-import Map from "./Map";
 import StadiumList from "./StadiumList";
+
+const Map = lazy(() => import("./Map"));
 
 const ParkingInfoPage = () => {
   const { teamId } = useAuthStore();
@@ -74,13 +76,14 @@ const ParkingInfoPage = () => {
         selectedStadiumId={selectedStadiumId}
         stadiums={sortedStadiums}
       />
-      <Map
-        selectedStadium={stadiumData}
-        parkingSpots={parkingSpots}
-        selectedParking={selectedParking}
-        parkingInfosLoading={parkingInfosLoading}
-      />
-
+      <Suspense fallback={<Loading />}>
+        <Map
+          selectedStadium={stadiumData}
+          parkingSpots={parkingSpots}
+          selectedParking={selectedParking}
+          parkingInfosLoading={parkingInfosLoading}
+        />
+      </Suspense>
       <ParkingList
         parkingSpots={parkingSpots}
         onSelectParking={setSelectedParking}
