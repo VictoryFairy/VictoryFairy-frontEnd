@@ -4,6 +4,8 @@ import svgr from "vite-plugin-svgr";
 import { resolve } from "path";
 import { VitePWA } from "vite-plugin-pwa";
 import prerender from "@prerenderer/rollup-plugin";
+import viteCompression from "vite-plugin-compression";
+
 // https://vitejs.dev/config/
 // export default defineConfig({
 //   plugins: [react(), svgr()],
@@ -66,7 +68,10 @@ export default defineConfig({
         ],
       },
     }),
+    viteCompression({ algorithm: "gzip" }), // Gzip 압축 활성화
+    viteCompression({ algorithm: "brotliCompress", ext: ".br" }), // Brotli 압축 활성화
   ],
+
   resolve: {
     alias: {
       "@": resolve(__dirname, "src"), // @를 /src 폴더로 매핑
