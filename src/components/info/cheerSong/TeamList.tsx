@@ -4,6 +4,7 @@ import { Team } from "@/types/Team";
 import { getTeams } from "@/api/info/info.api";
 import { useEffect, useState } from "react";
 import { getFullTemName } from "@/utils/getFullTeamName";
+import Loading from "@/components/common/Loading";
 
 interface TeamListProps {
   selectedTeamId: number;
@@ -34,8 +35,8 @@ const TeamList = ({ setSelectedTeamId, selectedTeamId }: TeamListProps) => {
     }
   }, [teamName, setSortedTeams, selectedTeamId]);
 
-  if (isLoading) return <div>로딩중...</div>;
-  if (isError) return <div>서버 에러입니다</div>;
+  if (isLoading) return <Loading />;
+  if (isError) throw new Error("서버문제로 인한 에러.");
   if (!teamName) return null;
 
   const myCheerCategory = { id: 0, name: "My 응원가" };

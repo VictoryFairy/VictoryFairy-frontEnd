@@ -5,7 +5,8 @@ import { useEffect } from "react";
 import { checkRefreshToken } from "@/api/auth/auth.api";
 import { sendGaEvent } from "@/utils/sendGaEvent";
 import Button from "../components/common/Button";
-import onBoarding from "../assets/images/onboarding/onBoarding.png";
+import onBoardingPng from "../assets/images/onboarding/onBoarding.png";
+import onBoardingWebp from "../assets/images/onboarding/onBoarding.webp";
 import Text from "../components/common/Text";
 
 const Home = () => {
@@ -31,7 +32,10 @@ const Home = () => {
 
   return (
     <Container>
-      <Image src={onBoarding} alt='환영 이미지' />
+      <Image>
+        <source srcSet={onBoardingWebp} type='image/webp' />
+        <img src={onBoardingPng} alt='환영 이미지' />
+      </Image>
       <Header as='h1' variant='headline'>
         환영합니다!
       </Header>
@@ -66,12 +70,21 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 
-const Image = styled.img`
+const Image = styled.picture`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  max-width: 70%;
-  height: 300px;
-  object-fit: cover;
+  height: auto;
   margin-bottom: 20px;
+
+  img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    object-fit: cover;
+    margin-bottom: 20px;
+  }
 `;
 const Header = styled(Text)`
   margin-bottom: 20px;

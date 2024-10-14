@@ -8,7 +8,8 @@ import SelectionBar from "@/components/common/SelectionBar";
 import Text from "@/components/common/Text";
 import { typography } from "@/style/typography";
 import Icon from "@/components/common/Icon";
-import empty from "@/assets/images/cheersEmpty/empty.webp";
+import emptyWebp from "@/assets/images/cheersEmpty/empty.webp";
+import emptyPng from "@/assets/images/cheersEmpty/empty.png";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import TeamList from "./TeamList";
 import CheerSongList, { TeamName } from "./CheerSongList";
@@ -137,13 +138,16 @@ const CheerSongPage = () => {
         <div>
           {likedCheerSongsData?.pages.length === 0 ? (
             <EmptyState>
-              <img
-                src={empty}
-                alt='No liked cheer songs'
-                style={{
-                  width: "300px",
-                }}
-              />
+              <picture>
+                <source srcSet={emptyWebp} type='image/webp' />
+                <img
+                  src={emptyPng}
+                  alt='좋아요한 노래 없음 이미지'
+                  style={{
+                    width: "300px",
+                  }}
+                />
+              </picture>
               <div
                 style={{
                   display: "flex",
