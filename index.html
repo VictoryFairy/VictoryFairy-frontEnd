@@ -1,34 +1,71 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      href="/apple-touch-icon-180x180.png"
+      sizes="180x180"
+    />
+    <link rel="mask-icon" href="/mask-icon.svg" color="#FFFFFF" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="viewport" content="initial-scale=1.0,width=device-width" />
+    <meta name="description" content="야구 직관러들을 위한 직관 기록 서비스" />
+    <meta name="keywords" content="야구, 직관, 기록, 승요" />
+    <meta
+      name="naver-site-verification"
+      content="c81f4e7b76b61c1e4a2946c6664f4eedb424b8a3"
+    />
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" href="/favicon.ico" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png" sizes="180x180" />
-  <link rel="mask-icon" href="/mask-icon.svg" color="#FFFFFF" />
-  <meta name="theme-color" content="#ffffff" />
-  <meta name="viewport" content="initial-scale=1.0,width=device-width" />
-  <meta name="description" content="야구 직관러들을 위한 직관 기록 서비스" />
-  <meta name="keywords" content="야구, 직관, 기록, 승요" />
-  <meta name="naver-site-verification" content="c81f4e7b76b61c1e4a2946c6664f4eedb424b8a3" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="승요" />
+    <meta
+      property="og:description"
+      content="야구 직관러들을 위한 직관 기록 서비스"
+    />
+    <meta property="og:image" content="/Logo/logo.webp" />
+    <meta property="og:url" content="https://sngyo.com" />
+    <title>승요</title>
 
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="승요" />
-  <meta property="og:description" content="야구 직관러들을 위한 직관 기록 서비스" />
-  <meta property="og:image" content="/Logo/logo.webp" />
-  <meta property="og:url" content="https://sngyo.com" />
-  <title>승요</title>
+    <link
+      rel="preload"
+      href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css"
+      as="font"
+      type="font/woff2"
+    />
+    <link rel="preload" href="/ticket.webp" as="image" />
+    <link
+      rel="preload"
+      href="/src/assets/images/cheersEmpty/empty.webp"
+      as="image"
+      type="image/webp"
+    />
+    <link
+      rel="preload"
+      href="/src/assets/images/cheersEmpty/empty.png"
+      as="image"
+      type="image/png"
+    />
+    <link
+      rel="preload"
+      as="image"
+      href="/src/assets/images/onboarding/onBoarding.webp"
+      type="image/webp"
+    />
+    <link
+      rel="preload"
+      as="image"
+      href="/src/assets/images/onboarding/onBoarding.png"
+      type="image/png"
+    />
 
-  <link rel="preload" href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css" as="font" type="font/woff2" />
-  <link rel="preload" href="/ticket.webp" as="image" />
-  <link rel="preload" href="/src/assets/images/cheersEmpty/empty.webp" as="image" />
-
-  <script src="https://developers.kakao.com/sdk/js/kakao.js" defer></script>
-  <script type="module" defer>
-    const kakaoKey = import.meta.env.VITE_KAKAO_KEY;
-    Kakao.init(kakaoKey);
-  </script>
-  <script type="application/ld+json">
+    <script src="https://developers.kakao.com/sdk/js/kakao.js" defer></script>
+    <script type="module" defer>
+      const kakaoKey = import.meta.env.VITE_KAKAO_KEY;
+      Kakao.init(kakaoKey);
+    </script>
+    <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
@@ -37,15 +74,14 @@
         "description": "야구 직관러들을 위한 직관 기록 서비스",
         "publisher": {
           "@type": "Organization",
-          "name": "승요",
+          "name": "승요"
         }
       }
     </script>
-</head>
+  </head>
 
-<body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
-</body>
-
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
