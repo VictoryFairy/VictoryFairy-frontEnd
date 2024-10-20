@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { fetchCheerSongs, FetchLikedCheerSongs } from "@/api/info/cheers.api";
 import { useAuthStore } from "@/store/authStore";
 import SelectionBar from "@/components/common/SelectionBar";
 import Text from "@/components/common/Text";
-import { typography } from "@/style/typography";
-import Icon from "@/components/common/Icon";
 import emptyWebp from "@/assets/images/cheersEmpty/empty.webp";
 import emptyPng from "@/assets/images/cheersEmpty/empty.png";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
@@ -24,7 +21,7 @@ const CheerSongPage = () => {
   const [activeTab, setActiveTab] = useState(() => {
     return Number(localStorage.getItem("tab")) || 0;
   });
-  const navigate = useNavigate();
+
   // const queryClient = useQueryClient();
 
   // useEffect(() => {
@@ -116,10 +113,6 @@ const CheerSongPage = () => {
 
   return (
     <Container>
-      <SearchBarWrapper onClick={() => navigate("/search-cheerSong")}>
-        <SearchInput placeholder='선수명,제목,가사를 입력해주세요' />
-        <Icon icon='IcSearch' cursor='pointer' />
-      </SearchBarWrapper>
       <TeamList
         selectedTeamId={selectedTeamId}
         setSelectedTeamId={setSelectedTeamId}
@@ -221,26 +214,6 @@ const Container = styled.div`
     height: 70px;
     margin-bottom: 60px;
   }
-`;
-
-const SearchBarWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  background-color: #f8f8f8;
-  border-radius: 10px;
-  padding: 0 10px;
-  height: 35px;
-  margin: 0 20px;
-  margin-bottom: 20px;
-  cursor: pointer;
-`;
-
-const SearchInput = styled.input`
-  flex: 1;
-  border: none;
-  background: transparent;
-  outline: none;
-  ${typography.body_01}
 `;
 
 const EmptyState = styled.div`

@@ -2,6 +2,7 @@ import { useEffect, useState, Suspense, lazy } from "react";
 import styled from "styled-components";
 import { typography } from "@/style/typography";
 import Loading from "@/components/common/Loading";
+import SearchBar from "@/components/info/cheerSong/SearchBar";
 import { DetailHelmet } from "./helmets/DetailHelmet";
 
 const ParkingInfoPage = lazy(
@@ -44,6 +45,7 @@ const Info = () => {
           응원가
         </TabButton>
       </Tabs>
+      {activeTab === "cheer" && <SearchBar />}
 
       <Suspense fallback={<Loading />}>
         {activeTab === "map" && <ParkingInfoPage />}
