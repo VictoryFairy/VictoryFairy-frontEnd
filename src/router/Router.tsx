@@ -2,6 +2,7 @@ import { createBrowserRouter, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Suspense, lazy } from "react";
 import Loading from "@/components/common/Loading";
+import Info from "@/pages/Info";
 import Layout from "../components/layout/Layout";
 import Icon from "../components/common/Icon";
 import { useSignupStore } from "../store/signupStep";
@@ -14,7 +15,6 @@ const Login = lazy(() => import("../pages/Login"));
 const PasswordReset = lazy(() => import("../pages/PasswordReset"));
 const Main = lazy(() => import("../pages/main/Main"));
 const MyPage = lazy(() => import("../pages/MyPage"));
-const Info = lazy(() => import("../pages/Info"));
 const Ranking = lazy(() => import("../pages/Ranking"));
 const TeamChange = lazy(() => import("../components/mypage/TeamChange"));
 const ProfileChange = lazy(() => import("../components/mypage/ProfileChange"));
@@ -148,11 +148,7 @@ const Router = createBrowserRouter([
     children: [
       {
         path: "/info",
-        element: (
-          <Suspense fallback={<Loading />}>
-            <Info />
-          </Suspense>
-        ),
+        element: <Info />,
       },
     ],
   },
