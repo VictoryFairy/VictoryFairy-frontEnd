@@ -84,6 +84,7 @@ const WatchList = () => {
           <CalendarTab
             onMonthChange={handleMonthChange}
             registeredGames={isSuccess ? filteredRegisteredGames! : []}
+            selectedMonth={selectMonth}
           />
         );
       case 1:

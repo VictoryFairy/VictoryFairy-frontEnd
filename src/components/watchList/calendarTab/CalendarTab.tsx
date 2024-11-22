@@ -7,9 +7,14 @@ import { useNavigate } from "react-router-dom";
 interface CalendarProps {
   registeredGames: MyGame[];
   onMonthChange: (date: Date) => void;
+  selectedMonth: Date;
 }
 
-const CalendarTab = ({ registeredGames, onMonthChange }: CalendarProps) => {
+const CalendarTab = ({
+  registeredGames,
+  onMonthChange,
+  selectedMonth,
+}: CalendarProps) => {
   const navigate = useNavigate();
 
   const handleClickRegisteredGame = (date: Date) => {
@@ -89,17 +94,14 @@ const CalendarTab = ({ registeredGames, onMonthChange }: CalendarProps) => {
     return isFutureDate ? "future-date" : "";
   };
 
-  const handleMonthChange = (date: Date) => {
-    onMonthChange(date); // onMonthChange 핸들러 호출
-  };
-
   return (
     <Calendar
       tileContent={tileContent}
       tileClassName={tileClassName}
       onActiveStartDateChange={({ activeStartDate }) =>
-        handleMonthChange(activeStartDate!)
+        onMonthChange(activeStartDate!)
       }
+      value={selectedMonth}
     />
   );
 };
