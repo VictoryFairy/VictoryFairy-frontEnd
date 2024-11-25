@@ -1,5 +1,5 @@
 import type { Preview } from "@storybook/react";
-
+import { ThemeContextProvider } from "../src/context/ThemeContext";
 const preview: Preview = {
   parameters: {
     controls: {
