@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { button, buttonSize } from "@/style/button";
 
-interface ButtonProps
+export interface ButtonProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "disabled"> {
   children: React.ReactNode;
   variant?: "default" | "disabled" | "error";
