@@ -4,7 +4,8 @@ import { typography } from "@/style/typography";
 
 type TextTags = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span";
 
-interface TextProps extends Omit<React.HTMLAttributes<HTMLElement>, "as"> {
+export interface TextProps
+  extends Omit<React.HTMLAttributes<HTMLElement>, "as"> {
   as?: Extract<React.ElementType, TextTags>;
   variant?: keyof typeof typography;
   color?: string;

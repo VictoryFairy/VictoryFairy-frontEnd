@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Game } from "@/types/Game";
 import Text from "./Text";
 
-interface ResultLabelProps {
+export interface ResultLabelProps {
   result: string | null;
   status: Pick<Game, "status">["status"];
 }
