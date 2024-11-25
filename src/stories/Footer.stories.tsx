@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from "@storybook/react";
 import { MemoryRouter } from "react-router-dom";
-import Footer from "./Footer";
+import Footer from "../components/common/Footer";
 
 export default {
   title: "Components/Common/Footer",

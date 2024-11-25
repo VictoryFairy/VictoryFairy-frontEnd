@@ -1,27 +1,27 @@
 import { Meta, StoryFn } from "@storybook/react";
 
-import Button, { ButtonProps } from "./Button";
+import Button, { ButtonProps } from "../components/common/Button";
 
 export default {
   title: "Components/Common/Button",
   component: Button,
   argTypes: {
     variant: {
+      options: ["default", "disabled", "error"],
       control: {
         type: "radio",
-        options: ["default", "disabled", "error"],
       },
     },
     styletype: {
+      options: ["default", "outline", "text"],
       control: {
         type: "radio",
-        options: ["default", "outline", "text"],
       },
     },
     size: {
+      options: ["small", "big"],
       control: {
         type: "radio",
-        options: ["small", "big"],
       },
     },
     disabled: {

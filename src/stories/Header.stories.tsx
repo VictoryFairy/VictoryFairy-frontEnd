@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from "@storybook/react";
-import Header, { HeaderProps } from "./Header";
-import Icon from "./Icon";
+import Header, { HeaderProps } from "../components/common/Header";
+import Icon from "../components/common/Icon";
 
 export default {
   title: "Components/Common/Header",

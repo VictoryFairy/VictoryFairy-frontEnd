@@ -1,7 +1,9 @@
 import { Meta, StoryFn } from "@storybook/react";
 import { Team } from "@/types/Game";
 import { ThemeContextProvider } from "@/context/ThemeContext";
-import GameListItem, { GameListItemProps } from "./GameListItem";
+import GameListItem, {
+  GameListItemProps,
+} from "../components/common/GameListItem";
 
 export default {
   title: "Components/Common/GameListItem",

@@ -1,9 +1,8 @@
 import { Meta, StoryFn } from "@storybook/react";
 import * as icons from "@/assets/Icons/_index";
-import Icon, { IconProps } from "./Icon";
+import Icon, { IconProps } from "../components/common/Icon";
 
 const iconKeys = Object.keys(icons);
-console.log(icons);
 export default {
   title: "Components/Common/Icon",
   component: Icon,
