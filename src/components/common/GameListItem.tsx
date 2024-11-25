@@ -5,7 +5,7 @@ import Text from "./Text";
 import ResultLabel from "./ResultLabel";
 import Icon from "./Icon";
 
-interface GameListItemProps
+export interface GameListItemProps
   extends Omit<HTMLAttributes<HTMLUListElement>, "onClick"> {
   result: string | null;
   isWinningTeam: Team;
