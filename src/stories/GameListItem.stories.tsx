@@ -1,6 +1,5 @@
 import { Meta, StoryFn } from "@storybook/react";
 import { Team } from "@/types/Game";
-import { ThemeContextProvider } from "@/context/ThemeContext";
 import GameListItem, {
   GameListItemProps,
 } from "../components/common/GameListItem";
@@ -17,13 +16,6 @@ export default {
       },
     },
   },
-  decorators: [
-    (Story) => (
-      <ThemeContextProvider>
-        <Story />
-      </ThemeContextProvider>
-    ),
-  ],
 } as Meta;
 
 const Template: StoryFn<GameListItemProps> = (args) => (

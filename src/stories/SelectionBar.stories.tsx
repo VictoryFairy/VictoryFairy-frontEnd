@@ -4,7 +4,6 @@ import SelectionBar, {
   SelectionBarProps,
 } from "@/components/common/SelectionBar";
 import { useState } from "react";
-import { ThemeContextProvider } from "@/context/ThemeContext";
 
 export default {
   title: "Components/Common/SelectionBar",
@@ -37,13 +36,11 @@ const Template: StoryFn<SelectionBarProps> = (args) => {
   };
 
   return (
-    <ThemeContextProvider>
-      <SelectionBar
-        {...args}
-        activeSelect={activeSelect}
-        onSelectClick={onSelectClick}
-      />
-    </ThemeContextProvider>
+    <SelectionBar
+      {...args}
+      activeSelect={activeSelect}
+      onSelectClick={onSelectClick}
+    />
   );
 };
 

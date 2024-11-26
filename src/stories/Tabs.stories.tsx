@@ -1,7 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import { Meta, StoryFn } from "@storybook/react";
 import Tabs, { TabProps } from "@/components/common/Tabs";
-import { ThemeContextProvider } from "@/context/ThemeContext";
 import { useState } from "react";
 
 export default {
@@ -23,11 +22,7 @@ const Template: StoryFn<TabProps> = (args) => {
     setActiveTab(index);
   };
 
-  return (
-    <ThemeContextProvider>
-      <Tabs {...args} activeTab={activeTab} onTabClick={onTabClick} />
-    </ThemeContextProvider>
-  );
+  return <Tabs {...args} activeTab={activeTab} onTabClick={onTabClick} />;
 };
 
 export const Default = Template.bind({});

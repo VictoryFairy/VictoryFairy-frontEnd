@@ -1,6 +1,5 @@
 import { Meta, StoryFn } from "@storybook/react";
 import ResultLabel, { ResultLabelProps } from "@/components/common/ResultLabel";
-import { ThemeContextProvider } from "@/context/ThemeContext";
 
 export default {
   title: "Components/Common/ResultLabel",
@@ -31,11 +30,7 @@ export default {
   ],
 } as Meta;
 
-const Template: StoryFn<ResultLabelProps> = (args) => (
-  <ThemeContextProvider>
-    <ResultLabel {...args} />
-  </ThemeContextProvider>
-);
+const Template: StoryFn<ResultLabelProps> = (args) => <ResultLabel {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
