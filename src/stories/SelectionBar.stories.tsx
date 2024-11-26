@@ -4,11 +4,18 @@ import SelectionBar, {
   SelectionBarProps,
 } from "@/components/common/SelectionBar";
 import { useState } from "react";
-import { ThemeContextProvider } from "@/context/ThemeContext";
 
 export default {
   title: "Components/Common/SelectionBar",
   component: SelectionBar,
+  tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: "selectionBar 컴포넌트입니다.",
+      },
+    },
+  },
   decorators: [
     (Story) => (
       <div
@@ -29,13 +36,11 @@ const Template: StoryFn<SelectionBarProps> = (args) => {
   };
 
   return (
-    <ThemeContextProvider>
-      <SelectionBar
-        {...args}
-        activeSelect={activeSelect}
-        onSelectClick={onSelectClick}
-      />
-    </ThemeContextProvider>
+    <SelectionBar
+      {...args}
+      activeSelect={activeSelect}
+      onSelectClick={onSelectClick}
+    />
   );
 };
 

@@ -4,6 +4,7 @@ import SearchBar, { SearchBarProps } from "@/components/common/SearchBar";
 export default {
   title: "Components/Common/SearchBar",
   component: SearchBar,
+  tags: ["autodocs"],
 } as Meta;
 
 const Template: StoryFn<SearchBarProps> = (args) => <SearchBar {...args} />;

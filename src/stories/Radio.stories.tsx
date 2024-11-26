@@ -2,11 +2,18 @@
 import React, { useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import Radio, { RadioProps } from "@/components/common/Radio";
-import { ThemeContextProvider } from "@/context/ThemeContext";
 
 export default {
   title: "Components/Common/Radio",
   component: Radio,
+  tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: "라디오 컴포넌트입니다.",
+      },
+    },
+  },
 } as Meta;
 
 // Single Radio Template
@@ -18,11 +25,7 @@ const SingleTemplate: StoryFn<RadioProps> = (args) => {
     args.onChange(e);
   };
 
-  return (
-    <ThemeContextProvider>
-      <Radio {...args} checked={checked} onChange={handleChange} />
-    </ThemeContextProvider>
-  );
+  return <Radio {...args} checked={checked} onChange={handleChange} />;
 };
 
 export const Default = SingleTemplate.bind({});
@@ -45,7 +48,7 @@ const GroupTemplate: StoryFn = () => {
   ];
 
   return (
-    <ThemeContextProvider>
+    <div>
       {radios.map((radio) => (
         <Radio
           key={radio.value}
@@ -55,7 +58,7 @@ const GroupTemplate: StoryFn = () => {
         />
       ))}
       <p>Selected Value: {selectedValues.join(", ")}</p>
-    </ThemeContextProvider>
+    </div>
   );
 };
 

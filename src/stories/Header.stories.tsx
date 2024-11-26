@@ -5,6 +5,14 @@ import Icon from "../components/common/Icon";
 export default {
   title: "Components/Common/Header",
   component: Header,
+  tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: "Header 컴포넌트입니다.",
+      },
+    },
+  },
 } as Meta;
 
 const Template: StoryFn<HeaderProps> = (args) => <Header {...args} />;

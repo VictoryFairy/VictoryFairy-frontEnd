@@ -27,8 +27,11 @@ const Calendar = ({ ...props }: CalendarProps) => {
         minDetail='year'
         next2Label={null}
         prev2Label={null}
+        nextAriaLabel='다음 달로 이동'
+        prevAriaLabel='이전 달로 이동'
         nextLabel={<Icon icon='IcArrowRight' />}
         prevLabel={<Icon icon='IcArrowLeft' />}
+        navigationAriaLabel='달력 이동'
         showNeighboringMonth={false}
         {...props}
       />

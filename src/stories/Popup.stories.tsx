@@ -1,25 +1,30 @@
 import { Meta, StoryFn } from "@storybook/react";
 import Popup, { PopupProps } from "@/components/modal/Popup";
-import { ThemeContextProvider } from "@/context/ThemeContext";
 
 export default {
   title: "Components/Common/Popup",
   component: Popup,
+  tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: "팝업 컴포넌트입니다.",
+      },
+    },
+  },
 } as Meta;
 
 const TemplateWithoutPortal: StoryFn<PopupProps> = (args) => {
   return (
-    <ThemeContextProvider>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}>
-        <Popup {...args} />
-      </div>
-    </ThemeContextProvider>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}>
+      <Popup {...args} />
+    </div>
   );
 };
 

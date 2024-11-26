@@ -4,6 +4,14 @@ import Text, { TextProps } from "@/components/common/Text";
 export default {
   title: "Components/Common/Text",
   component: Text,
+  tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: "프로젝트에서 사용되는 텍스트 컴포넌트입니다.",
+      },
+    },
+  },
 } as Meta;
 
 const Template: StoryFn<TextProps> = (args) => <Text {...args} />;

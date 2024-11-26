@@ -5,6 +5,7 @@ import Footer from "@/components/common/Footer";
 export default {
   title: "Components/Common/Footer",
   component: Footer,
+  tags: ["autodocs"],
   decorators: [
     (Story) => (
       <MemoryRouter>

@@ -1,6 +1,5 @@
 import { Meta, StoryFn } from "@storybook/react";
 import { Team } from "@/types/Game";
-import { ThemeContextProvider } from "@/context/ThemeContext";
 import GameListItem, {
   GameListItemProps,
 } from "../components/common/GameListItem";
@@ -8,14 +7,15 @@ import GameListItem, {
 export default {
   title: "Components/Common/GameListItem",
   component: GameListItem,
-
-  decorators: [
-    (Story) => (
-      <ThemeContextProvider>
-        <Story />
-      </ThemeContextProvider>
-    ),
-  ],
+  tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          "게임 리스트 아이템 컴포넌트입니다. 자신이 응원하는 팀에 따라 승/패 테마가 달라집니다.",
+      },
+    },
+  },
 } as Meta;
 
 const Template: StoryFn<GameListItemProps> = (args) => (

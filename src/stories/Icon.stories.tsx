@@ -6,6 +6,14 @@ const iconKeys = Object.keys(icons);
 export default {
   title: "Components/Common/Icon",
   component: Icon,
+  tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: "아이콘 컴포넌트입니다.",
+      },
+    },
+  },
   argTypes: {
     icon: {
       options: iconKeys,
