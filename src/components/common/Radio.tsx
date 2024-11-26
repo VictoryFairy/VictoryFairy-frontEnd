@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-interface RadioProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface RadioProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   checked: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

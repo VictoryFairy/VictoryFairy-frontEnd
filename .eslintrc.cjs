@@ -9,8 +9,9 @@ module.exports = {
     "airbnb/hooks",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended", // Prettier의 포맷팅 규칙을 ESLint 규칙으로 사용할 수 있게 해줌
-    "plugin:react/jsx-runtime", // import React from 'react'를 해야 jsx를 사용할 수 있게 해주는데 이를 없애기 위해 사용
+    "plugin:prettier/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:storybook/recommended"
   ],
   settings: {
     "import/resolver": {

@@ -1,0 +1,35 @@
+# Workflow name
+name: "Chromatic Deployment"
+
+# Event for the workflow
+on: push
+
+jobs:
+  deploy-storybook:
+    name: "Deploy Storybook to Chromatic"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18 # 프로젝트에 맞는 Node.js 버전 지정
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Setup Storybook Environment
+        run: |
+          echo "VITE_STORYBOOK=true" > .env
+
+      - name: Build Storybook
+        run: npm run build-storybook
+
+      - name: Publish Storybook to Chromatic
+        uses: chromaui/action@latest
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}

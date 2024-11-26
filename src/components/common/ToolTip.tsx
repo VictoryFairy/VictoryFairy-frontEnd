@@ -1,12 +1,12 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-interface TooltipProps {
+export interface TooltipProps {
   text: string;
   children: React.ReactNode;
 }
 
-export const Tooltip = ({ text, children }: TooltipProps) => {
+const Tooltip = ({ text, children }: TooltipProps) => {
   const [visible, setVisible] = useState(false);
 
   return (

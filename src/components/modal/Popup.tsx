@@ -14,7 +14,7 @@ export interface PopupProps {
   buttons: ButtonProps[];
 }
 
-const Popup2 = ({ title, message, buttons }: PopupProps) => {
+const Popup = ({ title, message, buttons }: PopupProps) => {
   return (
     <ModalPortal>
       <PopupWrapper>
@@ -90,4 +90,4 @@ const Button = styled.button<{ variant: "cancel" | "confirm" }>`
   cursor: pointer;
 `;
 
-export default Popup2;
+export default Popup;

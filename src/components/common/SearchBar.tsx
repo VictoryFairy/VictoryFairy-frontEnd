@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { typography } from "@/style/typography";
 import Icon from "./Icon";
 
-interface SearchBarProps
+export interface SearchBarProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
   searchTerm: string;
   onSearchChange: (searchTerm: string) => void;
