@@ -81,7 +81,7 @@ const GameListItem = ({
     </GameListItemContainer>
   );
 };
-export const GameListItemContainer = styled.li`
+export const GameListItemContainer = styled.div`
   cursor: pointer;
   display: flex;
   flex-direction: row;
