@@ -7,6 +7,14 @@ import { useState } from "react";
 export default {
   title: "Components/Common/Tabs",
   component: Tabs,
+  tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: "Tabs 컴포넌트입니다.",
+      },
+    },
+  },
 } as Meta;
 
 const Template: StoryFn<TabProps> = (args) => {

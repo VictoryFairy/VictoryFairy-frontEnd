@@ -8,7 +8,10 @@ export interface ButtonProps
   styletype?: "default" | "outline" | "text";
   size?: "small" | "big";
   disabled?: boolean;
-}
+} /**
+- Use an avatar for attributing actions or content to specific users.
+- The user's name should always be present when using Avatar – either printed beside the avatar or in a tooltip.
+* */
 
 const Button = ({
   children,

@@ -5,6 +5,7 @@ import Button, { ButtonProps } from "../components/common/Button";
 export default {
   title: "Components/Common/Button",
   component: Button,
+  tags: ["autodocs"],
   argTypes: {
     variant: {
       options: ["default", "disabled", "error"],
@@ -27,6 +28,13 @@ export default {
     disabled: {
       control: {
         type: "boolean",
+      },
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        component: "버튼 컴포넌트입니다.",
       },
     },
   },

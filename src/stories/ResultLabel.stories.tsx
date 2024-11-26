@@ -5,6 +5,15 @@ import { ThemeContextProvider } from "@/context/ThemeContext";
 export default {
   title: "Components/Common/ResultLabel",
   component: ResultLabel,
+  tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          "경기 결과 라벨 컴포넌트입니다. 테마에 따라 색상이 달라집니다.",
+      },
+    },
+  },
   decorators: [
     (Story) => (
       <div

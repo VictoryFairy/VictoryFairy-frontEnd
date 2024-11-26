@@ -9,6 +9,14 @@ import { ThemeContextProvider } from "@/context/ThemeContext";
 export default {
   title: "Components/Common/SelectionBar",
   component: SelectionBar,
+  tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: "selectionBar 컴포넌트입니다.",
+      },
+    },
+  },
   decorators: [
     (Story) => (
       <div

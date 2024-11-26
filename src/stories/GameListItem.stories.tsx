@@ -8,7 +8,15 @@ import GameListItem, {
 export default {
   title: "Components/Common/GameListItem",
   component: GameListItem,
-
+  tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          "게임 리스트 아이템 컴포넌트입니다. 자신이 응원하는 팀에 따라 승/패 테마가 달라집니다.",
+      },
+    },
+  },
   decorators: [
     (Story) => (
       <ThemeContextProvider>
