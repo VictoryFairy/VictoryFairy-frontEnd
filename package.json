@@ -11,7 +11,8 @@
     "preview": "vite preview --port 5000",
     "clean": "node scripts/clean.mjs",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "chromatic": "npx chromatic --project-token=chpt_e4b6f4974288143"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -62,6 +63,7 @@
     "@typescript-eslint/eslint-plugin": "^7.17.0",
     "@typescript-eslint/parser": "^7.17.0",
     "@vite-pwa/assets-generator": "^0.2.4",
+    "chromatic": "^11.19.0",
     "cross-env": "^7.0.3",
     "del": "^7.1.0",
     "eslint": "^8.57.0",
