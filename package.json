@@ -11,8 +11,7 @@
     "preview": "vite preview --port 5000",
     "clean": "node scripts/clean.mjs",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "chromatic": "npx chromatic --project-token=chpt_e4b6f4974288143"
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
