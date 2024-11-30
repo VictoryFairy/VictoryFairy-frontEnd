@@ -28,7 +28,7 @@
 
 |          <img src="https://github.com/user-attachments/assets/44258dbb-1aac-42a6-b2aa-9400cb6b35c9" width="100"/>          |         <img src="https://github.com/user-attachments/assets/eaa00101-80f1-491d-8e23-de5354061169" width="100"/>         |          <img src="https://github.com/user-attachments/assets/6d402968-19ca-4f14-b83a-511a64fe8346" width="100"/>           |
 | :-----------------------------------------: | :---------------------------------------: | :------------------------------------------: |
-| [남기주 - BE](https://github.com/Capoomaru) | [박해준 - BE](https://github.com/JEM1224) | [성민석 - FE](https://github.com/navyjeongs) |
+| [남기주 - FE](https://github.com/Capoomaru) | [박해준 - FE](https://github.com/JEM1224) | [성민석 - FE](https://github.com/navyjeongs) |
 
 </div>
 
