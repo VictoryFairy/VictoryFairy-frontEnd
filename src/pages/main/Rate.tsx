@@ -38,10 +38,8 @@ const Rate = () => {
     try {
       const dataUrl = await toPng(rateRef.current, {
         cacheBust: true,
-        style: {
-          margin: "0",
-          backgroundColor: "white",
-        },
+        backgroundColor: "white",
+
         filter: (node) => {
           // 버튼 그룹과 SVG는 제외
           if (node.classList && node.classList.contains("button-group")) {
@@ -132,6 +130,7 @@ const Rate = () => {
               className='fairy-img'
               alt='요정'
               src={getFairyImg(parseInt(winPercentage, 10), teamId, "webp")}
+              crossOrigin='anonymous'
             />
           </div>
         ) : data ? (
