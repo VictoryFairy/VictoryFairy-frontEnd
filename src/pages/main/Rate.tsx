@@ -161,6 +161,7 @@ const Rate = () => {
 const RateContainer = styled.div`
   background-image: url("/ticket.webp");
   background-size: 330px 494px;
+  background-color: white;
   width: 330px;
   height: 494px;
   margin: 0 auto;
