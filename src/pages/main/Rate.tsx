@@ -40,6 +40,7 @@ const Rate = () => {
         cacheBust: true,
         style: {
           margin: "0",
+          backgroundColor: "white",
         },
         filter: (node) => {
           // 버튼 그룹과 SVG는 제외

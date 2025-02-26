@@ -53,12 +53,14 @@ const RankingTab = () => {
     queryKey: ["getTopRank", { teamId }],
     queryFn: () => getTopRank(teamId),
     refetchOnWindowFocus: true,
+    staleTime: 1000 * 60 * 5,
   });
 
   const { data: nearBy } = useQuery<Omit<ApiResponse, "top">>({
     queryKey: ["getNearbyRank", { teamId }],
     queryFn: () => getNearbyRank(teamId),
     refetchOnWindowFocus: true,
+    staleTime: 1000 * 60 * 5,
   });
 
   useEffect(() => {
