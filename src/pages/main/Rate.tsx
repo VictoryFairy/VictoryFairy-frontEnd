@@ -36,21 +36,28 @@ const Rate = () => {
       return;
     }
     try {
-      const dataUrl = await toPng(rateRef.current, {
-        cacheBust: true,
-        backgroundColor: "white",
+      let dataUrl = "";
+      const minDataLength = 200 * 1024;
+      let i = 0;
+      const maxAttempts = 10;
+      while (dataUrl.length < minDataLength && i < maxAttempts) {
+        dataUrl = await toPng(rateRef.current, {
+          cacheBust: true,
+          backgroundColor: "white",
 
-        filter: (node) => {
-          // 버튼 그룹과 SVG는 제외
-          if (node.classList && node.classList.contains("button-group")) {
-            return false;
-          }
-          if (node.tagName === "svg") {
-            return false;
-          }
-          return true; // 나머지는 포함
-        },
-      });
+          filter: (node) => {
+            // 버튼 그룹과 SVG는 제외
+            if (node.classList && node.classList.contains("button-group")) {
+              return false;
+            }
+            if (node.tagName === "svg") {
+              return false;
+            }
+            return true; // 나머지는 포함
+          },
+        });
+        i += 1;
+      }
 
       const blob = await (await fetch(dataUrl)).blob();
 
