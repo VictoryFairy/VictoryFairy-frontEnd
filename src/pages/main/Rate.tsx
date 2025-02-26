@@ -59,9 +59,10 @@ const Rate = () => {
         i += 1;
       }
 
-      const blob = await (await fetch(dataUrl)).blob();
-
-      saveAs(blob, "승리요정.png");
+      if (dataUrl.length >= minDataLength) {
+        const blob = await (await fetch(dataUrl)).blob();
+        saveAs(blob, "승리요정.png");
+      }
     } catch (error) {
       console.error("이미지 저장에 실패했습니다.", error);
     }
