@@ -43,7 +43,11 @@ const Rate = () => {
       while (dataUrl.length < minDataLength && i < maxAttempts) {
         dataUrl = await toPng(rateRef.current, {
           cacheBust: true,
-          backgroundColor: "white",
+          backgroundColor: "transparent",
+          style: {
+            margin: "0",
+            padding: "0",
+          },
 
           filter: (node) => {
             // 버튼 그룹과 SVG는 제외
