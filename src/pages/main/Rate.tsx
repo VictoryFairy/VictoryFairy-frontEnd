@@ -58,6 +58,22 @@ const Rate = () => {
         if (blob.size >= 200 * 1024) {
           isValidImage = true;
           saveAs(blob, "승리요정.png");
+
+          // ✅ 인스타그램 공유 기능 추가
+          const file = new File([blob], "instagram-story.png", {
+            type: "image/png",
+          });
+
+          if (navigator.share) {
+            await navigator.share({
+              title: "인스타그램에 공유하기",
+              text: "이미지를 공유합니다!",
+              files: [file], // 파일 포함
+            });
+          } else {
+            alert("이 기기는 공유 기능을 지원하지 않습니다.");
+          }
+
           break;
         }
 
@@ -68,7 +84,7 @@ const Rate = () => {
         console.error("이미지 크기가 너무 작아서 저장되지 않았습니다.");
       }
     } catch (error) {
-      console.error("이미지 저장에 실패했습니다.", error);
+      console.error("이미지 저장 및 공유에 실패했습니다.", error);
     }
   };
 
