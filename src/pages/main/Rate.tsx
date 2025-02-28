@@ -32,40 +32,40 @@ const Rate = () => {
 
   const handleDownload = async () => {
     sendGaEvent("승률페이지", "이미지 저장 버튼 클릭", "이미지 저장 버튼");
-    if (!rateRef.current) {
-      return;
-    }
+
+    if (!rateRef.current) return;
+
     try {
       let dataUrl = "";
-      const minDataLength = 200 * 1024;
       let i = 0;
       const maxAttempts = 10;
-      while (dataUrl.length < minDataLength && i < maxAttempts) {
+      let isValidImage = false;
+
+      while (i < maxAttempts) {
         dataUrl = await toPng(rateRef.current, {
           cacheBust: true,
           backgroundColor: "transparent",
-          style: {
-            margin: "0",
-            padding: "0",
-          },
-
+          style: { margin: "0", padding: "0" },
           filter: (node) => {
-            // 버튼 그룹과 SVG는 제외
-            if (node.classList && node.classList.contains("button-group")) {
-              return false;
-            }
-            if (node.tagName === "svg") {
-              return false;
-            }
-            return true; // 나머지는 포함
+            if (node.classList?.contains("button-group")) return false;
+            if (node.tagName === "svg") return false;
+            return true;
           },
         });
+
+        // Blob으로 변환 후 크기 확인
+        const blob = await (await fetch(dataUrl)).blob();
+        if (blob.size >= 200 * 1024) {
+          isValidImage = true;
+          saveAs(blob, "승리요정.png");
+          break;
+        }
+
         i += 1;
       }
 
-      if (dataUrl.length >= minDataLength) {
-        const blob = await (await fetch(dataUrl)).blob();
-        saveAs(blob, "승리요정.png");
+      if (!isValidImage) {
+        console.error("이미지 크기가 너무 작아서 저장되지 않았습니다.");
       }
     } catch (error) {
       console.error("이미지 저장에 실패했습니다.", error);
@@ -177,7 +177,7 @@ const RateContainer = styled.div`
   width: 330px;
   height: 494px;
   margin: 0 auto;
-  padding: 0px 12px;
+  box-sizing: border-box;
 
   .img {
     border: none;
@@ -210,6 +210,10 @@ const MyRate = styled.div`
   > div {
     display: flex;
     justify-content: space-between;
+    padding: 0 12px;
+  }
+  :nth-child(3) {
+    padding: 0 12px;
   }
 `;
 const MyRateButton = styled.button`
@@ -217,6 +221,7 @@ const MyRateButton = styled.button`
   align-items: center;
   width: fit-content;
   background-color: var(--white);
+  padding: 0 12px;
   cursor: pointer;
   svg {
     width: 16px;

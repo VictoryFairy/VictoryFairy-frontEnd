@@ -24,7 +24,9 @@ interface VerifyEmailCodeRequest {
 
 export const verifyEmailCode = async (data: VerifyEmailCodeRequest) => {
   try {
-    const response = await axiosInstance.post("/auth/verify-email-code", data);
+    const response = await axiosInstance.post("/auth/verify-email-code", data, {
+      withCredentials: true,
+    });
     return response.status;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -114,7 +116,9 @@ interface LoginRequest {
 
 export const login = async (data: LoginRequest) => {
   try {
-    const response = await axiosInstance.post("/auth/login", data);
+    const response = await axiosInstance.post("/auth/login", data, {
+      withCredentials: true,
+    });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

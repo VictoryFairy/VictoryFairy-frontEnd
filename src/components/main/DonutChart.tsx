@@ -84,16 +84,18 @@ const DonutChart = ({ record }: DonutChartProps) => {
 };
 
 const ChartWrapper = styled.div`
-  padding-top: 15px;
-  width: 100%;
+  width: 300px;
+  height: 300px;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  box-sizing: border-box;
 `;
 const BarWrapper = styled.div`
   position: relative;
-  width: 80%;
+  width: 220px;
+  height: 220px;
 `;
 
 const LegendWrapper = styled.div`
