@@ -57,7 +57,6 @@ const Rate = () => {
         const blob = await (await fetch(dataUrl)).blob();
         if (blob.size >= 200 * 1024) {
           isValidImage = true;
-          saveAs(blob, "승리요정.png");
 
           // ✅ 인스타그램 공유 기능 추가
           const file = new File([blob], "instagram-story.png", {
