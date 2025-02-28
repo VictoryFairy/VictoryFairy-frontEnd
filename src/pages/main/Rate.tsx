@@ -44,7 +44,7 @@ const Rate = () => {
       while (i < maxAttempts) {
         dataUrl = await toPng(rateRef.current, {
           cacheBust: true,
-          backgroundColor: "transparent",
+          backgroundColor: "white",
           style: { margin: "0", padding: "0" },
           filter: (node) => {
             if (node.classList?.contains("button-group")) return false;
