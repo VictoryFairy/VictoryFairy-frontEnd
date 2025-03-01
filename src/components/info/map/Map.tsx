@@ -402,7 +402,7 @@ const Map = ({
   return (
     <MapContainer>
       <div ref={mapRef} style={{ width: "100%", height: "100%" }} />
-      <LocationButton mapInstance={mapInstance} />
+      {/* <LocationButton mapInstance={mapInstance} /> */}
       <ZoomButton mapInstance={mapInstance} zoomType='in' />
       <ZoomButton mapInstance={mapInstance} zoomType='out' />
     </MapContainer>
