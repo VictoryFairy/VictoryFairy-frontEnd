@@ -97,7 +97,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
   box-sizing: border-box;
   width: 100%;
   max-width: 480px;
@@ -109,11 +108,10 @@ const Image = styled.picture`
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin-bottom: 20px;
 
   img {
-    width: 200px;
-    height: 200px;
+    width: 290px;
+    height: 290px;
     object-fit: contain;
   }
 `;
