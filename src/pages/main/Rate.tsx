@@ -78,11 +78,16 @@ const Rate = () => {
           });
 
           if (navigator.share) {
-            await navigator.share({
-              title: "인스타그램에 공유하기",
-              text: "이미지를 공유합니다!",
-              files: [file], // 파일 포함
-            });
+            try {
+              await navigator.share({
+                title: "인스타그램에 공유하기",
+                text: "이미지를 공유합니다!",
+                files: [file],
+              });
+              return;
+            } catch (shareError) {
+              console.error("이미지 공유 실패:", shareError);
+            }
           }
 
           break;
