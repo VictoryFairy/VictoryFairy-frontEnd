@@ -12,6 +12,7 @@ import { getFairyImg } from "@/utils/getFairyImg";
 import saveAs from "file-saver";
 import { toPng } from "html-to-image";
 import { sendGaEvent } from "@/utils/sendGaEvent";
+import { usePopup } from "@/hooks/usePopup";
 
 const Rate = () => {
   const rateRef = useRef<HTMLDivElement | null>(null);
@@ -22,6 +23,7 @@ const Rate = () => {
     queryKey: ["getUserInfo"],
     queryFn: getUserInfo,
   });
+  const { renderPopup, openPopup, closePopup } = usePopup();
 
   const winPercentage = useMemo(() => {
     if (data && data.total > 0) {
@@ -29,8 +31,20 @@ const Rate = () => {
     }
     return "0.00";
   }, [data]);
-
-  const handleDownload = async () => {
+  const cancelPopup = () => {
+    openPopup({
+      title: "실패",
+      message: "이미지 저장 및 공유에 실패했습니다.",
+      buttons: [
+        {
+          label: "확인",
+          variant: "cancel",
+          onClick: closePopup,
+        },
+      ],
+    });
+  };
+  const handleShare = async () => {
     sendGaEvent("승률페이지", "이미지 저장 버튼 클릭", "이미지 저장 버튼");
 
     if (!rateRef.current) return;
@@ -70,7 +84,7 @@ const Rate = () => {
               files: [file], // 파일 포함
             });
           } else {
-            alert("이 기기는 공유 기능을 지원하지 않습니다.");
+            cancelPopup();
           }
 
           break;
@@ -81,12 +95,59 @@ const Rate = () => {
 
       if (!isValidImage) {
         console.error("이미지 크기가 너무 작아서 저장되지 않았습니다.");
+        cancelPopup();
       }
     } catch (error) {
       console.error("이미지 저장 및 공유에 실패했습니다.", error);
+      cancelPopup();
     }
   };
+  const handleDownload = async () => {
+    sendGaEvent("승률페이지", "이미지 저장 버튼 클릭", "이미지 저장 버튼");
 
+    if (!rateRef.current) return;
+
+    try {
+      let dataUrl = "";
+      let i = 0;
+      const maxAttempts = 10;
+      let isValidImage = false;
+
+      while (i < maxAttempts) {
+        dataUrl = await toPng(rateRef.current, {
+          cacheBust: true,
+          backgroundColor: "white",
+          style: { margin: "0", padding: "0" },
+          filter: (node) => {
+            if (node.classList?.contains("button-group")) return false;
+            if (node.tagName === "svg") return false;
+            return true;
+          },
+        });
+
+        // Blob으로 변환 후 크기 확인
+        const blob = await (await fetch(dataUrl)).blob();
+        if (blob.size >= 200 * 1024) {
+          isValidImage = true;
+
+          // ✅ 파일 다운로드 기능 추가
+          saveAs(blob, "rate-image.png");
+
+          break;
+        }
+
+        i += 1;
+      }
+
+      if (!isValidImage) {
+        console.error("이미지 크기가 너무 작아서 저장되지 않았습니다.");
+        cancelPopup();
+      }
+    } catch (error) {
+      console.error("이미지 저장에 실패했습니다.", error);
+      cancelPopup();
+    }
+  };
   const handleKakaoShare = async () => {
     if (!rateRef.current) {
       return;
@@ -121,6 +182,7 @@ const Rate = () => {
 
   return (
     <RateContainer ref={rateRef}>
+      {renderPopup()}
       <div>
         <MyRate>
           <MyRateButton
@@ -176,7 +238,7 @@ const Rate = () => {
         </button>
         <button
           type='button'
-          onClick={handleKakaoShare}
+          onClick={handleShare}
           style={{ cursor: "pointer" }}>
           <Icon icon='IcShare' fill='var(--gray-900)' />
           <Text variant='title_01'>공유하기</Text>
