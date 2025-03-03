@@ -261,6 +261,21 @@ const Router = createBrowserRouter([
     ],
   },
   {
+    path: "/mypage/login",
+    element: (
+      <Layout
+        left={<BackButton />}
+        center={<MiddelWrapper>간편 로그인 설정정</MiddelWrapper>}
+      />
+    ),
+    children: [
+      {
+        path: "/mypage/login",
+        element: <Suspense fallback={<Loading />}></Suspense>,
+      },
+    ],
+  },
+  {
     path: "/select-match",
     element: <Layout left={<BackButton />} center='직관 기록' footer={false} />,
     children: [

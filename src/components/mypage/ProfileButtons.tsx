@@ -210,7 +210,10 @@ const ProfileButtons = () => {
           <Icon icon='IcArrowRight' />
         </ProfileTeamWrapper>
       </ProfileWrapper>
-      <ProfileWrapper role='button' tabIndex={0}>
+      <ProfileWrapper
+        role='button'
+        tabIndex={0}
+        onClick={() => navigate("/mypage/login")}>
         <Text variant='body_02' color='var(--primary-color)'>
           간편 로그인 설정
         </Text>
