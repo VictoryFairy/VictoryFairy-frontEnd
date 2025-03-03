@@ -210,6 +210,12 @@ const ProfileButtons = () => {
           <Icon icon='IcArrowRight' />
         </ProfileTeamWrapper>
       </ProfileWrapper>
+      <ProfileWrapper role='button' tabIndex={0}>
+        <Text variant='body_02' color='var(--primary-color)'>
+          간편 로그인 설정
+        </Text>
+        <Icon icon='IcArrowRight' />
+      </ProfileWrapper>
       <ProfileLastWrapper
         onClick={() => {
           window.location.href =
