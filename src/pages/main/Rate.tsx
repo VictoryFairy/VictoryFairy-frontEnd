@@ -69,7 +69,9 @@ const Rate = () => {
 
         // Blob으로 변환 후 크기 확인
         const blob = await (await fetch(dataUrl)).blob();
-        if (blob.size >= 200 * 1024) {
+        const sizeLimit = imgChange ? 200 * 1024 : 100 * 1024;
+
+        if (blob.size >= sizeLimit) {
           isValidImage = true;
 
           // ✅ 인스타그램 공유 기능 추가
@@ -130,7 +132,9 @@ const Rate = () => {
 
         // Blob으로 변환 후 크기 확인
         const blob = await (await fetch(dataUrl)).blob();
-        if (blob.size >= 200 * 1024) {
+        const sizeLimit = imgChange ? 200 * 1024 : 100 * 1024;
+
+        if (blob.size >= sizeLimit) {
           isValidImage = true;
 
           // ✅ 파일 다운로드 기능 추가
