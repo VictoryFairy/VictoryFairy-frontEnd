@@ -65,6 +65,8 @@ const FooterContainer = styled.div`
   align-items: center;
   padding-bottom: 12px;
   box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.1);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 `;
 
 const IconWrapper = styled.div<IconProps>`

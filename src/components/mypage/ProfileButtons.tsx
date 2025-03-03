@@ -302,7 +302,7 @@ const ProfileLogWrapper = styled.div`
   justify-content: center;
   align-items: center;
   > :nth-child(1) {
-    border-right: 1px solid var(--gray-400);
+    border-right: 1px solid var(--gray-100);
     padding: 0 15px;
     cursor: pointer;
   }
