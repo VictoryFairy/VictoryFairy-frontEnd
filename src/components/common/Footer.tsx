@@ -64,6 +64,7 @@ const FooterContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   padding-bottom: 12px;
+  box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.1);
 `;
 
 const IconWrapper = styled.div<IconProps>`
