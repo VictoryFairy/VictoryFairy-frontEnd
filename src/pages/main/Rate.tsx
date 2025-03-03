@@ -44,6 +44,32 @@ const Rate = () => {
       ],
     });
   };
+  const cancelPopup2 = () => {
+    openPopup({
+      title: "실패",
+      message: "이미지 저장 및 공유에 실패했습니다.2",
+      buttons: [
+        {
+          label: "확인",
+          variant: "cancel",
+          onClick: closePopup,
+        },
+      ],
+    });
+  };
+  const cancelPopup3 = () => {
+    openPopup({
+      title: "실패",
+      message: "이미지 저장 및 공유에 실패했습니다.3",
+      buttons: [
+        {
+          label: "확인",
+          variant: "cancel",
+          onClick: closePopup,
+        },
+      ],
+    });
+  };
   const handleShare = async () => {
     sendGaEvent("승률페이지", "이미지 저장 버튼 클릭", "이미지 저장 버튼");
 
@@ -144,11 +170,11 @@ const Rate = () => {
 
       if (!isValidImage) {
         console.error("이미지 크기가 너무 작아서 저장되지 않았습니다.");
-        cancelPopup();
+        cancelPopup2();
       }
     } catch (error) {
       console.error("이미지 저장에 실패했습니다.", error);
-      cancelPopup();
+      cancelPopup3();
     }
   };
   const handleKakaoShare = async () => {
