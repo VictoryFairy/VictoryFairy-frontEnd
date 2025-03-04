@@ -69,7 +69,7 @@ const Rate = () => {
 
         // Blob으로 변환 후 크기 확인
         const blob = await (await fetch(dataUrl)).blob();
-        const sizeLimit = imgChange ? 200 * 1024 : 120 * 1024;
+        const sizeLimit = imgChange ? 200 * 1024 : 130 * 1024;
 
         if (blob.size >= sizeLimit) {
           isValidImage = true;
