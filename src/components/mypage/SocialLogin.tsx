@@ -73,7 +73,8 @@ const Container = styled.div`
   padding: 12px 0;
   > hr {
     width: 100%;
-    border: 1px solid var(Gray-100);
+    height: 1px;
+    color: var(Gray-100);
   }
 `;
 
