@@ -18,6 +18,7 @@ const MyPage = lazy(() => import("../pages/MyPage"));
 const Ranking = lazy(() => import("../pages/Ranking"));
 const TeamChange = lazy(() => import("../components/mypage/TeamChange"));
 const ProfileChange = lazy(() => import("../components/mypage/ProfileChange"));
+const SocialLogin = lazy(() => import("../components/mypage/SocialLogin"));
 const SearchCheerSong = lazy(() => import("../pages/SearchCheerSong"));
 const CheersongDetail = lazy(() => import("../pages/CheersongDetail"));
 const Detail = lazy(() => import("../pages/detail/Detail"));
@@ -265,13 +266,17 @@ const Router = createBrowserRouter([
     element: (
       <Layout
         left={<BackButton />}
-        center={<MiddelWrapper>간편 로그인 설정정</MiddelWrapper>}
+        center={<MiddelWrapper>간편 로그인 설정</MiddelWrapper>}
       />
     ),
     children: [
       {
         path: "/mypage/login",
-        element: <Suspense fallback={<Loading />}></Suspense>,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <SocialLogin />
+          </Suspense>
+        ),
       },
     ],
   },
