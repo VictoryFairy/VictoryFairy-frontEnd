@@ -74,7 +74,9 @@ const Container = styled.div`
   > hr {
     width: 100%;
     height: 1px;
-    color: var(Gray-100);
+    background-color: var(--gray-100);
+    border: none;
+    margin: 0;
   }
 `;
 
