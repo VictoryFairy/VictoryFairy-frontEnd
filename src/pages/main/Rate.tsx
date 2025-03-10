@@ -53,7 +53,9 @@ const Rate = () => {
       let dataUrl = "";
       let i = 0;
       const maxAttempts = 10;
-      let isValidImage = false;
+      let largestBlob = null;
+      let largestFile = null;
+      let maxSize = 0;
 
       while (i < maxAttempts) {
         dataUrl = await toPng(rateRef.current, {
@@ -67,39 +69,34 @@ const Rate = () => {
           },
         });
 
-        // Blob으로 변환 후 크기 확인
         const blob = await (await fetch(dataUrl)).blob();
-        const sizeLimit = imgChange ? 200 * 1024 : 130 * 1024;
 
-        if (blob.size >= sizeLimit) {
-          isValidImage = true;
-
-          // ✅ 인스타그램 공유 기능 추가
-          const file = new File([blob], "instagram-story.png", {
+        if (blob.size > maxSize) {
+          maxSize = blob.size;
+          largestBlob = blob;
+          largestFile = new File([blob], "instagram-story.png", {
             type: "image/png",
           });
-
-          if (navigator.share) {
-            try {
-              await navigator.share({
-                title: "인스타그램에 공유하기",
-                text: "이미지를 공유합니다!",
-                files: [file],
-              });
-              return;
-            } catch (shareError) {
-              console.error("이미지 공유 실패:", shareError);
-            }
-          }
-
-          break;
         }
 
         i += 1;
       }
 
-      if (!isValidImage) {
-        console.error("이미지 크기가 너무 작아서 저장되지 않았습니다.");
+      if (largestFile) {
+        if (navigator.share) {
+          try {
+            await navigator.share({
+              title: "인스타그램에 공유하기",
+              text: "이미지를 공유합니다!",
+              files: [largestFile],
+            });
+            return;
+          } catch (shareError) {
+            console.error("이미지 공유 실패:", shareError);
+          }
+        }
+      } else {
+        console.error("이미지 저장 실패: 유효한 이미지가 생성되지 않았습니다.");
         cancelPopup();
       }
     } catch (error) {
@@ -107,19 +104,19 @@ const Rate = () => {
       cancelPopup();
     }
   };
+
   const handleDownload = async () => {
     sendGaEvent("승률페이지", "이미지 저장 버튼 클릭", "이미지 저장 버튼");
 
     if (!rateRef.current) return;
 
     try {
-      let dataUrl = "";
-      let i = 0;
+      let largestBlob = null;
+      let maxSize = 0;
       const maxAttempts = 10;
-      let isValidImage = false;
 
-      while (i < maxAttempts) {
-        dataUrl = await toPng(rateRef.current, {
+      for (let i = 0; i < maxAttempts; i++) {
+        const dataUrl = await toPng(rateRef.current, {
           cacheBust: true,
           backgroundColor: "white",
           style: { margin: "0", padding: "0" },
@@ -130,24 +127,19 @@ const Rate = () => {
           },
         });
 
-        // Blob으로 변환 후 크기 확인
         const blob = await (await fetch(dataUrl)).blob();
-        const sizeLimit = imgChange ? 200 * 1024 : 120 * 1024;
+        const size = blob.size;
 
-        if (blob.size >= sizeLimit) {
-          isValidImage = true;
-
-          // ✅ 파일 다운로드 기능 추가
-          saveAs(blob, "rate-image.png");
-
-          break;
+        if (size > maxSize) {
+          maxSize = size;
+          largestBlob = blob;
         }
-
-        i += 1;
       }
 
-      if (!isValidImage) {
-        console.error("이미지 크기가 너무 작아서 저장되지 않았습니다.");
+      if (largestBlob) {
+        saveAs(largestBlob, "rate-image.png");
+      } else {
+        console.error("적절한 크기의 이미지가 없어 저장되지 않았습니다.");
         cancelPopup();
       }
     } catch (error) {
@@ -155,6 +147,7 @@ const Rate = () => {
       cancelPopup();
     }
   };
+
   const handleKakaoShare = async () => {
     if (!rateRef.current) {
       return;

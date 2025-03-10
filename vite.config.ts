@@ -1,25 +1,24 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
-import { resolve } from "path";
+import path, { resolve } from "path";
 import { VitePWA } from "vite-plugin-pwa";
 import prerender from "@prerenderer/rollup-plugin";
 import viteCompression from "vite-plugin-compression";
-
-// https://vitejs.dev/config/
-// export default defineConfig({
-//   plugins: [react(), svgr()],
-//   resolve: {
-//     alias: {
-//       "@": resolve(__dirname, "src"), // @를 /src 폴더로 매핑
-//     },
-//   },
-// });
+import mkcert from "vite-plugin-mkcert";
+import fs from "fs";
 
 export default defineConfig({
+  server: {
+    https: {
+      key: fs.readFileSync(path.resolve(__dirname, "localhost-key.pem")),
+      cert: fs.readFileSync(path.resolve(__dirname, "localhost.pem")),
+    },
+  },
   plugins: [
     react(),
     svgr(),
+    mkcert(),
     prerender({
       routes: ["/home", "/ranking", "/info"],
       renderer: "@prerenderer/renderer-puppeteer",
@@ -68,13 +67,13 @@ export default defineConfig({
         ],
       },
     }),
-    viteCompression({ algorithm: "gzip" }), // Gzip 압축 활성화
-    viteCompression({ algorithm: "brotliCompress", ext: ".br" }), // Brotli 압축 활성화
+    viteCompression({ algorithm: "gzip" }),
+    viteCompression({ algorithm: "brotliCompress", ext: ".br" }),
   ],
 
   resolve: {
     alias: {
-      "@": resolve(__dirname, "src"), // @를 /src 폴더로 매핑
+      "@": resolve(__dirname, "src"),
     },
   },
 });
