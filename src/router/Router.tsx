@@ -8,6 +8,8 @@ import Icon from "../components/common/Icon";
 import { useSignupStore } from "../store/signupStep";
 import { typography } from "../style/typography";
 import logo from "../assets/images/Logo/logo.webp";
+import WithDraw from "@/components/mypage/WithDraw";
+import WithDraw2 from "@/components/mypage/WithDraw2";
 
 const Home = lazy(() => import("../pages/Home"));
 const Signup = lazy(() => import("../pages/Signup"));
@@ -275,6 +277,46 @@ const Router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loading />}>
             <SocialLogin />
+          </Suspense>
+        ),
+      },
+    ],
+  },
+  {
+    path: "/mypage/withDraw",
+    element: (
+      <Layout
+        left={<BackButton />}
+        center={<MiddelWrapper>회원 탈퇴</MiddelWrapper>}
+        footer={false}
+      />
+    ),
+    children: [
+      {
+        path: "/mypage/withDraw",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <WithDraw />
+          </Suspense>
+        ),
+      },
+    ],
+  },
+  {
+    path: "/mypage/withDraw2",
+    element: (
+      <Layout
+        left={<BackButton />}
+        center={<MiddelWrapper>회원 탈퇴</MiddelWrapper>}
+        footer={false}
+      />
+    ),
+    children: [
+      {
+        path: "/mypage/withDraw2",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <WithDraw2 />
           </Suspense>
         ),
       },

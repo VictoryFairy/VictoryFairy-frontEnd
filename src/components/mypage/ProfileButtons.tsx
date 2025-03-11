@@ -244,7 +244,7 @@ const ProfileButtons = () => {
           role='button'
           tabIndex={0}
           onClick={() => {
-            handleWithDrawClik();
+            navigate("/mypage/withDraw");
           }}>
           <Text variant='subtitle_02' color='var(--gray-400)'>
             회원탈퇴
