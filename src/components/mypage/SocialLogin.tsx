@@ -1,11 +1,19 @@
 import styled from "styled-components";
 import Text from "../common/Text";
 import { useState } from "react";
+import { useUserStore } from "@/store/userInfo";
 
 function SocialLogin() {
   const [isChecked1, setIsChecked1] = useState(false);
   const [isChecked2, setIsChecked2] = useState(false);
   const [isChecked3, setIsChecked3] = useState(false);
+  const BASE_URL = import.meta.env.VITE_API_URL;
+
+  const provider = useUserStore((state) => state.provider);
+
+  const socialLinkClick = (value: string) => {
+    window.location.href = `${BASE_URL}/auth/link/${value}/callback`;
+  };
 
   return (
     <Container>
@@ -18,18 +26,19 @@ function SocialLogin() {
         </TextWrapper>
         <ToggleWrapper>
           <input
+            onClick={() => socialLinkClick("kakao")}
             type='checkbox'
-            id='toggle1'
+            id='kakao'
             checked={isChecked1}
-            onChange={() => setIsChecked1((prev) => !prev)}
+            onChange={() => setIsChecked1(provider?.includes("kakao") ?? false)}
           />
-          <label htmlFor='toggle1'></label>
+          <label htmlFor='kakao'></label>
         </ToggleWrapper>
       </Wrapper>
       <hr />
       <Wrapper>
         <TextWrapper>
-          <img src='/applelogin.png' alt='애플' />
+          <img src='/applelogin.png' alt='apple' />
           <Text variant='body_02' color='var(--primary-color)'>
             Apple 로그인 연동
           </Text>
@@ -39,9 +48,10 @@ function SocialLogin() {
             type='checkbox'
             id='toggle2'
             checked={isChecked2}
-            onChange={() => setIsChecked2((prev) => !prev)}
+            onClick={() => socialLinkClick("apple")}
+            onChange={() => setIsChecked2(provider?.includes("apple") ?? false)}
           />
-          <label htmlFor='toggle2'></label>
+          <label htmlFor='apple'></label>
         </ToggleWrapper>
       </Wrapper>
       <hr />
@@ -55,11 +65,14 @@ function SocialLogin() {
         <ToggleWrapper>
           <input
             type='checkbox'
-            id='toggle3'
+            id='google'
             checked={isChecked3}
-            onChange={() => setIsChecked3((prev) => !prev)}
+            onClick={() => socialLinkClick("google")}
+            onChange={() =>
+              setIsChecked3(provider?.includes("google") ?? false)
+            }
           />
-          <label htmlFor='toggle3'></label>
+          <label htmlFor='google'></label>
         </ToggleWrapper>
       </Wrapper>
     </Container>

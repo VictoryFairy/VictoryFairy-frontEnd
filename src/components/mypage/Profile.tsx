@@ -21,6 +21,7 @@ interface User {
   email: string;
   nickname: string;
   image: string;
+  provider: string[];
 }
 
 const teamNames = [
@@ -60,7 +61,10 @@ const Profile = () => {
         teamNames[teamId - 1],
         data.user.image,
         data.user.email,
+        data.user.provider,
       );
+      console.log(data.user.provider);
+
       setRecord(data.record);
       setUser(data.user);
     }

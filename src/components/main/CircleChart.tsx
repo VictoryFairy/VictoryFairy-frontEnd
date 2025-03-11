@@ -122,6 +122,8 @@ const ChartContainer = styled.div`
 const PieWrapper = styled.div`
   width: 75%;
   margin: 20px auto;
+  min-height: 150px;
+  text-align: center;
 `;
 const NoDataText = styled.div`
   text-align: center;

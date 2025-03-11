@@ -3,6 +3,7 @@ interface User {
   email: string;
   nickname: string;
   image: string;
+  provider: string[];
 }
 
 interface Record {
