@@ -8,12 +8,17 @@ import viteCompression from "vite-plugin-compression";
 import mkcert from "vite-plugin-mkcert";
 import fs from "fs";
 
+const keyPath = path.resolve(__dirname, "localhost-key.pem");
+const certPath = path.resolve(__dirname, "localhost.pem");
+
+const httpsConfig =
+  fs.existsSync(keyPath) && fs.existsSync(certPath)
+    ? { key: fs.readFileSync(keyPath), cert: fs.readFileSync(certPath) }
+    : false;
+
 export default defineConfig({
   server: {
-    https: {
-      key: fs.readFileSync(path.resolve(__dirname, "localhost-key.pem")),
-      cert: fs.readFileSync(path.resolve(__dirname, "localhost.pem")),
-    },
+    https: httpsConfig,
   },
   plugins: [
     react(),
@@ -70,7 +75,6 @@ export default defineConfig({
     viteCompression({ algorithm: "gzip" }),
     viteCompression({ algorithm: "brotliCompress", ext: ".br" }),
   ],
-
   resolve: {
     alias: {
       "@": resolve(__dirname, "src"),
