@@ -1,19 +1,32 @@
 import styled from "styled-components";
 import Text from "../common/Text";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUserStore } from "@/store/userInfo";
 
 function SocialLogin() {
+  const BASE_URL = import.meta.env.VITE_API_URL;
+  const { provider } = useUserStore();
+
   const [isChecked1, setIsChecked1] = useState(false);
   const [isChecked2, setIsChecked2] = useState(false);
   const [isChecked3, setIsChecked3] = useState(false);
-  const BASE_URL = import.meta.env.VITE_API_URL;
-
-  const provider = useUserStore((state) => state.provider);
 
   const socialLinkClick = (value: string) => {
-    window.location.href = `${BASE_URL}/auth/link/${value}/callback`;
+    if (
+      (value === "kakao" && isChecked1) ||
+      (value === "apple" && isChecked2) ||
+      (value === "google" && isChecked3)
+    ) {
+      return;
+    }
+    window.location.href = `${BASE_URL}/auth/link/${value}`;
   };
+
+  useEffect(() => {
+    setIsChecked1(provider?.includes("kakao") ?? false);
+    setIsChecked2(provider?.includes("apple") ?? false);
+    setIsChecked3(provider?.includes("google") ?? false);
+  }, [provider]);
 
   return (
     <Container>
@@ -26,13 +39,15 @@ function SocialLogin() {
         </TextWrapper>
         <ToggleWrapper>
           <input
-            onClick={() => socialLinkClick("kakao")}
             type='checkbox'
             id='kakao'
             checked={isChecked1}
-            onChange={() => setIsChecked1(provider?.includes("kakao") ?? false)}
+            onClick={() => socialLinkClick("kakao")}
+            readOnly
           />
-          <label htmlFor='kakao'></label>
+          <label
+            htmlFor='kakao'
+            className={isChecked1 ? "disabled" : ""}></label>
         </ToggleWrapper>
       </Wrapper>
       <hr />
@@ -46,12 +61,14 @@ function SocialLogin() {
         <ToggleWrapper>
           <input
             type='checkbox'
-            id='toggle2'
+            id='apple'
             checked={isChecked2}
             onClick={() => socialLinkClick("apple")}
-            onChange={() => setIsChecked2(provider?.includes("apple") ?? false)}
+            readOnly
           />
-          <label htmlFor='apple'></label>
+          <label
+            htmlFor='apple'
+            className={isChecked2 ? "disabled" : ""}></label>
         </ToggleWrapper>
       </Wrapper>
       <hr />
@@ -68,11 +85,11 @@ function SocialLogin() {
             id='google'
             checked={isChecked3}
             onClick={() => socialLinkClick("google")}
-            onChange={() =>
-              setIsChecked3(provider?.includes("google") ?? false)
-            }
+            readOnly
           />
-          <label htmlFor='google'></label>
+          <label
+            htmlFor='google'
+            className={isChecked3 ? "disabled" : ""}></label>
         </ToggleWrapper>
       </Wrapper>
     </Container>
@@ -143,6 +160,19 @@ const ToggleWrapper = styled.div`
   }
 
   > input:checked + label::before {
+    transform: translateX(20px);
+  }
+
+  > label.disabled {
+    pointer-events: none;
+    opacity: 1;
+  }
+
+  > input:checked + label.disabled {
+    background-color: rgba(47, 48, 54, 1);
+  }
+
+  > input:checked + label.disabled::before {
     transform: translateX(20px);
   }
 `;

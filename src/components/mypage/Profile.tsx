@@ -63,7 +63,6 @@ const Profile = () => {
         data.user.email,
         data.user.provider,
       );
-      console.log(data.user.provider);
 
       setRecord(data.record);
       setUser(data.user);

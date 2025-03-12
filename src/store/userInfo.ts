@@ -17,6 +17,7 @@ interface UserState {
   updateNickname: (nickname: string) => void;
   updateImage: (profile: string) => void;
   deleteUserInfo: () => void;
+  setProvider: (providers: string[]) => void;
 }
 
 export const useUserStore = create(
@@ -44,6 +45,9 @@ export const useUserStore = create(
       },
       updateImage: (profile: string) => {
         set({ profile });
+      },
+      setProvider: (provider: string[]) => {
+        set({ provider });
       },
     }),
 
