@@ -2,12 +2,78 @@ import styled from "styled-components";
 import Text from "../common/Text";
 import Button from "../common/Button";
 import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { withdrawal } from "@/api/mypage/mypage.api";
+import { useNavigate } from "react-router-dom";
+import { usePopup } from "@/hooks/usePopup";
+
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+  }
+}
 
 function WithDraw2() {
-  const [checked, setChecked] = useState<boolean>(false);
+  const reasons = [
+    "기록을 삭제하고 싶어서",
+    "더 이상 야구를 좋아하지 않아서",
+    "서비스 이용이 어렵거나 불편해서",
+    "콘텐츠가 없어서",
+    "자주 사용하지 않아서",
+  ];
 
-  const toggleChecked = () => {
-    setChecked((prev) => !prev);
+  const [checkedState, setCheckedState] = useState<boolean[]>(
+    new Array(reasons.length).fill(false),
+  );
+
+  const { renderPopup, openPopup } = usePopup();
+
+  const toggleChecked = (index: number) => {
+    setCheckedState((prev) =>
+      prev.map((checked, i) => (i === index ? !checked : checked)),
+    );
+  };
+
+  const navigate = useNavigate();
+
+  const handleBtnClick = () => {
+    navigate("/mypage");
+  };
+  const handleClickSave = () => {
+    openPopup({
+      title: "회원 탈퇴 완료",
+      message: "언젠가 다시 만나요!",
+      buttons: [
+        {
+          label: "확인",
+          variant: "confirm",
+          onClick: handleBtnClick,
+        },
+      ],
+    });
+  };
+  const isAnyChecked = checkedState.some((checked) => checked);
+
+  const withdraw = useMutation<void, Error>({
+    mutationFn: withdrawal,
+    onSuccess: () => {
+      const selectedReasons = reasons.filter((_, index) => checkedState[index]);
+
+      if (window.gtag) {
+        window.gtag("event", "탈퇴 사유", {
+          reason: selectedReasons.join(", "),
+        });
+      }
+      handleClickSave();
+      localStorage.clear();
+    },
+    onError: (error) => {
+      console.error("탈퇴 요청 중 오류 발생:", error);
+    },
+  });
+
+  const handleWithdraw = () => {
+    withdraw.mutate();
   };
 
   return (
@@ -21,58 +87,25 @@ function WithDraw2() {
           최소 1개 이상 선택해 주세요.
         </Text>
         <BtnWrapper>
-          <InputWrapper onClick={toggleChecked}>
-            <HiddenCheckbox
-              type='checkbox'
-              checked={checked}
-              onChange={() => {}}
-            />
-            <StyledCheckbox checked={checked} />
-            <Text variant='body_02'>기록을 삭제하고 싶어서</Text>
-          </InputWrapper>
-          <InputWrapper onClick={toggleChecked}>
-            <HiddenCheckbox
-              type='checkbox'
-              checked={checked}
-              onChange={() => {}}
-            />
-            <StyledCheckbox checked={checked} />
-            <Text variant='body_02'>더 이상 야구를 좋아하지 않아서</Text>
-          </InputWrapper>
-          <InputWrapper onClick={toggleChecked}>
-            <HiddenCheckbox
-              type='checkbox'
-              checked={checked}
-              onChange={() => {}}
-            />
-            <StyledCheckbox checked={checked} />
-            <Text variant='body_02'>서비스 이용이 어렵거나 불편해서</Text>
-          </InputWrapper>
-          <InputWrapper onClick={toggleChecked}>
-            <HiddenCheckbox
-              type='checkbox'
-              checked={checked}
-              onChange={() => {}}
-            />
-            <StyledCheckbox checked={checked} />
-            <Text variant='body_02'>콘텐츠가 없어서</Text>
-          </InputWrapper>
-          <InputWrapper onClick={toggleChecked}>
-            <HiddenCheckbox
-              type='checkbox'
-              checked={checked}
-              onChange={() => {}}
-            />
-            <StyledCheckbox checked={checked} />
-            <Text variant='body_02'>자주 사용하지 않아서</Text>
-          </InputWrapper>
+          {reasons.map((reason, index) => (
+            <InputWrapper key={index} onClick={() => toggleChecked(index)}>
+              <HiddenCheckbox
+                type='checkbox'
+                checked={checkedState[index]}
+                onChange={() => {}}
+              />
+              <StyledCheckbox checked={checkedState[index]} />
+              <Text variant='body_02'>{reason}</Text>
+            </InputWrapper>
+          ))}
         </BtnWrapper>
       </Wrapper>
       <WithDrawBtn>
-        <Button disabled={!checked}>
+        <Button disabled={!isAnyChecked} onClick={handleWithdraw}>
           <Text>탈퇴 하기</Text>
         </Button>
       </WithDrawBtn>
+      {renderPopup()}
     </Container>
   );
 }
@@ -95,7 +128,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   > :nth-child(2) {
     margin-top: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
   }
 `;
 
@@ -113,13 +146,14 @@ const WithDrawBtn = styled.div`
     height: 48px;
   }
 `;
+
 const InputWrapper = styled.div`
   display: flex;
   cursor: pointer;
   height: 58px;
   align-items: center;
   > span {
-    margin-bottom: 2%.5;
+    margin-bottom: 2px;
   }
 `;
 

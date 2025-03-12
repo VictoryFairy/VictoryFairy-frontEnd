@@ -2,9 +2,12 @@ import styled from "styled-components";
 import Text from "../common/Text";
 import Button from "../common/Button";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function WithDraw() {
   const [checked, setChecked] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   const toggleChecked = () => {
     setChecked((prev) => !prev);
@@ -37,7 +40,9 @@ function WithDraw() {
             안내 사항을 모두 확인하였으며, 이에 동의합니다.
           </Text>
         </InputWrapper>
-        <Button disabled={!checked}>
+        <Button
+          disabled={!checked}
+          onClick={() => navigate("/mypage/withDraw2")}>
           <Text>탈퇴 이유 입력하기</Text>
         </Button>
       </BtnWrapper>
