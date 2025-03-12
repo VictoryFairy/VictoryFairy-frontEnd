@@ -8,8 +8,6 @@ import Icon from "../components/common/Icon";
 import { useSignupStore } from "../store/signupStep";
 import { typography } from "../style/typography";
 import logo from "../assets/images/Logo/logo.webp";
-import WithDraw from "@/components/mypage/WithDraw";
-import WithDraw2 from "@/components/mypage/WithDraw2";
 
 const Home = lazy(() => import("../pages/Home"));
 const Signup = lazy(() => import("../pages/Signup"));
@@ -21,6 +19,8 @@ const Ranking = lazy(() => import("../pages/Ranking"));
 const TeamChange = lazy(() => import("../components/mypage/TeamChange"));
 const ProfileChange = lazy(() => import("../components/mypage/ProfileChange"));
 const SocialLogin = lazy(() => import("../components/mypage/SocialLogin"));
+const WithDraw = lazy(() => import("../components/mypage/WithDraw"));
+const WithDraw2 = lazy(() => import("../components/mypage/WithDraw2"));
 const SearchCheerSong = lazy(() => import("../pages/SearchCheerSong"));
 const CheersongDetail = lazy(() => import("../pages/CheersongDetail"));
 const Detail = lazy(() => import("../pages/detail/Detail"));
