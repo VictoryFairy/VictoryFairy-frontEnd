@@ -37,6 +37,7 @@ function SocialLogin() {
             카카오 로그인 연동
           </Text>
         </TextWrapper>
+
         <ToggleWrapper>
           <input
             type='checkbox'

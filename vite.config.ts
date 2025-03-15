@@ -7,11 +7,12 @@ import prerender from "@prerenderer/rollup-plugin";
 import viteCompression from "vite-plugin-compression";
 import mkcert from "vite-plugin-mkcert";
 import fs from "fs";
+import type { ServerOptions } from "vite";
 
 const keyPath = path.resolve(__dirname, "localhost-key.pem");
 const certPath = path.resolve(__dirname, "localhost.pem");
 
-const httpsConfig =
+const httpsConfig: false | ServerOptions =
   fs.existsSync(keyPath) && fs.existsSync(certPath)
     ? { key: fs.readFileSync(keyPath), cert: fs.readFileSync(certPath) }
     : false;
