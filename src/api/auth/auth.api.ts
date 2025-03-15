@@ -192,3 +192,18 @@ export const getMemberInfo = async (): Promise<MypageUserInfo> => {
     throw new Error("요청 중 문제가 발생했습니다. 다시 시도해 주세요.");
   }
 };
+
+type AuthProvider = "kakao" | "apple" | "google";
+
+export const getLoginUrl = (provider: AuthProvider): string => {
+  return `https://api.trbt.shop/auth/login/${provider}`;
+};
+
+export const patchProfile = async (data: { field: string; value: number }) => {
+  try {
+    await authAxiosInstance.patch("/users/profile", data);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

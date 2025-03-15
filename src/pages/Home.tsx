@@ -2,28 +2,116 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { checkRefreshToken } from "@/api/auth/auth.api";
+import { checkRefreshToken, getLoginUrl } from "@/api/auth/auth.api";
 import { sendGaEvent } from "@/utils/sendGaEvent";
 import onBoardingPng from "../assets/images/onboarding/onBoarding.png";
 import onBoardingWebp from "../assets/images/onboarding/onBoarding.webp";
 import Text from "../components/common/Text";
 import { typography } from "@/style/typography";
+import { usePopup } from "@/hooks/usePopup";
+import axiosInstance from "@/api/axios";
+import { useAuthStore } from "@/store/authStore";
+
+type AuthProvider = "kakao" | "apple" | "google";
+
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 const Home = () => {
   const navigate = useNavigate();
+  const { renderPopup, openPopup, closePopup } = usePopup();
+  const { loginAction } = useAuthStore();
 
   useEffect(() => {
     const checkToken = async () => {
       try {
-        await checkRefreshToken();
-        navigate("/home");
+        // URL 쿼리 파라미터 확인 (소셜 로그인 콜백)
+        const urlParams = new URLSearchParams(window.location.search);
+        const status = urlParams.get("status");
+
+        if (status) {
+          // 상태에 따른 처리
+          switch (status) {
+            case "LOGIN":
+              const response = await axiosInstance.post(
+                `${BASE_URL}/auth/token/issue`,
+              );
+              loginAction(response.data.acToken, response.data.teamId);
+              navigate("/home");
+              window.history.replaceState(
+                {},
+                document.title,
+                window.location.pathname,
+              );
+
+              break;
+            case "SIGNUP":
+              const response2 = await axiosInstance.post(
+                `${BASE_URL}/auth/token/issue`,
+              );
+              loginAction(response2.data.acToken, response2.data.teamId);
+              navigate("/team-selection");
+
+              break;
+            case "DUPLICATE":
+              // 모달 팝업 사용 - 여기서 return 추가
+              openPopup({
+                title: "계정 중복",
+                message:
+                  "같은 이메일로 가입된 계정이 있습니다. 해당 계정으로 로그인 후 마이페이지에서  연동해주세요.",
+                buttons: [
+                  {
+                    label: "확인",
+                    variant: "confirm",
+                    onClick: () => {
+                      window.history.replaceState(
+                        {},
+                        document.title,
+                        window.location.pathname,
+                      );
+
+                      closePopup();
+                      navigate("/login");
+                    },
+                  },
+                ],
+              });
+              return; // 여기서 함수 종료
+            case "FAIL":
+              // 실패 시에도 모달 사용 - 여기서 return 추가
+              openPopup({
+                title: "로그인 실패",
+                message: "로그인에 실패했습니다. 다시 시도해주세요.",
+                buttons: [
+                  {
+                    label: "확인",
+                    variant: "confirm",
+                    onClick: () => {
+                      window.history.replaceState(
+                        {},
+                        document.title,
+                        window.location.pathname,
+                      );
+                      closePopup();
+                    },
+                  },
+                ],
+              });
+              return; // 여기서 함수 종료
+            default:
+              navigate("/");
+          }
+        } else {
+          // 일반적인 페이지 접근 시
+          await checkRefreshToken();
+          navigate("/home");
+        }
       } catch (err) {
         navigate("/");
       }
     };
 
     checkToken();
-  }, []);
+  }, [navigate, openPopup, closePopup]);
 
   const handleClickSignUp = () => {
     sendGaEvent("초기페이지", "회원가입 클릭", "회원가입 버튼");
@@ -33,6 +121,13 @@ const Home = () => {
   const handleClickLogin = () => {
     sendGaEvent("초기페이지", "이메일로 로그인 클릭", "이메일로 로그인 버튼");
     navigate("/login");
+  };
+
+  const handleClickSocialLogin = (provider: AuthProvider) => {
+    sendGaEvent("초기페이지", "소셜 로그인 클릭", "소셜 로그인 버튼");
+
+    const url = getLoginUrl(provider);
+    window.location.href = url;
   };
 
   const handleClickTerms = (type: string) => {
@@ -68,13 +163,25 @@ const Home = () => {
 
       <SocialLoginContainer>
         <SocialButton>
-          <img src='/kakao.png' alt='카카오 로그인' />
+          <img
+            src='/kakao.png'
+            alt='카카오 로그인'
+            onClick={() => handleClickSocialLogin("kakao")}
+          />
         </SocialButton>
         <SocialButton>
-          <img src='/apple.png' alt='애플 로그인' />
+          <img
+            src='/apple.png'
+            alt='애플 로그인'
+            onClick={() => handleClickSocialLogin("apple")}
+          />
         </SocialButton>
         <SocialButton>
-          <img src='/google.png' alt='구글 로그인' />
+          <img
+            src='/google.png'
+            alt='구글 로그인'
+            onClick={() => handleClickSocialLogin("google")}
+          />
         </SocialButton>
       </SocialLoginContainer>
       <StyledText onClick={handleClickLogin}>이메일로 로그인</StyledText>
@@ -88,6 +195,7 @@ const Home = () => {
           개인정보처리방침
         </Term>
       </TermsContainer>
+      {renderPopup()}
     </Container>
   );
 };
