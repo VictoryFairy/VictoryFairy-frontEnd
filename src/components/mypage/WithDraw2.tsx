@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { withdrawal } from "@/api/mypage/mypage.api";
 import { useNavigate } from "react-router-dom";
 import { usePopup } from "@/hooks/usePopup";
+import { sendGaEvent } from "@/utils/sendGaEvent";
 
 declare global {
   interface Window {
@@ -53,19 +54,19 @@ function WithDraw2() {
     });
   };
   const isAnyChecked = checkedState.some((checked) => checked);
-
   const withdraw = useMutation<void, Error>({
     mutationFn: withdrawal,
     onSuccess: () => {
       const selectedReasons = reasons.filter((_, index) => checkedState[index]);
+      const reasonString =
+        selectedReasons.length > 0 ? selectedReasons.join(", ") : "선택 없음";
 
-      if (window.gtag) {
-        window.gtag("event", "탈퇴 사유", {
-          reason: selectedReasons.join(", "),
-        });
-      }
+      sendGaEvent("탈퇴 사유", "탈퇴 사유", reasonString);
+
       handleClickSave();
-      localStorage.clear();
+
+      localStorage.removeItem("userInfo");
+      localStorage.removeItem("authToken");
     },
     onError: (error) => {
       console.error("탈퇴 요청 중 오류 발생:", error);
