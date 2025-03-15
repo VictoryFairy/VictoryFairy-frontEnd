@@ -133,7 +133,8 @@ const Home = () => {
   const handleClickTerms = (type: string) => {
     if (type === "이용약관") {
       sendGaEvent("초기페이지", "이용약관 클릭", "이용약관 버튼");
-      window.location.href = "https://www.victoryfairy.com/terms/이용약관";
+      window.location.href =
+        "https://confused-cell-b3a.notion.site/1a70e990a12080f29f14e5effb1e9fab";
     } else {
       sendGaEvent(
         "초기페이지",
@@ -141,7 +142,7 @@ const Home = () => {
         "개인정보처리방침 버튼",
       );
       window.location.href =
-        "https://www.victoryfairy.com/terms/개인정보처리방침";
+        "https://confused-cell-b3a.notion.site/1a70e990a12080b9b766c44ea68bdf65";
     }
   };
 
