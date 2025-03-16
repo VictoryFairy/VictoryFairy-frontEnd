@@ -11,46 +11,7 @@ function SocialLogin() {
   const [isChecked2, setIsChecked2] = useState(false);
   const [isChecked3, setIsChecked3] = useState(false);
 
-  const socialLinkClick = async (value: string) => {
-    if (
-      (value === "kakao" && isChecked1) ||
-      (value === "apple" && isChecked2) ||
-      (value === "google" && isChecked3)
-    ) {
-      return;
-    }
-
-    const targetUrl = `${BASE_URL}/auth/link/${value}`;
-
-    try {
-      // ✅ GET 요청으로 먼저 상태 확인 (HEAD 대신)
-      const response = await fetch(targetUrl, {
-        method: "GET",
-        credentials: "include",
-      });
-      console.log(response);
-
-      if (!response.ok) {
-        if (response.status === 401) {
-          alert("로그인이 필요합니다.");
-          return;
-        } else if (response.status === 500) {
-          alert("서버 오류 발생. 다시 시도해주세요.");
-          return;
-        }
-      }
-
-      // ✅ 정상 응답이면 페이지 이동
-      window.location.href = targetUrl;
-    } catch (error) {
-      console.error("Authentication link failed:", error);
-      alert(
-        "현재 해당 서비스에 로그인할 수 없습니다. 이전 페이지로 돌아갑니다.",
-      );
-    }
-  };
-
-  // const socialLinkClick = (value: string) => {
+  // const socialLinkClick = async (value: string) => {
   //   if (
   //     (value === "kakao" && isChecked1) ||
   //     (value === "apple" && isChecked2) ||
@@ -58,8 +19,47 @@ function SocialLogin() {
   //   ) {
   //     return;
   //   }
-  //   window.location.href = `${BASE_URL}/auth/link/${value}`;
+
+  //   const targetUrl = `${BASE_URL}/auth/link/${value}`;
+
+  //   try {
+  //     // ✅ GET 요청으로 먼저 상태 확인 (HEAD 대신)
+  //     const response = await fetch(targetUrl, {
+  //       method: "GET",
+  //       credentials: "include",
+  //     });
+  //     console.log(response);
+
+  //     if (!response.ok) {
+  //       if (response.status === 401) {
+  //         alert("로그인이 필요합니다.");
+  //         return;
+  //       } else if (response.status === 500) {
+  //         alert("서버 오류 발생. 다시 시도해주세요.");
+  //         return;
+  //       }
+  //     }
+
+  //     // ✅ 정상 응답이면 페이지 이동
+  //     window.location.href = targetUrl;
+  //   } catch (error) {
+  //     console.error("Authentication link failed:", error);
+  //     alert(
+  //       "현재 해당 서비스에 로그인할 수 없습니다. 이전 페이지로 돌아갑니다.",
+  //     );
+  //   }
   // };
+
+  const socialLinkClick = (value: string) => {
+    if (
+      (value === "kakao" && isChecked1) ||
+      (value === "apple" && isChecked2) ||
+      (value === "google" && isChecked3)
+    ) {
+      return;
+    }
+    window.location.href = `${BASE_URL}/auth/link/${value}`;
+  };
 
   useEffect(() => {
     setIsChecked1(provider?.includes("kakao") ?? false);
