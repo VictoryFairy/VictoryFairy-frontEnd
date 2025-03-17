@@ -195,8 +195,9 @@ export const getMemberInfo = async (): Promise<MypageUserInfo> => {
 
 type AuthProvider = "kakao" | "apple" | "google";
 
+const url = import.meta.env.VITE_API_URL;
 export const getLoginUrl = (provider: AuthProvider): string => {
-  return `https://api.trbt.shop/auth/login/${provider}`;
+  return `${url}/auth/login/${provider}`;
 };
 
 export const patchProfile = async (data: { field: string; value: number }) => {
