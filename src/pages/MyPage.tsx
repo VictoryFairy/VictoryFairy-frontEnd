@@ -6,8 +6,9 @@ import { useEffect } from "react";
 import { usePopup } from "@/hooks/usePopup";
 
 const MyPage = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { renderPopup, openPopup, closePopup } = usePopup();
+  const navigate = useNavigate();
 
   const alertMessage = () => {
     openPopup({
@@ -22,25 +23,29 @@ const MyPage = () => {
       ],
     });
   };
-  const navigate = useNavigate();
+
   useEffect(() => {
     const status = searchParams.get("status");
     console.log(status);
+
     if (status) {
       switch (status) {
         case "SUCCESS":
           break;
         case "DUPLICATE":
-          alertMessage();
-          break;
         case "FAIL":
           alertMessage();
           break;
         default:
           break;
       }
+
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.delete("status");
+      navigate(`?${newSearchParams.toString()}`, { replace: true });
     }
   }, [searchParams, navigate]);
+
   return (
     <Container>
       <Profile />
