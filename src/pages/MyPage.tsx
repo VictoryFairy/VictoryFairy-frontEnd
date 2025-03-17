@@ -3,33 +3,49 @@ import Profile from "../components/mypage/Profile";
 import ProfileButtons from "../components/mypage/ProfileButtons";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
+import { usePopup } from "@/hooks/usePopup";
 
 const MyPage = () => {
-  // const [searchParams] = useSearchParams(); // ✅ 쿼리 파라미터 가져오기
-  // const navigate = useNavigate();
-  // useEffect(() => {
-  //   const status = searchParams.get("status");
-  //   console.log(status);
-  //   if (status) {
-  //     switch (status) {
-  //       case "SUCCESS":
-  //         break;
-  //       case "DUPLICATE":
-  //         alert();
-  //         break;
-  //       case "FAIL":
-  //         break;
-  //       default:
-  //         break;
-  //     }
+  const [searchParams] = useSearchParams();
+  const { renderPopup, openPopup, closePopup } = usePopup();
 
-  //     navigate("/mypage", { replace: true });
-  //   }
-  // }, [searchParams, navigate]);
+  const alertMessage = () => {
+    openPopup({
+      title: "실패",
+      message: "연동에 실패했습니다",
+      buttons: [
+        {
+          label: "확인",
+          variant: "confirm",
+          onClick: closePopup,
+        },
+      ],
+    });
+  };
+  const navigate = useNavigate();
+  useEffect(() => {
+    const status = searchParams.get("status");
+    console.log(status);
+    if (status) {
+      switch (status) {
+        case "SUCCESS":
+          break;
+        case "DUPLICATE":
+          alertMessage();
+          break;
+        case "FAIL":
+          alertMessage();
+          break;
+        default:
+          break;
+      }
+    }
+  }, [searchParams, navigate]);
   return (
     <Container>
       <Profile />
       <ProfileButtons />
+      {renderPopup()}
     </Container>
   );
 };
