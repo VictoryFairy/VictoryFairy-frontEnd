@@ -26,7 +26,6 @@ const MyPage = () => {
 
   useEffect(() => {
     const status = searchParams.get("status");
-    console.log(status);
 
     if (status) {
       switch (status) {
