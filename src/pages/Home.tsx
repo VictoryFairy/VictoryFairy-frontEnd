@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { checkRefreshToken, getLoginUrl } from "@/api/auth/auth.api";
 import { sendGaEvent } from "@/utils/sendGaEvent";
-import onBoardingPng from "../assets/images/onboarding/onBoarding.png";
-import onBoardingWebp from "../assets/images/onboarding/onBoarding.webp";
-import Text from "../components/common/Text";
 import { typography } from "@/style/typography";
 import { usePopup } from "@/hooks/usePopup";
 import axiosInstance from "@/api/axios";
 import { useAuthStore } from "@/store/authStore";
+import Text from "../components/common/Text";
+import onBoardingWebp from "../assets/images/onboarding/onBoarding.webp";
+import onBoardingPng from "../assets/images/onboarding/onBoarding.png";
 
 type AuthProvider = "kakao" | "apple" | "google";
 
@@ -133,16 +133,22 @@ const Home = () => {
   const handleClickTerms = (type: string) => {
     if (type === "이용약관") {
       sendGaEvent("초기페이지", "이용약관 클릭", "이용약관 버튼");
-      window.location.href =
-        "https://confused-cell-b3a.notion.site/1a70e990a12080f29f14e5effb1e9fab";
+      // window.location.href =
+      //   "https://confused-cell-b3a.notion.site/1a70e990a12080f29f14e5effb1e9fab";
+      window.open(
+        "https://confused-cell-b3a.notion.site/1a70e990a12080f29f14e5effb1e9fab",
+        "_blank",
+      );
     } else {
       sendGaEvent(
         "초기페이지",
         "개인정보처리방침 클릭",
         "개인정보처리방침 버튼",
       );
-      window.location.href =
-        "https://confused-cell-b3a.notion.site/1a70e990a12080b9b766c44ea68bdf65";
+      window.open(
+        "https://confused-cell-b3a.notion.site/1a70e990a12080b9b766c44ea68bdf65",
+        "_blank",
+      );
     }
   };
 
@@ -188,7 +194,8 @@ const Home = () => {
       <StyledText onClick={handleClickLogin}>이메일로 로그인</StyledText>
 
       <TermsText variant='caption_long'>
-        회원가입을 진행할 경우, 아래의 정책에 대해 동의한 것으로 간주합니다.{" "}
+        회원가입을 진행할 경우, 아래의 정책에 대해 동의한 것으로
+        간주합니다.{" "}
       </TermsText>
       <TermsContainer>
         <Term onClick={() => handleClickTerms("이용약관")}>이용약관</Term>
