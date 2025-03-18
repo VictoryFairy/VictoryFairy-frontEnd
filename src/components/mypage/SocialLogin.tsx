@@ -58,7 +58,8 @@ function SocialLogin() {
     ) {
       return;
     }
-    window.location.href = `${BASE_URL}/auth/link/${value}`;
+    // window.location.href = `${BASE_URL}/auth/link/${value}`;
+    window.open(`${BASE_URL}/auth/link/${value}`);
   };
 
   useEffect(() => {
