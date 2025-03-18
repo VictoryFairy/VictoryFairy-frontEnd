@@ -2,6 +2,8 @@ import styled from "styled-components";
 import Text from "../common/Text";
 import { useEffect, useState } from "react";
 import { useUserStore } from "@/store/userInfo";
+import { socialDelete } from "@/api/mypage/mypage.api";
+import { useMutation } from "@tanstack/react-query";
 
 function SocialLogin() {
   const BASE_URL = import.meta.env.VITE_API_URL;
@@ -50,23 +52,48 @@ function SocialLogin() {
   //   }
   // };
 
-  const socialLinkClick = (value: string) => {
-    if (
-      (value === "kakao" && isChecked1) ||
-      (value === "apple" && isChecked2) ||
-      (value === "google" && isChecked3)
-    ) {
-      return;
+  const deleteMutation = useMutation({
+    mutationFn: async (provider: string) => {
+      return await socialDelete(provider);
+    },
+    onSuccess: (_, provider) => {
+      alert(`${provider} 연동이 해제되었습니다.`);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const socialLinkClick = async (value: string) => {
+    if (value === "kakao") {
+      if (isChecked1) {
+        deleteMutation.mutate("kakao"); // ✅ 연동 해제 요청
+      } else {
+        window.open(`${BASE_URL}/auth/link/${value}`);
+      }
+      setIsChecked1((prev) => !prev);
+    } else if (value === "apple") {
+      if (isChecked2) {
+        deleteMutation.mutate("apple");
+      } else {
+        window.open(`${BASE_URL}/auth/link/${value}`);
+      }
+      setIsChecked2((prev) => !prev);
+    } else if (value === "google") {
+      if (isChecked3) {
+        deleteMutation.mutate("google");
+      } else {
+        window.open(`${BASE_URL}/auth/link/${value}`);
+      }
+      setIsChecked3((prev) => !prev);
     }
-    // window.location.href = `${BASE_URL}/auth/link/${value}`;
-    window.open(`${BASE_URL}/auth/link/${value}`);
   };
 
   useEffect(() => {
     setIsChecked1(provider?.includes("kakao") ?? false);
     setIsChecked2(provider?.includes("apple") ?? false);
     setIsChecked3(provider?.includes("google") ?? false);
-  }, [provider]);
+  }, [provider, isChecked1, isChecked2, isChecked3]);
 
   return (
     <Container>
@@ -82,12 +109,9 @@ function SocialLogin() {
             type='checkbox'
             id='kakao'
             checked={isChecked1}
-            onClick={() => socialLinkClick("kakao")}
-            readOnly
+            onChange={() => socialLinkClick("kakao")}
           />
-          <label
-            htmlFor='kakao'
-            className={isChecked1 ? "disabled" : ""}></label>
+          <label htmlFor='kakao'></label>
         </ToggleWrapper>
       </Wrapper>
       <hr />
@@ -103,12 +127,9 @@ function SocialLogin() {
             type='checkbox'
             id='apple'
             checked={isChecked2}
-            onClick={() => socialLinkClick("apple")}
-            readOnly
+            onChange={() => socialLinkClick("apple")}
           />
-          <label
-            htmlFor='apple'
-            className={isChecked2 ? "disabled" : ""}></label>
+          <label htmlFor='apple'></label>
         </ToggleWrapper>
       </Wrapper>
       <hr />
@@ -124,12 +145,9 @@ function SocialLogin() {
             type='checkbox'
             id='google'
             checked={isChecked3}
-            onClick={() => socialLinkClick("google")}
-            readOnly
+            onChange={() => socialLinkClick("google")}
           />
-          <label
-            htmlFor='google'
-            className={isChecked3 ? "disabled" : ""}></label>
+          <label htmlFor='google'></label>
         </ToggleWrapper>
       </Wrapper>
     </Container>

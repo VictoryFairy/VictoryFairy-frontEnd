@@ -103,9 +103,9 @@ export const withdrawal = async () => {
   }
 };
 
-export const socialLink = async (provider: string) => {
+export const socialDelete = async (provider: string) => {
   try {
-    await axiosInstance.post(`/auth/link/${provider}/callback`, {
+    await axiosInstance.delete(`/auth/link/${provider}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -116,6 +116,10 @@ export const socialLink = async (provider: string) => {
         switch (error.response.status) {
           case 401:
             throw new Error("로그인 되어 있지 않습니다.");
+          case 400:
+            throw new Error(
+              "유효하지 않은 요청 url or 계정 연동 해제 할 수 없는 경우",
+            );
           default:
             throw new Error("알 수 없는 오류가 발생했습니다.");
         }
