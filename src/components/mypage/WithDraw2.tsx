@@ -61,9 +61,17 @@ function WithDraw2() {
         (_, index) => checkedState?.[index],
       );
 
-      selectedReasons.forEach((reason) => {
-        sendGaEvent("event", "탈퇴_사유", reason);
-      });
+      if (typeof window !== "undefined" && typeof window.gtag === "function") {
+        selectedReasons.forEach((reason) => {
+          window.gtag("event", "탈퇴_사유", {
+            event_category: "탈퇴 사유",
+            event_label: reason,
+            reason: reason,
+          });
+        });
+      } else {
+        console.warn("GA4 gtag is not available.");
+      }
 
       // const reasonString =
       //   selectedReasons.length > 0 ? selectedReasons.join(", ") : "선택 없음";
