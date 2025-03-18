@@ -57,15 +57,30 @@ function WithDraw2() {
   const withdraw = useMutation<void, Error>({
     mutationFn: withdrawal,
     onSuccess: () => {
-      const selectedReasons = reasons.filter((_, index) => checkedState[index]);
-      const reasonString =
-        selectedReasons.length > 0 ? selectedReasons.join(", ") : "선택 없음";
+      const selectedReasons = reasons.filter(
+        (_, index) => checkedState?.[index],
+      );
 
-      window.gtag("event", "탈퇴_사유", {
-        event_category: "탈퇴 사유",
-        event_label: reasonString,
-        reason: reasonString,
-      });
+      if (typeof window !== "undefined" && typeof window.gtag === "function") {
+        selectedReasons.forEach((reason) => {
+          window.gtag("event", "탈퇴_사유", {
+            event_category: "탈퇴 사유",
+            event_label: reason,
+            reason: reason,
+          });
+        });
+      } else {
+        console.warn("GA4 gtag is not available.");
+      }
+
+      // const reasonString =
+      //   selectedReasons.length > 0 ? selectedReasons.join(", ") : "선택 없음";
+
+      // window.gtag("event", "탈퇴_사유", {
+      //   event_category: "탈퇴 사유",
+      //   event_label: reasonString,
+      //   reason: reasonString,
+      // });
 
       handleClickSave();
 
