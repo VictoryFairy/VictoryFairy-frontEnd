@@ -31,27 +31,41 @@ const Home = () => {
         if (status) {
           // 상태에 따른 처리
           switch (status) {
-            case "LOGIN":
+            case "LOGIN": {
               const response = await axiosInstance.post(
                 `${BASE_URL}/auth/token/issue`,
               );
               loginAction(response.data.acToken, response.data.teamId);
-              navigate("/home");
+
+              // 팝업 창인 경우 닫기
+              if (window.opener) {
+                window.opener.postMessage({ type: "LOGIN_SUCCESS" }, "*");
+                window.close();
+              } else {
+                navigate("/home");
+              }
               window.history.replaceState(
                 {},
                 document.title,
                 window.location.pathname,
               );
-
               break;
-            case "SIGNUP":
+            }
+            case "SIGNUP": {
               const response2 = await axiosInstance.post(
                 `${BASE_URL}/auth/token/issue`,
               );
               loginAction(response2.data.acToken, response2.data.teamId);
-              navigate("/team-selection");
 
+              // 팝업 창인 경우 닫기
+              if (window.opener) {
+                window.opener.postMessage({ type: "LOGIN_SUCCESS" }, "*");
+                window.close();
+              } else {
+                navigate("/team-selection");
+              }
               break;
+            }
             case "DUPLICATE":
               // 모달 팝업 사용 - 여기서 return 추가
               openPopup({
@@ -127,7 +141,49 @@ const Home = () => {
     sendGaEvent("초기페이지", "소셜 로그인 클릭", "소셜 로그인 버튼");
 
     const url = getLoginUrl(provider);
-    window.location.href = url;
+    const width = 500;
+    const height = 600;
+    const left = window.screenX + (window.outerWidth - width) / 2;
+    const top = window.screenY + (window.outerHeight - height) / 2;
+
+    const popup = window.open(
+      url,
+      "소셜 로그인",
+      `width=${width},height=${height},left=${left},top=${top}`,
+    );
+
+    // 메시지 이벤트 리스너 추가
+    const handleMessage = async (event: MessageEvent) => {
+      if (event.data.type === "LOGIN_SUCCESS") {
+        window.removeEventListener("message", handleMessage);
+        try {
+          await checkRefreshToken();
+          navigate("/home");
+        } catch (err) {
+          openPopup({
+            title: "로그인 실패",
+            message: "로그인에 실패했습니다. 다시 시도해주세요.",
+            buttons: [
+              {
+                label: "확인",
+                variant: "confirm",
+                onClick: () => closePopup(),
+              },
+            ],
+          });
+        }
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+
+    // 팝업이 닫힐 때 이벤트 리스너 제거
+    const checkClosed = setInterval(() => {
+      if (popup?.closed) {
+        clearInterval(checkClosed);
+        window.removeEventListener("message", handleMessage);
+      }
+    }, 1000);
   };
 
   const handleClickTerms = (type: string) => {
