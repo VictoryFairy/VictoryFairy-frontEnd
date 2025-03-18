@@ -10,7 +10,7 @@ import { sendGaEvent } from "@/utils/sendGaEvent";
 
 declare global {
   interface Window {
-    gtag?: (...args: any[]) => void;
+    gtag: (...args: any[]) => void;
   }
 }
 
@@ -61,7 +61,11 @@ function WithDraw2() {
       const reasonString =
         selectedReasons.length > 0 ? selectedReasons.join(", ") : "선택 없음";
 
-      sendGaEvent("탈퇴 사유", "탈퇴 사유", reasonString);
+      window.gtag("event", "탈퇴_사유", {
+        event_category: "탈퇴 사유",
+        event_label: reasonString,
+        reason: reasonString,
+      });
 
       handleClickSave();
 
