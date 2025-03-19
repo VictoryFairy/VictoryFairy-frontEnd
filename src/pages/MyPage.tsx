@@ -64,6 +64,13 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   background-color: var(--gray-50);
+
+  overflow-y: scroll;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export default MyPage;
