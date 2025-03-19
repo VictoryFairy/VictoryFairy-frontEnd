@@ -66,7 +66,7 @@ function SocialLogin() {
     },
     onSuccess: (_, provider) => {
       openPopup({
-        title: "연동 헤제 완료",
+        title: "연동 해제 완료",
         message: `${provider} 연동이 해제되었습니다.`,
         buttons: [
           {
@@ -80,8 +80,8 @@ function SocialLogin() {
     onError: (error) => {
       console.log(error);
       openPopup({
-        title: "연동 헤제 실패",
-        message: `${provider} 연동에 실패했습니다.`,
+        title: "연동 해제 실패",
+        message: `${provider} 연동에 해제에 실패했습니다.`,
         buttons: [
           {
             label: "확인",
