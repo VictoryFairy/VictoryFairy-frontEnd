@@ -4,10 +4,13 @@ import { useEffect, useState } from "react";
 import { useUserStore } from "@/store/userInfo";
 import { socialDelete } from "@/api/mypage/mypage.api";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import { usePopup } from "@/hooks/usePopup";
 
 function SocialLogin() {
   const BASE_URL = import.meta.env.VITE_API_URL;
   const { provider } = useUserStore();
+  const navigate = useNavigate();
 
   const [isChecked1, setIsChecked1] = useState(false);
   const [isChecked2, setIsChecked2] = useState(false);
@@ -52,15 +55,41 @@ function SocialLogin() {
   //   }
   // };
 
+  const { renderPopup, openPopup, closePopup } = usePopup();
+  const clickNav = () => {
+    navigate("/mypage");
+  };
+
   const deleteMutation = useMutation({
     mutationFn: async (provider: string) => {
       return await socialDelete(provider);
     },
     onSuccess: (_, provider) => {
-      alert(`${provider} 연동이 해제되었습니다.`);
+      openPopup({
+        title: "연동 헤제 완료",
+        message: `${provider} 연동이 해제되었습니다.`,
+        buttons: [
+          {
+            label: "확인",
+            variant: "confirm",
+            onClick: clickNav,
+          },
+        ],
+      });
     },
     onError: (error) => {
       console.log(error);
+      openPopup({
+        title: "연동 헤제 실패",
+        message: `${provider} 연동에 실패했습니다.`,
+        buttons: [
+          {
+            label: "확인",
+            variant: "confirm",
+            onClick: closePopup,
+          },
+        ],
+      });
     },
   });
 
@@ -150,6 +179,7 @@ function SocialLogin() {
           <label htmlFor='google'></label>
         </ToggleWrapper>
       </Wrapper>
+      {renderPopup()}
     </Container>
   );
 }
