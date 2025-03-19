@@ -7,12 +7,14 @@ interface UserState {
   profile: string | null;
   email: string | null;
   provider: string[] | null;
+  primaryProvider: string | null;
   setUserInfo: (
     nickname: string | null,
     supportTeam: string | null,
     profile: string | null,
     email: string | null,
     provider: string[] | null,
+    primaryProvider: string | null,
   ) => void;
   updateNickname: (nickname: string) => void;
   updateImage: (profile: string) => void;
@@ -28,8 +30,23 @@ export const useUserStore = create(
       profile: null,
       email: null,
       provider: null,
-      setUserInfo: (nickname, supportTeam, profile, email, provider) =>
-        set({ nickname, supportTeam, profile, email, provider }),
+      primaryProvider: null,
+      setUserInfo: (
+        nickname,
+        supportTeam,
+        profile,
+        email,
+        provider,
+        primaryProvider,
+      ) =>
+        set({
+          nickname,
+          supportTeam,
+          profile,
+          email,
+          provider,
+          primaryProvider,
+        }),
       deleteUserInfo: () => {
         set({
           nickname: null,

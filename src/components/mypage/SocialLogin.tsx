@@ -9,51 +9,12 @@ import { usePopup } from "@/hooks/usePopup";
 
 function SocialLogin() {
   const BASE_URL = import.meta.env.VITE_API_URL;
-  const { provider } = useUserStore();
+  const { provider, primaryProvider } = useUserStore();
   const navigate = useNavigate();
 
   const [isChecked1, setIsChecked1] = useState(false);
   const [isChecked2, setIsChecked2] = useState(false);
   const [isChecked3, setIsChecked3] = useState(false);
-
-  // const socialLinkClick = async (value: string) => {
-  //   if (
-  //     (value === "kakao" && isChecked1) ||
-  //     (value === "apple" && isChecked2) ||
-  //     (value === "google" && isChecked3)
-  //   ) {
-  //     return;
-  //   }
-
-  //   const targetUrl = `${BASE_URL}/auth/link/${value}`;
-
-  //   try {
-  //     // ✅ GET 요청으로 먼저 상태 확인 (HEAD 대신)
-  //     const response = await fetch(targetUrl, {
-  //       method: "GET",
-  //       credentials: "include",
-  //     });
-  //     console.log(response);
-
-  //     if (!response.ok) {
-  //       if (response.status === 401) {
-  //         alert("로그인이 필요합니다.");
-  //         return;
-  //       } else if (response.status === 500) {
-  //         alert("서버 오류 발생. 다시 시도해주세요.");
-  //         return;
-  //       }
-  //     }
-
-  //     // ✅ 정상 응답이면 페이지 이동
-  //     window.location.href = targetUrl;
-  //   } catch (error) {
-  //     console.error("Authentication link failed:", error);
-  //     alert(
-  //       "현재 해당 서비스에 로그인할 수 없습니다. 이전 페이지로 돌아갑니다.",
-  //     );
-  //   }
-  // };
 
   const { renderPopup, openPopup, closePopup } = usePopup();
   const clickNav = () => {
@@ -96,7 +57,7 @@ function SocialLogin() {
   const socialLinkClick = async (value: string) => {
     if (value === "kakao") {
       if (isChecked1) {
-        deleteMutation.mutate("kakao"); // ✅ 연동 해제 요청
+        deleteMutation.mutate("kakao");
       } else {
         window.open(`${BASE_URL}/auth/link/${value}`);
       }
@@ -139,6 +100,7 @@ function SocialLogin() {
             id='kakao'
             checked={isChecked1}
             onChange={() => socialLinkClick("kakao")}
+            disabled={primaryProvider === "kakao"}
           />
           <label htmlFor='kakao'></label>
         </ToggleWrapper>
@@ -157,6 +119,7 @@ function SocialLogin() {
             id='apple'
             checked={isChecked2}
             onChange={() => socialLinkClick("apple")}
+            disabled={primaryProvider === "apple"}
           />
           <label htmlFor='apple'></label>
         </ToggleWrapper>
@@ -165,6 +128,7 @@ function SocialLogin() {
       <Wrapper>
         <TextWrapper>
           <img src='/googlelogin.png' alt='구글' />
+
           <Text variant='body_02' color='var(--primary-color)'>
             구글 로그인 연동
           </Text>
@@ -175,6 +139,7 @@ function SocialLogin() {
             id='google'
             checked={isChecked3}
             onChange={() => socialLinkClick("google")}
+            disabled={primaryProvider === "google"}
           />
           <label htmlFor='google'></label>
         </ToggleWrapper>

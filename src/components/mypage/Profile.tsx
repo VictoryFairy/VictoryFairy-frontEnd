@@ -62,6 +62,7 @@ const Profile = () => {
         data.user.image,
         data.user.email,
         data.user.provider,
+        data.user.primaryProvider,
       );
 
       setRecord(data.record);

@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { usePopup } from "@/hooks/usePopup";
 
 const MyPage = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const { renderPopup, openPopup, closePopup } = usePopup();
   const navigate = useNavigate();
 
