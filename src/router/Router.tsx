@@ -29,6 +29,7 @@ const SelectMatch = lazy(() => import("../pages/register/SelectMatch"));
 const RegisterForm = lazy(() => import("../pages/register/RegisterForm"));
 const DetailRate = lazy(() => import("../pages/main/DetailRate"));
 const NotFound = lazy(() => import("../pages/NotFound"));
+const OAuthCallback = lazy(() => import("../components/common/OAuthCallback"));
 
 const MiddelWrapper = styled.div`
   ${typography.headline}
@@ -398,6 +399,10 @@ const Router = createBrowserRouter([
         ),
       },
     ],
+  },
+  {
+    path: "/oauth/callback",
+    element: <OAuthCallback />,
   },
 ]);
 
