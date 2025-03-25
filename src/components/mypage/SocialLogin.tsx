@@ -60,18 +60,21 @@ function SocialLogin() {
   });
 
   useEffect(() => {
-    let handled = false;
+    const handledProviders = new Set<string>();
 
     const handleMessage = async (event: MessageEvent) => {
       if (event.origin !== window.origin) return;
       const { type, payload } = event.data || {};
       if (type !== "SOCIAL_LOGIN_RESULT") return;
 
-      if (handled) return;
-      handled = true;
-
       const { pid, provider } = payload;
-      if (provider && pid && !linkMutation.isPending) {
+
+      if (!provider || !pid) return;
+      if (handledProviders.has(provider)) return;
+
+      handledProviders.add(provider);
+
+      if (!linkMutation.isPending) {
         linkMutation.mutate({ provider, pid });
       }
     };

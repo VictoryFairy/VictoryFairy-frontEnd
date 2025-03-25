@@ -8,10 +8,6 @@ const OAuthCallback = () => {
     const status = searchParams.get("status");
     const flowType = searchParams.get("flow_type");
     const pid = searchParams.get("pid");
-<<<<<<< HEAD
-    const flowtype = searchParams.get("flow_type");
-=======
->>>>>>> 4174952d3044518f096c7d753147ca6e83a29b5b
     const provider = searchParams.get("provider");
 
     if (window.opener) {

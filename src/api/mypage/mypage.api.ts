@@ -133,7 +133,7 @@ export const socialLink = async (provider: string, pid: string) => {
   try {
     await axiosInstance.post(
       `/auth/link/${provider}/handle`,
-      { pid },
+      { pid: pid },
       {
         headers: {
           Authorization: `Bearer ${token}`,
