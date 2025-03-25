@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Text from "../common/Text";
 import { useEffect, useState } from "react";
 import { useUserStore } from "@/store/userInfo";
-import { socialDelete } from "@/api/mypage/mypage.api";
+import { socialDelete, socialLink } from "@/api/mypage/mypage.api";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { usePopup } from "@/hooks/usePopup";
@@ -20,6 +20,65 @@ function SocialLogin() {
   const clickNav = () => {
     navigate("/mypage");
   };
+  const linkMutation = useMutation({
+    mutationFn: async ({
+      provider,
+      pid,
+    }: {
+      provider: string;
+      pid: string;
+    }) => {
+      return await socialLink(provider, pid);
+    },
+    onSuccess: (_, { provider }) => {
+      openPopup({
+        title: "연동 성공",
+        message: `${provider} 계정이 성공적으로 연동되었습니다.`,
+        buttons: [
+          {
+            label: "확인",
+            variant: "confirm",
+            onClick: clickNav,
+          },
+        ],
+      });
+    },
+    onError: (error, { provider }) => {
+      console.error(error);
+      openPopup({
+        title: "연동 실패",
+        message: `${provider} 계정 연동에 실패했습니다.`,
+        buttons: [
+          {
+            label: "확인",
+            variant: "confirm",
+            onClick: closePopup,
+          },
+        ],
+      });
+    },
+  });
+
+  useEffect(() => {
+    let handled = false;
+
+    const handleMessage = async (event: MessageEvent) => {
+      if (event.origin !== window.origin) return;
+      const { type, payload } = event.data || {};
+      if (type !== "SOCIAL_LOGIN_RESULT") return;
+
+      if (handled) return;
+      handled = true;
+
+      const { pid, provider } = payload;
+      if (provider && pid && !linkMutation.isPending) {
+        linkMutation.mutate({ provider, pid });
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
 
   const deleteMutation = useMutation({
     mutationFn: async (provider: string) => {

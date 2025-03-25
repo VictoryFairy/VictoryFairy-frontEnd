@@ -128,3 +128,31 @@ export const socialDelete = async (provider: string) => {
     throw new Error("요청 중 문제가 발생했습니다. 다시 시도해 주세요.");
   }
 };
+
+export const socialLink = async (provider: string, pid: string) => {
+  try {
+    await axiosInstance.post(
+      `/auth/link/${provider}/handle`,
+      { pid },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      switch (error.response.status) {
+        case 401:
+          throw new Error("로그인 되어 있지 않습니다.");
+        case 400:
+          throw new Error("유효하지 않은 요청입니다.");
+        case 409:
+          throw new Error("이미 연동된 계정입니다.");
+        default:
+          throw new Error("알 수 없는 오류입니다.");
+      }
+    }
+    throw new Error("요청 중 문제가 발생했습니다.");
+  }
+};

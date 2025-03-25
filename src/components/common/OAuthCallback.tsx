@@ -6,7 +6,7 @@ const OAuthCallback = () => {
 
   useEffect(() => {
     const pid = searchParams.get("pid");
-    const flowtype = searchParams.get("flowtype");
+    const flowtype = searchParams.get("flow_type");
     const provider = searchParams.get("provider");
     console.log("쿼리 파라미터 확인", pid, flowtype, provider);
 
