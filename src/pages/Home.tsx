@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-boolean-value */
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { checkRefreshToken, getLoginUrl } from "@/api/auth/auth.api";
 import { sendGaEvent } from "@/utils/sendGaEvent";
 import { typography } from "@/style/typography";
@@ -113,6 +113,96 @@ const Home = () => {
     checkToken();
   }, [navigate, openPopup, closePopup]);
 
+  // postMessage 이벤트 리스너
+  useEffect(() => {
+    let isHandled = false; // 중복 처리 방지를 위한 플래그 추가
+
+    const handleMessage = async (event: MessageEvent) => {
+      if (event.origin !== window.origin) return;
+      if (event.data?.type !== "SOCIAL_LOGIN_RESULT") return;
+      if (isHandled) return; // 이미 처리된 경우 리턴
+
+      isHandled = true; // 처리 시작 표시
+      const { status, flowType, pid, provider } = event.data.payload;
+
+      console.log("소셜 로그인 결과", status, flowType, pid, provider);
+
+      if (status === "fail") {
+        openPopup({
+          title: "로그인 실패",
+          message:
+            "소셜 로그인 처리 중 오류가 발생했습니다. 다시 시도해주세요.",
+          buttons: [
+            {
+              label: "확인",
+              variant: "confirm",
+              onClick: closePopup,
+            },
+          ],
+        });
+        return;
+      }
+
+      try {
+        const response = await axiosInstance.post(
+          `${BASE_URL}/auth/login/${provider}/handle`,
+          { pid },
+          { withCredentials: true },
+        );
+
+        // 응답 데이터로 로그인 처리
+        const { acToken, teamId, teamName } = response.data;
+        console.log("응답 데이터", response, acToken, teamId, teamName);
+        loginAction(acToken, teamId);
+
+        // teamId가 없으면 회원가입 플로우로 간주
+        if (!teamId) {
+          navigate("/team-selection");
+        } else {
+          navigate("/home");
+        }
+      } catch (error: any) {
+        if (error.response?.status === 409) {
+          // 계정 중복 처리
+          openPopup({
+            title: "계정 중복",
+            message:
+              "같은 이메일로 가입된 계정이 있습니다. 해당 계정으로 로그인 후 마이페이지에서 연동해주세요.",
+            buttons: [
+              {
+                label: "확인",
+                variant: "confirm",
+                onClick: () => {
+                  closePopup();
+                  navigate("/login");
+                },
+              },
+            ],
+          });
+        } else {
+          // 기타 오류 처리
+          openPopup({
+            title: "오류",
+            message: "처리 중 오류가 발생했습니다. 다시 시도해주세요.",
+            buttons: [
+              {
+                label: "확인",
+                variant: "confirm",
+                onClick: closePopup,
+              },
+            ],
+          });
+        }
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => {
+      window.removeEventListener("message", handleMessage);
+      isHandled = false; // 클린업 시 플래그 초기화
+    };
+  }, [navigate, loginAction, openPopup, closePopup]);
+
   const handleClickSignUp = () => {
     sendGaEvent("초기페이지", "회원가입 클릭", "회원가입 버튼");
     navigate("/signup");
@@ -123,12 +213,32 @@ const Home = () => {
     navigate("/login");
   };
 
-  const handleClickSocialLogin = (provider: AuthProvider) => {
-    sendGaEvent("초기페이지", "소셜 로그인 클릭", "소셜 로그인 버튼");
+  const handleClickSocialLogin = useCallback(
+    (provider: AuthProvider) => {
+      sendGaEvent("초기페이지", "소셜 로그인 클릭", "소셜 로그인 버튼");
 
-    const url = getLoginUrl(provider);
-    window.location.href = url;
-  };
+      // 소셜 로그인 요청 URL
+      const url = `${BASE_URL}/auth/login/${provider}`;
+
+      const loginWindow = window.open(url, "_blank");
+
+      if (!loginWindow) {
+        openPopup({
+          title: "알림",
+          message:
+            "팝업이 차단되었습니다. 팝업 차단을 해제하고 다시 시도해주세요.",
+          buttons: [
+            {
+              label: "확인",
+              variant: "confirm",
+              onClick: closePopup,
+            },
+          ],
+        });
+      }
+    },
+    [openPopup, closePopup],
+  );
 
   const handleClickTerms = (type: string) => {
     if (type === "이용약관") {

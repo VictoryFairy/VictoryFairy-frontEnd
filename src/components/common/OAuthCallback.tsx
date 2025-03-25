@@ -5,18 +5,19 @@ const OAuthCallback = () => {
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
+    const status = searchParams.get("status");
+    const flowType = searchParams.get("flow_type");
     const pid = searchParams.get("pid");
-    const flowtype = searchParams.get("flowtype");
     const provider = searchParams.get("provider");
-    console.log("쿼리 파라미터 확인", pid, flowtype, provider);
 
-    if (pid && flowtype && window.opener) {
+    if (window.opener) {
       window.opener.postMessage(
         {
           type: "SOCIAL_LOGIN_RESULT",
           payload: {
+            status,
+            flowType,
             pid,
-            flowtype,
             provider,
           },
         },
