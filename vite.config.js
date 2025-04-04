@@ -44,6 +44,7 @@ export default defineConfig({
       manifest: {
         name: "Victory-fairy",
         short_name: "Victory-fairy",
+        display: "standalone",
         theme_color: "#ffffff",
         id: "com.sngyo.Victoryfairy",
         icons: [
