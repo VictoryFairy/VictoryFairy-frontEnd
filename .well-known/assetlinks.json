@@ -1,8 +1,12 @@
-[{
-      "relation": ["delegate_permission/common.handle_all_urls"],
-      "target": {
-        "namespace": "android_app",
-        "package_name": "com.sngyo.www.twa",
-        "sha256_cert_fingerprints": ["FF:6E:EC:7D:6D:16:E3:AD:57:32:9B:00:64:EA:F4:DC:7D:65:60:0A:C7:4B:E7:34:3B:5F:04:52:CA:2B:B3:B2"]
-      }
-    }]
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.sngyo.www.twa",
+      "sha256_cert_fingerprints": [
+        "46:4D:1B:A0:CE:7B:C4:35:7F:F5:F9:CF:7F:7E:0D:DE:BD:C6:90:89"
+      ]
+    }
+  }
+]
