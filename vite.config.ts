@@ -49,6 +49,7 @@ export default defineConfig({
         name: "Victory-fairy",
         short_name: "Victory-fairy",
         theme_color: "#ffffff",
+        display: "standalone",
         id: "com.sngyo.Victoryfairy",
         icons: [
           {
