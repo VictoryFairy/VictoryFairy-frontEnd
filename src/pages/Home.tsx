@@ -125,7 +125,7 @@ const Home = () => {
       isHandled = true; // 처리 시작 표시
       const { status, flowType, pid, provider } = event.data.payload;
 
-      console.log("소셜 로그인 결과", status, flowType, pid, provider);
+      // console.log("소셜 로그인 결과", status, flowType, pid, provider);
 
       if (status === "fail") {
         openPopup({
@@ -152,7 +152,7 @@ const Home = () => {
 
         // 응답 데이터로 로그인 처리
         const { acToken, teamId, teamName } = response.data;
-        console.log("응답 데이터", response, acToken, teamId, teamName);
+        // console.log("응답 데이터", response, acToken, teamId, teamName);
         loginAction(acToken, teamId);
 
         // teamId가 없으면 회원가입 플로우로 간주
