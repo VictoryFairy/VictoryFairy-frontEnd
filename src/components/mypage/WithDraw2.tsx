@@ -6,7 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { withdrawal } from "@/api/mypage/mypage.api";
 import { useNavigate } from "react-router-dom";
 import { usePopup } from "@/hooks/usePopup";
-import { sendGaEvent } from "@/utils/sendGaEvent";
+// import { sendGaEvent } from "@/utils/sendGaEvent";
 
 declare global {
   interface Window {

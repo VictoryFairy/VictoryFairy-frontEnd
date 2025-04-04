@@ -7,19 +7,22 @@ import prerender from "@prerenderer/rollup-plugin";
 import viteCompression from "vite-plugin-compression";
 import mkcert from "vite-plugin-mkcert";
 import fs from "fs";
-import type { ServerOptions } from "vite";
+import type { ServerOptions } from "https"; // ✅ 핵심: Node.js의 ServerOptions 타입
 
 const keyPath = path.resolve(__dirname, "localhost-key.pem");
 const certPath = path.resolve(__dirname, "localhost.pem");
 
-const httpsConfig: false | ServerOptions =
+const httpsConfig: ServerOptions | undefined =
   fs.existsSync(keyPath) && fs.existsSync(certPath)
-    ? { key: fs.readFileSync(keyPath), cert: fs.readFileSync(certPath) }
-    : false;
+    ? {
+        key: fs.readFileSync(keyPath),
+        cert: fs.readFileSync(certPath),
+      }
+    : undefined;
 
 export default defineConfig({
   server: {
-    https: httpsConfig,
+    https: httpsConfig, // ✅ 타입 에러 해결됨
   },
   plugins: [
     react(),

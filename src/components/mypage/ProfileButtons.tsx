@@ -16,9 +16,9 @@ const ProfileButtons = () => {
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
-  const openWithDrawPopup = useCallback(() => {
-    setIsOpenDraw(true);
-  }, []);
+  // const openWithDrawPopup = useCallback(() => {
+  //   setIsOpenDraw(true);
+  // }, []);
 
   const closeWithDrawPopup = useCallback(() => {
     setIsOpenDraw(false);
@@ -46,9 +46,9 @@ const ProfileButtons = () => {
     });
   };
 
-  const handleWithDrawClik = () => {
-    openWithDrawPopup();
-  };
+  // const handleWithDrawClik = () => {
+  //   openWithDrawPopup();
+  // };
 
   const navigate = useNavigate();
   const { supportTeam } = useUserStore((state) => ({

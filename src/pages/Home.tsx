@@ -2,7 +2,7 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useCallback } from "react";
-import { checkRefreshToken, getLoginUrl } from "@/api/auth/auth.api";
+import { checkRefreshToken } from "@/api/auth/auth.api";
 import { sendGaEvent } from "@/utils/sendGaEvent";
 import { typography } from "@/style/typography";
 import { usePopup } from "@/hooks/usePopup";
@@ -203,10 +203,10 @@ const Home = () => {
     };
   }, [navigate, loginAction, openPopup, closePopup]);
 
-  const handleClickSignUp = () => {
-    sendGaEvent("초기페이지", "회원가입 클릭", "회원가입 버튼");
-    navigate("/signup");
-  };
+  // const handleClickSignUp = () => {
+  //   sendGaEvent("초기페이지", "회원가입 클릭", "회원가입 버튼");
+  //   navigate("/signup");
+  // };
 
   const handleClickLogin = () => {
     sendGaEvent("초기페이지", "이메일로 로그인 클릭", "이메일로 로그인 버튼");

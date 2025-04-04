@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.sngyo.www.twa",
+      "sha256_cert_fingerprints": [
+        "46:4D:1B:A0:CE:7B:C4:35:7F:F5:F9:CF:7F:7E:0D:DE:BD:C6:90:89"
+      ]
+    }
+  }
+]

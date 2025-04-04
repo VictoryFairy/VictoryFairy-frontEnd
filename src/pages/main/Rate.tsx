@@ -53,7 +53,7 @@ const Rate = () => {
       let dataUrl = "";
       let i = 0;
       const maxAttempts = 10;
-      let largestBlob = null;
+      // let largestBlob = null;
       let largestFile = null;
       let maxSize = 0;
 
@@ -73,7 +73,7 @@ const Rate = () => {
 
         if (blob.size > maxSize) {
           maxSize = blob.size;
-          largestBlob = blob;
+          // largestBlob = blob;
           largestFile = new File([blob], "instagram-story.png", {
             type: "image/png",
           });
@@ -148,37 +148,37 @@ const Rate = () => {
     }
   };
 
-  const handleKakaoShare = async () => {
-    if (!rateRef.current) {
-      return;
-    }
-    sendGaEvent("승률페이지", "카카오톡 공유 버튼 클릭", "카카오톡 공유 버튼");
-    try {
-      Kakao.Link.sendDefault({
-        objectType: "feed",
-        content: {
-          title: "승리요정",
-          description: `나의 승률: ${winPercentage}%`,
-          imageUrl: getFairyImg(parseInt(winPercentage, 10), teamId, "png"),
-          link: {
-            mobileWebUrl: window.location.href,
-            webUrl: window.location.href,
-          },
-        },
-        buttons: [
-          {
-            title: "앱에서 보기",
-            link: {
-              mobileWebUrl: window.location.href,
-              webUrl: window.location.href,
-            },
-          },
-        ],
-      });
-    } catch (error) {
-      console.error("카카오톡 공유에 실패했습니다.", error);
-    }
-  };
+  // const handleKakaoShare = async () => {
+  //   if (!rateRef.current) {
+  //     return;
+  //   }
+  //   sendGaEvent("승률페이지", "카카오톡 공유 버튼 클릭", "카카오톡 공유 버튼");
+  //   try {
+  //     Kakao.Link.sendDefault({
+  //       objectType: "feed",
+  //       content: {
+  //         title: "승리요정",
+  //         description: `나의 승률: ${winPercentage}%`,
+  //         imageUrl: getFairyImg(parseInt(winPercentage, 10), teamId, "png"),
+  //         link: {
+  //           mobileWebUrl: window.location.href,
+  //           webUrl: window.location.href,
+  //         },
+  //       },
+  //       buttons: [
+  //         {
+  //           title: "앱에서 보기",
+  //           link: {
+  //             mobileWebUrl: window.location.href,
+  //             webUrl: window.location.href,
+  //           },
+  //         },
+  //       ],
+  //     });
+  //   } catch (error) {
+  //     console.error("카카오톡 공유에 실패했습니다.", error);
+  //   }
+  // };
 
   return (
     <RateContainer ref={rateRef}>
