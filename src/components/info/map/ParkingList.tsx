@@ -34,7 +34,7 @@ const ParkingList = ({ parkingSpots, onSelectParking }: ParkingListProps) => {
           <RightContent>
             <Icon
               icon='IcNaver'
-              onClick={() => (window.location.href = spot.link)}
+              onClick={() => window.open(spot.link, "_blank")}
             />
             <Icon icon='IcArrowRight' />
           </RightContent>
