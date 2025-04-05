@@ -50,6 +50,10 @@ const ProfileButtons = () => {
   //   openWithDrawPopup();
   // };
 
+  const isIOS =
+    /iPad|iPhone|iPod/.test(navigator.userAgent) &&
+    !/Chrome|Firefox|Safari/.test(navigator.userAgent);
+
   const navigate = useNavigate();
   const { supportTeam } = useUserStore((state) => ({
     supportTeam: state.supportTeam,
@@ -210,15 +214,17 @@ const ProfileButtons = () => {
           <Icon icon='IcArrowRight' />
         </ProfileTeamWrapper>
       </ProfileWrapper>
-      <ProfileWrapper
-        role='button'
-        tabIndex={0}
-        onClick={() => navigate("/mypage/login")}>
-        <Text variant='body_02' color='var(--primary-color)'>
-          간편 로그인 설정
-        </Text>
-        <Icon icon='IcArrowRight' />
-      </ProfileWrapper>
+      {!isIOS && (
+        <ProfileWrapper
+          role='button'
+          tabIndex={0}
+          onClick={() => navigate("/mypage/login")}>
+          <Text variant='body_02' color='var(--primary-color)'>
+            간편 로그인 설정
+          </Text>
+          <Icon icon='IcArrowRight' />
+        </ProfileWrapper>
+      )}
       <ProfileLastWrapper
         onClick={() => {
           window.location.href =

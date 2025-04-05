@@ -103,6 +103,7 @@ const TeamSelect = ({
   const navigate = useNavigate();
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
   const { openPopup, renderPopup, closePopup } = usePopup();
+
   const handleTeamSelect = (team: Team) => {
     setSelectedTeam(team);
     handleSetUserInfo({ teamId: team.id });

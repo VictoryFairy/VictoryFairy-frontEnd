@@ -21,6 +21,11 @@ const Home = () => {
   const { renderPopup, openPopup, closePopup } = usePopup();
   const { loginAction } = useAuthStore();
 
+  // iOS 체크 함수 수정 - 웹 브라우저는 제외
+  const isIOS =
+    /iPad|iPhone|iPod/.test(navigator.userAgent) &&
+    !/Chrome|Firefox|Safari/.test(navigator.userAgent);
+
   useEffect(() => {
     const checkToken = async () => {
       try {
@@ -203,10 +208,10 @@ const Home = () => {
     };
   }, [navigate, loginAction, openPopup, closePopup]);
 
-  // const handleClickSignUp = () => {
-  //   sendGaEvent("초기페이지", "회원가입 클릭", "회원가입 버튼");
-  //   navigate("/signup");
-  // };
+  const handleClickSignUp = () => {
+    sendGaEvent("초기페이지", "회원가입 클릭", "회원가입 버튼");
+    navigate("/signup");
+  };
 
   const handleClickLogin = () => {
     sendGaEvent("초기페이지", "이메일로 로그인 클릭", "이메일로 로그인 버튼");
@@ -274,38 +279,34 @@ const Home = () => {
           <Text variant='display'>응원할 준비가 되셨나요?</Text>
         </div>
         <Text variant='body_long_02' color='#545763'>
-          서비스 이용을 위해 로그인을 진행해주세요.
+          서비스 이용을 위해 로그인을 진행해주세요
         </Text>
       </TextContainer>
 
-      <SocialLoginContainer>
-        <SocialButton>
-          <img
-            src='/kakao.png'
-            alt='카카오 로그인'
-            onClick={() => handleClickSocialLogin("kakao")}
-          />
-        </SocialButton>
-        <SocialButton>
-          <img
-            src='/apple.png'
-            alt='애플 로그인'
-            onClick={() => handleClickSocialLogin("apple")}
-          />
-        </SocialButton>
-        <SocialButton>
-          <img
-            src='/google.png'
-            alt='구글 로그인'
-            onClick={() => handleClickSocialLogin("google")}
-          />
-        </SocialButton>
-      </SocialLoginContainer>
-      <StyledText onClick={handleClickLogin}>이메일로 로그인</StyledText>
+      {isIOS ? (
+        <>
+          <SocialLoginContainer>
+            <SocialButton onClick={() => handleClickSocialLogin("kakao")}>
+              <img src='/kakao.png' alt='카카오 로그인' />
+            </SocialButton>
+            <SocialButton onClick={() => handleClickSocialLogin("apple")}>
+              <img src='/apple.png' alt='애플 로그인' />
+            </SocialButton>
+            <SocialButton onClick={() => handleClickSocialLogin("google")}>
+              <img src='/google.png' alt='구글 로그인' />
+            </SocialButton>
+          </SocialLoginContainer>
+          <StyledText onClick={handleClickLogin}>이메일로 로그인</StyledText>
+        </>
+      ) : (
+        <>
+          <SignUpButton onClick={handleClickSignUp}>회원가입</SignUpButton>
+          <LoginButton onClick={handleClickLogin}>로그인</LoginButton>
+        </>
+      )}
 
       <TermsText variant='caption_long'>
-        회원가입을 진행할 경우, 아래의 정책에 대해 동의한 것으로
-        간주합니다.{" "}
+        회원가입을 진행할 경우, 아래의 정책에 대해 동의한 것으로 간주합니다.
       </TermsText>
       <TermsContainer>
         <Term onClick={() => handleClickTerms("이용약관")}>이용약관</Term>
@@ -353,16 +354,18 @@ const TextContainer = styled.div`
 
 const SocialLoginContainer = styled.div`
   display: flex;
-  gap: 20px;
-  margin-bottom: 16px;
+  gap: 16px;
+  margin-bottom: 24px;
+  justify-content: center;
 `;
 
 const SocialButton = styled.button`
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   border: none;
   background: none;
+  padding: 0;
   cursor: pointer;
 
   img {
@@ -394,6 +397,31 @@ const Term = styled.span`
   font-weight: 600;
   border-bottom: 1px solid #545763;
   display: inline-block;
+`;
+
+// 새로운 스타일 컴포넌트 추가
+const SignUpButton = styled.button`
+  width: 354px;
+  min-height: 40px;
+  background-color: #1c1d22;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  ${typography.body_01}
+  cursor: pointer;
+  margin-bottom: 10px;
+`;
+
+const LoginButton = styled.button`
+  width: 354px;
+  min-height: 40px;
+  background-color: white;
+  color: #1c1d22;
+  border: none;
+  border-radius: 8px;
+  ${typography.body_01}
+  cursor: pointer;
+  margin-bottom: 50px;
 `;
 
 export default Home;
