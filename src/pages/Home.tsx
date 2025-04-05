@@ -283,7 +283,7 @@ const Home = () => {
         </Text>
       </TextContainer>
 
-      {isIOS ? (
+      {!isIOS ? (
         <>
           <SocialLoginContainer>
             <SocialButton onClick={() => handleClickSocialLogin("kakao")}>
