@@ -21,10 +21,10 @@ const Home = () => {
   const { renderPopup, openPopup, closePopup } = usePopup();
   const { loginAction } = useAuthStore();
 
-  // iOS 체크 함수 수정 - 웹 브라우저는 제외
+  // iOS 디바이스인지 간단하게 확인
   const isIOS =
-    /iPad|iPhone|iPod/.test(navigator.userAgent) &&
-    !/Chrome|Firefox|Safari/.test(navigator.userAgent);
+    /iPhone|iPad|iPod/i.test(navigator.userAgent) &&
+    !/Android/i.test(navigator.userAgent);
 
   useEffect(() => {
     const checkToken = async () => {
@@ -283,7 +283,12 @@ const Home = () => {
         </Text>
       </TextContainer>
 
-      {!isIOS ? (
+      {isIOS ? (
+        <>
+          <SignUpButton onClick={handleClickSignUp}>회원가입</SignUpButton>
+          <LoginButton onClick={handleClickLogin}>로그인</LoginButton>
+        </>
+      ) : (
         <>
           <SocialLoginContainer>
             <SocialButton onClick={() => handleClickSocialLogin("kakao")}>
@@ -297,11 +302,6 @@ const Home = () => {
             </SocialButton>
           </SocialLoginContainer>
           <StyledText onClick={handleClickLogin}>이메일로 로그인</StyledText>
-        </>
-      ) : (
-        <>
-          <SignUpButton onClick={handleClickSignUp}>회원가입</SignUpButton>
-          <LoginButton onClick={handleClickLogin}>로그인</LoginButton>
         </>
       )}
 
