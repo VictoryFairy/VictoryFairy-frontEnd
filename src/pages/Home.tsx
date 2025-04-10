@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable react/jsx-boolean-value */
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +9,7 @@ import { typography } from "@/style/typography";
 import { usePopup } from "@/hooks/usePopup";
 import axiosInstance from "@/api/axios";
 import { useAuthStore } from "@/store/authStore";
+import { isIOS } from "react-device-detect";
 import Text from "../components/common/Text";
 import onBoardingWebp from "../assets/images/onboarding/onBoarding.webp";
 import onBoardingPng from "../assets/images/onboarding/onBoarding.png";
@@ -20,11 +22,6 @@ const Home = () => {
   const navigate = useNavigate();
   const { renderPopup, openPopup, closePopup } = usePopup();
   const { loginAction } = useAuthStore();
-
-  // iOS 디바이스인지 간단하게 확인
-  const isIOS =
-    /iPhone|iPad|iPod/i.test(navigator.userAgent) &&
-    !/Android/i.test(navigator.userAgent);
 
   useEffect(() => {
     const checkToken = async () => {
