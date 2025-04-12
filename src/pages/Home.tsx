@@ -23,10 +23,6 @@ const Home = () => {
   const { renderPopup, openPopup, closePopup } = usePopup();
   const { loginAction } = useAuthStore();
 
-  /** iOS 앱 접근 여부 */
-  const isIOSApp =
-    isIOS && window.matchMedia("(display-mode: standalone)").matches;
-
   useEffect(() => {
     const checkToken = async () => {
       try {
@@ -284,7 +280,7 @@ const Home = () => {
         </Text>
       </TextContainer>
 
-      {isIOSApp ? (
+      {isIOS ? (
         <>
           <SignUpButton onClick={handleClickSignUp}>회원가입</SignUpButton>
           <LoginButton onClick={handleClickLogin}>로그인</LoginButton>
