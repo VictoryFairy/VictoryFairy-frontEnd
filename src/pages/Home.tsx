@@ -9,7 +9,7 @@ import { typography } from "@/style/typography";
 import { usePopup } from "@/hooks/usePopup";
 import axiosInstance from "@/api/axios";
 import { useAuthStore } from "@/store/authStore";
-import { isIOS, isMobileSafari } from "react-device-detect";
+import { isChrome, isIOS, isSafari } from "react-device-detect";
 import Text from "../components/common/Text";
 import onBoardingWebp from "../assets/images/onboarding/onBoarding.webp";
 import onBoardingPng from "../assets/images/onboarding/onBoarding.png";
@@ -23,10 +23,16 @@ const Home = () => {
   const { renderPopup, openPopup, closePopup } = usePopup();
   const { loginAction } = useAuthStore();
 
-  /** ios 앱 접근 */
-  const isIOSApp = useMemo(() => {
-    // iOS 디바이스이고 Safari 브라우저가 아닌 경우 (PWA 앱)
-    return isIOS && !isMobileSafari;
+  /** ios 접근 */
+  const test = useMemo(() => {
+    // ios로 접근하였으나, 사파리 또는 크롬일 경우 false 반환
+    if (isIOS && isSafari) {
+      return false;
+    }
+    if (isIOS && isChrome) {
+      return false;
+    }
+    return true;
   }, []);
 
   useEffect(() => {
@@ -286,7 +292,7 @@ const Home = () => {
         </Text>
       </TextContainer>
 
-      {isIOSApp ? (
+      {test ? (
         <>
           <SignUpButton onClick={handleClickSignUp}>회원가입</SignUpButton>
           <LoginButton onClick={handleClickLogin}>로그인</LoginButton>
