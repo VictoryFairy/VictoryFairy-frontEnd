@@ -2,14 +2,14 @@
 /* eslint-disable react/jsx-boolean-value */
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useCallback, useMemo } from "react";
+import { useEffect, useCallback } from "react";
 import { checkRefreshToken } from "@/api/auth/auth.api";
 import { sendGaEvent } from "@/utils/sendGaEvent";
 import { typography } from "@/style/typography";
 import { usePopup } from "@/hooks/usePopup";
 import axiosInstance from "@/api/axios";
 import { useAuthStore } from "@/store/authStore";
-import { isChrome, isIOS, isSafari } from "react-device-detect";
+import { isIOS } from "react-device-detect";
 import Text from "../components/common/Text";
 import onBoardingWebp from "../assets/images/onboarding/onBoarding.webp";
 import onBoardingPng from "../assets/images/onboarding/onBoarding.png";
@@ -23,17 +23,9 @@ const Home = () => {
   const { renderPopup, openPopup, closePopup } = usePopup();
   const { loginAction } = useAuthStore();
 
-  /** ios 접근 */
-  const test = useMemo(() => {
-    // ios로 접근하였으나, 사파리 또는 크롬일 경우 false 반환
-    if (isIOS && isSafari) {
-      return false;
-    }
-    if (isIOS && isChrome) {
-      return false;
-    }
-    return true;
-  }, []);
+  /** iOS 앱 접근 여부 */
+  const isIOSApp =
+    isIOS && window.matchMedia("(display-mode: standalone)").matches;
 
   useEffect(() => {
     const checkToken = async () => {
@@ -292,7 +284,7 @@ const Home = () => {
         </Text>
       </TextContainer>
 
-      {test ? (
+      {isIOSApp ? (
         <>
           <SignUpButton onClick={handleClickSignUp}>회원가입</SignUpButton>
           <LoginButton onClick={handleClickLogin}>로그인</LoginButton>
