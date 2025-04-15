@@ -83,6 +83,7 @@ const SelectMatchCalendar = ({
         handleMonthChange(activeStartDate!)
       }
       className='calendar'
+      showExplainBar={false}
     />
   );
 };

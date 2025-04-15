@@ -5,7 +5,11 @@ import moment from "moment";
 import Icon from "./Icon";
 import Text from "./Text";
 
-const Calendar = ({ ...props }: CalendarProps) => {
+interface ICalendarProps extends CalendarProps {
+  showExplainBar?: boolean; // 승리, 패배 .. 설명 바 보여줄지 여부
+}
+
+const Calendar = ({ showExplainBar = true, ...props }: ICalendarProps) => {
   const formatDay = (_: any, date: Date) => {
     return moment(date).format("D");
   };
@@ -15,6 +19,7 @@ const Calendar = ({ ...props }: CalendarProps) => {
   const formatMonth = (_: any, date: Date) => {
     return moment(date).format("MMMM YYYY");
   };
+
   return (
     <CalendarTabContainer>
       <CalendarWrraper
@@ -35,24 +40,26 @@ const Calendar = ({ ...props }: CalendarProps) => {
         showNeighboringMonth={false}
         {...props}
       />
-      <ExplainBar>
-        <div>
-          <Icon icon='IcWin' className='win-icon' />
-          <Text variant='subtitle_01'>승리</Text>
-        </div>
-        <div>
-          <Icon icon='IcLose' className='lose-icon' />
-          <Text variant='subtitle_01'>패배</Text>
-        </div>
-        <div>
-          <Icon icon='IcTie' />
-          <Text variant='subtitle_01'>무승부</Text>
-        </div>
-        <div>
-          <Icon icon='IcNoGame' />
-          <Text variant='subtitle_01'>경기 취소</Text>
-        </div>
-      </ExplainBar>
+      {showExplainBar && (
+        <ExplainBar>
+          <div>
+            <Icon icon='IcWin' className='win-icon' />
+            <Text variant='subtitle_01'>승리</Text>
+          </div>
+          <div>
+            <Icon icon='IcLose' className='lose-icon' />
+            <Text variant='subtitle_01'>패배</Text>
+          </div>
+          <div>
+            <Icon icon='IcTie' />
+            <Text variant='subtitle_01'>무승부</Text>
+          </div>
+          <div>
+            <Icon icon='IcNoGame' />
+            <Text variant='subtitle_01'>경기 취소</Text>
+          </div>
+        </ExplainBar>
+      )}
     </CalendarTabContainer>
   );
 };
