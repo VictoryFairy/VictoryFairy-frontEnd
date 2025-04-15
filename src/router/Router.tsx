@@ -3,12 +3,12 @@ import styled from "styled-components";
 import { Suspense, lazy } from "react";
 import Loading from "@/components/common/Loading";
 import Info from "@/pages/Info";
+import TeamSelect from "@/pages/TeamSelect";
 import Layout from "../components/layout/Layout";
 import Icon from "../components/common/Icon";
 import { useSignupStore } from "../store/signupStep";
 import { typography } from "../style/typography";
 import logo from "../assets/images/Logo/logo.webp";
-import TeamSelect from "@/pages/TeamSelect";
 
 const Home = lazy(() => import("../pages/Home"));
 const Signup = lazy(() => import("../pages/Signup"));
