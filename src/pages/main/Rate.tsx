@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import styled from "styled-components";
 import Text from "@/components/common/Text";
 import Icon from "@/components/common/Icon";
@@ -90,7 +91,6 @@ const Rate = () => {
               text: "이미지를 공유합니다!",
               files: [largestFile],
             });
-            return;
           } catch (shareError) {
             console.error("이미지 공유 실패:", shareError);
           }
@@ -128,7 +128,7 @@ const Rate = () => {
         });
 
         const blob = await (await fetch(dataUrl)).blob();
-        const size = blob.size;
+        const { size } = blob;
 
         if (size > maxSize) {
           maxSize = size;
