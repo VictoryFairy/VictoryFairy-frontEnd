@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { fetchCheerSongs, FetchLikedCheerSongs } from "@/api/info/cheers.api";
 import { useAuthStore } from "@/store/authStore";
-import SelectionBar from "@/components/common/SelectionBar";
+// import SelectionBar from "@/components/common/SelectionBar";
 import Text from "@/components/common/Text";
 import emptyWebp from "@/assets/images/cheersEmpty/empty.webp";
 import emptyPng from "@/assets/images/cheersEmpty/empty.png";
@@ -13,33 +13,20 @@ import CheerSongList, { TeamName } from "./CheerSongList";
 
 const CheerSongPage = () => {
   const { teamId } = useAuthStore();
-  // const [selectedTeamId, setSelectedTeamId] = useState(teamId);
-  // const [activeTab, setActiveTab] = useState(0); // 0: team, 1: player
   const [selectedTeamId, setSelectedTeamId] = useState(() => {
     return Number(localStorage.getItem("selectedTeamId")) || teamId;
   });
-  const [activeTab, setActiveTab] = useState(() => {
-    return Number(localStorage.getItem("tab")) || 0;
-  });
-
-  // const queryClient = useQueryClient();
-
-  // useEffect(() => {
-  //   queryClient.resetQueries({
-  //     queryKey: ["cheerSongs", selectedTeamId, activeTab],
-  //   });
-  //   queryClient.resetQueries({
-  //     queryKey: ["likedCheerSongs", activeTab],
-  //   });
-  // }, [selectedTeamId, activeTab, queryClient]);
+  // const [activeTab, setActiveTab] = useState(() => {
+  //   return Number(localStorage.getItem("tab")) || 0;
+  // });
 
   useEffect(() => {
     localStorage.setItem("selectedTeamId", String(selectedTeamId));
   }, [selectedTeamId]);
 
-  useEffect(() => {
-    localStorage.setItem("tab", String(activeTab));
-  }, [activeTab]);
+  // useEffect(() => {
+  //   localStorage.setItem("tab", String(activeTab));
+  // }, [activeTab]);
 
   const {
     data: likedCheerSongsData,
@@ -48,12 +35,11 @@ const CheerSongPage = () => {
     isFetchingNextPage: isFetchingNextLikedPage,
     isError: isLikedCheerSongsError,
   } = useInfiniteQuery({
-    queryKey: ["likedCheerSongs", activeTab],
+    queryKey: ["likedCheerSongs"],
     queryFn: async ({ pageParam = 0 }) => {
-      const type = activeTab === 0 ? "team" : "player";
       const response = await FetchLikedCheerSongs({
         pageParam,
-        type,
+        type: "team",
       });
       return response;
     },
@@ -75,13 +61,12 @@ const CheerSongPage = () => {
     isFetchingNextPage: isFetchingNextCheerPage,
     isError: isCheerSongsError,
   } = useInfiniteQuery({
-    queryKey: ["cheerSongs", selectedTeamId, activeTab],
+    queryKey: ["cheerSongs", selectedTeamId],
     queryFn: async ({ pageParam = 0 }) => {
-      const type = activeTab === 0 ? "team" : "player";
       const response = await fetchCheerSongs({
         pageParam,
         teamId: selectedTeamId,
-        type,
+        type: "team",
       });
       return response;
     },
@@ -118,14 +103,14 @@ const CheerSongPage = () => {
         setSelectedTeamId={setSelectedTeamId}
       />
       <div className='line' />
-      <div className='selectContainer'>
+      {/* <div className='selectContainer'>
         <SelectionBar
           labels={["팀 응원가", "선수 응원가"]}
           activeSelect={activeTab}
           onSelectClick={setActiveTab}
           direction='row'
         />
-      </div>
+      </div> */}
 
       {selectedTeamId === 0 && (
         <div>
@@ -206,10 +191,10 @@ const Container = styled.div`
     height: 16px;
     background-color: var(--gray-50);
   }
-  .selectContainer {
+  /* .selectContainer {
     margin: 20px 0;
     padding: 0 20px;
-  }
+  } */
   .trigger {
     height: 70px;
     margin-bottom: 60px;
