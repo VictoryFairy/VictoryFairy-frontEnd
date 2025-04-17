@@ -12,6 +12,7 @@ const Map = lazy(() => import("./Map"));
 
 const ParkingInfoPage = () => {
   const { teamId } = useAuthStore();
+  console.log(teamId);
   const [selectedStadiumId, setSelectedStadiumId] = useState(
     getStadiumId(teamId),
   );
@@ -75,6 +76,7 @@ const ParkingInfoPage = () => {
         setSelectedStadiumId={setSelectedStadiumId}
         selectedStadiumId={selectedStadiumId}
         stadiums={sortedStadiums}
+        myteam={getStadiumId(teamId)}
       />
       <Suspense fallback={<Loading />}>
         <Map

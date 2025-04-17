@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { fetchCheerSongs, FetchLikedCheerSongs } from "@/api/info/cheers.api";
@@ -13,16 +13,14 @@ import CheerSongList, { TeamName } from "./CheerSongList";
 
 const CheerSongPage = () => {
   const { teamId } = useAuthStore();
-  const [selectedTeamId, setSelectedTeamId] = useState(() => {
-    return Number(localStorage.getItem("selectedTeamId")) || teamId;
-  });
+  const [selectedTeamId, setSelectedTeamId] = useState(teamId);
   // const [activeTab, setActiveTab] = useState(() => {
   //   return Number(localStorage.getItem("tab")) || 0;
   // });
 
-  useEffect(() => {
-    localStorage.setItem("selectedTeamId", String(selectedTeamId));
-  }, [selectedTeamId]);
+  // useEffect(() => {
+  //   localStorage.setItem("selectedTeamId", String(selectedTeamId));
+  // }, [selectedTeamId]);
 
   // useEffect(() => {
   //   localStorage.setItem("tab", String(activeTab));

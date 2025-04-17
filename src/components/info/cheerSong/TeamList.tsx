@@ -5,6 +5,7 @@ import { getTeams } from "@/api/info/info.api";
 import { useEffect, useState } from "react";
 import { getFullTemName } from "@/utils/getFullTeamName";
 import Loading from "@/components/common/Loading";
+import { typography } from "@/style/typography";
 
 interface TeamListProps {
   selectedTeamId: number;
@@ -20,7 +21,12 @@ const TeamList = ({ setSelectedTeamId, selectedTeamId }: TeamListProps) => {
     queryKey: ["teams"],
     queryFn: getTeams,
     staleTime: Infinity,
-    select: (teams) => getFullTemName(teams),
+    select: (teams: Team[]) => {
+      const fullNameTeams = getFullTemName(teams);
+      return fullNameTeams.sort((a, b) =>
+        a.name.localeCompare(b.name, "ko-KR"),
+      );
+    },
   });
   const [sortedTeams, setSortedTeams] = useState<Team[]>([]);
 
@@ -89,6 +95,10 @@ const FixedTeamButton = styled.button<{ $active: boolean }>`
   font-size: 14px;
   white-space: nowrap;
   margin-left: 20px;
+  width: 90px;
+  height: 32px;
+  ${typography.subtitle_01}
+  font-weight: 500;
 `;
 
 const TeamLists = styled.div`
@@ -113,6 +123,10 @@ const TeamButton = styled.button<{ $active: boolean }>`
   cursor: pointer;
   font-size: 14px;
   white-space: nowrap;
+  width: 90px;
+  height: 32px;
+  ${typography.subtitle_01}
+  font-weight: 500;
 
   &:last-child {
     margin-right: 0;

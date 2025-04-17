@@ -7,12 +7,14 @@ interface StadiumListProps {
   selectedStadiumId: number;
   setSelectedStadiumId: (id: number) => void;
   stadiums: Stadium[];
+  myteam: number;
 }
 
 const StadiumList = ({
   setSelectedStadiumId,
   selectedStadiumId,
   stadiums,
+  myteam,
 }: StadiumListProps) => {
   const listRef = useRef<HTMLDivElement>(null);
   const scrollPosition = useRef<number>(0);
@@ -30,10 +32,16 @@ const StadiumList = ({
     }
   }, [selectedStadiumId]);
 
+  const sortedStadiums = [...stadiums].sort((a, b) => {
+    if (a.id === myteam) return -1;
+    if (b.id === myteam) return 1;
+    return a.fullName.localeCompare(b.fullName, "ko-KR");
+  });
+
   return (
     <TeamListContainer>
       <TeamList ref={listRef}>
-        {stadiums.map((stadium) => (
+        {sortedStadiums.map((stadium) => (
           <TeamButton
             type='button'
             key={stadium.id}
@@ -75,6 +83,8 @@ const TeamButton = styled.button<{ $active: boolean }>`
   cursor: pointer;
   ${typography.subtitle_01}
   white-space: nowrap;
+  height: 32px;
+  font-weight: 500;
 
   &:last-child {
     margin-right: 0;
