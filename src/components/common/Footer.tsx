@@ -74,6 +74,7 @@ const IconWrapper = styled.div<IconProps>`
     $isActive
       ? css`
           ${typography.title_01}
+          font-weight: 700;
           color: ${({ theme }) => theme.colors.primary};
           svg {
             stroke: ${({ theme }) => theme.colors.primary};
@@ -82,7 +83,8 @@ const IconWrapper = styled.div<IconProps>`
         `
       : css`
           ${typography.subtitle_02}
-          color:var(--gray-400);
+          font-weight: 500;
+          color: var(--gray-400);
           svg {
             stroke: var(--gray-400);
             fill: var(--gray-400);
