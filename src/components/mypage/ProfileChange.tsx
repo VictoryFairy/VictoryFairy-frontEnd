@@ -2,7 +2,10 @@ import { ChangeEvent, useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { profileChange } from "@/api/mypage/mypage.api";
 import styled from "styled-components";
-import { uploadProfileImage } from "@/api/auth/auth.api";
+import {
+  checkNicknameAvailability,
+  uploadProfileImage,
+} from "@/api/auth/auth.api";
 import { usePopup } from "@/hooks/usePopup";
 import { useUserStore } from "@/store/userInfo";
 import { useMutation } from "@tanstack/react-query";
@@ -13,7 +16,7 @@ import Icon from "../common/Icon";
 const ProfileChange = () => {
   const [image, setImage] = useState<string | null>(null);
   const [name, setName] = useState<string>("");
-  const { renderPopup, openPopup } = usePopup();
+  const { renderPopup, openPopup, closePopup } = usePopup();
   const { updateNickname, updateImage } = useUserStore();
   const fileInput = useRef<HTMLInputElement | null>(null);
   const onChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,16 +77,34 @@ const ProfileChange = () => {
   };
 
   const handleClickSave = () => {
-    openPopup({
-      title: "프로필 설정 완료",
-      message: "프로필 설정이 완료되었습니다.",
-      buttons: [
-        {
-          label: "확인",
-          variant: "confirm",
-          onClick: handleBtnClick,
-        },
-      ],
+    checkNicknameAvailability({ nickname: name }).then((isExist: boolean) => {
+      if (isExist) {
+        openPopup({
+          title: "닉네임 중복",
+          message: "이미 사용중인 닉네임입니다.",
+          buttons: [
+            {
+              label: "확인",
+              variant: "confirm",
+              onClick: () => {
+                closePopup();
+              },
+            },
+          ],
+        });
+      } else {
+        openPopup({
+          title: "프로필 설정 완료",
+          message: "프로필 설정이 완료되었습니다.",
+          buttons: [
+            {
+              label: "확인",
+              variant: "confirm",
+              onClick: handleBtnClick,
+            },
+          ],
+        });
+      }
     });
   };
 

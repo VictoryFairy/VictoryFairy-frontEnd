@@ -225,6 +225,15 @@ const ProfileButtons = () => {
           <Icon icon='IcArrowRight' />
         </ProfileWrapper>
       )}
+      <ProfileWrapper
+        role='button'
+        tabIndex={0}
+        onClick={() => navigate("/mypage/changePassword")}>
+        <Text variant='body_02' color='var(--primary-color)'>
+          비밀번호 변경
+        </Text>
+        <Icon icon='IcArrowRight' />
+      </ProfileWrapper>
       <ProfileLastWrapper
         onClick={() => {
           window.location.href =

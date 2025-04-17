@@ -30,6 +30,7 @@ const RegisterForm = lazy(() => import("../pages/register/RegisterForm"));
 const DetailRate = lazy(() => import("../pages/main/DetailRate"));
 const NotFound = lazy(() => import("../pages/NotFound"));
 const OAuthCallback = lazy(() => import("../components/common/OAuthCallback"));
+const ChangePassword = lazy(() => import("../pages/ChangePassword"));
 
 const MiddelWrapper = styled.div`
   ${typography.headline}
@@ -403,6 +404,22 @@ const Router = createBrowserRouter([
   {
     path: "/oauth/callback",
     element: <OAuthCallback />,
+  },
+  {
+    path: "/mypage/changePassword",
+    element: (
+      <Layout left={<BackButton />} center='비밀번호 변경' footer={false} />
+    ),
+    children: [
+      {
+        path: "/mypage/changePassword",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ChangePassword />
+          </Suspense>
+        ),
+      },
+    ],
   },
 ]);
 

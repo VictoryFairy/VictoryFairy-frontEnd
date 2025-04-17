@@ -9,7 +9,7 @@ export const typography = {
     letter-spacing: -0.4px;
   `,
   headline: css`
-    font-weight: bold;
+    font-weight: 700;
     font-size: 20px;
     line-height: 28px;
     letter-spacing: -0.4px;

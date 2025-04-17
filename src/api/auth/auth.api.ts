@@ -72,7 +72,7 @@ interface NicknameCheckRequest {
   nickname: string;
 }
 
-interface NicknameCheckResponse {
+export interface NicknameCheckResponse {
   isExist: boolean;
 }
 
