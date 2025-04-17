@@ -291,9 +291,9 @@ const Home = () => {
             <SocialButton onClick={() => handleClickSocialLogin("kakao")}>
               <img src='/kakao.png' alt='카카오 로그인' />
             </SocialButton>
-            <SocialButton onClick={() => handleClickSocialLogin("apple")}>
+            {/* <SocialButton onClick={() => handleClickSocialLogin("apple")}>
               <img src='/apple.png' alt='애플 로그인' />
-            </SocialButton>
+            </SocialButton> */}
             <SocialButton onClick={() => handleClickSocialLogin("google")}>
               <img src='/google.png' alt='구글 로그인' />
             </SocialButton>
