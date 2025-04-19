@@ -208,3 +208,38 @@ export const patchProfile = async (data: { field: string; value: number }) => {
     throw error;
   }
 };
+
+interface EmailDuplicateResponse {
+  isExist: boolean;
+  initialSignUpType: "social" | "email";
+}
+
+export const checkEmailDuplicate = async (email: string) => {
+  try {
+    const response = await axiosInstance.post<EmailDuplicateResponse>(
+      "/users/existed-email",
+      {
+        email,
+      },
+    );
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        switch (error.response.status) {
+          case 400:
+            throw new Error("유효하지 않은 이메일 형식입니다.");
+          case 409:
+            throw new Error("이미 사용중인 이메일입니다.");
+          case 500:
+            throw new Error(
+              "서버 오류가 발생했습니다. 나중에 다시 시도해 주세요.",
+            );
+          default:
+            throw new Error("알 수 없는 오류가 발생했습니다.");
+        }
+      }
+    }
+    throw new Error("요청 중 문제가 발생했습니다. 다시 시도해 주세요.");
+  }
+};

@@ -3,7 +3,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import styled from "styled-components";
 import { UserInfo } from "@/types/User";
-import { requestEmailVerificationCode } from "@/api/auth/auth.api";
+import {
+  checkEmailDuplicate,
+  requestEmailVerificationCode,
+} from "@/api/auth/auth.api";
 import TitleSection from "../common/TitleSection";
 import InputField from "../common/InputField";
 import Button from "../common/Button";
@@ -36,6 +39,16 @@ const EmailValid = ({ setstep, handleSetUserInfo }: EmailValidProps) => {
 
   const onSubmit = async (data: FormData) => {
     try {
+      const res = await checkEmailDuplicate(data.email);
+      if (res.isExist) {
+        setError("email", {
+          type: "manual",
+          message: `${
+            res.initialSignUpType === "social" ? "소셜 로그인" : "이메일 로그인"
+          }으로 가입하신 계정입니다`,
+        });
+        return;
+      }
       await requestEmailVerificationCode({ email: data.email });
       handleSetUserInfo({ email: data.email });
       setstep(2);
