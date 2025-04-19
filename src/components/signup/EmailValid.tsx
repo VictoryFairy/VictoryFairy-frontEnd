@@ -14,12 +14,17 @@ import Button from "../common/Button";
 interface EmailValidProps {
   setstep: (step: number) => void;
   handleSetUserInfo: (userInfo: Partial<UserInfo>) => void;
+  changePassword: boolean;
 }
 const schema = z.object({
   email: z.string().email("유효하지 않은 이메일 주소입니다."),
 });
 
-const EmailValid = ({ setstep, handleSetUserInfo }: EmailValidProps) => {
+const EmailValid = ({
+  setstep,
+  handleSetUserInfo,
+  changePassword = false,
+}: EmailValidProps) => {
   const {
     register,
     watch,
@@ -47,8 +52,16 @@ const EmailValid = ({ setstep, handleSetUserInfo }: EmailValidProps) => {
             res.initialSignUpType === "social" ? "소셜 로그인" : "이메일 로그인"
           }으로 가입하신 계정입니다`,
         });
+        if (changePassword && res.initialSignUpType === "social") {
+          setError("email", {
+            type: "manual",
+            message: "소셜 로그인 계정은 비밀번호 변경이 불가능합니다.",
+          });
+          return;
+        }
         return;
       }
+
       await requestEmailVerificationCode({ email: data.email });
       handleSetUserInfo({ email: data.email });
       setstep(2);

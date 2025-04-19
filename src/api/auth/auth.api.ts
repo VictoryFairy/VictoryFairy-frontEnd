@@ -149,6 +149,8 @@ export const changePassword = async (data: ChangePasswordRequest) => {
         switch (error.response.status) {
           case 400:
             throw new Error("해당 이메일로 가입된 계정이 없습니다.");
+          case 403:
+            throw new Error("소셜 로그인 계정은 비밀번호 변경이 불가능합니다.");
           case 500:
             throw new Error(
               "서버 오류가 발생했습니다. 나중에 다시 시도해 주세요.",
