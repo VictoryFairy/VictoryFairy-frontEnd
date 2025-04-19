@@ -88,7 +88,7 @@ const EmailValid = ({
     <Container>
       <TitleSection
         title='승리요정님의 이메일을 알려주세요'
-        subtitle='비밀번호 변경에 필요한 인증번호를 이메일로 보내드릴게요'
+        subtitle={`${changePassword ? "비밀번호 변경" : "회원가입"}에 필요한 인증번호를 이메일로 보내드릴게요`}
       />
       <Form onSubmit={handleSubmit(onSubmit)}>
         <InputWrapper>
