@@ -123,7 +123,7 @@ const TeamButton = styled.button<{ $active: boolean }>`
   cursor: pointer;
   font-size: 14px;
   white-space: nowrap;
-  width: 90px;
+  min-width: 90px;
   height: 32px;
   ${typography.subtitle_01}
   font-weight: 500;
