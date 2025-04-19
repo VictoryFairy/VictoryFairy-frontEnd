@@ -46,19 +46,24 @@ const EmailValid = ({
     try {
       const res = await checkEmailDuplicate(data.email);
       if (res.isExist) {
-        setError("email", {
-          type: "manual",
-          message: `${
-            res.initialSignUpType === "social" ? "소셜 로그인" : "이메일 로그인"
-          }으로 가입하신 계정입니다`,
-        });
-        if (changePassword && res.initialSignUpType === "social") {
+        const isSocialLogin = res.initialSignUpType === "social";
+
+        if (changePassword && isSocialLogin) {
           setError("email", {
             type: "manual",
             message: "소셜 로그인 계정은 비밀번호 변경이 불가능합니다.",
           });
           return;
         }
+
+        const errorMessage = isSocialLogin
+          ? "소셜 로그인으로 가입하신 계정입니다"
+          : "이메일 로그인으로 가입하신 계정입니다";
+
+        setError("email", {
+          type: "manual",
+          message: errorMessage,
+        });
         return;
       }
 
