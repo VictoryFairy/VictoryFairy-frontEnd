@@ -48,24 +48,29 @@ const EmailValid = ({
       if (res.isExist) {
         const isSocialLogin = res.initialSignUpType === "social";
         const errorMessages = {
-          changePassword: {
-            social: "소셜 로그인 계정은 비밀번호 변경이 불가능합니다.",
-          },
+          changePassword:
+            "소셜 로그인으로 가입하신 계정은 비밀번호 변경이 불가능합니다.",
           signup: {
             social: "소셜 로그인으로 가입하신 계정입니다",
             email: "이메일 로그인으로 가입하신 계정입니다",
           },
         };
 
-        const errorMessage = changePassword
-          ? errorMessages.changePassword.social
-          : errorMessages.signup[isSocialLogin ? "social" : "email"];
+        if (changePassword && isSocialLogin) {
+          setError("email", {
+            type: "manual",
+            message: errorMessages.changePassword,
+          });
+          return;
+        }
 
-        setError("email", {
-          type: "manual",
-          message: errorMessage,
-        });
-        return;
+        if (!changePassword) {
+          setError("email", {
+            type: "manual",
+            message: errorMessages.signup[isSocialLogin ? "social" : "email"],
+          });
+          return;
+        }
       }
 
       await requestEmailVerificationCode({ email: data.email });
