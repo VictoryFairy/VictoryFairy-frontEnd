@@ -137,7 +137,7 @@ const Rate = () => {
       }
 
       if (largestBlob) {
-        saveAs(largestBlob, "rate-image.png");
+        saveAs(largestBlob, "승리요정.png");
       } else {
         console.error("적절한 크기의 이미지가 없어 저장되지 않았습니다.");
         cancelPopup();
