@@ -182,7 +182,7 @@ const Rate = () => {
         const blobUrl = URL.createObjectURL(largestBlob);
         const link = document.createElement("a");
         link.href = blobUrl;
-        link.download = "rate-image.png";
+        link.download = "승요.png";
 
         // iOS에서는 클릭 이벤트가 사용자 액션과 연결되지 않으면 무시되므로 DOM에 추가
         document.body.appendChild(link);
