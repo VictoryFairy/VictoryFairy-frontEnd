@@ -244,12 +244,7 @@ const Router = createBrowserRouter([
   },
   {
     path: "/mypage/profile",
-    element: (
-      <Layout
-        left={<BackButton />}
-        center={<MiddelWrapper>프로필 설정</MiddelWrapper>}
-      />
-    ),
+    element: <Layout left={<BackButton />} center='프로필 설정' />,
     children: [
       {
         path: "/mypage/profile",
@@ -263,12 +258,7 @@ const Router = createBrowserRouter([
   },
   {
     path: "/mypage/team",
-    element: (
-      <Layout
-        left={<BackButton />}
-        center={<MiddelWrapper>응원팀 변경</MiddelWrapper>}
-      />
-    ),
+    element: <Layout left={<BackButton />} center='응원팀 변경' />,
     children: [
       {
         path: "/mypage/team",
@@ -282,12 +272,7 @@ const Router = createBrowserRouter([
   },
   {
     path: "/mypage/login",
-    element: (
-      <Layout
-        left={<BackButton />}
-        center={<MiddelWrapper>간편 로그인 설정</MiddelWrapper>}
-      />
-    ),
+    element: <Layout left={<BackButton />} center='간편 로그인 설정' />,
     children: [
       {
         path: "/mypage/login",
@@ -304,7 +289,8 @@ const Router = createBrowserRouter([
     element: (
       <Layout
         left={<BackButton />}
-        center={<MiddelWrapper>회원 탈퇴</MiddelWrapper>}
+        center='회원 탈퇴
+'
         footer={false}
       />
     ),
@@ -321,13 +307,7 @@ const Router = createBrowserRouter([
   },
   {
     path: "/mypage/withDraw2",
-    element: (
-      <Layout
-        left={<BackButton />}
-        center={<MiddelWrapper>회원 탈퇴</MiddelWrapper>}
-        footer={false}
-      />
-    ),
+    element: <Layout left={<BackButton />} center='회원 탈퇴' footer={false} />,
     children: [
       {
         path: "/mypage/withDraw2",
@@ -369,13 +349,7 @@ const Router = createBrowserRouter([
   },
   {
     path: "/DetailRate",
-    element: (
-      <Layout
-        center={<MiddelWrapper>내 승률</MiddelWrapper>}
-        left={<BackButton />}
-        footer={false}
-      />
-    ),
+    element: <Layout center='내 승률' left={<BackButton />} footer={false} />,
     children: [
       {
         path: "/DetailRate",

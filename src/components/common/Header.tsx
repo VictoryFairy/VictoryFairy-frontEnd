@@ -13,7 +13,7 @@ const Header = ({ left, center, right }: HeaderProps) => {
       <HeaderSection>{left}</HeaderSection>
       <HeaderSection>
         {/* 직관 기록 페이지에서 사용, 추후 리팩터링 필요 */}
-        {center === "직관 기록" ? <CenterText>{center}</CenterText> : center}
+        <CenterText>{center}</CenterText>
       </HeaderSection>
       <HeaderSection>{right}</HeaderSection>
     </HeaderContainer>
