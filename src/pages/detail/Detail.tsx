@@ -154,15 +154,18 @@ const Detail = () => {
           <Icon icon='IcArrowLeft' onClick={() => navigate(-1)} />
         </div>
         <div>
-          <Text variant='headline'>{`${registeredGame.game.date} ${registeredGame.game.homeTeam.name} vs ${registeredGame.game.awayTeam.name}`}</Text>
+          <Text variant='headline'>{`${registeredGame.game.date.replace(
+            /-/g,
+            ".",
+          )} ${registeredGame.game.homeTeam.name} vs ${registeredGame.game.awayTeam.name}`}</Text>
         </div>
         <div>
           <DropDown onEdit={handleEdit} onDelete={handleDelete} />
         </div>
       </Header>
       {/* 경기 결과 표시 */}
+
       <GameListItem
-        className='match'
         result={$isEditing ? getResult() : registeredGame.status} // 서버 API 수정 후, registeredGame.status로 변경
         isWinningTeam={registeredGame.game.winningTeam}
         homeTeam={registeredGame.game.homeTeam}
@@ -174,6 +177,7 @@ const Detail = () => {
         status={registeredGame.game.status}
       />
       {/* 직관 기록 수정 폼 */}
+      <hr className='divider' />
       <DetailContainer onSubmit={handleSubmit(onSubmit)}>
         <input
           className='img-input'
@@ -261,6 +265,18 @@ const Layout = styled.div<{ $isEditing: boolean }>`
   margin: auto;
   position: relative;
   padding: 20px;
+
+  .match {
+    border: none;
+  }
+
+  .divider {
+    height: 16px;
+    margin: 0px -20px;
+    background-color: #efefef;
+    border: none;
+    margin-bottom: 20px;
+  }
 
   label {
     margin-bottom: 0;
