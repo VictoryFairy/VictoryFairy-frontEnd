@@ -45,37 +45,37 @@ export const typography = {
     letter-spacing: -0.4px;
   `,
   body_02: css`
-    font-weight: regular;
+    font-weight: normal;
     font-size: 16px;
     line-height: 20px;
     letter-spacing: -0.4px;
   `,
   body_long_02: css`
-    font-weight: regular;
+    font-weight: normal;
     font-size: 16px;
     line-height: 24px;
     letter-spacing: -0.4px;
   `,
   body_01: css`
-    font-weight: regular;
+    font-weight: normal;
     font-size: 14px;
     line-height: 18px;
     letter-spacing: -0.4px;
   `,
   body_long_01: css`
-    font-weight: regular;
+    font-weight: normal;
     font-size: 14px;
     line-height: 22px;
     letter-spacing: -0.4px;
   `,
   caption: css`
-    font-weight: regular;
+    font-weight: normal;
     font-size: 12px;
     line-height: 16px;
     letter-spacing: -0.4px;
   `,
   caption_long: css`
-    font-weight: regular;
+    font-weight: normal;
     font-size: 12px;
     line-height: 20px;
     letter-spacing: -0.4px;
