@@ -2,10 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 import { Team } from "@/types/Team";
 import { getTeams } from "@/api/info/info.api";
-import { useEffect, useState } from "react";
 import { getFullTemName } from "@/utils/getFullTeamName";
 import Loading from "@/components/common/Loading";
 import { typography } from "@/style/typography";
+import { useEffect, useMemo } from "react";
+import { useUserStore } from "@/store/userInfo";
 
 interface TeamListProps {
   selectedTeamId: number;
@@ -13,6 +14,8 @@ interface TeamListProps {
 }
 
 const TeamList = ({ setSelectedTeamId, selectedTeamId }: TeamListProps) => {
+  const supportTeam = useUserStore((state) => state.supportTeam); // 내 응원팀 이름
+
   const {
     data: teamName,
     isLoading,
@@ -22,31 +25,32 @@ const TeamList = ({ setSelectedTeamId, selectedTeamId }: TeamListProps) => {
     queryFn: getTeams,
     staleTime: Infinity,
     select: (teams: Team[]) => {
-      const fullNameTeams = getFullTemName(teams);
-      return fullNameTeams.sort((a, b) =>
-        a.name.localeCompare(b.name, "ko-KR"),
-      );
+      return getFullTemName(teams); // 전체 이름 변환
     },
   });
-  const [sortedTeams, setSortedTeams] = useState<Team[]>([]);
+  const sortedTeams = useMemo(() => {
+    if (!teamName) return [];
 
-  useEffect(() => {
-    if (teamName && sortedTeams.length === 0) {
-      const sorted = [...teamName].sort((a, b) => {
-        if (a.id === selectedTeamId) return -1;
-        if (b.id === selectedTeamId) return 1;
-        return 0;
-      });
-      setSortedTeams(sorted);
-    }
-  }, [teamName, setSortedTeams, selectedTeamId]);
+    const myTeam = teamName.find(
+      (team) => team.name.replace(/\s/g, "") === supportTeam, // 공백 제거 비교
+    );
+
+    const rest = teamName.filter(
+      (team) => team.name.replace(/\s/g, "") !== supportTeam && team.id !== 0,
+    );
+
+    const sortedRest = [...rest].sort((a, b) =>
+      a.name.localeCompare(b.name, "ko-KR"),
+    );
+
+    return myTeam ? [myTeam, ...sortedRest] : sortedRest;
+  }, [teamName, supportTeam]);
 
   if (isLoading) return <Loading />;
   if (isError) throw new Error("서버문제로 인한 에러.");
   if (!teamName) return null;
 
   const myCheerCategory = { id: 0, name: "My 응원가" };
-  // const cheersCat = [myCheerCategory, ...data];
 
   const handleTeamClick = (team: Team) => {
     setSelectedTeamId(team.id);

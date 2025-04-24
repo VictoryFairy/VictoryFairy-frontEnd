@@ -16,6 +16,7 @@ import Icon from "../common/Icon";
 import RankTextComp from "./RankTextComp";
 import MyRankComp from "./MyRankComp";
 import RankBar from "./RankBar";
+import { useUserStore } from "@/store/userInfo";
 
 const RankingTab = () => {
   const [teamId, setTeamId] = useState<number>(0);
@@ -27,6 +28,7 @@ const RankingTab = () => {
   const userMe = useMemo(() => {
     return withUser?.find((my) => my.userId === user?.userId);
   }, [withUser, user]);
+  const supportTeam = useUserStore((state) => state.supportTeam);
 
   const firstRank = top?.find((element) => element.rank === 1);
   const secondRank = top?.find((element) => element.rank === 2);
@@ -42,6 +44,20 @@ const RankingTab = () => {
       setTeamId(selectedTeam.id);
     }
   };
+
+  const sortedTeams = useMemo(() => {
+    return [
+      ...teams.filter((team) => team.name === "전체"),
+      ...teams.filter((team) => team.name.replace(/\s/g, "") === supportTeam),
+      ...teams
+        .filter(
+          (team) =>
+            team.name !== "전체" &&
+            team.name.replace(/\s/g, "") !== supportTeam,
+        )
+        .sort((a, b) => a.name.localeCompare(b.name, "ko-KR")),
+    ];
+  }, [teams, supportTeam]);
 
   function textChange(text: string) {
     if (text?.length > 4) {
@@ -87,7 +103,7 @@ const RankingTab = () => {
   return (
     <Container>
       <TeamTabWrapper>
-        {teams.map((element, index) => {
+        {sortedTeams.map((element, index) => {
           return (
             <Button
               style={{
