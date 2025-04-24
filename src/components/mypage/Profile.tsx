@@ -41,7 +41,6 @@ const Profile = () => {
   const { data } = useQuery<MypageUserInfo>({
     queryKey: ["getMemberInfo"],
     queryFn: getMemberInfo,
-    refetchOnWindowFocus: true,
   });
   // const { data, refetch: refetchMemberInfo } = useQuery<MypageUserInfo>({
   //   queryKey: ["getMemberInfo"],
