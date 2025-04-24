@@ -88,6 +88,7 @@ const RegisterForm = () => {
         date={match.date}
         stadium={match.stadium}
       />
+      <hr className='divider' />
       <RegisterFormFields
         onSubmit={handleSubmit(onSubmit)}
         watch={watch}
@@ -104,6 +105,16 @@ const RegisterForm = () => {
 
 const RegisterFormContainer = styled.div`
   padding-bottom: 80px;
+  .match {
+    border: none;
+  }
+
+  .divider {
+    height: 16px;
+    margin: 0px -20px;
+    background-color: #efefef;
+    border: none;
+  }
 `;
 
 export default RegisterForm;
