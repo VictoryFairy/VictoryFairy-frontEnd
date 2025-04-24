@@ -16,6 +16,7 @@ import Button from "@/components/common/Button";
 import { uploadImg } from "@/utils/uploadImg"; // Import the image upload utility
 import { usePopup } from "@/hooks/usePopup"; // usePopup 사용
 import CheerTeamSelect from "@/components/register/CheerTeamSelect";
+import { typography } from "@/style/typography";
 import TextAreaField from "../../components/common/TextAreaField";
 import InputField from "../../components/common/InputField";
 
@@ -147,7 +148,7 @@ const Detail = () => {
   };
 
   return (
-    <Layout>
+    <Layout $isEditing={$isEditing}>
       <Header>
         <div>
           <Icon icon='IcArrowLeft' onClick={() => navigate(-1)} />
@@ -159,6 +160,7 @@ const Detail = () => {
           <DropDown onEdit={handleEdit} onDelete={handleDelete} />
         </div>
       </Header>
+      {/* 경기 결과 표시 */}
       <GameListItem
         className='match'
         result={$isEditing ? getResult() : registeredGame.status} // 서버 API 수정 후, registeredGame.status로 변경
@@ -171,6 +173,7 @@ const Detail = () => {
         stadium={registeredGame.game.stadium}
         status={registeredGame.game.status}
       />
+      {/* 직관 기록 수정 폼 */}
       <DetailContainer onSubmit={handleSubmit(onSubmit)}>
         <input
           className='img-input'
@@ -180,10 +183,12 @@ const Detail = () => {
           ref={inputImgRef}
           onChange={handleImageChange}
         />
+        {/* 직관 사진 업로드 컨테이너 */}
         <ImgUploadContainer
           $isEditing={$isEditing}
           $hasImage={!!previewImage}
           onClick={handleClickImageUpload}>
+          {/* 직관 사진 미리보기 */}
           {previewImage ? (
             <PreviewImage src={previewImage} alt='직관 사진' />
           ) : (
@@ -193,6 +198,7 @@ const Detail = () => {
             </ImgWrraper>
           )}
         </ImgUploadContainer>
+        {/* 응원팀 선택 컴포넌트 */}
         {$isEditing ? (
           <CheerTeamSelect
             homeTeam={registeredGame.game.homeTeam}
@@ -205,8 +211,9 @@ const Detail = () => {
         ) : (
           <InputField
             name='cheeringTeamName'
-            label='응원팀'
+            label='응원팀*'
             type='text'
+            className='cheering-team-name'
             register={register}
             watch={watch}
             setValue={setValue}
@@ -214,6 +221,7 @@ const Detail = () => {
             clearable={false}
           />
         )}
+        {/* 좌석 입력 필드 */}
         <InputField
           name='seat'
           label='좌석'
@@ -224,6 +232,7 @@ const Detail = () => {
           disabled={!$isEditing}
           clearable={false}
         />
+        {/* 메모 입력 필드 */}
         <TextAreaField
           name='review'
           label='메모'
@@ -232,6 +241,7 @@ const Detail = () => {
           setValue={setValue}
           disabled={!$isEditing}
         />
+        {/* 수정 완료 버튼 */}
         {$isEditing && (
           <Button size='big' type='submit'>
             <Text variant='title_02'>수정완료</Text>
@@ -243,7 +253,7 @@ const Detail = () => {
   );
 };
 
-const Layout = styled.div`
+const Layout = styled.div<{ $isEditing: boolean }>`
   display: flex;
   flex-direction: column;
   max-width: 480px;
@@ -251,6 +261,43 @@ const Layout = styled.div`
   margin: auto;
   position: relative;
   padding: 20px;
+
+  label {
+    margin-bottom: 0;
+    color: var(--gray-700);
+    ${typography.caption}
+  }
+
+  input {
+    ${({ $isEditing }) =>
+      !$isEditing &&
+      `
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      padding: 12px 8px 8px;
+      gap: 8px;
+      box-shadow: none;
+      background: #efefef;
+      border-radius: 4px 4px 0px 0px;
+    `}
+  }
+
+  textarea {
+    ${({ $isEditing }) =>
+      !$isEditing &&
+      `
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      padding: 12px 8px 8px;
+      gap: 8px;
+      border: none;
+      background: #efefef;
+      border-radius: 4px 4px 0px 0px;
+      ${typography.body_long_02}
+    `}
+  }
 `;
 
 const Header = styled.div`
