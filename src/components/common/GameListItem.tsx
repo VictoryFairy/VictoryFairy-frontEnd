@@ -44,6 +44,7 @@ const GameListItem = ({
 
   return (
     <GameListItemContainer
+      className='match'
       onClick={() => {
         if (onClick) onClick();
       }}>
