@@ -67,7 +67,7 @@ const CheerTeamSelect = ({
   return (
     <CheerTeamSelectContainer ref={dropdownRef}>
       <Text color='#545763' className='label' variant='caption'>
-        응원팀
+        응원팀*
       </Text>
       <div
         role='button'
