@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import Text from "../common/Text";
-import Button from "../common/Button";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { withdrawal } from "@/api/mypage/mypage.api";
 import { useNavigate } from "react-router-dom";
 import { usePopup } from "@/hooks/usePopup";
+import Button from "../common/Button";
+import Text from "../common/Text";
 // import { sendGaEvent } from "@/utils/sendGaEvent";
 
 declare global {
@@ -14,7 +14,7 @@ declare global {
   }
 }
 
-function WithDraw2() {
+const WithDraw2 = () => {
   const reasons = [
     "기록을 삭제하고 싶어서",
     "더 이상 야구를 좋아하지 않아서",
@@ -38,7 +38,7 @@ function WithDraw2() {
   const navigate = useNavigate();
 
   const handleBtnClick = () => {
-    navigate("/mypage");
+    navigate("/");
   };
   const handleClickSave = () => {
     openPopup({
@@ -66,7 +66,7 @@ function WithDraw2() {
           window.gtag("event", "탈퇴_사유", {
             event_category: "탈퇴 사유",
             event_label: reason,
-            reason: reason,
+            reason,
           });
         });
       } else {
@@ -128,7 +128,7 @@ function WithDraw2() {
       {renderPopup()}
     </Container>
   );
-}
+};
 
 export default WithDraw2;
 

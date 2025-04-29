@@ -5,16 +5,16 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteLikeCheerSong, postLikeCheerSong } from "@/api/info/cheers.api";
 
 const teamColors = {
-  롯데: "var(--lotte-giants-navy)",
-  삼성: "var(--samsung-lions-blue)",
-  LG: "var(--lg-twins-red)",
-  두산: "var(--doosan-bears-navy)",
-  SSG: "var(--ssg-landers-red)",
-  KT: "var(--kt-wiz-black)",
-  한화: "var(--hanwha-eagles-orange)",
-  NC: "var(--nc-dinos-blue)",
-  KIA: "var(--kia-tigers-red)",
-  키움: "var(--kiwoom-heroes-pink)",
+  "롯데 자이언츠": "var(--lotte-giants-navy)",
+  "삼성 라이온즈\n": "var(--samsung-lions-blue)",
+  "LG 트윈스": "var(--lg-twins-red)",
+  "두산 베어스": "var(--doosan-bears-navy)",
+  "SSG 렌더스": "var(--ssg-landers-red)",
+  "KT 위즈": "var(--kt-wiz-black)",
+  "한화 이글스": "var(--hanwha-eagles-orange)",
+  "NC 다이노스": "var(--nc-dinos-blue)",
+  "KIA 타이거즈": "var(--kia-tigers-red)",
+  "키움 히어로즈": "var(--kiwoom-heroes-pink)",
 };
 export type TeamName = keyof typeof teamColors;
 
@@ -140,10 +140,11 @@ const CheerSongList = ({
       setRecentSearches(updatedSearches);
     }
   };
+  console.log(teamName);
   return (
     <Container>
       <CheersInfo>
-        <TeamLogo teamname={teamName}>{teamName}</TeamLogo>
+        <TeamLogo teamname={teamName}>{teamName.split(" ")[0]}</TeamLogo>
         <InfoWrapper>
           <CheersName onClick={handleNavigate}>{title}</CheersName>
           <Description>
