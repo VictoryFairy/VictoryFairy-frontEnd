@@ -172,7 +172,6 @@ const RankingTab = () => {
             <div>3</div>
           </RankWrapper>
         </RankProfileWrapper>
-        <RankBar data={top} tab={teamId} />
       </RankTopWrapper>
 
       <RankTextWrapper>
@@ -333,6 +332,8 @@ const RankWrapper = styled.div`
     margin-top: 7px;
   }
 `;
+
+const RankItem = styled.div``;
 
 const FirstRankWrapper = styled.div<{ $teamId: number }>`
   position: relative;

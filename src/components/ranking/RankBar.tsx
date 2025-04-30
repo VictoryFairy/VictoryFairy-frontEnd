@@ -1,3 +1,5 @@
+// RankBar.tsx (업데이트: 정규화 개선, 점수 차이 확대, 동점일 경우 모두 최대 높이)
+
 import { useState, useEffect } from "react";
 import { Bar } from "react-chartjs-2";
 import {
@@ -30,13 +32,14 @@ const teamColor = [
 const fadeIn = keyframes`
   from {
     opacity: 0;
-    transform: translateY(20px); /* Slide in from below */
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
   }
 `;
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -56,9 +59,10 @@ interface RankData {
 interface RankBarProps {
   data: RankData[] | null;
   tab: number;
+  rank: 1 | 2 | 3;
 }
 
-const RankBar = ({ data, tab }: RankBarProps) => {
+const RankBar = ({ data, tab, rank }: RankBarProps) => {
   const [labels, setLabels] = useState<string[]>([]);
   const [datas, setDatas] = useState<number[]>([]);
   const teamId = useAuthStore((state) => state.teamId);
@@ -71,42 +75,57 @@ const RankBar = ({ data, tab }: RankBarProps) => {
       setPropTab(tab);
     }
 
-    const sortedData = [
-      { point: "Point 0", score: 0 },
-      { point: "Point 0", score: 0 },
-      { point: "Point 0", score: 0 },
+    const baseData = [
+      { rank: 1, label: "Point 0", height: 0 },
+      { rank: 2, label: "Point 0", height: 0 },
+      { rank: 3, label: "Point 0", height: 0 },
     ];
 
     data?.forEach((item) => {
-      if (item.rank === 2) {
-        sortedData[0] = {
-          point: `Point ${item.score}`,
-          score: item.score - 600,
-        };
-      } else if (item.rank === 1) {
-        sortedData[1] = {
-          point: `Point ${item.score}`,
-          score: item.score - 500,
-        };
-      } else if (item.rank === 3) {
-        sortedData[2] = {
-          point: `Point ${item.score}`,
-          score: item.score - 700,
-        };
+      const target = baseData.find((b) => b.rank === item.rank);
+      if (target) {
+        target.label = `Point ${item.score}`;
+        target.height = item.score;
       }
     });
 
-    setLabels(sortedData.map((item) => item.point));
-    setDatas(sortedData.map((item) => item.score));
-  }, [data, tab, teamId]);
+    const scores = baseData.map((b) => b.height);
+    const isAllZero = scores.every((s) => s === 0);
+
+    const normalizedData = baseData.map((b) => {
+      if (isAllZero || b.height === 0) {
+        return { ...b, height: 0 };
+      }
+
+      // ✅ 등수 기준으로 고정 높이 부여
+      const heightByRank = { 1: 100, 2: 75, 3: 50 };
+      return {
+        rank: b.rank,
+        label: b.label,
+        height: heightByRank[b.rank as 1 | 2 | 3],
+      };
+    });
+
+    const target = normalizedData.find((b) => b.rank === rank);
+    if (target) {
+      setLabels([target.label]);
+      setDatas([target.height]);
+    } else {
+      setLabels(["Point 0"]);
+      setDatas([0]);
+    }
+  }, [data, tab, teamId, rank]);
+
+  const rankIndex = rank - 1;
+  const colorSet = teamColor[propTab - 1] || ["#ccc"];
 
   const chartData: ChartData<"bar", number[], string> = {
     labels,
     datasets: [
       {
         data: datas,
-        backgroundColor: teamColor[propTab - 1],
-        borderColor: teamColor[propTab - 1],
+        backgroundColor: colorSet[rankIndex] || colorSet[0],
+        borderColor: colorSet[rankIndex] || colorSet[0],
         borderWidth: 1,
         barPercentage: 0.8,
         categoryPercentage: 0.8,
@@ -119,44 +138,30 @@ const RankBar = ({ data, tab }: RankBarProps) => {
     maintainAspectRatio: false,
     scales: {
       x: {
-        grid: {
-          display: false,
-        },
-        border: {
-          display: false,
-        },
+        grid: { display: false },
+        border: { display: false },
         ticks: {
           font: {
             family: "'Spoqa Han Sans Neo', sans-serif",
-            size: 12,
-            weight: "normal",
+            size: 18,
+            weight: "bold",
             lineHeight: 1.33,
           },
           color: "rgb(137,140,155,1)",
         },
       },
       y: {
-        ticks: {
-          display: false,
-        },
-        grid: {
-          display: false,
-        },
-        border: {
-          display: false,
-        },
+        ticks: { display: false },
+        grid: { display: false },
+        border: { display: false },
+        min: 0,
+        max: 100,
       },
     },
     plugins: {
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        enabled: false,
-      },
-      datalabels: {
-        display: false,
-      },
+      legend: { display: false },
+      tooltip: { enabled: false },
+      datalabels: { display: false },
     },
     animation: false,
   };
@@ -171,7 +176,8 @@ const RankBar = ({ data, tab }: RankBarProps) => {
 const BarWrapper = styled.div`
   width: 100%;
   display: flex;
-  padding-right: 10px;
+  margin-top: 15px;
+  padding: 0 5px;
   > canvas {
     width: 100% !important;
     animation: ${fadeIn} 0.8s ease-out;
