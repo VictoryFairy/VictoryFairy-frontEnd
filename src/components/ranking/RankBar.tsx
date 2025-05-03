@@ -15,6 +15,7 @@ import {
 } from "chart.js";
 import styled, { keyframes } from "styled-components";
 import { useAuthStore } from "@/store/authStore";
+import { max } from "moment";
 
 const teamColor = [
   ["#456089", "#041E42", "#BBC4D5"], // 1 롯데
@@ -142,10 +143,9 @@ const RankBar = ({ data, tab, rank }: RankBarProps) => {
         border: { display: false },
         ticks: {
           font: {
-            family: "'Spoqa Han Sans Neo', sans-serif",
-            size: 18,
+            size: 24,
             weight: "bold",
-            lineHeight: 1.33,
+            lineHeight: 1,
           },
           color: "rgb(137,140,155,1)",
         },
@@ -174,7 +174,8 @@ const RankBar = ({ data, tab, rank }: RankBarProps) => {
 };
 
 const BarWrapper = styled.div`
-  width: 100%;
+  width: 100px;
+  height: 150px;
   display: flex;
   margin-top: 15px;
   padding: 0 5px;
