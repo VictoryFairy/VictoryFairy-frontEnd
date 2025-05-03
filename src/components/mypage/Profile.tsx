@@ -138,15 +138,16 @@ const Container = styled.div`
 const ProfileWrapper = styled.div`
   width: 90%;
   height: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   padding: 0 20px;
   justify-content: center;
   align-items: center;
   > img {
     height: 100px;
     width: 100px;
+    margin: 0 auto;
     border-radius: 100%;
-    margin: 0 12%;
   }
 `;
 
@@ -156,6 +157,7 @@ const ProfileInfoWrapper = styled.div`
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
+  margin: 0 auto;
   :nth-child(2) {
     height: 46px;
     display: flex;
