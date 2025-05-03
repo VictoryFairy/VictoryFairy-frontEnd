@@ -178,7 +178,8 @@ const RankBar = ({ data, tab, rank }: RankBarProps) => {
 };
 
 const BarWrapper = styled.div`
-  width: 100%;
+  width: 100px;
+  height: 150px;
   display: flex;
   flex-direction: column;
   align-items: center;
