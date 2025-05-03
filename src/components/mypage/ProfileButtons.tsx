@@ -8,6 +8,7 @@ import Text from "../common/Text";
 import { useUserStore } from "../../store/userInfo";
 import Icon from "../common/Icon";
 import WithDrawPopup from "./WithDrawPopup";
+import { isIOS } from "react-device-detect";
 
 const ProfileButtons = () => {
   const [isOpenDraw, setIsOpenDraw] = useState(false);
@@ -50,9 +51,9 @@ const ProfileButtons = () => {
   //   openWithDrawPopup();
   // };
 
-  const isIOS =
-    /iPad|iPhone|iPod/.test(navigator.userAgent) &&
-    !/Chrome|Firefox|Safari/.test(navigator.userAgent);
+  // const isIOS =
+  //   /iPad|iPhone|iPod/.test(navigator.userAgent) &&
+  //   !/Chrome|Firefox|Safari/.test(navigator.userAgent);
 
   const navigate = useNavigate();
   const { supportTeam } = useUserStore((state) => ({
