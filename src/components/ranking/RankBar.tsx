@@ -15,7 +15,7 @@ import {
 } from "chart.js";
 import styled, { keyframes } from "styled-components";
 import { useAuthStore } from "@/store/authStore";
-import { max } from "moment";
+import Text from "../common/Text";
 
 const teamColor = [
   ["#456089", "#041E42", "#BBC4D5"], // 1 롯데
@@ -137,18 +137,17 @@ const RankBar = ({ data, tab, rank }: RankBarProps) => {
   const options: ChartOptions<"bar"> = {
     responsive: false,
     maintainAspectRatio: false,
+    layout: {
+      padding: {
+        top: 20,
+        bottom: 0,
+      },
+    },
     scales: {
       x: {
         grid: { display: false },
         border: { display: false },
-        ticks: {
-          font: {
-            size: 24,
-            weight: "bold",
-            lineHeight: 1,
-          },
-          color: "rgb(137,140,155,1)",
-        },
+        ticks: { display: false },
       },
       y: {
         ticks: { display: false },
@@ -169,6 +168,11 @@ const RankBar = ({ data, tab, rank }: RankBarProps) => {
   return (
     <BarWrapper>
       <Bar data={chartData} options={options} />
+      <LabelWrapper>
+        <Text variant='caption' color='gray'>
+          {labels[0]}
+        </Text>
+      </LabelWrapper>
     </BarWrapper>
   );
 };
@@ -177,12 +181,20 @@ const BarWrapper = styled.div`
   width: 100px;
   height: 150px;
   display: flex;
-  margin-top: 15px;
+  flex-direction: column;
+  align-items: center;
   padding: 0 5px;
+
   > canvas {
     width: 100% !important;
     animation: ${fadeIn} 0.8s ease-out;
   }
+`;
+
+const LabelWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
 `;
 
 export default RankBar;
