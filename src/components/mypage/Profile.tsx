@@ -138,7 +138,8 @@ const Container = styled.div`
 const ProfileWrapper = styled.div`
   width: 90%;
   height: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   padding: 0 20px;
   justify-content: center;
   align-items: center;
@@ -146,7 +147,6 @@ const ProfileWrapper = styled.div`
     height: 100px;
     width: 100px;
     border-radius: 100%;
-    margin: 0 12%;
   }
 `;
 
