@@ -7,6 +7,7 @@ import Icon from "@/components/common/Icon";
 import Text from "@/components/common/Text";
 import { Team } from "@/types/Team";
 import CheerTeamSelect from "./CheerTeamSelect";
+import { typography } from "@/style/typography";
 
 interface RegisterFormFieldsProps {
   onSubmit: (data: any) => void;
@@ -105,6 +106,12 @@ const Form = styled.form`
 
   .img-input {
     display: none;
+  }
+
+  label {
+    margin-bottom: 0;
+    color: var(--gray-700);
+    ${typography.caption}
   }
 `;
 
