@@ -146,6 +146,7 @@ const ProfileWrapper = styled.div`
   > img {
     height: 100px;
     width: 100px;
+    margin: 0 auto;
     border-radius: 100%;
   }
 `;
@@ -156,6 +157,7 @@ const ProfileInfoWrapper = styled.div`
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
+  margin: 0 auto;
   :nth-child(2) {
     height: 46px;
     display: flex;
