@@ -36,7 +36,7 @@ const Rate = () => {
   const cancelPopup = () => {
     openPopup({
       title: "실패",
-      message: "이미지 저장 및 공유에 실패했습니다.",
+      message: "공유하기 버튼을 이용해주세요.",
       buttons: [
         {
           label: "확인",
@@ -106,85 +106,78 @@ const Rate = () => {
     }
   };
 
-  // const handleDownload = async () => {
-  //   sendGaEvent("승률페이지", "이미지 저장 버튼 클릭", "이미지 저장 버튼");
-
-  //   if (!rateRef.current) return;
-
-  //   try {
-  //     let largestBlob = null;
-  //     let maxSize = 0;
-  //     const maxAttempts = 10;
-
-  //     for (let i = 0; i < maxAttempts; i++) {
-  //       const dataUrl = await toPng(rateRef.current, {
-  //         cacheBust: true,
-  //         backgroundColor: "white",
-  //         style: { margin: "0", padding: "0" },
-  //         filter: (node) => {
-  //           if (node.classList?.contains("button-group")) return false;
-  //           if (node.tagName === "svg") return false;
-  //           return true;
-  //         },
-  //       });
-
-  //       const blob = await (await fetch(dataUrl)).blob();
-  //       const { size } = blob;
-
-  //       if (size > maxSize) {
-  //         maxSize = size;
-  //         largestBlob = blob;
-  //       }
-  //     }
-
-  //     if (largestBlob) {
-  //       saveAs(largestBlob, "승리요정.png");
-  //     } else {
-  //       console.error("적절한 크기의 이미지가 없어 저장되지 않았습니다.");
-  //       cancelPopup();
-  //     }
-  //   } catch (error) {
-  //     console.error("이미지 저장에 실패했습니다.", error);
-  //     cancelPopup();
-  //   }
-  // };
   const handleDownload = async () => {
+    sendGaEvent("승률페이지", "이미지 저장 버튼 클릭", "이미지 저장 버튼");
+
     if (!rateRef.current) return;
 
     try {
-      const dataUrl = await toPng(rateRef.current, {
-        backgroundColor: "white",
-        cacheBust: true,
-        style: { margin: "0", padding: "0" },
-        filter: (node) => {
-          if (node.classList?.contains("button-group")) return false;
-          if (node.tagName === "svg") return false;
-          return true;
-        },
-      });
+      let largestBlob = null;
+      let maxSize = 0;
+      const maxAttempts = 10;
 
-      if (isIOS) {
-        // iOS에서는 다운로드가 안될 수 있어서 새 창으로 열기
-        const newWindow = window.open();
-        if (newWindow) {
-          newWindow.document.write(`<img src="${dataUrl}" style="width:100%">`);
-          newWindow.document.title = "이미지를 길게 눌러 저장하세요";
-        } else {
-          alert("팝업 차단을 해제해주세요.");
+      for (let i = 0; i < maxAttempts; i++) {
+        const dataUrl = await toPng(rateRef.current, {
+          cacheBust: true,
+          backgroundColor: "white",
+          style: { margin: "0", padding: "0" },
+          filter: (node) => {
+            if (node.classList?.contains("button-group")) return false;
+            if (node.tagName === "svg") return false;
+            return true;
+          },
+        });
+
+        const blob = await (await fetch(dataUrl)).blob();
+        const { size } = blob;
+
+        if (size > maxSize) {
+          maxSize = size;
+          largestBlob = blob;
         }
+      }
+
+      if (largestBlob) {
+        saveAs(largestBlob, "승리요정.png");
       } else {
-        // 다른 브라우저는 기본 다운로드 시도
-        const link = document.createElement("a");
-        link.href = dataUrl;
-        link.download = "승요.png";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        console.error("적절한 크기의 이미지가 없어 저장되지 않았습니다.");
+        cancelPopup();
       }
     } catch (error) {
-      console.error("이미지 저장 실패:", error);
+      console.error("이미지 저장에 실패했습니다.", error);
+      cancelPopup();
     }
   };
+  // const handleDownload = async () => {
+  //   if (!rateRef.current) return;
+
+  //   try {
+  //     const dataUrl = await toPng(rateRef.current, {
+  //       backgroundColor: "white",
+  //       cacheBust: true,
+  //       style: { margin: "0", padding: "0" },
+  //       filter: (node) => {
+  //         if (node.classList?.contains("button-group")) return false;
+  //         if (node.tagName === "svg") return false;
+  //         return true;
+  //       },
+  //     });
+
+  //     if (isIOS) {
+  //       alert("준비 중입니다. 공유하기를 이용해주세요.");
+  //     } else {
+  //       // 다른 브라우저는 기본 다운로드 시도
+  //       const link = document.createElement("a");
+  //       link.href = dataUrl;
+  //       link.download = "승요.png";
+  //       document.body.appendChild(link);
+  //       link.click();
+  //       document.body.removeChild(link);
+  //     }
+  //   } catch (error) {
+  //     console.error("이미지 저장 실패:", error);
+  //   }
+  // };
 
   // const handleKakaoShare = async () => {
   //   if (!rateRef.current) {
