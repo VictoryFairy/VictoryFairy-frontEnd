@@ -25,7 +25,7 @@ export const teams = [
     id: 4,
   },
   {
-    name: "SSG 렌더스",
+    name: "SSG 랜더스",
     color: "#BE262C",
     id: 5,
   },
