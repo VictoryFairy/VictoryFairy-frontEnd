@@ -86,6 +86,7 @@ const TeamListContainer = styled.div`
   margin-bottom: 20px;
   background-color: white;
   gap: 20px;
+  margin-right: 20px;
 `;
 
 const FixedTeamButton = styled.button<{ $active: boolean }>`
