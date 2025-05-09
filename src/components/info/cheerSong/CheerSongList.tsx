@@ -6,10 +6,10 @@ import { deleteLikeCheerSong, postLikeCheerSong } from "@/api/info/cheers.api";
 
 const teamColors = {
   "롯데 자이언츠": "var(--lotte-giants-navy)",
-  "삼성 라이온즈\n": "var(--samsung-lions-blue)",
+  "삼성 라이온즈": "var(--samsung-lions-blue)",
   "LG 트윈스": "var(--lg-twins-red)",
   "두산 베어스": "var(--doosan-bears-navy)",
-  "SSG 렌더스": "var(--ssg-landers-red)",
+  "SSG 랜더스": "var(--ssg-landers-red)",
   "KT 위즈": "var(--kt-wiz-black)",
   "한화 이글스": "var(--hanwha-eagles-orange)",
   "NC 다이노스": "var(--nc-dinos-blue)",

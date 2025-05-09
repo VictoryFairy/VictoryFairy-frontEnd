@@ -72,8 +72,8 @@ const SelectMatch = () => {
 };
 
 const SelectMatchContainer = styled.div`
-  height: 100%;
   padding-top: 20px;
+  padding-bottom: 36px;
   position: relative;
 
   .loading {
