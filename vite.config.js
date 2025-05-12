@@ -59,13 +59,13 @@ export default defineConfig({
             type: "image/png",
           },
           {
-            src: "Aos.png",
+            src: "AOS512.png",
             sizes: "512x512",
             type: "image/png",
             purpose: "any",
           },
           {
-            src: "Aos.png",
+            src: "AOS512.png",
             sizes: "512x512",
             type: "image/png",
             purpose: "maskable",
