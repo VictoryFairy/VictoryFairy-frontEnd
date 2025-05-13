@@ -60,16 +60,28 @@ const ProfileChange = () => {
   });
 
   const handleBtnClick = async () => {
-    if (name) {
-      await mutationProfileChange.mutateAsync({
-        field: "nickname",
-        value: name,
-      });
+    try {
+      // 닉네임이 변경된 경우에만 닉네임 업데이트
+      if (name && name !== nickname) {
+        await mutationProfileChange.mutateAsync({
+          field: "nickname",
+          value: name,
+        });
+      }
+
+      // 이미지가 변경된 경우에만 이미지 업데이트
+      if (image && image !== profile) {
+        await mutationProfileChange.mutateAsync({
+          field: "image",
+          value: image,
+        });
+      }
+      closePopup();
+      navigate("/mypage");
+    } catch (error) {
+      console.error("프로필 변경 중 오류 발생:", error);
+      closePopup();
     }
-    if (image) {
-      await mutationProfileChange.mutateAsync({ field: "image", value: image });
-    }
-    navigate("/mypage");
   };
 
   const nickChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -77,35 +89,69 @@ const ProfileChange = () => {
   };
 
   const handleClickSave = () => {
-    checkNicknameAvailability({ nickname: name }).then((isExist: boolean) => {
-      if (isExist) {
-        openPopup({
-          title: "닉네임 중복",
-          message: "이미 사용중인 닉네임입니다.",
-          buttons: [
-            {
-              label: "확인",
-              variant: "confirm",
-              onClick: () => {
-                closePopup();
+    // 닉네임이 변경되었는지 확인
+    const isNicknameChanged = name !== nickname;
+    // 이미지가 변경되었는지 확인
+    const isImageChanged = image !== profile;
+
+    // 닉네임이 변경된 경우
+    if (isNicknameChanged) {
+      checkNicknameAvailability({ nickname: name }).then((isExist: boolean) => {
+        if (isExist) {
+          // 닉네임 중복이면 에러 팝업
+          openPopup({
+            title: "닉네임 중복",
+            message: "이미 사용중인 닉네임입니다.",
+            buttons: [
+              {
+                label: "확인",
+                variant: "confirm",
+                onClick: closePopup,
               },
-            },
-          ],
-        });
-      } else {
-        openPopup({
-          title: "프로필 설정 완료",
-          message: "프로필 설정이 완료되었습니다.",
-          buttons: [
-            {
-              label: "확인",
-              variant: "confirm",
-              onClick: handleBtnClick,
-            },
-          ],
-        });
-      }
-    });
+            ],
+          });
+        } else {
+          // 닉네임이 중복이 아니면 완료 팝업
+          openPopup({
+            title: "프로필 설정 완료",
+            message: "프로필 설정이 완료되었습니다.",
+            buttons: [
+              {
+                label: "확인",
+                variant: "confirm",
+                onClick: handleBtnClick,
+              },
+            ],
+          });
+        }
+      });
+    } else if (isImageChanged) {
+      // 닉네임은 변경되지 않고 이미지만 변경된 경우
+      openPopup({
+        title: "프로필 설정 완료",
+        message: "프로필 사진 변경이 완료되었습니다.",
+        buttons: [
+          {
+            label: "확인",
+            variant: "confirm",
+            onClick: handleBtnClick,
+          },
+        ],
+      });
+    } else {
+      // 아무것도 변경되지 않은 경우
+      openPopup({
+        title: "변경 사항 없음",
+        message: "변경된 내용이 없습니다.",
+        buttons: [
+          {
+            label: "확인",
+            variant: "confirm",
+            onClick: closePopup,
+          },
+        ],
+      });
+    }
   };
 
   return (
