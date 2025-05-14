@@ -1,3 +1,5 @@
+import { GameStatus } from "@/constants";
+
 export interface MyGame {
   id: number;
   image: string;
@@ -12,7 +14,7 @@ export interface Game {
   id: string;
   date: string;
   time: string;
-  status: "경기중" | "경기전" | "경기종료" | "우천취소";
+  status: GameStatusServer;
   homeTeam: Team;
   awayTeam: Team;
   stadium: {
@@ -35,4 +37,9 @@ export interface Team {
   name: string;
 }
 
-export type GameStatus = "All" | "Win" | "Lose" | "Tie" | "No game" | null;
+/** 클라이언트에서 사용하는 경기 상태 */
+export type GameStatusType = "All" | "Win" | "Lose" | "Tie" | "No game" | null;
+
+/** 서버에서 사용하는 경기 상태 */
+// TODO 뭔가 수정이 필요해보임
+export type GameStatusServer = (typeof GameStatus)[number];

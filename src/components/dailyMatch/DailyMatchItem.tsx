@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { Game } from "../../types/Game";
+import { CanceledGameStatus } from "@/constants";
+import { Game, GameStatusServer } from "../../types/Game";
 import Radio from "../common/Radio";
 import Text from "../common/Text";
 import Icon from "../common/Icon";
@@ -21,6 +22,10 @@ const DailyMatchItem = ({
     return match.winningTeam.id === teamId;
   };
 
+  const isCanceledGame = (status: GameStatusServer) => {
+    return CanceledGameStatus.includes(status);
+  };
+
   return (
     <DailyMatchItemContainer
       $isSelected={$isSelected}
@@ -33,16 +38,29 @@ const DailyMatchItem = ({
           className={`team-score ${isWinningTeam(match.homeTeam.id) ? "winning" : ""}`}>
           <Text variant='subtitle_02'>{match.homeTeam.name}</Text>
           <Text variant='subtitle_02'>{match.homeTeamScore}</Text>
-          {isWinningTeam(match.homeTeam.id) && (
-            <Icon icon='IcPolygon' width={10} height={10} />
+          {/* TODO: 리팩터링 필요 */}
+          {isCanceledGame(match.status) ? (
+            <Text variant='subtitle_02' className='canceled-bar'>
+              -
+            </Text>
+          ) : (
+            isWinningTeam(match.homeTeam.id) && (
+              <Icon icon='IcPolygon' width={10} height={10} />
+            )
           )}
         </div>
         <div
           className={`team-score ${isWinningTeam(match.awayTeam.id) ? "winning" : ""}`}>
           <Text variant='subtitle_02'>{match.awayTeam.name}</Text>
           <Text variant='subtitle_02'>{match.awayTeamScore}</Text>
-          {isWinningTeam(match.awayTeam.id) && (
-            <Icon icon='IcPolygon' width={10} height={10} />
+          {isCanceledGame(match.status) ? (
+            <Text variant='subtitle_02' className='canceled-bar'>
+              -
+            </Text>
+          ) : (
+            isWinningTeam(match.awayTeam.id) && (
+              <Icon icon='IcPolygon' width={10} height={10} />
+            )
           )}
         </div>
       </div>
@@ -50,8 +68,11 @@ const DailyMatchItem = ({
       <div className='game-info-stadium'>
         <Text variant='caption'>{match.date}</Text>
         <div>
-          <Icon icon='IcLocation' width={15} height={15} />
-          <Text variant='caption'> {match.stadium.name} 야구장</Text>
+          {/* <Icon icon='IcLocation' width={15} height={15} />
+          <Text variant='caption'> {match.stadium.name} 야구장</Text> */}
+          <Text variant='caption' className='canceled-text'>
+            경기 취소
+          </Text>
         </div>
       </div>
     </DailyMatchItemContainer>
@@ -104,6 +125,12 @@ const DailyMatchItemContainer = styled(motion.div)<{ $isSelected: boolean }>`
       top: 20%;
       right: -15px;
     }
+  }
+  .canceled-bar {
+    color: var(--primary-color);
+  }
+  .canceled-text {
+    font-weight: 700;
   }
 `;
 
