@@ -105,6 +105,10 @@ const Rate = () => {
       cancelPopup();
     }
   };
+  const waitForNextPaint = () =>
+    new Promise((resolve) =>
+      requestAnimationFrame(() => setTimeout(resolve, 0)),
+    );
 
   const handleDownload = async () => {
     sendGaEvent("승률페이지", "이미지 저장 버튼 클릭", "이미지 저장 버튼");
@@ -112,6 +116,8 @@ const Rate = () => {
     if (!rateRef.current) return;
 
     try {
+      await waitForNextPaint(); // ⭐ 렌더링 완료 대기
+
       let largestBlob = null;
       let maxSize = 0;
       const maxAttempts = 10;
@@ -129,10 +135,8 @@ const Rate = () => {
         });
 
         const blob = await (await fetch(dataUrl)).blob();
-        const { size } = blob;
-
-        if (size > maxSize) {
-          maxSize = size;
+        if (blob.size > maxSize) {
+          maxSize = blob.size;
           largestBlob = blob;
         }
       }
@@ -148,6 +152,7 @@ const Rate = () => {
       cancelPopup();
     }
   };
+
   // const handleDownload = async () => {
   //   if (!rateRef.current) return;
 
