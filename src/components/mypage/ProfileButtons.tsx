@@ -282,7 +282,7 @@ const Container = styled.div`
   align-items: left;
   background-color: var(--white);
   margin: 15px 0;
-  padding: 10px 20px;
+  padding: 10px 20px 30px 20px;
   > span {
     margin: 20px 0;
   }

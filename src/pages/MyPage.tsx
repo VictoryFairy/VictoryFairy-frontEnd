@@ -64,7 +64,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   background-color: var(--gray-50);
-
+  padding-bottom: 65px;
   overflow-y: scroll;
   scrollbar-width: none;
 
