@@ -55,7 +55,7 @@ const Footer = () => {
 
 const FooterContainer = styled.div`
   background-color: var(--white);
-  height: 76px;
+  height: 100px;
   position: fixed;
   bottom: 0;
   max-width: 480px;
