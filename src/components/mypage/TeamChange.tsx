@@ -165,6 +165,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const SelectedTeamBox = styled.div<{
@@ -222,6 +226,7 @@ const TeamButton = styled.button<{
 
 const ButtonWrapper = styled.div`
   margin: 20px 0;
+  margin-bottom: 50px;
 `;
 
 export default TeamChange;

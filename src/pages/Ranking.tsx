@@ -261,7 +261,8 @@ const Ranking = () => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 20px 0;
+  padding-top: 20px;
+  padding-bottom: 60px;
   > div::-webkit-scrollbar {
     display: none;
   }
