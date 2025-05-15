@@ -10,6 +10,7 @@ export interface TextProps
   variant?: keyof typeof typography;
   color?: string;
   children: React.ReactNode;
+  className?: string;
 }
 
 const Text = ({
@@ -17,9 +18,14 @@ const Text = ({
   as = "span",
   color,
   children,
+  className,
 }: TextProps) => {
   return (
-    <TextComponent as={as} variant={variant} color={color}>
+    <TextComponent
+      className={className}
+      as={as}
+      variant={variant}
+      color={color}>
       {children}
     </TextComponent>
   );

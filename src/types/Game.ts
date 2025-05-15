@@ -1,9 +1,11 @@
+import { GAMESTATUS_CANCELED, GAMESTATUS_ALL } from "@/constants";
+
 export interface MyGame {
   id: number;
   image: string;
   seat: string;
   review: string;
-  status: GameStatus;
+  status: GameResultType;
   game: Game;
   cheeringTeam: Team;
 }
@@ -12,7 +14,7 @@ export interface Game {
   id: string;
   date: string;
   time: string;
-  status: "경기중" | "경기전" | "경기종료" | "우천취소";
+  status: GameStatusType;
   homeTeam: Team;
   awayTeam: Team;
   stadium: {
@@ -35,4 +37,11 @@ export interface Team {
   name: string;
 }
 
-export type GameStatus = "All" | "Win" | "Lose" | "Tie" | "No game" | null;
+/** 클라이언트에서 사용하는 경기 상태 */
+export type GameResultType = "All" | "Win" | "Lose" | "Tie" | "No game" | null;
+
+// 취소 상태 타입
+export type GameStatusCanceledType = (typeof GAMESTATUS_CANCELED)[number];
+
+// 경기 상태 타입
+export type GameStatusType = (typeof GAMESTATUS_ALL)[number];
