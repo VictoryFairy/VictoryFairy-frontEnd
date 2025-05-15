@@ -1,7 +1,13 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { CanceledGameStatus } from "@/constants";
-import { Game, GameStatusServer } from "../../types/Game";
+import {
+  GAMESTATUS_CANCELED_RAIN,
+  GAMESTATUS_CANCELED_HEAT,
+  GAMESTATUS_CANCELED_ETC,
+  GAMESTATUS_CANCELED_DUST,
+  GAMESTATUS_CANCELED_GROUND,
+} from "@/constants";
+import { Game, GameStatusType } from "../../types/Game";
 import Radio from "../common/Radio";
 import Text from "../common/Text";
 import Icon from "../common/Icon";
@@ -22,8 +28,15 @@ const DailyMatchItem = ({
     return match.winningTeam.id === teamId;
   };
 
-  const isCanceledGame = (status: GameStatusServer) => {
-    return CanceledGameStatus.includes(status);
+  const isCanceledGame = (status: GameStatusType) => {
+    const canceledGameStatus = [
+      GAMESTATUS_CANCELED_RAIN,
+      GAMESTATUS_CANCELED_HEAT,
+      GAMESTATUS_CANCELED_ETC,
+      GAMESTATUS_CANCELED_DUST,
+      GAMESTATUS_CANCELED_GROUND,
+    ];
+    return canceledGameStatus.includes(status);
   };
 
   return (

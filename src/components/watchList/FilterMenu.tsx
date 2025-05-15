@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { GameStatus } from "@/types/Game";
+import { GameResultType } from "@/types/Game";
 import Text from "../common/Text";
 
 const FILTERS = [
@@ -11,7 +11,7 @@ const FILTERS = [
 ];
 
 interface FilterMenuProps {
-  onSelectFilter: (filter: GameStatus) => void;
+  onSelectFilter: (filter: GameResultType) => void;
 }
 
 const FilterMenu = ({ onSelectFilter }: FilterMenuProps) => {
@@ -20,7 +20,7 @@ const FilterMenu = ({ onSelectFilter }: FilterMenuProps) => {
       {FILTERS.map((filter) => (
         <FilterItem
           key={filter.value}
-          onClick={() => onSelectFilter(filter.value as GameStatus)}>
+          onClick={() => onSelectFilter(filter.value as GameResultType)}>
           <Text variant='subtitle_02'>{filter.label}</Text>
         </FilterItem>
       ))}

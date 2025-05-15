@@ -1,11 +1,20 @@
-import { GameStatus } from "@/constants";
+import {
+  GAMESTATUS_CANCELED_RAIN,
+  GAMESTATUS_CANCELED_HEAT,
+  GAMESTATUS_CANCELED_ETC,
+  GAMESTATUS_CANCELED_DUST,
+  GAMESTATUS_CANCELED_GROUND,
+  GAMESTATUS_PLAYING,
+  GAMESTATUS_PREPARING,
+  GAMESTATUS_ENDED,
+} from "@/constants";
 
 export interface MyGame {
   id: number;
   image: string;
   seat: string;
   review: string;
-  status: GameStatus;
+  status: GameResultType;
   game: Game;
   cheeringTeam: Team;
 }
@@ -14,7 +23,7 @@ export interface Game {
   id: string;
   date: string;
   time: string;
-  status: GameStatusServer;
+  status: GameStatusType;
   homeTeam: Team;
   awayTeam: Team;
   stadium: {
@@ -38,8 +47,19 @@ export interface Team {
 }
 
 /** 클라이언트에서 사용하는 경기 상태 */
-export type GameStatusType = "All" | "Win" | "Lose" | "Tie" | "No game" | null;
+export type GameResultType = "All" | "Win" | "Lose" | "Tie" | "No game" | null;
 
-/** 서버에서 사용하는 경기 상태 */
-// TODO 뭔가 수정이 필요해보임
-export type GameStatusServer = (typeof GameStatus)[number];
+// 취소 상태 타입
+export type GameStatusCanceledType =
+  | typeof GAMESTATUS_CANCELED_RAIN
+  | typeof GAMESTATUS_CANCELED_HEAT
+  | typeof GAMESTATUS_CANCELED_ETC
+  | typeof GAMESTATUS_CANCELED_DUST
+  | typeof GAMESTATUS_CANCELED_GROUND;
+
+// 경기 상태 타입
+export type GameStatusType =
+  | typeof GAMESTATUS_PLAYING
+  | typeof GAMESTATUS_PREPARING
+  | typeof GAMESTATUS_ENDED
+  | GameStatusCanceledType;
