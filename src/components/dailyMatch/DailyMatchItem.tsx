@@ -1,12 +1,6 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import {
-  GAMESTATUS_CANCELED_RAIN,
-  GAMESTATUS_CANCELED_HEAT,
-  GAMESTATUS_CANCELED_ETC,
-  GAMESTATUS_CANCELED_DUST,
-  GAMESTATUS_CANCELED_GROUND,
-} from "@/constants";
+import { GAMESTATUS_CANCELED } from "@/constants";
 import { Game, GameStatusType } from "../../types/Game";
 import Radio from "../common/Radio";
 import Text from "../common/Text";
@@ -29,14 +23,7 @@ const DailyMatchItem = ({
   };
 
   const isCanceledGame = (status: GameStatusType) => {
-    const canceledGameStatus = [
-      GAMESTATUS_CANCELED_RAIN,
-      GAMESTATUS_CANCELED_HEAT,
-      GAMESTATUS_CANCELED_ETC,
-      GAMESTATUS_CANCELED_DUST,
-      GAMESTATUS_CANCELED_GROUND,
-    ];
-    return canceledGameStatus.includes(status);
+    return GAMESTATUS_CANCELED.includes(status);
   };
 
   return (

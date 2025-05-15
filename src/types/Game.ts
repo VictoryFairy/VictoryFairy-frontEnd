@@ -1,13 +1,4 @@
-import {
-  GAMESTATUS_CANCELED_RAIN,
-  GAMESTATUS_CANCELED_HEAT,
-  GAMESTATUS_CANCELED_ETC,
-  GAMESTATUS_CANCELED_DUST,
-  GAMESTATUS_CANCELED_GROUND,
-  GAMESTATUS_PLAYING,
-  GAMESTATUS_PREPARING,
-  GAMESTATUS_ENDED,
-} from "@/constants";
+import { GAMESTATUS_CANCELED, GAMESTATUS_ALL } from "@/constants";
 
 export interface MyGame {
   id: number;
@@ -50,16 +41,7 @@ export interface Team {
 export type GameResultType = "All" | "Win" | "Lose" | "Tie" | "No game" | null;
 
 // 취소 상태 타입
-export type GameStatusCanceledType =
-  | typeof GAMESTATUS_CANCELED_RAIN
-  | typeof GAMESTATUS_CANCELED_HEAT
-  | typeof GAMESTATUS_CANCELED_ETC
-  | typeof GAMESTATUS_CANCELED_DUST
-  | typeof GAMESTATUS_CANCELED_GROUND;
+export type GameStatusCanceledType = (typeof GAMESTATUS_CANCELED)[number];
 
 // 경기 상태 타입
-export type GameStatusType =
-  | typeof GAMESTATUS_PLAYING
-  | typeof GAMESTATUS_PREPARING
-  | typeof GAMESTATUS_ENDED
-  | GameStatusCanceledType;
+export type GameStatusType = (typeof GAMESTATUS_ALL)[number];
