@@ -68,11 +68,16 @@ const DailyMatchItem = ({
       <div className='game-info-stadium'>
         <Text variant='caption'>{match.date}</Text>
         <div>
-          {/* <Icon icon='IcLocation' width={15} height={15} />
-          <Text variant='caption'> {match.stadium.name} 야구장</Text> */}
-          <Text variant='caption' className='canceled-text'>
-            경기 취소
-          </Text>
+          {isCanceledGame(match.status) ? (
+            <Text variant='caption' className='canceled-text'>
+              경기 취소
+            </Text>
+          ) : (
+            <div>
+              <Icon icon='IcLocation' width={15} height={15} />
+              <Text variant='caption'> {match.stadium.name} 야구장</Text>
+            </div>
+          )}
         </div>
       </div>
     </DailyMatchItemContainer>
