@@ -252,6 +252,7 @@ const Rate = () => {
         {imgChange ? (
           <div className='img'>
             <img
+              key={teamId}
               className='fairy-img'
               alt='요정'
               src={getFairyImg(parseInt(winPercentage, 10), teamId, "webp")}
