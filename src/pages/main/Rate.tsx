@@ -255,7 +255,7 @@ const Rate = () => {
               key={teamId}
               className='fairy-img'
               alt='요정'
-              src={getFairyImg(parseInt(winPercentage, 10), teamId, "webp")}
+              src={getFairyImg(parseInt(winPercentage, 10), teamId, "webp") + `?v=${Date.now()}`}
               crossOrigin='anonymous'
             />
           </div>
