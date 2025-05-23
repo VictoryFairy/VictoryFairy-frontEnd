@@ -75,7 +75,7 @@ const Layer = styled.div`
   width: 100%;
   max-width: 480px;
   position: fixed;
-  bottom: 150px;
+  bottom: 174px;
   display: flex;
   justify-content: flex-end;
   z-index: 100;
