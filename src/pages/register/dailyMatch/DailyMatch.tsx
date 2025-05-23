@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useEffect } from "react";
 import { setCheerTeamFirst } from "@/utils/setCheerTeamFirst";
-import { Game } from "../../types/Game";
+import { Game } from "../../../types/Game";
 import DailyMatchItem from "./DailyMatchItem";
 
 interface DailyMatchProps {
