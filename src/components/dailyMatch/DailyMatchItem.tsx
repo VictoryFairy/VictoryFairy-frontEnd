@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { GAMESTATUS_CANCELED } from "@/constants";
-import { Game, GameStatusType } from "../../types/Game";
+import { Game, GameStatusCanceledType, GameStatusType } from "@/types/Game";
 import Radio from "../common/Radio";
 import Text from "../common/Text";
 import Icon from "../common/Icon";
@@ -23,7 +23,7 @@ const DailyMatchItem = ({
   };
 
   const isCanceledGame = (status: GameStatusType) => {
-    return GAMESTATUS_CANCELED.includes(status);
+    return GAMESTATUS_CANCELED.includes(status as GameStatusCanceledType);
   };
 
   return (

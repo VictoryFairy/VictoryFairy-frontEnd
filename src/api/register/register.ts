@@ -2,16 +2,15 @@ import axios from "axios";
 import { MyGame } from "@/types/Game";
 import authAxiosInstance from "../authAxios";
 
-// api/register/register.ts
-
-export const postUploadImg = async (formData: FormData): Promise<any> => {
+// presigned url 요청
+export const requestPresignedUrl = async (imgObj: any): Promise<any> => {
   try {
     const response = await authAxiosInstance.post(
-      "/s3-store/registered-game",
-      formData,
+      "/s3-store/presigned-url/registered-game",
+      imgObj,
       {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
         },
       },
     );
@@ -38,6 +37,22 @@ export const postUploadImg = async (formData: FormData): Promise<any> => {
         "네트워크 오류가 발생했습니다. 인터넷 연결을 확인해 주세요.",
       );
     }
+  }
+};
+
+// presigned url 업로드
+export const putPresignedUrl = async (presignedUrl: string, file: Blob) => {
+  try {
+    const response = await axios.put(presignedUrl, file, {
+      headers: {
+        "Content-Type": file.type,
+      },
+      withCredentials: false,
+    });
+    return response.data;
+  } catch (err) {
+    console.error(err);
+    throw err;
   }
 };
 
