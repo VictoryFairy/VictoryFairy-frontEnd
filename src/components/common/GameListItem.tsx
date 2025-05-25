@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Game, Team } from "@/types/Game";
+import { Game, GameResultType, Team } from "@/types/Game";
 import { HTMLAttributes } from "react";
 import Text from "./Text";
 import ResultLabel from "./ResultLabel";
@@ -7,7 +7,7 @@ import Icon from "./Icon";
 
 export interface GameListItemProps
   extends Omit<HTMLAttributes<HTMLUListElement>, "onClick"> {
-  result: string | null;
+  result: GameResultType;
   isWinningTeam: Team;
   homeTeam: Team;
   homeTeamScore: number;

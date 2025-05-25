@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { Game } from "@/types/Game";
+import { Game, GameResultType } from "@/types/Game";
 import Text from "./Text";
 
 export interface ResultLabelProps {
-  result: string | null;
+  result: GameResultType;
   status: Pick<Game, "status">["status"];
 }
 
@@ -19,7 +19,7 @@ const ResultLabel = ({ result, status }: ResultLabelProps) => {
   );
 };
 const ResultLabelContainer = styled.span<{
-  result: string | null;
+  result: GameResultType;
   status: string;
 }>`
   display: flex;

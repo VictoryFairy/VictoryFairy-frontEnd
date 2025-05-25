@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
-import { Game } from "@/types/Game";
+import { Game, GameResultType } from "@/types/Game";
 import { postRegisterGame } from "@/api/register/register";
 import { usePopup } from "@/hooks/usePopup";
 import GameListItem from "@/components/common/GameListItem";
@@ -65,7 +65,7 @@ const RegisterForm = () => {
     }
   };
 
-  const getResult = () => {
+  const getResult = (): GameResultType => {
     const isCheeringTeamNotSelected = () => {
       return watch("cheeringTeamId") === undefined;
     };
