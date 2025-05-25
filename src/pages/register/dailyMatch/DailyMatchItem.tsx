@@ -35,7 +35,7 @@ const DailyMatchItem = ({
           <Text variant='subtitle_02'>{match.homeTeam.name}</Text>
           <Text variant='subtitle_02'>{match.homeTeamScore}</Text>
           {/* TODO: 리팩터링 필요 */}
-          {isCanceledGame(match.status) ? (
+          {isCanceledGame(match.status) || match.status === "경기전" ? (
             <Text variant='subtitle_02' className='canceled-bar'>
               -
             </Text>
@@ -49,7 +49,7 @@ const DailyMatchItem = ({
           className={`team-score ${isWinningTeam(match.awayTeam.id) ? "winning" : ""}`}>
           <Text variant='subtitle_02'>{match.awayTeam.name}</Text>
           <Text variant='subtitle_02'>{match.awayTeamScore}</Text>
-          {isCanceledGame(match.status) ? (
+          {isCanceledGame(match.status) || match.status === "경기전" ? (
             <Text variant='subtitle_02' className='canceled-bar'>
               -
             </Text>

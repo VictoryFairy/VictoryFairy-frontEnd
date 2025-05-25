@@ -14,7 +14,6 @@ import saveAs from "file-saver";
 import { toPng } from "html-to-image";
 import { sendGaEvent } from "@/utils/sendGaEvent";
 import { usePopup } from "@/hooks/usePopup";
-import { isIOS } from "react-device-detect";
 
 const Rate = () => {
   const rateRef = useRef<HTMLDivElement | null>(null);
@@ -255,7 +254,11 @@ const Rate = () => {
               key={teamId}
               className='fairy-img'
               alt='요정'
-              src={getFairyImg(parseInt(winPercentage, 10), teamId, "webp") + `?v=${Date.now()}`}
+              src={`${getFairyImg(
+                parseInt(winPercentage, 10),
+                teamId,
+                "webp",
+              )}?v=${Date.now()}`}
               crossOrigin='anonymous'
             />
           </div>

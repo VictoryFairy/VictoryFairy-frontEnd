@@ -21,23 +21,17 @@ const Main = () => {
   };
 
   const handleClickTab = (tab: number) => {
-    if (tab === 0) {
-      sendGaEvent("탭", "승률 탭 클릭", "승률 탭");
-    }
-    if (tab === 1) {
-      sendGaEvent("탭", "내 직관 탭 클릭", "내 직관");
+    switch (tab) {
+      case 0:
+        sendGaEvent("탭", "승률 탭 클릭", "승률 탭");
+        break;
+      case 1:
+        sendGaEvent("탭", "내 직관 탭 클릭", "내 직관");
+        break;
+      default:
+        break;
     }
     setActiveTab(tab);
-  };
-  const renderContent = () => {
-    switch (activeTab) {
-      case 0:
-        return <Rate />;
-      case 1:
-        return <Watch />;
-      default:
-        return null;
-    }
   };
 
   return (
@@ -53,7 +47,18 @@ const Main = () => {
         activeTab={activeTab}
         onTabClick={handleClickTab}
       />
-      <Suspense fallback={<Loading />}>{renderContent()}</Suspense>
+      <Suspense fallback={<Loading />}>
+        {(() => {
+          switch (activeTab) {
+            case 0:
+              return <Rate />;
+            case 1:
+              return <Watch />;
+            default:
+              return null;
+          }
+        })()}
+      </Suspense>
       <Layer>
         <RegisterButton onClick={() => handleClickRegister()}>
           <Icon icon='IcEdit' />

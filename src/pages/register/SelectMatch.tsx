@@ -25,28 +25,6 @@ const SelectMatch = () => {
     }
   };
 
-  const renderMatches = () => {
-    if (matches?.length === 0) {
-      return (
-        <div>
-          <p>경기가 없습니다.</p>
-        </div>
-      );
-    }
-    if (isLoading) {
-      return <Loading />;
-    }
-    if (isSuccess && matches) {
-      return (
-        <DailyMatch
-          matches={matches}
-          selectedMatch={selectedMatch}
-          setSelectedMatch={setSelectedMatch}
-        />
-      );
-    }
-  };
-
   return (
     <SelectMatchContainer>
       <SelectMatchCalendar
@@ -56,7 +34,27 @@ const SelectMatch = () => {
         setSelectedDate={setSelectedDate}
       />
 
-      {renderMatches()}
+      {(() => {
+        if (matches?.length === 0) {
+          return (
+            <div>
+              <p>경기가 없습니다.</p>
+            </div>
+          );
+        }
+        if (isLoading) {
+          return <Loading />;
+        }
+        if (isSuccess && matches) {
+          return (
+            <DailyMatch
+              matches={matches}
+              selectedMatch={selectedMatch}
+              setSelectedMatch={setSelectedMatch}
+            />
+          );
+        }
+      })()}
 
       {selectedMatch && (
         <Button

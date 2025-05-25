@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { uploadImg } from "@/utils/uploadImg";
 import RegisterFormFields from "@/components/register/RegisterFormFields";
 import { sendGaEvent } from "@/utils/sendGaEvent";
+import { isCanceledGame } from "@/utils/isCanceledGame";
 
 const RegisterForm = () => {
   const location = useLocation();
@@ -65,14 +66,53 @@ const RegisterForm = () => {
   };
 
   const getResult = () => {
-    if (watch("cheeringTeamId") === undefined) return null;
-    if (match.winningTeam) {
-      return match.winningTeam.id === watch("cheeringTeamId") ? "Win" : "Lose";
-    }
-    if (!match.homeTeamScore && !match.awayTeamScore) {
+    const isCheeringTeamNotSelected = () => {
+      return watch("cheeringTeamId") === undefined;
+    };
+    const isScoreTie = () => {
+      return match.homeTeamScore === match.awayTeamScore;
+    };
+
+    if (isCanceledGame(match.status)) {
       return "No game";
     }
-    return "Tie";
+
+    if (isCheeringTeamNotSelected()) {
+      if (isScoreTie()) {
+        return "Tie";
+      }
+      return null;
+    }
+
+    switch (match.status) {
+      case "경기전":
+      case "경기중":
+        return null;
+      case "경기종료":
+        if (match.winningTeam) {
+          return match.winningTeam.id === watch("cheeringTeamId")
+            ? "Win"
+            : "Lose";
+        }
+        if (!match.homeTeamScore && !match.awayTeamScore) {
+          return "No game";
+        }
+        if (isScoreTie()) {
+          return "Tie";
+        }
+        return null;
+      default:
+        return null;
+    }
+
+    // if (match.st) return null;
+    // if (match.winningTeam) {
+    //   return match.winningTeam.id === watch("cheeringTeamId") ? "Win" : "Lose";
+    // }
+    // if (!match.homeTeamScore && !match.awayTeamScore) {
+    //   return "No game";
+    // }
+    // return "Tie";
   };
 
   return (
