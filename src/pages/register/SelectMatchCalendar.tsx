@@ -23,10 +23,7 @@ const SelectMatchCalendar = ({
   };
 
   const handleClickDay = (date: Date) => {
-    const match = getRegisteredGame(date);
-    if (!match) {
-      setSelectedDate(date);
-    }
+    setSelectedDate(date);
   };
 
   const handleMonthChange = (date: Date) => {

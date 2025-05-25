@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRegisteredGame } from "@/hooks/useRegisteredGame";
-import DailyMatch from "@/components/dailyMatch/DailyMatch";
+import DailyMatch from "@/pages/register/dailyMatch/DailyMatch";
 import Loading from "@/components/common/Loading";
 import { useGame } from "../../hooks/useGame";
 import Button from "../../components/common/Button";
