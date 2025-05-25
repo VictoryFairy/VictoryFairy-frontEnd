@@ -1,11 +1,7 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { GAMESTATUS_CANCELED } from "@/constants";
-import {
-  Game,
-  GameStatusCanceledType,
-  GameStatusType,
-} from "../../../types/Game";
+import { isCanceledGame } from "@/utils/isCanceledGame";
+import { Game } from "../../../types/Game";
 import Radio from "../../../components/common/Radio";
 import Text from "../../../components/common/Text";
 import Icon from "../../../components/common/Icon";
@@ -24,10 +20,6 @@ const DailyMatchItem = ({
   const isWinningTeam = (teamId: number) => {
     if (match.winningTeam === null) return false;
     return match.winningTeam.id === teamId;
-  };
-
-  const isCanceledGame = (status: GameStatusType) => {
-    return GAMESTATUS_CANCELED.includes(status as GameStatusCanceledType);
   };
 
   return (

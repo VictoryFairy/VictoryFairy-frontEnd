@@ -17,12 +17,8 @@ import { uploadImg } from "@/utils/uploadImg"; // Import the image upload utilit
 import { usePopup } from "@/hooks/usePopup"; // usePopup 사용
 import CheerTeamSelect from "@/components/register/CheerTeamSelect";
 import { typography } from "@/style/typography";
-import { GAMESTATUS_CANCELED } from "@/constants";
-import {
-  GameResultType,
-  GameStatusCanceledType,
-  GameStatusType,
-} from "@/types/Game";
+import { GameResultType } from "@/types/Game";
+import { isCanceledGame } from "@/utils/isCanceledGame";
 import TextAreaField from "../../components/common/TextAreaField";
 import InputField from "../../components/common/InputField";
 
@@ -138,10 +134,6 @@ const Detail = () => {
   };
 
   if (!registeredGame) return null;
-
-  const isCanceledGame = (status: GameStatusType) => {
-    return GAMESTATUS_CANCELED.includes(status as GameStatusCanceledType);
-  };
 
   const getResult = (): GameResultType => {
     if (watch("cheeringTeamId") === undefined) return null;
