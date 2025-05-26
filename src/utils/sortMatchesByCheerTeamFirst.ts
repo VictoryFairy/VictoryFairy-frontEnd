@@ -1,7 +1,7 @@
 import { useAuthStore } from "@/store/authStore";
 import { Game } from "@/types/Game";
 
-export const setCheerTeamFirst = (matches: Game[]) => {
+export const sortMatchesByCheerTeamFirst = (matches: Game[]) => {
   const { teamId } = useAuthStore.getState();
 
   return matches.sort((a, b) => {

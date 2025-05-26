@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useEffect } from "react";
-import { setCheerTeamFirst } from "@/utils/setCheerTeamFirst";
+import { sortMatchesByCheerTeamFirst } from "@/utils/sortMatchesByCheerTeamFirst";
 import { Game } from "../../../types/Game";
 import DailyMatchItem from "./DailyMatchItem";
 
@@ -15,16 +15,14 @@ const DailyMatch = ({
   selectedMatch,
   setSelectedMatch,
 }: DailyMatchProps) => {
-  const formatMatches = setCheerTeamFirst(matches);
-
   useEffect(() => {
-    setSelectedMatch(formatMatches[0]);
+    setSelectedMatch(sortMatchesByCheerTeamFirst(matches)[0]);
   }, [matches, setSelectedMatch]);
 
   return (
     <DailyMatchContainer>
-      {formatMatches &&
-        formatMatches.map((match) => (
+      {sortMatchesByCheerTeamFirst(matches) &&
+        sortMatchesByCheerTeamFirst(matches).map((match) => (
           <DailyMatchItem
             key={match.id}
             match={match}

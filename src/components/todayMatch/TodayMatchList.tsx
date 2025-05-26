@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { setCheerTeamFirst } from "@/utils/setCheerTeamFirst";
+import { sortMatchesByCheerTeamFirst } from "@/utils/sortMatchesByCheerTeamFirst";
 import TodayMatchItem from "./TodayMatchItem";
 import { useGame } from "../../hooks/useGame";
 import Text from "../common/Text";
@@ -8,7 +8,7 @@ const DATE = new Date();
 
 const TodayMatchList = () => {
   const { data } = useGame(DATE);
-  const formatMatches = data && setCheerTeamFirst(data);
+  const formatMatches = data && sortMatchesByCheerTeamFirst(data);
   return (
     <Container>
       <Text as='h1' variant='title_02'>
