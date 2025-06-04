@@ -2,13 +2,11 @@ import { ChangeEvent, useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { profileChange } from "@/api/mypage/mypage.api";
 import styled from "styled-components";
-import {
-  checkNicknameAvailability,
-  uploadProfileImage,
-} from "@/api/auth/auth.api";
+import { checkNicknameAvailability } from "@/api/auth/auth.api";
 import { usePopup } from "@/hooks/usePopup";
 import { useUserStore } from "@/store/userInfo";
 import { useMutation } from "@tanstack/react-query";
+import { uploadImg } from "@/utils/uploadImg";
 import Button from "../common/Button";
 import Text from "../common/Text";
 import Icon from "../common/Icon";
@@ -23,9 +21,7 @@ const ProfileChange = () => {
     const file = e.target.files?.[0];
     if (file) {
       try {
-        const formData = new FormData();
-        formData.append("file", file);
-        const profileImgUrl = await uploadProfileImage(formData);
+        const profileImgUrl = await uploadImg(file);
         setImage(profileImgUrl);
       } catch (err) {
         console.log(err);
