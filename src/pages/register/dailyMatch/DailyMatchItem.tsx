@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { isCanceledGame } from "@/utils/isCanceledGame";
-import { Game } from "../../../types/Game";
-import Radio from "../../../components/common/Radio";
-import Text from "../../../components/common/Text";
-import Icon from "../../../components/common/Icon";
+import { Game } from "@/types/Game";
+import Radio from "@/components/common/Radio";
+import Text from "@/components/common/Text";
+import Icon from "@/components/common/Icon";
 
 interface DailyMatchItemProps {
   match: Game;

@@ -44,7 +44,7 @@ const Detail = () => {
   const updateMutation = useMutation({
     mutationFn: async (updatedData: any) => {
       if (updatedData.img) {
-        updatedData.image = await uploadImg(updatedData.img);
+        updatedData.image = await uploadImg(updatedData.img, "registered-game");
       }
       return updateRegisteredGame(id, updatedData);
     },

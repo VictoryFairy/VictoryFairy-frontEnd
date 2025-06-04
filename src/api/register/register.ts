@@ -3,17 +3,17 @@ import { MyGame } from "@/types/Game";
 import authAxiosInstance from "../authAxios";
 
 // presigned url 요청
-export const requestPresignedUrl = async (imgObj: any): Promise<any> => {
+export const requestPresignedUrl = async (
+  imgObj: any,
+  type: "registered-game" | "profile",
+): Promise<any> => {
+  const endpoint = `/s3-store/presigned-url/${type}`;
   try {
-    const response = await authAxiosInstance.post(
-      "/s3-store/presigned-url/registered-game",
-      imgObj,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
+    const response = await authAxiosInstance.post(endpoint, imgObj, {
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+    });
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
