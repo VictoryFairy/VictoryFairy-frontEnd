@@ -24,7 +24,7 @@ const RegisterForm = () => {
     );
     try {
       const { img, seat, review, cheeringTeamId } = data;
-      const image = img ? await uploadImg(img) : null;
+      const image = img ? await uploadImg(img, "registered-game") : null;
 
       const registerData = {
         gameId: matchId,

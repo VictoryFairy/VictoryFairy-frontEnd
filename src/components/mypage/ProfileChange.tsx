@@ -21,7 +21,7 @@ const ProfileChange = () => {
     const file = e.target.files?.[0];
     if (file) {
       try {
-        const profileImgUrl = await uploadImg(file);
+        const profileImgUrl = await uploadImg(file, "profile");
         setImage(profileImgUrl);
       } catch (err) {
         console.log(err);

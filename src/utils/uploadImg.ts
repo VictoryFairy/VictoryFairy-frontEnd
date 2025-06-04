@@ -1,6 +1,9 @@
 import { requestPresignedUrl, putPresignedUrl } from "@/api/register/register";
 
-export const uploadImg = async (img: File) => {
+export const uploadImg = async (
+  img: File,
+  type: "registered-game" | "profile",
+) => {
   try {
     const imgObj = {
       fileName: img.name,
@@ -8,7 +11,7 @@ export const uploadImg = async (img: File) => {
       size: img.size,
     };
     /** 프리사인드 url 요청 */
-    const { presignedUrl } = await requestPresignedUrl(imgObj);
+    const { presignedUrl } = await requestPresignedUrl(imgObj, type);
     /** 프리사인드 url 업로드 */
     await putPresignedUrl(presignedUrl, img);
     /** 업로드 완료 후 이미지 url 반환 */
