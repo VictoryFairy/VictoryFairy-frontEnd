@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import Profile from "../components/mypage/Profile";
-import ProfileButtons from "../components/mypage/ProfileButtons";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { usePopup } from "@/hooks/usePopup";
+import Profile from "@/components/mypage/Profile";
+import ProfileButtons from "@/components/mypage/ProfileButtons";
 
 const MyPage = () => {
   const [searchParams] = useSearchParams();
