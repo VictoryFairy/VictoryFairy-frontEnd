@@ -17,6 +17,12 @@ import { uploadImg } from "@/utils/uploadImg"; // Import the image upload utilit
 import { usePopup } from "@/hooks/usePopup"; // usePopup 사용
 import CheerTeamSelect from "@/components/register/CheerTeamSelect";
 import { typography } from "@/style/typography";
+import { GAMESTATUS_CANCELED } from "@/constants";
+import {
+  GameResultType,
+  GameStatusCanceledType,
+  GameStatusType,
+} from "@/types/Game";
 import TextAreaField from "../../components/common/TextAreaField";
 import InputField from "../../components/common/InputField";
 
@@ -42,7 +48,7 @@ const Detail = () => {
   const updateMutation = useMutation({
     mutationFn: async (updatedData: any) => {
       if (updatedData.img) {
-        updatedData.image = await uploadImg(updatedData.img);
+        updatedData.image = await uploadImg(updatedData.img, "registered-game");
       }
       return updateRegisteredGame(id, updatedData);
     },
@@ -133,9 +139,13 @@ const Detail = () => {
 
   if (!registeredGame) return null;
 
-  const getResult = () => {
+  const isCanceledGame = (status: GameStatusType) => {
+    return GAMESTATUS_CANCELED.includes(status as GameStatusCanceledType);
+  };
+
+  const getResult = (): GameResultType => {
     if (watch("cheeringTeamId") === undefined) return null;
-    if (registeredGame.game.status === "우천취소") return "No Game";
+    if (isCanceledGame(registeredGame.game.status)) return "No game";
     if (watch("cheeringTeamId") === registeredGame.game.winningTeam.id) {
       return "Win";
     }
