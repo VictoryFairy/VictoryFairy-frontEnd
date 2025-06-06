@@ -30,6 +30,13 @@ const RegisterFormFields = ({
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const { ref, ...rest } = register("img");
 
+  // 메모 입력란 auto-resize용 핸들러
+  const handleReviewInput = (e: React.FormEvent<HTMLTextAreaElement>) => {
+    const textarea = e.currentTarget;
+    textarea.style.height = "auto";
+    textarea.style.height = `${textarea.scrollHeight}px`;
+  };
+
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
     if (files && files.length > 0) {
@@ -76,6 +83,7 @@ const RegisterFormFields = ({
       />
       <InputField
         label='좌석*'
+        className='seat-input'
         placeholder='123존 12열 1번'
         setValue={setValue}
         register={register}
@@ -84,12 +92,16 @@ const RegisterFormFields = ({
         type='input'
       />
       <TextAreaField
+        className='review-textarea'
         label='메모*'
         placeholder='직관 한 마디!'
         setValue={setValue}
         register={register}
         watch={watch}
         name='review'
+        onInput={handleReviewInput}
+        maxLength={200}
+        rows={1}
       />
       <Button size='big' type='submit' disabled={!watch("cheeringTeamId")}>
         직관 기록 하기
@@ -108,10 +120,26 @@ const Form = styled.form`
     display: none;
   }
 
+  ::placeholder {
+    color: var(--disabled-on);
+  }
+
   label {
     margin-bottom: 0;
     color: var(--gray-700);
     ${typography.caption}
+  }
+
+  .seat-input {
+    border-bottom: 1px solid var(--gray-400);
+    box-shadow: none;
+    margin-bottom: -16px;
+  }
+
+  .review-textarea {
+    padding: 8px 0px 8px 0px;
+    min-height: 0px;
+    border-bottom: 1px solid var(--gray-400);
   }
 `;
 

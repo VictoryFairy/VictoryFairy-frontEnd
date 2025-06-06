@@ -10,6 +10,7 @@ export const GlobalStyle = createGlobalStyle`
     --primary-color: #2F3036;
     --black: #000000;
     --white: #FFFFFF;
+    --disabled-on: #898C9B;
     --gray-900: #2F3036;
     --gray-800: #43444D;
     --gray-700: #545763;
