@@ -6,8 +6,8 @@ import styled from "styled-components";
 import Icon from "@/components/common/Icon";
 import Text from "@/components/common/Text";
 import { Team } from "@/types/Team";
-import CheerTeamSelect from "./CheerTeamSelect";
 import { typography } from "@/style/typography";
+import CheerTeamSelect from "./CheerTeamSelect";
 
 interface RegisterFormFieldsProps {
   onSubmit: (data: any) => void;
@@ -75,7 +75,7 @@ const RegisterFormFields = ({
         name='cheeringTeamId'
       />
       <InputField
-        label='좌석'
+        label='좌석*'
         placeholder='123존 12열 1번'
         setValue={setValue}
         register={register}
@@ -84,7 +84,7 @@ const RegisterFormFields = ({
         type='input'
       />
       <TextAreaField
-        label='메모'
+        label='메모*'
         placeholder='직관 한 마디!'
         setValue={setValue}
         register={register}
