@@ -5,9 +5,9 @@ import { useRef, useState } from "react";
 import styled from "styled-components";
 import Icon from "@/components/common/Icon";
 import Text from "@/components/common/Text";
-import { Team } from "@/types/Team";
-import CheerTeamSelect from "./CheerTeamSelect";
+import { Team } from "@/types/Game";
 import { typography } from "@/style/typography";
+import CheerTeamSelect from "./CheerTeamSelect";
 
 interface RegisterFormFieldsProps {
   onSubmit: (data: any) => void;

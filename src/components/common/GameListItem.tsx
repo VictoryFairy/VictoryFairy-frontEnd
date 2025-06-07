@@ -8,7 +8,7 @@ import Icon from "./Icon";
 export interface GameListItemProps
   extends Omit<HTMLAttributes<HTMLUListElement>, "onClick"> {
   result: GameResultType;
-  isWinningTeam: Team;
+  isWinningTeam: Team | null;
   homeTeam: Team;
   homeTeamScore: number;
   awayTeam: Team;

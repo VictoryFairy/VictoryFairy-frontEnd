@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useRegisteredGame } from "@/hooks/useRegisteredGame";
 import DailyMatch from "@/pages/register/dailyMatch/DailyMatch";
 import Loading from "@/components/common/Loading";
-import SelectionBar from "@/components/common/SelectionBar";
 import { useGame } from "../../hooks/useGame";
 import Button from "../../components/common/Button";
 import { Game } from "../../types/Game";
@@ -14,7 +13,7 @@ const SelectMatch = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedMatch, setSelectedMatch] = useState<Game | null>(null);
   const [selectMonth, setSelectMonth] = useState(new Date());
-  const [selectedMatchType, setSelectedMatchType] = useState<number>(0);
+
   const navigate = useNavigate();
 
   const { registeredGames } = useRegisteredGame(selectMonth);
@@ -26,9 +25,6 @@ const SelectMatch = () => {
     }
   };
 
-  const filterByGameType = () =>
-    matches?.filter((match) => match.gameType === selectedMatchType) as Game[];
-
   return (
     <SelectMatchContainer>
       <SelectMatchCalendar
@@ -37,18 +33,9 @@ const SelectMatch = () => {
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
       />
-      {selectedDate && (
-        <SelectionWrapper>
-          <SelectionBar
-            labels={["일반", "DH1", "DH2"]}
-            onSelectClick={setSelectedMatchType}
-            activeSelect={selectedMatchType}
-          />
-        </SelectionWrapper>
-      )}
 
       {(() => {
-        if (filterByGameType()?.length === 0) {
+        if (matches?.length === 0) {
           return (
             <div>
               <p>경기가 없습니다.</p>
@@ -61,7 +48,7 @@ const SelectMatch = () => {
         if (isSuccess && matches) {
           return (
             <DailyMatch
-              matches={filterByGameType()}
+              matches={matches}
               selectedMatch={selectedMatch}
               setSelectedMatch={setSelectedMatch}
             />
@@ -100,10 +87,6 @@ const SelectMatchContainer = styled.div`
   }
   .button {
   }
-`;
-
-const SelectionWrapper = styled.div`
-  margin-top: 20px;
 `;
 
 export default SelectMatch;
