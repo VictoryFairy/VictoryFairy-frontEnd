@@ -4,20 +4,40 @@ import { useNavigate } from "react-router-dom";
 import { useRegisteredGame } from "@/hooks/useRegisteredGame";
 import DailyMatch from "@/pages/register/dailyMatch/DailyMatch";
 import Loading from "@/components/common/Loading";
-import { useGame } from "../../hooks/useGame";
+import { getDailyMatch } from "@/api/game/game";
+import moment from "moment";
+import { useQuery } from "@tanstack/react-query";
 import Button from "../../components/common/Button";
 import { Game } from "../../types/Game";
 import SelectMatchCalendar from "./SelectMatchCalendar";
+import DoubleHeader from "./dailyMatch/DoubleHeader";
 
 const SelectMatch = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [selectedMatch, setSelectedMatch] = useState<Game | null>(null);
+  const [selectedMatch, setSelectedMatch] = useState<Game[] | null>(null);
   const [selectMonth, setSelectMonth] = useState(new Date());
 
   const navigate = useNavigate();
 
   const { registeredGames } = useRegisteredGame(selectMonth);
-  const { data: matches, isSuccess, isLoading } = useGame(selectedDate);
+
+  const {
+    data: matches,
+    isSuccess,
+    isLoading,
+  } = useQuery({
+    queryKey: ["dailyMatches", moment(selectedDate).format("YYYY-MM-DD")],
+    queryFn: () =>
+      selectedDate
+        ? getDailyMatch(
+            selectedDate.getFullYear(),
+            selectedDate.getMonth() + 1,
+            selectedDate.getDate(),
+          )
+        : null,
+    enabled: !!selectedDate,
+    staleTime: 1000 * 60 * 3,
+  });
 
   const handleClickButton = () => {
     if (selectedMatch) {
@@ -33,9 +53,8 @@ const SelectMatch = () => {
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
       />
-
       {(() => {
-        if (matches?.length === 0) {
+        if (Object.values(matches?.games || {}).length === 0) {
           return (
             <div>
               <p>경기가 없습니다.</p>
@@ -48,7 +67,7 @@ const SelectMatch = () => {
         if (isSuccess && matches) {
           return (
             <DailyMatch
-              matches={matches}
+              matchGroups={Object.values(matches.games)}
               selectedMatch={selectedMatch}
               setSelectedMatch={setSelectedMatch}
             />
@@ -56,7 +75,7 @@ const SelectMatch = () => {
         }
       })()}
 
-      {selectedMatch && matches?.length !== 0 && (
+      {selectedMatch && Object.values(matches?.games || {}).length !== 0 && (
         <Button
           className='button'
           onClick={handleClickButton}

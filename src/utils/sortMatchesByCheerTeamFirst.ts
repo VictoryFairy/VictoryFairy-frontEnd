@@ -1,17 +1,21 @@
 import { useAuthStore } from "@/store/authStore";
 import { Game } from "@/types/Game";
 
-export const sortMatchesByCheerTeamFirst = (matches: Game[]) => {
+export const sortMatchesByCheerTeamFirst = (matches: Game[][]): Game[][] => {
   const { teamId } = useAuthStore.getState();
 
-  return matches.sort((a, b) => {
-    const cheerTeamA = a.homeTeam.id === teamId || a.awayTeam.id === teamId;
-    const cheerTeamB = b.homeTeam.id === teamId || b.awayTeam.id === teamId;
+  return matches.sort((groupA, groupB) => {
+    const hasCheerTeamA = groupA.some(
+      (game) => game.homeTeam.id === teamId || game.awayTeam.id === teamId,
+    );
+    const hasCheerTeamB = groupB.some(
+      (game) => game.homeTeam.id === teamId || game.awayTeam.id === teamId,
+    );
 
-    if (cheerTeamA && !cheerTeamB) {
+    if (hasCheerTeamA && !hasCheerTeamB) {
       return -1;
     }
-    if (!cheerTeamA && cheerTeamB) {
+    if (!hasCheerTeamA && hasCheerTeamB) {
       return 1;
     }
     return 0;

@@ -5,29 +5,30 @@ import { Game } from "../../../types/Game";
 import DailyMatchItem from "./DailyMatchItem";
 
 interface DailyMatchProps {
-  matches: Game[];
-  selectedMatch: Game | null;
-  setSelectedMatch: React.Dispatch<React.SetStateAction<Game | null>>;
+  matchGroups: Game[][];
+  selectedMatch: Game[] | null;
+  setSelectedMatch: React.Dispatch<React.SetStateAction<Game[] | null>>;
 }
 
 const DailyMatch = ({
-  matches,
+  matchGroups,
   selectedMatch,
   setSelectedMatch,
 }: DailyMatchProps) => {
   useEffect(() => {
-    setSelectedMatch(sortMatchesByCheerTeamFirst(matches)[0]);
-  }, [matches, setSelectedMatch]);
+    setSelectedMatch(sortMatchesByCheerTeamFirst(matchGroups)[0]);
+  }, []);
 
   return (
     <DailyMatchContainer>
-      {sortMatchesByCheerTeamFirst(matches) &&
-        sortMatchesByCheerTeamFirst(matches).map((match) => (
+      {sortMatchesByCheerTeamFirst(matchGroups) &&
+        sortMatchesByCheerTeamFirst(matchGroups).map((group) => (
           <DailyMatchItem
-            key={match.id}
-            match={match}
-            $isSelected={selectedMatch?.id === match.id}
-            onSelect={() => setSelectedMatch(match)}
+            key={group[0].id}
+            match={group[0]}
+            $isSelected={selectedMatch?.[0]?.id === group[0].id}
+            onSelect={() => setSelectedMatch(group)}
+            $isRegistered={false}
           />
         ))}
     </DailyMatchContainer>

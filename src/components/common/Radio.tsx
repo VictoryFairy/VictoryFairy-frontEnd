@@ -9,9 +9,17 @@ export interface RadioProps
   checked: boolean;
   variant: "circle" | "square";
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
 }
 
-const Radio = ({ label, checked, variant, onChange, ...props }: RadioProps) => {
+const Radio = ({
+  label,
+  checked,
+  variant,
+  onChange,
+  disabled,
+  ...props
+}: RadioProps) => {
   return (
     <Label>
       <RadioInput
@@ -23,7 +31,7 @@ const Radio = ({ label, checked, variant, onChange, ...props }: RadioProps) => {
       {(() => {
         switch (variant) {
           case "circle":
-            return <CircleRadio checked={checked} />;
+            return <CircleRadio checked={checked} disabled />;
           case "square":
             return checked ? (
               <img src={checkBoxChecked} alt='checkbox' />
@@ -49,7 +57,7 @@ const RadioInput = styled.input`
   display: none;
 `;
 
-const CircleRadio = styled.span<{ checked: boolean }>`
+const CircleRadio = styled.span<{ checked: boolean; disabled?: boolean }>`
   display: inline-block;
   width: 24px;
   height: 24px;
@@ -59,6 +67,23 @@ const CircleRadio = styled.span<{ checked: boolean }>`
   transition: background-color 0.3s;
   border: ${({ checked }) =>
     checked ? "1px solid transparent" : "1px solid #2f3036"};
+
+  ${({ disabled }) =>
+    disabled &&
+    `
+    background-color: var(--disabled-on);
+    border: none;
+     &:after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #fff;
+      display: block;
+      margin: 50%;
+      transform: translate(-50%, -50%);
+    }
+  `}
 
   ${({ checked }) =>
     checked &&
@@ -73,7 +98,7 @@ const CircleRadio = styled.span<{ checked: boolean }>`
       margin: 50%;
       transform: translate(-50%, -50%);
     }
-  `}
+  `};
 `;
 
 const LabelText = styled.span`
