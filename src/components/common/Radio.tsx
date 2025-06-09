@@ -1,14 +1,17 @@
 import React from "react";
 import styled from "styled-components";
+import checkBoxUnchecked from "@/assets/images/checkbox-unchecked.png";
+import checkBoxChecked from "@/assets/images/checkbox-checked.png";
 
 export interface RadioProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   checked: boolean;
+  variant: "circle" | "square";
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Radio = ({ label, checked, onChange, ...props }: RadioProps) => {
+const Radio = ({ label, checked, variant, onChange, ...props }: RadioProps) => {
   return (
     <Label>
       <RadioInput
@@ -17,7 +20,20 @@ const Radio = ({ label, checked, onChange, ...props }: RadioProps) => {
         onChange={onChange}
         {...props}
       />
-      <CustomRadio checked={checked} />
+      {(() => {
+        switch (variant) {
+          case "circle":
+            return <CircleRadio checked={checked} />;
+          case "square":
+            return checked ? (
+              <img src={checkBoxChecked} alt='checkbox' />
+            ) : (
+              <img src={checkBoxUnchecked} alt='checkbox' />
+            );
+          default:
+            return null;
+        }
+      })()}
       <LabelText>{label}</LabelText>
     </Label>
   );
@@ -33,7 +49,7 @@ const RadioInput = styled.input`
   display: none;
 `;
 
-const CustomRadio = styled.span<{ checked: boolean }>`
+const CircleRadio = styled.span<{ checked: boolean }>`
   display: inline-block;
   width: 24px;
   height: 24px;
