@@ -22,6 +22,7 @@ export interface Game {
   stadium: {
     id: number;
     name: string;
+    fullName: string;
     latitude: number;
     longitude: number;
     address: string;
