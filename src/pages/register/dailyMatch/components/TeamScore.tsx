@@ -18,7 +18,7 @@ const TeamScore = ({
   isDoubleHeader,
 }: TeamScoreProps) => {
   return (
-    <TeamScoreContainer $isWinning={isWinning}>
+    <TeamScoreContainer $isWinning={isWinning} $isDoubleHeader={isDoubleHeader}>
       <Text variant='subtitle_02'>{team.name}</Text>
       {isDoubleHeader ? null : <Text variant='subtitle_02'>{score}</Text>}
       {isDoubleHeader ? null : isCanceled ? (
@@ -30,13 +30,20 @@ const TeamScore = ({
   );
 };
 
-const TeamScoreContainer = styled.div<{ $isWinning: boolean }>`
+const TeamScoreContainer = styled.div<{
+  $isWinning: boolean;
+  $isDoubleHeader: boolean;
+}>`
   display: flex;
   justify-content: space-between;
   min-width: 126px;
   position: relative;
-  color: ${({ $isWinning, theme }) =>
-    $isWinning ? theme.colors.primary : "var(--gray-200)"};
+  color: ${({ $isWinning, $isDoubleHeader, theme }) =>
+    $isDoubleHeader
+      ? theme.colors.primary
+      : $isWinning
+        ? theme.colors.primary
+        : "var(--gray-200)"};
 `;
 
 const WinningIcon = styled(Icon)`
