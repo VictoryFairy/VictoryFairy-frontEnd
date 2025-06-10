@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useEffect } from "react";
 import { sortMatchesByCheerTeamFirst } from "@/utils/sortMatchesByCheerTeamFirst";
+import { isRegistered } from "@/utils/isRegistered";
 import { Game } from "../../../types/Game";
 import DailyMatchItem from "./DailyMatchItem";
 
@@ -8,12 +9,14 @@ interface DailyMatchProps {
   matchGroups: Game[][];
   selectedMatch: Game[] | null;
   setSelectedMatch: React.Dispatch<React.SetStateAction<Game[] | null>>;
+  registeredGameIds: string[];
 }
 
 const DailyMatch = ({
   matchGroups,
   selectedMatch,
   setSelectedMatch,
+  registeredGameIds,
 }: DailyMatchProps) => {
   useEffect(() => {
     setSelectedMatch(sortMatchesByCheerTeamFirst(matchGroups)[0]);
@@ -28,7 +31,7 @@ const DailyMatch = ({
             match={group[0]}
             $isSelected={selectedMatch?.[0]?.id === group[0].id}
             onSelect={() => setSelectedMatch(group)}
-            $isRegistered={false}
+            $isRegistered={isRegistered(group, registeredGameIds)}
           />
         ))}
     </DailyMatchContainer>

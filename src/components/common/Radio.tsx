@@ -31,7 +31,7 @@ const Radio = ({
       {(() => {
         switch (variant) {
           case "circle":
-            return <CircleRadio checked={checked} disabled />;
+            return <CircleRadio checked={checked} disabled={disabled} />;
           case "square":
             return checked ? (
               <img src={checkBoxChecked} alt='checkbox' />

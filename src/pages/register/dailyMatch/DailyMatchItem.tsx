@@ -24,8 +24,7 @@ const DailyMatchItem = ({
 
   return (
     <DailyMatchItemContainer
-      // $isRegistered={$isRegistered}
-      $isRegistered
+      $isRegistered={$isRegistered}
       $isSelected={$isSelected}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}

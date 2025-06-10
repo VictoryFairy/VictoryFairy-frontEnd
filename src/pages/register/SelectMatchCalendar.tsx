@@ -22,10 +22,18 @@ const SelectMatchCalendar = ({
     );
   };
 
+  /**
+   * 날짜 클릭 시 선택된 날짜 변경
+   * @param date 선택된 날짜
+   */
   const handleClickDay = (date: Date) => {
     setSelectedDate(date);
   };
 
+  /**
+   * 월 변경 시 선택된 월 변경
+   * @param date 선택된 월
+   */
   const handleMonthChange = (date: Date) => {
     onMonthChange(date);
   };
