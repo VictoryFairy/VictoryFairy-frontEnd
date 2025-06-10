@@ -1,14 +1,14 @@
 import Radio from "@/components/common/Radio";
-import { GameType } from "@/types/Game";
+import { Game, GameType } from "@/types/Game";
 import styled from "styled-components";
 import Text from "@/components/common/Text";
+import moment from "moment";
 
 interface DoubleHeaderItemProps {
-  gameType: GameType;
-  time: string;
+  match: Game;
 }
 
-const DoubleHeaderItem = ({ gameType, time }: DoubleHeaderItemProps) => {
+const DoubleHeaderItem = ({ match }: DoubleHeaderItemProps) => {
   return (
     <DoubleHeaderItemContainer>
       <Radio
@@ -19,7 +19,7 @@ const DoubleHeaderItem = ({ gameType, time }: DoubleHeaderItemProps) => {
       />
       <TextContainer>
         {(() => {
-          switch (gameType) {
+          switch (match.gameType) {
             case GameType.DOUBLEHEADER_1:
               return <Text variant='subtitle_02'>더블헤더 1 차전</Text>;
             case GameType.DOUBLEHEADER_2:
@@ -29,7 +29,9 @@ const DoubleHeaderItem = ({ gameType, time }: DoubleHeaderItemProps) => {
           }
         })()}
         <Divider />
-        <TimeText variant='subtitle_02'>{time}</TimeText>
+        <TimeText variant='subtitle_02'>
+          {moment(match.time, "HH:mm:ss").format("HH:mm")}
+        </TimeText>
       </TextContainer>
     </DoubleHeaderItemContainer>
   );

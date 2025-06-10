@@ -1,10 +1,13 @@
 import styled from "styled-components";
+import { Game } from "@/types/Game";
 import DoubleHeaderItem from "./DoubleHeaderItem";
 
-const DoubleHeader = () => {
+const DoubleHeader = ({ group }: { group: Game[] }) => {
   return (
     <DoubleHeaderContainer>
-      <DoubleHeaderItem gameType={1} time='12:00' />
+      {group.map((match) => (
+        <DoubleHeaderItem key={match.id} match={match} />
+      ))}
     </DoubleHeaderContainer>
   );
 };
