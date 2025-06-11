@@ -3,9 +3,9 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "com.sngyo.www.twa",
+      "package_name": "com.sngyo.www",
       "sha256_cert_fingerprints": [
-        "C7:28:9A:1E:BA:93:30:1A:AB:27:F5:5F:C0:15:DA:D5:0C:E0:C0:6C:79:E2:5C:47:D0:7D:B8:4C:C3:EF:3C:5A"
+        "6C:46:22:50:C2:2C:96:35:6B:31:B5:8E:25:A8:9A:AF:D7:05:7A:BA:E5:EF:6E:15:1D:FC:3A:E4:F2:4E:E5:39"
       ]
     }
   }
