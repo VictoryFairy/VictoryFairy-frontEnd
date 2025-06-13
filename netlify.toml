@@ -8,5 +8,12 @@ status = 200
   to = "/robots.txt"
   status = 200
 
+[[redirects]]
+  from = "/.well-known/*"
+  to = "/.well-known/:splat"
+  status = 200
+  force = true
+
+
 [build]
   command = "npx puppeteer browsers install chrome && npx vite build"

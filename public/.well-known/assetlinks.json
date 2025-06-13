@@ -3,6 +3,16 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
+      "package_name": "com.sngyo.www.twa",
+      "sha256_cert_fingerprints": [
+        "CC:7D:4C:04:C3:4F:C8:1A:81:2C:40:A2:AA:60:A0:0B:BA:15:4E:B3:EE:70:B4:53:E5:56:92:C9:2F:A8:6F:66"
+      ]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
       "package_name": "com.sngyo.www",
       "sha256_cert_fingerprints": [
         "6C:46:22:50:C2:2C:96:35:6B:31:B5:8E:25:A8:9A:AF:D7:05:7A:BA:E5:EF:6E:15:1D:FC:3A:E4:F2:4E:E5:39"
