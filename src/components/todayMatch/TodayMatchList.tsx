@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { sortMatchesByCheerTeamFirst } from "@/utils/sortMatchesByCheerTeamFirst";
 import { Game } from "@/types/Game";
+import { useAuthStore } from "@/store/authStore";
 import TodayMatchItem from "./TodayMatchItem";
 import { useGame } from "../../hooks/useGame";
 import Text from "../common/Text";
@@ -10,6 +10,23 @@ const DATE = new Date();
 const TodayMatchList = () => {
   const { data } = useGame(DATE);
 
+  const setCheerTeamFirst = (matches: Game[]) => {
+    const { teamId } = useAuthStore.getState();
+
+    return matches.sort((a, b) => {
+      const cheerTeamA = a.homeTeam.id === teamId || a.awayTeam.id === teamId;
+      const cheerTeamB = b.homeTeam.id === teamId || b.awayTeam.id === teamId;
+
+      if (cheerTeamA && !cheerTeamB) {
+        return -1;
+      }
+      if (!cheerTeamA && cheerTeamB) {
+        return 1;
+      }
+      return 0;
+    });
+  };
+
   return (
     <Container>
       <Text as='h1' variant='title_02'>
@@ -17,7 +34,7 @@ const TodayMatchList = () => {
       </Text>
       <TodayMatchListContainer>
         {data && data?.length !== 0 ? (
-          sortMatchesByCheerTeamFirst(data as Game[])?.map((match) => (
+          setCheerTeamFirst(data as Game[])?.map((match) => (
             <TodayMatchItem key={match.id} match={match} />
           ))
         ) : (
