@@ -92,7 +92,6 @@ const DoubleHeaderMatchItemContainer = styled.div<{
   flex-direction: column;
   border-radius: 8px;
   border: 1px solid var(--disabled-on);
-  opacity: ${({ $allRegistered }) => ($allRegistered ? 0.6 : 1)};
   background-color: ${({ $allRegistered }) =>
     $allRegistered ? "var(--disabled-bg)" : "#fff"};
 `;
@@ -119,8 +118,6 @@ const DailyMatchItemContainer = styled(motion.div)<{
 
   .vertical-line {
     height: 100%;
-    border: ${({ $isRegistered }) =>
-      $isRegistered ? "0.1px solid var(--gray-100)" : "0.1px solid #efefef"};
     margin-left: 16px;
   }
 `;
@@ -136,7 +133,7 @@ const DoubleHeaderItemWrapper = styled.div<{
   padding: 16px;
   border-radius: 8px 8px 0px 0px;
   height: 80px;
-  border-bottom: 1px solid var(--gray-50);
+  border-bottom: 1px solid var(--gray-100);
 
   background-color: ${({ $isRegistered, $allRegistered }) =>
     $isRegistered || $allRegistered ? "var(--disabled-bg)" : "#fff"};

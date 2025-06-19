@@ -63,6 +63,7 @@ const DoubleHeaderContainer = styled.div<{
   $allRegistered: boolean;
 }>`
   padding: 0px 20px;
+  border-radius: 0px 0px 8px 8px;
   background-color: ${({ $allRegistered }) =>
     $allRegistered ? "var(--disabled-bg)" : "transparent"};
 `;
