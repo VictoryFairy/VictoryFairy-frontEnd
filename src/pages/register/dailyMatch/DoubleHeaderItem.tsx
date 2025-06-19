@@ -1,25 +1,35 @@
 import Radio from "@/components/common/Radio";
-import { GameType } from "@/types/Game";
+import { Game, GameType } from "@/types/Game";
 import styled from "styled-components";
 import Text from "@/components/common/Text";
+import moment from "moment";
 
 interface DoubleHeaderItemProps {
-  gameType: GameType;
-  time: string;
+  match: Game;
+  onSelect: (match: Game) => void;
+  checked: boolean;
+  disabled?: boolean;
 }
 
-const DoubleHeaderItem = ({ gameType, time }: DoubleHeaderItemProps) => {
+const DoubleHeaderItem = ({
+  match,
+  onSelect,
+  checked,
+  disabled = false,
+}: DoubleHeaderItemProps) => {
   return (
-    <DoubleHeaderItemContainer>
+    <DoubleHeaderItemContainer $disabled={disabled}>
       <Radio
         className='radio'
         variant='square'
-        checked={false}
-        onChange={() => {}}
+        checked={checked}
+        onChange={() => !disabled && onSelect(match)}
+        onClick={() => !disabled && onSelect(match)}
+        disabled={disabled}
       />
-      <TextContainer>
+      <TextContainer $disabled={disabled}>
         {(() => {
-          switch (gameType) {
+          switch (match.gameType) {
             case GameType.DOUBLEHEADER_1:
               return <Text variant='subtitle_02'>더블헤더 1 차전</Text>;
             case GameType.DOUBLEHEADER_2:
@@ -29,17 +39,20 @@ const DoubleHeaderItem = ({ gameType, time }: DoubleHeaderItemProps) => {
           }
         })()}
         <Divider />
-        <TimeText variant='subtitle_02'>{time}</TimeText>
+        <TimeText variant='subtitle_02' $disabled={disabled}>
+          {moment(match.time, "HH:mm:ss").format("HH:mm")}
+        </TimeText>
       </TextContainer>
     </DoubleHeaderItemContainer>
   );
 };
 
-const DoubleHeaderItemContainer = styled.div`
+const DoubleHeaderItemContainer = styled.div<{ $disabled?: boolean }>`
   display: flex;
   align-items: center;
   height: 50px;
   gap: 16px;
+  cursor: ${({ $disabled }) => ($disabled ? "not-allowed" : "pointer")};
 
   .radio {
     width: 18px;
@@ -51,7 +64,7 @@ const DoubleHeaderItemContainer = styled.div`
   }
 `;
 
-const TextContainer = styled.div`
+const TextContainer = styled.div<{ $disabled?: boolean }>`
   display: flex;
   align-items: center;
   gap: 8px;
@@ -64,8 +77,6 @@ const Divider = styled.span`
   transform: rotate(-90deg);
 `;
 
-const TimeText = styled(Text)`
-  color: #393a3d;
-`;
+const TimeText = styled(Text)<{ $disabled?: boolean }>``;
 
 export default DoubleHeaderItem;
