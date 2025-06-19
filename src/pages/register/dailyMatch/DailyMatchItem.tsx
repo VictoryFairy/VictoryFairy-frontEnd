@@ -91,6 +91,8 @@ const DoubleHeaderMatchItemContainer = styled.div<{
   display: flex;
   flex-direction: column;
   border-radius: 8px;
+  border: ${({ $allRegistered }) =>
+    $allRegistered ? "none" : "1px solid var(--disabled-on)"};
   background-color: ${({ $allRegistered }) =>
     $allRegistered ? "var(--disabled-bg)" : "#fff"};
 `;
@@ -133,7 +135,6 @@ const DoubleHeaderItemWrapper = styled.div<{
   border-radius: 8px 8px 0px 0px;
   height: 80px;
   border-bottom: 1px solid var(--gray-100);
-
   background-color: ${({ $isRegistered, $allRegistered }) =>
     $isRegistered || $allRegistered ? "var(--disabled-bg)" : "#fff"};
 
