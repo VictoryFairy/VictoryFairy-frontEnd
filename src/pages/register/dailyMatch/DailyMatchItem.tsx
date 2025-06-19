@@ -91,7 +91,6 @@ const DoubleHeaderMatchItemContainer = styled.div<{
   display: flex;
   flex-direction: column;
   border-radius: 8px;
-  border: 1px solid var(--disabled-on);
   background-color: ${({ $allRegistered }) =>
     $allRegistered ? "var(--disabled-bg)" : "#fff"};
 `;
