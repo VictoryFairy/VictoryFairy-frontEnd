@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { GameResultType } from "@/types/Game";
-import Text from "../common/Text";
+import Text from "../../common/Text";
 
 const FILTERS = [
   { label: "전체", value: "All" },

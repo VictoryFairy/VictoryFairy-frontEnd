@@ -8,9 +8,9 @@ import SelectionBar from "../common/SelectionBar";
 import GalleryTab from "./GalleryTab/GalleryTab";
 import MonthNav from "../common/MonthNav";
 import Text from "../common/Text";
-import ActionIcons from "./ActionIcons";
-import SearchBar from "./SearchBar";
-import FilterMenu from "./FilterMenu";
+import ActionIcons from "./_components/ActionIcons";
+import SearchBar from "./_components/SearchBar";
+import FilterMenu from "./_components/FilterMenu";
 import CalendarTab from "./calendarTab/CalendarTab";
 
 const WatchList = () => {
