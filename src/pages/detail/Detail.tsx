@@ -175,6 +175,7 @@ const Detail = () => {
         awayTeam={registeredGame.game.awayTeam}
         awayTeamScore={registeredGame.game.awayTeamScore}
         date={registeredGame.game.date}
+        time={registeredGame.game.time}
         stadium={registeredGame.game.stadium}
         status={registeredGame.game.status}
       />

@@ -26,6 +26,7 @@ const ListTab = ({ matches, onClick, children }: GameListItemProps) => {
             awayTeam={match.game.awayTeam}
             awayTeamScore={match.game.awayTeamScore}
             date={match.game.date}
+            time={match.game.time}
             stadium={match.game.stadium}
             status={match.game.status}
           />

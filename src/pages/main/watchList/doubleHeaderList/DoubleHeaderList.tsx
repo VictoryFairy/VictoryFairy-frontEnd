@@ -38,6 +38,7 @@ const DoubleHeaderList = () => {
               date={match.game.date}
               stadium={match.game.stadium}
               status={match.game.status}
+              time={match.game.time}
             />
           ))}
         </GameList>

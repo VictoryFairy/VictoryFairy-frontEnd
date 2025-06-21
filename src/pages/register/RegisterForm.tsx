@@ -203,6 +203,7 @@ const RegisterForm = () => {
         awayTeam={match.awayTeam}
         awayTeamScore={match.awayTeamScore}
         date={match.date}
+        time={match.time}
         stadium={match.stadium}
       />
       <hr className='divider' />

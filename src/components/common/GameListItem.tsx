@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Game, GameResultType, Team } from "@/types/Game";
 import { HTMLAttributes } from "react";
+import moment from "moment";
 import Text from "./Text";
 import ResultLabel from "./ResultLabel";
 import Icon from "./Icon";
@@ -14,6 +15,7 @@ export interface GameListItemProps
   awayTeam: Team;
   awayTeamScore: number;
   date: string;
+  time: string;
   stadium: Pick<Game, "stadium">["stadium"];
   status: Pick<Game, "status">["status"];
   onClick?: () => void;
@@ -27,13 +29,11 @@ const GameListItem = ({
   awayTeam,
   awayTeamScore,
   date,
+  time,
   stadium,
   status,
   onClick,
 }: GameListItemProps) => {
-  // 경기 중 일때 ???
-  // 응원팀 선택 전 일때 ???
-
   const isWinnigTeam = (teamId: number) => {
     if (!isWinningTeam) return false;
     if (isWinningTeam.id === teamId) {
@@ -73,7 +73,10 @@ const GameListItem = ({
       </div>
       <div className='vertical-line' />
       <div className='game-info-stadium'>
-        <Text variant='caption'>{date}</Text>
+        <div className='game-info-stadium-date'>
+          <Text variant='caption'>{moment(date).format("MM.DD")}</Text>
+          <Text variant='caption'>{moment(time, "HH:mm").format("HH:mm")}</Text>
+        </div>
         <Text variant='caption'>
           <Icon icon='IcLocation' width={15} height={15} />
           {stadium.name} 야구장
@@ -124,6 +127,10 @@ export const GameListItemContainer = styled.div`
     gap: 8px;
     margin-left: -12px;
     color: var(--primary-color);
+    .game-info-stadium-date {
+      display: flex;
+      gap: 8px;
+    }
   }
   .winning {
     color: var(--primary-color);
