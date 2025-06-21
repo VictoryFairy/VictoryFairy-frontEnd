@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { MyGame } from "@/types/Game";
 import { HTMLAttributes } from "react";
-import GameListItem from "../../common/GameListItem";
+import GameListItem from "@/components/common/GameListItem";
 
 interface GameListItemProps
   extends Omit<HTMLAttributes<HTMLUListElement>, "onClick"> {

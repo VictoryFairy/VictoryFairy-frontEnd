@@ -4,6 +4,7 @@ import { Suspense, lazy } from "react";
 import Loading from "@/components/common/Loading";
 import Info from "@/pages/Info";
 import TeamSelect from "@/pages/TeamSelect";
+import DoubleHeaderList from "@/components/watchList/doubleHeaderList/DoubleHeaderList";
 import Layout from "../components/layout/Layout";
 import Icon from "../components/common/Icon";
 import { useSignupStore } from "../store/signupStep";
@@ -89,6 +90,16 @@ const Router = createBrowserRouter([
             <Home />
           </Suspense>
         ),
+      },
+    ],
+  },
+  {
+    path: "/double-header-list",
+    element: <Layout />,
+    children: [
+      {
+        path: "/double-header-list",
+        element: <DoubleHeaderList />,
       },
     ],
   },
