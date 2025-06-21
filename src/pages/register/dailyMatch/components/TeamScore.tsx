@@ -38,11 +38,11 @@ const TeamScoreContainer = styled.div<{
   justify-content: space-between;
   min-width: 126px;
   position: relative;
-  color: ${({ $isWinning, $isDoubleHeader, theme }) =>
+  color: ${({ $isWinning, $isDoubleHeader }) =>
     $isDoubleHeader
-      ? theme.colors.primary
+      ? "var(--primary-color)"
       : $isWinning
-        ? theme.colors.primary
+        ? "var(--primary-color)"
         : "var(--gray-200)"};
 `;
 
