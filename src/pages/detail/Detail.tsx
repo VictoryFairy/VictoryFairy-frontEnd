@@ -138,7 +138,7 @@ const Detail = () => {
   const getResult = (): GameResultType => {
     if (watch("cheeringTeamId") === undefined) return null;
     if (isCanceledGame(registeredGame.game.status)) return "No game";
-    if (watch("cheeringTeamId") === registeredGame.game.winningTeam.id) {
+    if (watch("cheeringTeamId") === registeredGame.game.winningTeam?.id) {
       return "Win";
     }
     if (
