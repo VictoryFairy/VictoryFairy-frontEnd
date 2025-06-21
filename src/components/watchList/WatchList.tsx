@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState, useMemo } from "react";
-import { GameStatus, MyGame } from "@/types/Game";
+import { GameResultType, MyGame } from "@/types/Game";
 import { useNavigate } from "react-router-dom";
 import { useRegisteredGame } from "@/hooks/useRegisteredGame";
 import ListTab from "./ListTab/ListTab";
@@ -23,7 +23,7 @@ const WatchList = () => {
     value: "",
   });
   const [isFilter, setIsFilter] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState<GameStatus>("All");
+  const [selectedFilter, setSelectedFilter] = useState<GameResultType>("All");
 
   const { registeredGames, isSuccess } = useRegisteredGame(selectMonth);
 
@@ -52,7 +52,7 @@ const WatchList = () => {
     });
   };
 
-  const handleFilterSelect = (filterType: GameStatus) => {
+  const handleFilterSelect = (filterType: GameResultType) => {
     setSelectedFilter(filterType);
     setIsFilter(false);
   };
@@ -79,7 +79,7 @@ const WatchList = () => {
 
   const renderContent = () => {
     switch (activeSelect) {
-      case 0:
+      case 0 /* 달력 */:
         return (
           <CalendarTab
             onMonthChange={handleMonthChange}
@@ -87,7 +87,7 @@ const WatchList = () => {
             selectedMonth={selectMonth}
           />
         );
-      case 1:
+      case 1 /* 리스트 */:
         return (
           <ListTab
             matches={isSuccess ? filteredRegisteredGames! : []}
@@ -98,7 +98,7 @@ const WatchList = () => {
             />
           </ListTab>
         );
-      case 2:
+      case 2 /* 갤러리 */:
         return (
           <GalleryTab
             onClick={(match: MyGame) => handleClickMatch(match.id)}

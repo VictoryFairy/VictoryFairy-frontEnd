@@ -3,6 +3,7 @@ import { MyGame } from "@/types/Game";
 import moment from "moment";
 import Calendar from "@/components/common/Calendar";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "@/store/authStore";
 
 interface CalendarProps {
   registeredGames: MyGame[];
@@ -31,6 +32,44 @@ const CalendarTab = ({
     const match = registeredGames?.find(
       (item: any) => moment(date).format("YYYY-MM-DD") === item.game.date,
     );
+    // 같은 날짜의 경기가 2개 일 경우
+    const sameDateMatches = registeredGames?.filter(
+      (item: any) => moment(date).format("YYYY-MM-DD") === item.game.date,
+    );
+
+    // 응원팀에 따라 더블헤더 아이콘
+    const doubleHeaderIcon = () => {
+      const { teamId } = useAuthStore.getState();
+      switch (teamId) {
+        case 1:
+          return <Icon icon='IcLTDoubleHeader' cursor='pointer' />;
+        case 2:
+          return <Icon icon='IcDSDoubleHeader' cursor='pointer' />;
+        case 3:
+          return <Icon icon='IcKIADoubleHeader' cursor='pointer' />;
+        case 4:
+          return <Icon icon='IcSSDoubleHeader' cursor='pointer' />;
+        case 5:
+          return <Icon icon='IcSSGDoubleHeader' cursor='pointer' />;
+        case 6:
+          return <Icon icon='IcNCDoubleHeader' cursor='pointer' />;
+        case 7:
+          return <Icon icon='IcLGDoubleHeader' cursor='pointer' />;
+        case 8:
+          return <Icon icon='IcKWDoubleHeader' cursor='pointer' />;
+        case 9:
+          return <Icon icon='IcKTDoubleHeader' cursor='pointer' />;
+        case 10:
+          return <Icon icon='IcHHDoubleHeader' cursor='pointer' />;
+        default:
+          return null;
+      }
+    };
+
+    if (sameDateMatches.length > 1) {
+      return doubleHeaderIcon();
+    }
+
     if (match && match.status === "Win") {
       return (
         <Icon
