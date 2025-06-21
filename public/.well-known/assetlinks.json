@@ -5,7 +5,17 @@
       "namespace": "android_app",
       "package_name": "com.sngyo.www.twa",
       "sha256_cert_fingerprints": [
-        "C7:28:9A:1E:BA:93:30:1A:AB:27:F5:5F:C0:15:DA:D5:0C:E0:C0:6C:79:E2:5C:47:D0:7D:B8:4C:C3:EF:3C:5A"
+        "CC:7D:4C:04:C3:4F:C8:1A:81:2C:40:A2:AA:60:A0:0B:BA:15:4E:B3:EE:70:B4:53:E5:56:92:C9:2F:A8:6F:66"
+      ]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.sngyo.www",
+      "sha256_cert_fingerprints": [
+        "54:F4:3E:32:32:CA:61:41:46:9D:82:78:C7:A0:A3:0D:6C:82:72:68:8D:B2:86:FB:61:3F:B7:0E:8A:AF:53:D4"
       ]
     }
   }

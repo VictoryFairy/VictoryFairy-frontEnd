@@ -46,9 +46,10 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.svg"],
       manifest: {
-        name: "Victory-fairy",
-        short_name: "Victory-fairy",
+        name: "승리요정",
+        short_name: "승리요정",
         theme_color: "#ffffff",
+        background_color: "#2F3036",
         display: "standalone",
         id: "com.sngyo.Victoryfairy",
         icons: [

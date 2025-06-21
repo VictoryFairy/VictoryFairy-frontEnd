@@ -38,6 +38,7 @@ const RankPopup = ({
     queryKey: ["getRankList", { teamId }],
     queryFn: () => getRankList(teamId),
     refetchOnWindowFocus: true,
+    enabled: isOpen,
   });
 
   useEffect(() => {
