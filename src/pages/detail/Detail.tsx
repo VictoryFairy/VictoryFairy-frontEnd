@@ -64,12 +64,16 @@ const Detail = () => {
     mutationFn: () => deleteRegisteredGame(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["registeredGame"] });
-      navigate("/home");
-
       openPopup({
         title: "삭제 완료",
         message: "게임 정보가 삭제되었습니다.",
-        buttons: [{ label: "확인", variant: "confirm", onClick: closePopup }],
+        buttons: [
+          {
+            label: "확인",
+            variant: "confirm",
+            onClick: () => navigate("/home"),
+          },
+        ],
       });
     },
   });

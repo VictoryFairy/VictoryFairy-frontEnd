@@ -56,26 +56,42 @@ const SelectMatch = () => {
   };
 
   /**
+   * 게임 ID에서 경기 구분 번호(0,1,2)를 추출
+   * @param gameId - 전체 게임 ID (ex: "20250511NCOB2")
+   * @returns 0,1,2
+   */
+  const getGameNumber = (gameId: string) => {
+    return gameId.slice(-1); // 마지막 문자(0,1,2) 추출
+  };
+
+  /**
    * 이미 등록된 경기가 있는 날짜에 다른 경기를 등록하려고 하는지 확인
-   * @returns 중복 등록 시도 여부
+   * @returns { type: 'none' | 'same_time' | 'different_game' } 중복 유형
    */
   const checkDuplicateRegistration = () => {
-    if (!selectedMatch || !matches) return false;
+    // 선택한 경기가 없거나 경기 정보를 가져오는데 실패한 경우
+    if (!selectedMatch || !matches) return { type: "none" };
 
     // 이미 등록된 경기가 있는지 확인
     const hasRegisteredGames = matches.registeredGameIds.length > 0;
-    if (!hasRegisteredGames) return false;
+    if (!hasRegisteredGames) return { type: "none" };
 
-    // 등록된 경기들의 기본 ID 목록
+    // 등록된 경기들의 기본 ID와 구분 번호
     const registeredBaseIds = matches.registeredGameIds.map((id) =>
       getBaseGameId(id),
+    );
+    const registeredGameNumbers = matches.registeredGameIds.map((id) =>
+      getGameNumber(id),
     );
 
     // 더블헤더인 경우
     if (selectedMatch.length === 2) {
-      // 선택한 더블헤더 경기들의 기본 ID
+      // 선택한 더블헤더 경기들의 기본 ID와 구분 번호
       const selectedBaseIds = selectedDoubleHeader.map((game) =>
         getBaseGameId(game.id),
+      );
+      const selectedGameNumbers = selectedDoubleHeader.map((game) =>
+        getGameNumber(game.id),
       );
 
       // 선택한 더블헤더가 이미 등록된 경기와 같은 기본 경기인지 확인
@@ -84,22 +100,45 @@ const SelectMatch = () => {
       );
 
       // 같은 기본 경기라면 등록 가능 (중복 아님)
-      if (isSameBaseGame) return false;
+      if (isSameBaseGame) return { type: "none" };
 
-      // 다른 기본 경기라면 중복
-      return true;
+      // 1. 등록된 경기에서 같은 구분번호가 있을 경우 -> 같은 시간 경기 모달
+      const hasSameGameNumber = selectedGameNumbers.some((gameNumber) =>
+        registeredGameNumbers.includes(gameNumber),
+      );
+
+      if (hasSameGameNumber) {
+        return { type: "same_time" };
+      }
+
+      // 2. 같은 경기가 아닌데 2차전을 등록하려고 하는 경우 -> 동일 경기 모달
+      // (다른 기본 경기라면 모두 동일 경기 모달)
+      return { type: "different_game" };
     }
+
     // 일반 경기인 경우
     const selectedBaseId = getBaseGameId(selectedMatch[0].id);
+    const selectedGameNumber = getGameNumber(selectedMatch[0].id);
 
     // 선택한 경기가 이미 등록된 경기와 같은 기본 경기인지 확인
     const isSameBaseGame = registeredBaseIds.includes(selectedBaseId);
 
     // 같은 기본 경기라면 등록 가능 (중복 아님)
-    if (isSameBaseGame) return false;
+    if (isSameBaseGame) return { type: "none" };
 
-    // 다른 기본 경기라면 중복
-    return true;
+    // 3. 일반경기를 등록할 때, 이미 다른 더블헤더(1 or 2)가 등록되어 있을 경우 -> 동일 경기 모달
+    // (선택한 경기가 0이고, 등록된 경기에 1 또는 2가 있는 경우)
+    if (selectedGameNumber === "0") {
+      const hasDoubleHeaderRegistered = registeredGameNumbers.some(
+        (num) => num === "1" || num === "2",
+      );
+      if (hasDoubleHeaderRegistered) {
+        return { type: "different_game" };
+      }
+    }
+
+    // 완전히 다른 기본 경기라면 동일 경기 모달
+    return { type: "different_game" };
   };
 
   /**
@@ -109,7 +148,25 @@ const SelectMatch = () => {
   const handleClickButton = () => {
     if (selectedMatch) {
       // 중복 등록 체크
-      if (checkDuplicateRegistration()) {
+      const duplicateCheck = checkDuplicateRegistration();
+
+      if (duplicateCheck.type === "same_time") {
+        openPopup({
+          title: "경기 등록 시간이 겹칩니다.",
+          message:
+            "같은 시간대의 다른 경기가 이미 등록되어 있습니다.\n기존 경기를 삭제하고 기록해주세요.",
+          buttons: [
+            {
+              label: "확인",
+              variant: "confirm",
+              onClick: closePopup,
+            },
+          ],
+        });
+        return;
+      }
+
+      if (duplicateCheck.type === "different_game") {
         openPopup({
           title: "동일 경기의 더블헤더만\n등록 가능합니다.",
           message:
