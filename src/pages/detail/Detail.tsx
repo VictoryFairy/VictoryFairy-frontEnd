@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -12,13 +12,12 @@ import Text from "@/components/common/Text";
 import Icon from "@/components/common/Icon";
 import DropDown from "@/components/detail/DropDown";
 import styled from "styled-components";
-import Button from "@/components/common/Button";
-import { uploadImg } from "@/utils/uploadImg"; // Import the image upload utility
-import { usePopup } from "@/hooks/usePopup"; // usePopup 사용
-import CheerTeamSelect from "@/components/register/CheerTeamSelect";
+import { uploadImg } from "@/utils/uploadImg";
+import { usePopup } from "@/hooks/usePopup";
 import { typography } from "@/style/typography";
 import { GameResultType } from "@/types/Game";
 import { isCanceledGame } from "@/utils/isCanceledGame";
+import RegisterFormFields from "@/components/register/RegisterFormFields";
 import TextAreaField from "../../components/common/TextAreaField";
 import InputField from "../../components/common/InputField";
 
@@ -37,7 +36,15 @@ const Detail = () => {
     queryFn: () => getRegisteredGameById(id),
   });
 
-  const { register, watch, setValue, reset, handleSubmit } = useForm({
+  const {
+    register,
+    watch,
+    setValue,
+    reset,
+    handleSubmit,
+    formState,
+    clearErrors,
+  } = useForm({
     mode: "onChange",
   });
 
@@ -57,6 +64,7 @@ const Detail = () => {
         message: "게임 정보가 성공적으로 수정되었습니다.",
         buttons: [{ label: "확인", variant: "confirm", onClick: closePopup }],
       });
+      setIsEditing(!$isEditing);
     },
   });
 
@@ -82,9 +90,6 @@ const Detail = () => {
     registeredGame?.image || null,
   );
 
-  const inputImgRef = useRef<HTMLInputElement>(null);
-  const { ref, ...rest } = register("img");
-
   useEffect(() => {
     if (registeredGame) {
       reset({
@@ -99,7 +104,6 @@ const Detail = () => {
 
   const onSubmit = (formData: any) => {
     updateMutation.mutate(formData);
-    setIsEditing(!$isEditing);
   };
 
   const handleEdit = () => {
@@ -119,22 +123,6 @@ const Detail = () => {
         },
       ],
     });
-  };
-
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { files } = event.target;
-    if (files && files.length > 0) {
-      const file = files[0];
-      const imageUrl = URL.createObjectURL(file);
-      setPreviewImage(imageUrl);
-      setValue("img", file);
-    }
-  };
-
-  const handleClickImageUpload = () => {
-    if ($isEditing) {
-      inputImgRef.current?.click();
-    }
   };
 
   if (!registeredGame) return null;
@@ -166,7 +154,9 @@ const Detail = () => {
           )} ${registeredGame.game.homeTeam.name} vs ${registeredGame.game.awayTeam.name}`}</Text>
         </div>
         <div>
-          <DropDown onEdit={handleEdit} onDelete={handleDelete} />
+          {$isEditing ? null : (
+            <DropDown onEdit={handleEdit} onDelete={handleDelete} />
+          )}
         </div>
       </Header>
       {/* 경기 결과 표시 */}
@@ -185,44 +175,42 @@ const Detail = () => {
       />
       {/* 직관 기록 수정 폼 */}
       <hr className='divider' />
-      <DetailContainer onSubmit={handleSubmit(onSubmit)}>
-        <input
-          className='img-input'
-          type='file'
-          accept='image/jpg, image/jpeg, image/png'
-          {...rest}
-          ref={inputImgRef}
-          onChange={handleImageChange}
+      {$isEditing ? (
+        <RegisterFormFields
+          onSubmit={handleSubmit(onSubmit)}
+          watch={watch}
+          register={register}
+          setValue={setValue}
+          homeTeam={registeredGame.game.homeTeam}
+          awayTeam={registeredGame.game.awayTeam}
+          matchId={registeredGame.game.id}
+          mode='edit'
+          defaultValues={{
+            cheeringTeamId: registeredGame.cheeringTeam.id,
+            seat: registeredGame.seat,
+            review: registeredGame.review,
+            image: registeredGame.image,
+          }}
+          isReviewValid={!!formState.errors.review}
+          clearErrors={clearErrors}
         />
-        {/* 직관 사진 업로드 컨테이너 */}
-        <ImgUploadContainer
-          $isEditing={$isEditing}
-          $hasImage={!!previewImage}
-          onClick={handleClickImageUpload}>
-          {/* 직관 사진 미리보기 */}
-          {previewImage ? (
-            <PreviewImage src={previewImage} alt='직관 사진' />
-          ) : (
-            <ImgWrraper>
-              <Icon icon='IcCamera' width={24} height={24} />
-              <Text variant='caption'>직관 사진을 업로드해주세요</Text>
-            </ImgWrraper>
-          )}
-        </ImgUploadContainer>
-        {/* 응원팀 선택 컴포넌트 */}
-        {$isEditing ? (
-          <CheerTeamSelect
-            homeTeam={registeredGame.game.homeTeam}
-            awayTeam={registeredGame.game.awayTeam}
-            setValue={setValue}
-            watch={watch}
-            name='cheeringTeamId'
-            defaultValue={registeredGame.cheeringTeam.id}
-          />
-        ) : (
+      ) : (
+        <DetailContainer>
+          {/* 직관 사진 표시 (읽기 전용) */}
+          <ImgUploadContainer $isEditing={false} $hasImage={!!previewImage}>
+            {previewImage ? (
+              <PreviewImage src={previewImage} alt='직관 사진' />
+            ) : (
+              <ImgWrraper>
+                <Icon icon='IcCamera' width={24} height={24} />
+                <Text variant='caption'>직관 사진을 업로드해주세요</Text>
+              </ImgWrraper>
+            )}
+          </ImgUploadContainer>
+          {/* 응원팀 표시 (읽기 전용) */}
           <InputField
             name='cheeringTeamName'
-            label='응원팀*'
+            label='응원팀'
             type='text'
             className='cheering-team-name'
             register={register}
@@ -231,34 +219,28 @@ const Detail = () => {
             disabled
             clearable={false}
           />
-        )}
-        {/* 좌석 입력 필드 */}
-        <InputField
-          name='seat'
-          label='좌석'
-          type='text'
-          register={register}
-          watch={watch}
-          setValue={setValue}
-          disabled={!$isEditing}
-          clearable={false}
-        />
-        {/* 메모 입력 필드 */}
-        <TextAreaField
-          name='review'
-          label='메모'
-          register={register}
-          watch={watch}
-          setValue={setValue}
-          disabled={!$isEditing}
-        />
-        {/* 수정 완료 버튼 */}
-        {$isEditing && (
-          <Button size='big' type='submit'>
-            <Text variant='title_02'>수정완료</Text>
-          </Button>
-        )}
-      </DetailContainer>
+          {/* 좌석 표시 (읽기 전용) */}
+          <InputField
+            name='seat'
+            label='좌석'
+            type='text'
+            register={register}
+            watch={watch}
+            setValue={setValue}
+            disabled
+            clearable={false}
+          />
+          {/* 메모 표시 (읽기 전용) */}
+          <TextAreaField
+            name='review'
+            label='메모'
+            register={register}
+            watch={watch}
+            setValue={setValue}
+            disabled
+          />
+        </DetailContainer>
+      )}
       {renderPopup()}
     </Layout>
   );
@@ -335,7 +317,7 @@ const Header = styled.div`
   z-index: 1;
 `;
 
-const DetailContainer = styled.form`
+const DetailContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;

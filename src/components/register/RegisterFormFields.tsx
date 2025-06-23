@@ -18,6 +18,14 @@ interface RegisterFormFieldsProps {
   awayTeam: Team;
   isReviewValid?: any;
   clearErrors?: any;
+  matchId: string;
+  mode?: "register" | "edit";
+  defaultValues?: {
+    cheeringTeamId?: number;
+    seat?: string;
+    review?: string;
+    image?: string;
+  };
 }
 
 const RegisterFormFields = ({
@@ -29,12 +37,37 @@ const RegisterFormFields = ({
   awayTeam,
   isReviewValid,
   clearErrors,
+  matchId,
+  mode = "register",
+  defaultValues,
 }: RegisterFormFieldsProps) => {
   const inputImgRef = useRef<HTMLInputElement>(null);
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [isErrorCleared, setIsErrorCleared] = useState(false);
+  const [previewImage, setPreviewImage] = useState<string | null>(
+    mode === "edit" && defaultValues?.image ? defaultValues.image : null,
+  );
+  const [isErrorCleared, setIsErrorCleared] = useState(mode === "edit");
   const [shouldShake, setShouldShake] = useState(false);
   const { ref, ...rest } = register("img");
+
+  // matchId가 변경될 때마다 이미지 미리보기 초기화 (register 모드에서만)
+  useEffect(() => {
+    if (mode === "register") {
+      setPreviewImage(null);
+      // input 파일도 초기화
+      if (inputImgRef.current) {
+        inputImgRef.current.value = "";
+      }
+    }
+  }, [matchId, mode]);
+
+  // edit 모드에서 defaultValues 설정
+  useEffect(() => {
+    if (mode === "edit" && defaultValues) {
+      if (defaultValues.image) {
+        setPreviewImage(defaultValues.image);
+      }
+    }
+  }, [mode, defaultValues]);
 
   // 실제 에러 상태 계산 (로컬 상태로 오버라이드)
   const actualErrorState = isReviewValid && !isErrorCleared;
@@ -113,6 +146,9 @@ const RegisterFormFields = ({
         setValue={setValue}
         watch={watch}
         name='cheeringTeamId'
+        defaultValue={
+          mode === "edit" ? defaultValues?.cheeringTeamId : undefined
+        }
       />
       <InputField
         label='좌석*'
@@ -156,7 +192,7 @@ const RegisterFormFields = ({
           !watch("review") ||
           actualErrorState
         }>
-        직관 기록 하기
+        {mode === "register" ? "직관 기록 하기" : "수정완료"}
       </Button>
     </Form>
   );

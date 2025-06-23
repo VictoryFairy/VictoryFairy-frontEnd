@@ -226,6 +226,7 @@ const RegisterForm = () => {
         awayTeam={match.awayTeam}
         isReviewValid={!!formState.errors.review}
         clearErrors={clearErrors}
+        matchId={matchId}
       />
 
       {renderPopup()}
