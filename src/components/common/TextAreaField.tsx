@@ -5,6 +5,7 @@ import {
   FieldError,
   UseFormWatch,
   UseFormSetValue,
+  RegisterOptions,
 } from "react-hook-form";
 
 interface TextAreaFieldProps
@@ -16,6 +17,7 @@ interface TextAreaFieldProps
   setValue: UseFormSetValue<any>;
   error?: FieldError;
   maxLength?: number;
+  validation?: RegisterOptions;
 }
 
 const TextAreaField = ({
@@ -29,6 +31,7 @@ const TextAreaField = ({
   error,
   disabled,
   rows = 2,
+  validation,
   ...textareaProps
 }: TextAreaFieldProps) => {
   const data = watch(name) as string;
@@ -52,7 +55,8 @@ const TextAreaField = ({
           rows={rows}
           disabled={disabled}
           maxLength={maxLength}
-          {...register(name)}
+          $hasError={!!error}
+          {...register(name, validation)}
           {...textareaProps}
         />
       </InputWrapper>
@@ -82,12 +86,12 @@ const InputWrapper = styled.div`
   position: relative;
 `;
 
-const StyledTextArea = styled.textarea`
+const StyledTextArea = styled.textarea<{ $hasError?: boolean }>`
   width: 100%;
   padding: 8px;
   outline: none;
   border: none;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid ${(props) => (props.$hasError ? "red" : "#ccc")};
   resize: vertical;
   min-height: 100px;
   background-color: ${(prop) => (prop.disabled ? "var(--gray-50)" : "white")};

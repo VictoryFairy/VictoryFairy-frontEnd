@@ -33,9 +33,19 @@ const RegisterForm = () => {
   };
 
   const matchId = match.id; // 현재 경기의 ID
-  const { register, watch, handleSubmit, setValue, reset } = useForm();
+  const {
+    register,
+    watch,
+    handleSubmit,
+    setValue,
+    reset,
+    formState,
+    clearErrors,
+  } = useForm({
+    mode: "onSubmit",
+    reValidateMode: "onChange",
+  });
   const { openPopup, renderPopup, closePopup } = usePopup();
-
   // 더블헤더 경기인지 확인 (경기가 2개 이상이면 더블헤더)
   const isDoubleHeader = doubleHeader && doubleHeader.length > 1;
 
@@ -214,6 +224,8 @@ const RegisterForm = () => {
         setValue={setValue}
         homeTeam={match.homeTeam}
         awayTeam={match.awayTeam}
+        isReviewValid={!!formState.errors.review}
+        clearErrors={clearErrors}
       />
 
       {renderPopup()}

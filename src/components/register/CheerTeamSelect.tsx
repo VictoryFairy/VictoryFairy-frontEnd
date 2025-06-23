@@ -66,7 +66,7 @@ const CheerTeamSelect = ({
 
   return (
     <CheerTeamSelectContainer ref={dropdownRef}>
-      <Text color='var(--disabled-on)' className='label' variant='caption'>
+      <Text color='var(--gray-700)' className='label' variant='caption'>
         응원팀*
       </Text>
       <div

@@ -1,7 +1,7 @@
 import TextAreaField from "@/components/common/TextAreaField";
 import InputField from "@/components/common/InputField";
 import Button from "@/components/common/Button";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import Icon from "@/components/common/Icon";
 import Text from "@/components/common/Text";
@@ -16,6 +16,8 @@ interface RegisterFormFieldsProps {
   setValue: any;
   homeTeam: Team;
   awayTeam: Team;
+  isReviewValid?: any;
+  clearErrors?: any;
 }
 
 const RegisterFormFields = ({
@@ -25,16 +27,47 @@ const RegisterFormFields = ({
   setValue,
   homeTeam,
   awayTeam,
+  isReviewValid,
+  clearErrors,
 }: RegisterFormFieldsProps) => {
   const inputImgRef = useRef<HTMLInputElement>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [isErrorCleared, setIsErrorCleared] = useState(false);
+  const [shouldShake, setShouldShake] = useState(false);
   const { ref, ...rest } = register("img");
+
+  // 실제 에러 상태 계산 (로컬 상태로 오버라이드)
+  const actualErrorState = isReviewValid && !isErrorCleared;
+
+  // 에러 상태가 변할 때 흔들림 애니메이션 트리거
+  useEffect(() => {
+    if (actualErrorState) {
+      setShouldShake(true);
+      // 애니메이션이 끝난 후 상태 리셋
+      const timer = setTimeout(() => {
+        setShouldShake(false);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [actualErrorState]);
 
   // 메모 입력란 auto-resize용 핸들러
   const handleReviewInput = (e: React.FormEvent<HTMLTextAreaElement>) => {
     const textarea = e.currentTarget;
     textarea.style.height = "auto";
     textarea.style.height = `${textarea.scrollHeight}px`;
+
+    // 에러가 있을 때 사용자가 다시 입력을 시작하면 에러를 클리어
+    if (isReviewValid && !isErrorCleared) {
+      clearErrors("review");
+      setIsErrorCleared(true);
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    // 폼 제출 시 에러 클리어 상태 리셋
+    setIsErrorCleared(false);
+    onSubmit(e);
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +85,7 @@ const RegisterFormFields = ({
   };
 
   return (
-    <Form onSubmit={onSubmit}>
+    <Form onSubmit={handleSubmit}>
       <input
         className='img-input'
         type='file'
@@ -102,8 +135,27 @@ const RegisterFormFields = ({
         onInput={handleReviewInput}
         maxLength={200}
         rows={1}
+        validation={{
+          minLength: 10,
+        }}
+        error={actualErrorState}
       />
-      <Button size='big' type='submit' disabled={!watch("cheeringTeamId")}>
+      <ShakeText
+        className='validation-text'
+        variant='caption'
+        color={actualErrorState ? "red" : "var(--gray-500)"}
+        $shouldShake={shouldShake}>
+        최소 10글자 이상 입력해주세요.
+      </ShakeText>
+      <Button
+        size='big'
+        type='submit'
+        disabled={
+          !watch("cheeringTeamId") ||
+          !watch("seat") ||
+          !watch("review") ||
+          actualErrorState
+        }>
         직관 기록 하기
       </Button>
     </Form>
@@ -141,6 +193,10 @@ const Form = styled.form`
     min-height: 0px;
     border-bottom: 1px solid var(--gray-400);
   }
+
+  .validation-text {
+    margin-top: -40px;
+  }
 `;
 
 const ImgUploadContainer = styled.label<{ $hasImage: boolean }>`
@@ -173,6 +229,47 @@ const PreviewImage = styled.img`
   height: 100%;
   border-radius: 12px;
   object-fit: cover;
+`;
+
+const ShakeText = styled(Text)<{ $shouldShake: boolean }>`
+  animation: ${({ $shouldShake }) =>
+    $shouldShake ? "shake 0.5s ease-in-out" : "none"};
+
+  @keyframes shake {
+    0% {
+      transform: translateX(0);
+    }
+    10% {
+      transform: translateX(-4px);
+    }
+    20% {
+      transform: translateX(4px);
+    }
+    30% {
+      transform: translateX(-3px);
+    }
+    40% {
+      transform: translateX(3px);
+    }
+    50% {
+      transform: translateX(-2px);
+    }
+    60% {
+      transform: translateX(2px);
+    }
+    70% {
+      transform: translateX(-1px);
+    }
+    80% {
+      transform: translateX(1px);
+    }
+    90% {
+      transform: translateX(-0.5px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
 `;
 
 export default RegisterFormFields;
