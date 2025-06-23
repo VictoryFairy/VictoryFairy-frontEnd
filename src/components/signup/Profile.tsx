@@ -2,10 +2,8 @@ import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { useRef, useState } from "react";
 import { UserInfo } from "@/types/User";
-import {
-  checkNicknameAvailability,
-  uploadProfileImage,
-} from "@/api/auth/auth.api";
+import { checkNicknameAvailability } from "@/api/auth/auth.api";
+import { uploadImg } from "@/utils/uploadImg";
 import TitleSection from "../common/TitleSection";
 import InputField from "../common/InputField";
 import Button from "../common/Button";
@@ -61,9 +59,7 @@ const Profile = ({ setstep, handleSetUserInfo }: ProfileProps) => {
     const file = e.target.files?.[0];
     if (file) {
       try {
-        const formData = new FormData();
-        formData.append("file", file);
-        const profileImgUrl = await uploadProfileImage(formData);
+        const profileImgUrl = await uploadImg(file, "profile");
         setImage(profileImgUrl);
       } catch (err) {
         console.log(err);
