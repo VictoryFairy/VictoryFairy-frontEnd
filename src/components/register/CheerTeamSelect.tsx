@@ -66,7 +66,7 @@ const CheerTeamSelect = ({
 
   return (
     <CheerTeamSelectContainer ref={dropdownRef}>
-      <Text color='#545763' className='label' variant='caption'>
+      <Text color='var(--disabled-on)' className='label' variant='caption'>
         응원팀*
       </Text>
       <div
@@ -75,9 +75,13 @@ const CheerTeamSelect = ({
         className='select'
         tabIndex={0}>
         {selectedTeam === null ? (
-          <Text variant='subtitle_02'>응원팀을 선택해주세요</Text>
+          <Text color='var(--gray-200)' variant='subtitle_02'>
+            응원팀을 선택해주세요
+          </Text>
         ) : (
-          <Text variant='subtitle_02'>{selectedTeam}</Text>
+          <Text className='selected-team' variant='subtitle_02'>
+            {selectedTeam}
+          </Text>
         )}
         <Icon icon='IcArrowDown' />
       </div>
@@ -97,14 +101,14 @@ const CheerTeamSelect = ({
 };
 
 const CheerTeamSelectContainer = styled.div`
-  border-bottom: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--gray-400);
   width: 100%;
   position: relative;
   .select {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding: 12px 8px 8px 0;
+    padding: 12px 8px 2px 0;
     cursor: pointer;
   }
 `;
