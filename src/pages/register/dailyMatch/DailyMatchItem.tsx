@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { Game } from "@/types/Game";
 import Radio from "@/components/common/Radio";
+import { sortGamesByGameNumber } from "@/utils/sortGamesByGameNumber";
 import GameInfo from "./components/GameInfo";
 import GameStadiumInfo from "./components/GameStadiumInfo";
 import DoubleHeader from "./DoubleHeader";
@@ -58,7 +59,7 @@ const DailyMatchItem = ({
         <GameStadiumInfo match={match} isDoubleHeader={isDoubleHeader} />
       </DoubleHeaderItemWrapper>
       <DoubleHeader
-        group={group}
+        group={sortGamesByGameNumber(group)}
         setSelectedDoubleHeader={setSelectedDoubleHeader}
         selectedDoubleHeader={selectedDoubleHeader}
         registeredGameIds={registeredGameIds}
