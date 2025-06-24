@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import TodayMatchList from "@/components/todayMatch/TodayMatchList";
-import WatchList from "@/components/watchList/WatchList";
+import WatchList from "@/pages/main/watchList/WatchList";
 
 const Watch = () => {
   return (

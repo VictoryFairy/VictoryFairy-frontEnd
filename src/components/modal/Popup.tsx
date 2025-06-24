@@ -20,10 +20,20 @@ const Popup = ({ title, message, buttons }: PopupProps) => {
       <PopupWrapper>
         <PopupContainer onClick={(e) => e.stopPropagation()}>
           <Text variant='headline' as='h1'>
-            {title}
+            {title.split("\n").map((line, index) => (
+              <span key={index}>
+                {line}
+                <br />
+              </span>
+            ))}
           </Text>
           <Text variant='body_long_02' as='p'>
-            {message}
+            {message.split("\n").map((line, index) => (
+              <span key={index}>
+                {line}
+                <br />
+              </span>
+            ))}
           </Text>
           <ButtonGroup>
             {buttons.map((button, index) => (

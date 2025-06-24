@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Icon from "../common/Icon";
+import Icon from "@/components/common/Icon";
 
 interface SearchBarProps {
   searchValue: string;

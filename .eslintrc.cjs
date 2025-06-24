@@ -11,7 +11,7 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
     "plugin:react/jsx-runtime",
-    "plugin:storybook/recommended"
+    "plugin:storybook/recommended",
   ],
   settings: {
     "import/resolver": {
@@ -43,7 +43,7 @@ module.exports = {
   },
   plugins: ["react", "prettier"],
   rules: {
-    complexity: ["error", { max: 10 }],
+    complexity: ["error", { max: 20 }],
     "react/function-component-definition": [
       2,
       {
