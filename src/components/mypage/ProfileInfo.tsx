@@ -6,6 +6,7 @@ import { MypageUserInfo } from "@/types/UserInfo";
 import { useAuthStore } from "@/store/authStore";
 import { getMemberInfo } from "../../api/auth/auth.api";
 import { useUserStore } from "../../store/userInfo";
+import { getTeamName } from "@/utils/getTeamName";
 
 interface Record {
   win: number;
@@ -23,19 +24,6 @@ interface User {
   image: string;
   provider: string[];
 }
-
-const teamNames = [
-  "롯데자이언츠",
-  "두산베어스",
-  "KIA타이거즈",
-  "삼성라이온즈",
-  "SSG랜더스",
-  "NC다이노스",
-  "LG트윈스",
-  "키움히어로즈",
-  "KT위즈",
-  "한화이글스",
-];
 
 const Profile = () => {
   const { data } = useQuery<MypageUserInfo>({
@@ -57,7 +45,7 @@ const Profile = () => {
     if (data) {
       setUserStoreInfo(
         data.user.nickname,
-        teamNames[teamId - 1],
+        getTeamName(teamId),
         data.user.image,
         data.user.email,
         data.user.provider,

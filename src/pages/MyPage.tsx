@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { usePopup } from "@/hooks/usePopup";
-import Profile from "@/components/mypage/Profile";
-import ProfileButtons from "@/components/mypage/ProfileButtons";
+import ProfileInfo from "@/components/mypage/ProfileInfo";
+import ProfileSettings from "@/components/mypage/ProfileSettings";
 
 const MyPage = () => {
   const [searchParams] = useSearchParams();
@@ -47,8 +47,8 @@ const MyPage = () => {
 
   return (
     <Container>
-      <Profile />
-      <ProfileButtons />
+      <ProfileInfo />
+      <ProfileSettings />
       {renderPopup()}
     </Container>
   );
