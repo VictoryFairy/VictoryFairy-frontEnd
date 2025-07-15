@@ -18,11 +18,21 @@ const PasswordReset = lazy(() => import("../pages/PasswordReset"));
 const Main = lazy(() => import("../pages/main/Main"));
 const MyPage = lazy(() => import("../pages/MyPage"));
 const Ranking = lazy(() => import("../pages/Ranking"));
-const TeamChange = lazy(() => import("../components/mypage/TeamChange"));
-const ProfileChange = lazy(() => import("../components/mypage/ProfileChange"));
-const SocialLogin = lazy(() => import("../components/mypage/SocialLogin"));
-const WithDraw = lazy(() => import("../components/mypage/WithDraw"));
-const WithDraw2 = lazy(() => import("../components/mypage/WithDraw2"));
+const TeamChange = lazy(
+  () => import("../components/mypage/ProfileSettings/TeamChange"),
+);
+const ProfileChange = lazy(
+  () => import("../components/mypage/ProfileSettings/ProfileChange"),
+);
+const SocialLogin = lazy(
+  () => import("../components/mypage/ProfileSettings/SocialLogin"),
+);
+const WithDraw = lazy(
+  () => import("../components/mypage/ProfileSettings/WithDraw"),
+);
+const WithDraw2 = lazy(
+  () => import("../components/mypage/ProfileSettings/WithDraw2"),
+);
 const SearchCheerSong = lazy(() => import("../pages/SearchCheerSong"));
 const CheersongDetail = lazy(() => import("../pages/CheersongDetail"));
 const Detail = lazy(() => import("../pages/detail/Detail"));

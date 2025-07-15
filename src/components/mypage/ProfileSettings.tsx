@@ -7,7 +7,7 @@ import { logout, passwordChk, withdrawal } from "@/api/mypage/mypage.api";
 import Text from "../common/Text";
 import { useUserStore } from "../../store/userInfo";
 import Icon from "../common/Icon";
-import WithDrawPopup from "./WithDrawPopup";
+import WithDrawPopup from "./ProfileSettings/WithDrawPopup";
 import { isIOS } from "react-device-detect";
 
 const ProfileButtons = () => {

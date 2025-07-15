@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Text from "../common/Text";
+import Text from "../../common/Text";
 import { useEffect, useState } from "react";
 import { useUserStore } from "@/store/userInfo";
 import { socialDelete, socialLink } from "@/api/mypage/mypage.api";

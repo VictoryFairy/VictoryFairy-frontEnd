@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { usePopup } from "@/hooks/usePopup";
 import { profileChange } from "@/api/mypage/mypage.api";
 import { useAuthStore } from "@/store/authStore";
-import Button from "../common/Button";
-import Text from "../common/Text";
+import Button from "../../common/Button";
+import Text from "../../common/Text";
 
 interface Team {
   id: number;

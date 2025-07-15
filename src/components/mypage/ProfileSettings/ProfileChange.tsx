@@ -7,9 +7,9 @@ import { usePopup } from "@/hooks/usePopup";
 import { useUserStore } from "@/store/userInfo";
 import { useMutation } from "@tanstack/react-query";
 import { uploadImg } from "@/utils/uploadImg";
-import Button from "../common/Button";
-import Text from "../common/Text";
-import Icon from "../common/Icon";
+import Button from "../../common/Button";
+import Text from "../../common/Text";
+import Icon from "../../common/Icon";
 
 const ProfileChange = () => {
   const [image, setImage] = useState<string | null>(null);

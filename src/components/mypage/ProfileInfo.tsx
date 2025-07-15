@@ -2,36 +2,28 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import styled from "styled-components";
 import Text from "@/components/common/Text";
 import { useQuery } from "@tanstack/react-query";
-import { MypageUserInfo } from "@/types/UserInfo";
+import { MypageUserInfo, User } from "@/types/UserInfo";
 import { useAuthStore } from "@/store/authStore";
 import { getMemberInfo } from "../../api/auth/auth.api";
 import { useUserStore } from "../../store/userInfo";
 import { getTeamName } from "@/utils/getTeamName";
 import { Record } from "@/types/Record";
 
-interface User {
-  id: number;
-  email: string;
-  nickname: string;
-  image: string;
-  provider: string[];
-}
-
 const Profile = () => {
+  const [record, setRecord] = useState<Record | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const { setUserInfo: setUserStoreInfo } = useUserStore();
+  const teamId = useAuthStore((state) => state.teamId);
   const { data } = useQuery<MypageUserInfo>({
     queryKey: ["getMemberInfo"],
     queryFn: getMemberInfo,
   });
+
   // const { data, refetch: refetchMemberInfo } = useQuery<MypageUserInfo>({
   //   queryKey: ["getMemberInfo"],
   //   queryFn: getMemberInfo,
   //   refetchOnWindowFocus: true,
   // });
-
-  const [record, setRecord] = useState<Record | null>(null);
-  const [user, setUser] = useState<User | null>(null);
-  const { setUserInfo: setUserStoreInfo } = useUserStore();
-  const teamId = useAuthStore((state) => state.teamId);
 
   const updateUserStore = useCallback(() => {
     if (data) {
