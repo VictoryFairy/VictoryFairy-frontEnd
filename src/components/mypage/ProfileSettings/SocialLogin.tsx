@@ -6,20 +6,20 @@ import { socialDelete, socialLink } from "@/api/mypage/mypage.api";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { usePopup } from "@/hooks/usePopup";
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 function SocialLogin() {
-  const BASE_URL = import.meta.env.VITE_API_URL;
   const { provider, primaryProvider } = useUserStore();
   const navigate = useNavigate();
-
+  const clickNav = () => {
+    navigate("/mypage");
+  };
   const [isChecked1, setIsChecked1] = useState(false);
   const [isChecked2, setIsChecked2] = useState(false);
   const [isChecked3, setIsChecked3] = useState(false);
 
   const { renderPopup, openPopup, closePopup } = usePopup();
-  const clickNav = () => {
-    navigate("/mypage");
-  };
+
   const linkMutation = useMutation({
     mutationFn: async ({
       provider,
