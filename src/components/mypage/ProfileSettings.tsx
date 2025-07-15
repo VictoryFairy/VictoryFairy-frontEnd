@@ -3,30 +3,33 @@ import { useMutation } from "@tanstack/react-query";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { usePopup } from "@/hooks/usePopup";
-import { logout, passwordChk, withdrawal } from "@/api/mypage/mypage.api";
+import { logout } from "@/api/mypage/mypage.api";
 import Text from "../common/Text";
 import { useUserStore } from "../../store/userInfo";
 import Icon from "../common/Icon";
-import WithDrawPopup from "./ProfileSettings/WithDrawPopup";
 import { isIOS } from "react-device-detect";
 
-const ProfileButtons = () => {
-  const [isOpenDraw, setIsOpenDraw] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-
-  const togglePasswordVisibility = () => {
-    setShowPassword((prevState) => !prevState);
-  };
-  // const openWithDrawPopup = useCallback(() => {
-  //   setIsOpenDraw(true);
-  // }, []);
-
-  const closeWithDrawPopup = useCallback(() => {
-    setIsOpenDraw(false);
-  }, []);
+const ProfileSettings = () => {
   const { renderPopup, openPopup, closePopup } = usePopup();
-  const [password, setPassword] = useState("");
-  const [isPasswordValid, setIsPasswordValid] = useState<boolean>(false);
+
+  const navigate = useNavigate();
+  const { renderPopup, openPopup, closePopup } = usePopup();
+
+  const navigate = useNavigate();
+  const { supportTeam } = useUserStore((state) => ({
+    supportTeam: state.supportTeam,
+  }));
+
+  const mutationLogout = useMutation<void, Error>({
+    mutationFn: logout,
+    onSuccess: () => {
+      navigate("/");
+      localStorage.clear();
+    },
+    onError: (error) => {
+      console.error("로그아웃 중 오류 발생:", error);
+    },
+  });
 
   const handleLogoutClick = () => {
     openPopup({
@@ -46,22 +49,9 @@ const ProfileButtons = () => {
       ],
     });
   };
-
-  // const handleWithDrawClik = () => {
-  //   openWithDrawPopup();
-  // };
-
-  // const isIOS =
-  //   /iPad|iPhone|iPod/.test(navigator.userAgent) &&
-  //   !/Chrome|Firefox|Safari/.test(navigator.userAgent);
-
-  const navigate = useNavigate();
   const { supportTeam } = useUserStore((state) => ({
     supportTeam: state.supportTeam,
   }));
-  // const { logoutAction } = useAuthStore((state) => ({
-  //   logoutAction: state.logoutAction,
-  // }));
 
   const mutationLogout = useMutation<void, Error>({
     mutationFn: logout,
@@ -74,121 +64,26 @@ const ProfileButtons = () => {
     },
   });
 
-  const withdraw = useMutation<void, Error>({
-    mutationFn: withdrawal,
-    onSuccess: () => {
-      navigate("/");
-      localStorage.clear();
-    },
-    onError: (error) => {
-      console.error("로그아웃 중 오류 발생:", error);
-    },
-  });
-
-  const mutationPasswordChk = useMutation<any, Error, string>({
-    mutationFn: passwordChk,
-    onSuccess: (data) => {
-      setIsPasswordValid(data.isCorrect);
-    },
-    onError: (error) => {
-      console.error("비밀번호 체크 중 오류 발생:", error);
-    },
-  });
-
-  const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  const onPasswordChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newPassword = e.target.value;
-      setPassword(newPassword);
-
-      if (debounceTimeoutRef.current) {
-        clearTimeout(debounceTimeoutRef.current);
-      }
-
-      if (newPassword) {
-        debounceTimeoutRef.current = setTimeout(() => {
-          mutationPasswordChk.mutate(newPassword);
-        }, 300);
-      } else {
-        setIsPasswordValid(false);
-      }
-    },
-    [],
-  );
+  const handleLogoutClick = () => {
+    openPopup({
+      title: "로그아웃",
+      message: "정말 로그아웃 하시겠습니까?",
+      buttons: [
+        {
+          label: "취소",
+          variant: "cancel",
+          onClick: closePopup,
+        },
+        {
+          label: "로그아웃",
+          variant: "confirm",
+          onClick: () => mutationLogout.mutate(),
+        },
+      ],
+    });
+  };
   return (
     <Container>
-      {isOpenDraw && (
-        <WithDrawPopup
-          title='확인'
-          message='탈퇴 후 복구가 불가능합니다.<br />탈퇴 하시려면 비밀번호를 입력해주세요.'
-          confirmMessage='탈퇴'
-          closePopup={closeWithDrawPopup}
-          confirmFunc={() => {
-            withdraw.mutate();
-          }}
-          active={isPasswordValid}
-          comp={
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-              }}>
-              <Text variant='caption' color='var(--gray-700)'>
-                비밀번호
-              </Text>
-              <div
-                style={{
-                  width: "100%",
-                  position: "relative",
-                }}>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  onChange={onPasswordChange}
-                  value={password}
-                  style={{
-                    width: "100%",
-                    height: "40px",
-                    border: "none",
-                    borderBottom: "1px solid var(--gray-400)",
-                    outline: "none",
-                    margin: "5px 0",
-                    paddingRight: "40px",
-                  }}
-                />
-                <button
-                  type='button'
-                  onClick={togglePasswordVisibility}
-                  style={{
-                    position: "absolute",
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    right: "10px",
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    width: "20px",
-                    height: "20px",
-                  }}>
-                  {showPassword ? (
-                    <Icon icon='IcShow' />
-                  ) : (
-                    <Icon icon='IcHide' />
-                  )}
-                </button>
-              </div>
-
-              {isPasswordValid === false && (
-                <Text variant='caption' color='var(--red-600)'>
-                  입력하신 비밀번호가 일치하지 않습니다.
-                </Text>
-              )}
-            </div>
-          }
-        />
-      )}
-
       <Text variant='title_02' color='var(--primary-color)'>
         정보 수정
       </Text>
@@ -344,4 +239,4 @@ const ProfileTeamWrapper = styled.div`
   }
 `;
 
-export default ProfileButtons;
+export default ProfileSettings;

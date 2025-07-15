@@ -9,7 +9,7 @@ import { useUserStore } from "../../store/userInfo";
 import { getTeamName } from "@/utils/getTeamName";
 import { Record } from "@/types/Record";
 
-const Profile = () => {
+const ProfileInfo = () => {
   const [record, setRecord] = useState<Record | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const { setUserInfo: setUserStoreInfo } = useUserStore();
@@ -141,4 +141,4 @@ const ProfileInfoWrapper = styled.div`
   }
 `;
 
-export default Profile;
+export default ProfileInfo;
