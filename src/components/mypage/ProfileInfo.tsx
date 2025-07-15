@@ -7,15 +7,7 @@ import { useAuthStore } from "@/store/authStore";
 import { getMemberInfo } from "../../api/auth/auth.api";
 import { useUserStore } from "../../store/userInfo";
 import { getTeamName } from "@/utils/getTeamName";
-
-interface Record {
-  win: number;
-  lose: number;
-  tie: number;
-  cancel: number;
-  total: number;
-  score: number;
-}
+import { Record } from "@/types/Record";
 
 interface User {
   id: number;
