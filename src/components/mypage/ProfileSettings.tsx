@@ -1,4 +1,3 @@
-import { useState, useCallback, useRef } from "react";
 import { useMutation } from "@tanstack/react-query";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -13,42 +12,7 @@ const ProfileSettings = () => {
   const { renderPopup, openPopup, closePopup } = usePopup();
 
   const navigate = useNavigate();
-  const { renderPopup, openPopup, closePopup } = usePopup();
 
-  const navigate = useNavigate();
-  const { supportTeam } = useUserStore((state) => ({
-    supportTeam: state.supportTeam,
-  }));
-
-  const mutationLogout = useMutation<void, Error>({
-    mutationFn: logout,
-    onSuccess: () => {
-      navigate("/");
-      localStorage.clear();
-    },
-    onError: (error) => {
-      console.error("로그아웃 중 오류 발생:", error);
-    },
-  });
-
-  const handleLogoutClick = () => {
-    openPopup({
-      title: "로그아웃",
-      message: "정말 로그아웃 하시겠습니까?",
-      buttons: [
-        {
-          label: "취소",
-          variant: "cancel",
-          onClick: closePopup,
-        },
-        {
-          label: "로그아웃",
-          variant: "confirm",
-          onClick: () => mutationLogout.mutate(),
-        },
-      ],
-    });
-  };
   const { supportTeam } = useUserStore((state) => ({
     supportTeam: state.supportTeam,
   }));
