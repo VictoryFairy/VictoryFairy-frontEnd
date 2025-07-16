@@ -14,7 +14,7 @@ export const requestPresignedUrl = async (
         "Content-Type": "application/json",
       },
     });
-    return response.data;
+    return { data: response.data, headers: response.headers };
   } catch (err) {
     if (axios.isAxiosError(err)) {
       // 상태 코드에 따른 에러 메시지 처리
@@ -41,10 +41,15 @@ export const requestPresignedUrl = async (
 };
 
 // presigned url 업로드
-export const putPresignedUrl = async (presignedUrl: string, file: Blob) => {
+export const putPresignedUrl = async (
+  presignedUrl: string,
+  file: Blob,
+  headers: any,
+) => {
   try {
     const response = await axios.put(presignedUrl, file, {
       headers: {
+        ...headers,
         "Content-Type": file.type,
       },
       withCredentials: false,

@@ -11,11 +11,11 @@ export const uploadImg = async (
       size: img.size,
     };
     /** 프리사인드 url 요청 */
-    const { presignedUrl } = await requestPresignedUrl(imgObj, type);
+    const { data, headers } = await requestPresignedUrl(imgObj, type);
     /** 프리사인드 url 업로드 */
-    await putPresignedUrl(presignedUrl, img);
+    await putPresignedUrl(data.presignedUrl, img, headers);
     /** 업로드 완료 후 이미지 url 반환 */
-    const result = presignedUrl.split("?")[0];
+    const result = data.presignedUrl.split("?")[0];
     return result;
   } catch (error) {
     console.error("Error uploading image:", error);
