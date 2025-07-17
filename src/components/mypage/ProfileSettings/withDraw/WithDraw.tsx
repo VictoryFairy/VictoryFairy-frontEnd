@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Text from "../../common/Text";
-import Button from "../../common/Button";
+import Text from "@/components/common/Text";
+import Button from "@/components/common/Button";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 

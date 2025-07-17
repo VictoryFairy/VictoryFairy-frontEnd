@@ -4,8 +4,8 @@ import { useMutation } from "@tanstack/react-query";
 import { withdrawal } from "@/api/mypage/mypage.api";
 import { useNavigate } from "react-router-dom";
 import { usePopup } from "@/hooks/usePopup";
-import Button from "../../common/Button";
-import Text from "../../common/Text";
+import Text from "@/components/common/Text";
+import Button from "@/components/common/Button";
 // import { sendGaEvent } from "@/utils/sendGaEvent";
 
 declare global {
