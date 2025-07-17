@@ -4,9 +4,9 @@ import * as z from "zod";
 import styled from "styled-components";
 import { UserInfo } from "@/types/User";
 import { requestEmailVerificationCode } from "@/api/auth/auth.api";
-import TitleSection from "../common/TitleSection";
-import InputField from "../common/InputField";
-import Button from "../common/Button";
+import TitleSection from "../../../common/TitleSection";
+import InputField from "../../../common/InputField";
+import Button from "../../../common/Button";
 
 interface EmailValidProps {
   setstep: (step: number) => void;

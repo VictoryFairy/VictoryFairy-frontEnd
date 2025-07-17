@@ -5,10 +5,10 @@ import {
   requestEmailVerificationCode,
   verifyEmailCode,
 } from "@/api/auth/auth.api";
-import OTPInput from "../common/OTPInput";
-import TitleSection from "../common/TitleSection";
-import Button from "../common/Button";
-import EmailVerificationTimer from "../signup/EmailVerificationTimer";
+import OTPInput from "../../../common/OTPInput";
+import TitleSection from "../../../common/TitleSection";
+import Button from "../../../common/Button";
+import EmailVerificationTimer from "../../../signup/EmailVerificationTimer";
 
 interface VerificationCodeProps {
   email: string;

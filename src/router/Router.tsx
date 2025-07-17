@@ -28,10 +28,10 @@ const SocialLogin = lazy(
   () => import("../components/mypage/ProfileSettings/SocialLogin"),
 );
 const WithDraw = lazy(
-  () => import("../components/mypage/ProfileSettings/WithDraw"),
+  () => import("../components/mypage/ProfileSettings/withDraw/WithDraw"),
 );
 const WithDraw2 = lazy(
-  () => import("../components/mypage/ProfileSettings/WithDraw2"),
+  () => import("../components/mypage/ProfileSettings/withDraw/WithDraw2"),
 );
 const SearchCheerSong = lazy(() => import("../pages/SearchCheerSong"));
 const CheersongDetail = lazy(() => import("../pages/CheersongDetail"));

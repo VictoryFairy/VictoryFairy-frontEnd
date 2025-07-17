@@ -1,8 +1,8 @@
 import { useState } from "react";
-import EmailValid from "../components/passwordReset/EmailValid";
-import VerificationCode from "../components/passwordReset/VerificationCode";
-import PasswordValid from "../components/passwordReset/PassWordReset";
-import Confirmpassword from "../components/passwordReset/Confirmpassword";
+import EmailValid from "../components/mypage/ProfileSettings/passwordReset/EmailValid";
+import VerificationCode from "../components/mypage/ProfileSettings/passwordReset/VerificationCode";
+import PasswordValid from "../components/mypage/ProfileSettings/passwordReset/PassWordReset";
+import Confirmpassword from "../components/mypage/ProfileSettings/passwordReset/Confirmpassword";
 import { useSignupStore } from "../store/signupStep";
 
 interface ResetPassword {

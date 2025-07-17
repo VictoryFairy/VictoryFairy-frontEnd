@@ -3,9 +3,9 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { changePassword } from "@/api/auth/auth.api";
 import { usePopup } from "@/hooks/usePopup";
-import Button from "../common/Button";
-import InputField from "../common/InputField";
-import TitleSection from "../common/TitleSection";
+import Button from "../../../common/Button";
+import InputField from "../../../common/InputField";
+import TitleSection from "../../../common/TitleSection";
 
 interface ConfirmpasswordProps {
   password: string;

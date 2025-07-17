@@ -4,10 +4,10 @@ import * as z from "zod";
 import styled from "styled-components";
 import { UserInfo } from "@/types/User";
 import { typography } from "@/style/typography";
-import TitleSection from "../common/TitleSection";
-import InputField from "../common/InputField";
-import Button from "../common/Button";
-import Icon from "../common/Icon";
+import TitleSection from "../../../common/TitleSection";
+import InputField from "../../../common/InputField";
+import Button from "../../../common/Button";
+import Icon from "../../../common/Icon";
 
 interface PasswordValidProps {
   setstep: (step: number) => void;
