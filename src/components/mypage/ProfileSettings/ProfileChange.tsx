@@ -173,7 +173,10 @@ const ProfileChange = () => {
           <Icon icon='IcCancel' />
         </InputWrapper>
         <ButtonWrapper>
-          <Button type='button' onClick={handleClickSave}>
+          <Button
+            type='button'
+            onClick={handleClickSave}
+            disabled={mutationProfileChange.isPending}>
             저장
           </Button>
         </ButtonWrapper>

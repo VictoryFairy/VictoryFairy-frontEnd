@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 import { Game, GameResultType } from "@/types/Game";
 import { postRegisterGame } from "@/api/register/register";
 import { usePopup } from "@/hooks/usePopup";
@@ -18,54 +19,55 @@ import { isCanceledGame } from "@/utils/isCanceledGame";
 const RegisterForm = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { openPopup, renderPopup, closePopup } = usePopup();
 
-  // 이전 페이지에서 넘어온 데이터들
+  // location.state에서 경기 정보 추출
   const {
-    match, // 현재 등록할 경기 정보
-    doubleHeader, // 더블헤더 전체 경기 목록 (있는 경우)
-    currentGameIndex = 0, // 현재 몇 번째 경기인지 (0부터 시작)
-    totalGames = 1, // 총 경기 수
-  } = location.state as {
+    match,
+    doubleHeader,
+    currentGameIndex = 0,
+    totalGames = 1,
+  } = (location.state as {
     match: Game;
     doubleHeader?: Game[];
     currentGameIndex?: number;
     totalGames?: number;
-  };
+  }) || {};
 
-  const matchId = match.id; // 현재 경기의 ID
   const {
     register,
-    watch,
     handleSubmit,
+    watch,
     setValue,
     reset,
     formState,
     clearErrors,
   } = useForm({
-    mode: "onSubmit",
-    reValidateMode: "onChange",
+    mode: "onChange",
   });
-  const { openPopup, renderPopup, closePopup } = usePopup();
-  // 더블헤더 경기인지 확인 (경기가 2개 이상이면 더블헤더)
+
+  // 더블헤더 여부 확인
   const isDoubleHeader = doubleHeader && doubleHeader.length > 1;
 
   // 현재 경기가 마지막 경기인지 확인
   const isLastGame = currentGameIndex === totalGames - 1;
 
   /**
-   * 폼 제출 시 실행되는 함수
-   * 직관 기록 데이터를 서버에 저장하고, 더블헤더인 경우 다음 경기로 이동
-   * @param data - 폼에서 입력받은 데이터 (이미지, 좌석, 후기, 응원팀 등)
+   * 직관 기록 등록 mutation
    */
-  const onSubmit = async (data: any) => {
-    // 구글 애널리틱스 이벤트 전송
-    sendGaEvent(
-      "직관 기록 페이지",
-      "직관 기록 하기 완료",
-      "직관 기록 하기 버튼",
-    );
+  const registerMutation = useMutation({
+    mutationFn: async (data: any) => {
+      if (!match) {
+        throw new Error("경기 정보가 없습니다.");
+      }
 
-    try {
+      // 구글 애널리틱스 이벤트 전송
+      sendGaEvent(
+        "직관 기록 페이지",
+        "직관 기록 하기 완료",
+        "직관 기록 하기 버튼",
+      );
+
       // 폼에서 입력받은 데이터 추출
       const { img, seat, review, cheeringTeamId } = data;
 
@@ -74,7 +76,7 @@ const RegisterForm = () => {
 
       // 서버에 보낼 데이터 구성
       const registerData = {
-        gameId: matchId, // 경기 ID
+        gameId: match.id, // 경기 ID
         image, // 업로드된 이미지 URL
         seat, // 좌석 정보
         review, // 직관 후기
@@ -82,8 +84,9 @@ const RegisterForm = () => {
       };
 
       // 서버에 직관 기록 저장
-      await postRegisterGame(registerData);
-
+      return await postRegisterGame(registerData);
+    },
+    onSuccess: () => {
       /**
        * 등록 완료 후 처리 로직
        * - 더블헤더이고 첫 번째 경기인 경우: 두 번째 경기로 이동
@@ -131,16 +134,27 @@ const RegisterForm = () => {
           ],
         });
       }
-    } catch (error) {
+    },
+    onError: (error: Error) => {
       openPopup({
         title: "직관 기록 실패",
-        message:
-          error instanceof Error
-            ? error.message
-            : "알 수 없는 오류가 발생했습니다.",
+        message: error.message || "알 수 없는 오류가 발생했습니다.",
         buttons: [{ label: "확인", variant: "confirm", onClick: closePopup }],
       });
-    }
+    },
+  });
+
+  if (!match) {
+    return <div>경기 정보가 없습니다.</div>;
+  }
+
+  const matchId = match.id;
+
+  /**
+   * 폼 제출 시 실행되는 함수
+   */
+  const onSubmit = (data: any) => {
+    registerMutation.mutate(data);
   };
 
   /**
@@ -227,6 +241,7 @@ const RegisterForm = () => {
         isReviewValid={!!formState.errors.review}
         clearErrors={clearErrors}
         matchId={matchId}
+        isPending={registerMutation.isPending}
       />
 
       {renderPopup()}

@@ -26,6 +26,7 @@ interface RegisterFormFieldsProps {
     review?: string;
     image?: string;
   };
+  isPending?: boolean;
 }
 
 const RegisterFormFields = ({
@@ -40,6 +41,7 @@ const RegisterFormFields = ({
   matchId,
   mode = "register",
   defaultValues,
+  isPending,
 }: RegisterFormFieldsProps) => {
   const inputImgRef = useRef<HTMLInputElement>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(
@@ -190,7 +192,8 @@ const RegisterFormFields = ({
           !watch("cheeringTeamId") ||
           !watch("seat") ||
           !watch("review") ||
-          actualErrorState
+          actualErrorState ||
+          isPending
         }>
         {mode === "register" ? "직관 기록 하기" : "수정완료"}
       </Button>

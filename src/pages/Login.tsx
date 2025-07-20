@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
-import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import styled from "styled-components";
 import { typography } from "@/style/typography";
 import Button from "../components/common/Button";
 import TitleSection from "../components/common/TitleSection";
@@ -25,25 +26,32 @@ const Login = () => {
     formState: { errors },
   } = useForm<LoginFormData>({});
 
-  const onSubmit = async (data: LoginFormData) => {
-    try {
-      const response = await login(data);
+  const loginMutation = useMutation({
+    mutationFn: async (data: LoginFormData) => {
+      return await login(data);
+    },
+    onSuccess: (response) => {
       if (response.acToken) {
         loginAction(response.acToken, response.teamId);
         navigate("/home");
       }
-    } catch (err) {
-      if (err instanceof Error) {
-        setError("password", {
-          type: "manual",
-          message: err.message,
-        });
-      }
-    }
+    },
+    onError: (err: Error) => {
+      setError("password", {
+        type: "manual",
+        message: err.message,
+      });
+    },
+  });
+
+  const onSubmit = (data: LoginFormData) => {
+    loginMutation.mutate(data);
   };
+
   const emailValue = watch("email");
   const passwordValue = watch("password");
-  const isButtonDisabled = !emailValue || !passwordValue;
+  const isButtonDisabled =
+    !emailValue || !passwordValue || loginMutation.isPending;
 
   return (
     <Container>

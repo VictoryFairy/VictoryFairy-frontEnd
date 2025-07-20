@@ -193,6 +193,7 @@ const Detail = () => {
           }}
           isReviewValid={!!formState.errors.review}
           clearErrors={clearErrors}
+          isPending={updateMutation.isPending}
         />
       ) : (
         <DetailContainer>
