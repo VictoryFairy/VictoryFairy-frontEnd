@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import TodayMatchList from "@/components/todayMatch/TodayMatchList";
+import { TodayMatches } from "@/@entities/todayMatch";
 import WatchList from "@/pages/main/watchList/WatchList";
 
 const Watch = () => {
   return (
     <WatchContainer>
-      <TodayMatchList />
+      <TodayMatches />
       <hr />
       <WatchList />
     </WatchContainer>
