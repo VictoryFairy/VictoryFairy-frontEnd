@@ -1,30 +1,12 @@
 import styled from "styled-components";
-import { Game, GameStatusCanceledType, GameStatusType } from "@/types/Game";
-import {
-  GAMESTATUS_CANCELED,
-  GAMESTATUS_CANCELED_DEFAULT,
-  GAMESTATUS_PREPARING,
-} from "@/constants";
-import Text from "../common/Text";
+import { Text } from "@/@shared";
+import { Game, getStatus, isNoScoreStatus } from "@/@entities/todayMatch";
 
 interface TodayMatchItemProps {
   match: Game;
 }
 
 const TodayMatchItem = ({ match }: TodayMatchItemProps) => {
-  const getStatus = (status: GameStatusType): GameStatusType => {
-    if (GAMESTATUS_CANCELED.includes(status as GameStatusCanceledType)) {
-      return GAMESTATUS_CANCELED_DEFAULT;
-    }
-    return status;
-  };
-
-  const isNoScoreStatus = (status: GameStatusType) => {
-    return (
-      status === GAMESTATUS_PREPARING ||
-      GAMESTATUS_CANCELED.includes(status as GameStatusCanceledType)
-    );
-  };
   return (
     <TodayMatchItemContainer>
       <Text color='var(--gray-500)' className='status' variant='subtitle_01'>
