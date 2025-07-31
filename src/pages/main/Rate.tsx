@@ -28,10 +28,11 @@ const Rate = () => {
 
   const winPercentage = useMemo(() => {
     if (data && data.total > 0) {
-      return ((data.win / data.total) * 100).toFixed(2);
+      return ((data.win / (data.win + data.lose)) * 100).toFixed(2);
     }
     return "0.00";
   }, [data]);
+
   const cancelPopup = () => {
     openPopup({
       title: "실패",
