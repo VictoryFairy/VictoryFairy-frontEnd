@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, Suspense, lazy } from "react";
+import { useState, Suspense, lazy, useEffect } from "react";
 import Tabs from "@/components/common/Tabs";
 import Text from "@/components/common/Text";
 import Icon from "@/components/common/Icon";
@@ -7,13 +7,38 @@ import { useNavigate } from "react-router-dom";
 import Loading from "@/components/common/Loading";
 import { sendGaEvent } from "@/utils/sendGaEvent";
 import { DetailHelmet } from "../helmets/DetailHelmet";
+import { usePopup } from "@/hooks/usePopup";
 
 const Rate = lazy(() => import("./Rate"));
 const Watch = lazy(() => import("./Watch"));
 
+const SERVICE_NOTICE_STORAGE_KEY = "serviceNoticeShown";
+
 const Main = () => {
   const [activeTab, setActiveTab] = useState(0);
   const navigate = useNavigate();
+  const { openPopup, closePopup, renderPopup } = usePopup();
+
+  useEffect(() => {
+    const hasSeenNotice = localStorage.getItem(SERVICE_NOTICE_STORAGE_KEY);
+
+    if (!hasSeenNotice) {
+      openPopup({
+        title: "승리요정 서비스가 잠시 중단됩니다",
+        message: `11월 28일(금)부로 \n 승리요정 서비스가 잠시 중단됩니다.\n\n그동안 함께해주셔서 진심으로 감사드립니다.\n더 나은 모습으로 다시 찾아오겠습니다.\n\n궁금한 점이 있다면,\n마이페이지 → 문의사항을 통해 남겨주세요.`,
+        buttons: [
+          {
+            label: "확인",
+            variant: "confirm",
+            onClick: () => {
+              localStorage.setItem(SERVICE_NOTICE_STORAGE_KEY, "true");
+              closePopup();
+            },
+          },
+        ],
+      });
+    }
+  }, [openPopup, closePopup]);
 
   const handleClickRegister = () => {
     sendGaEvent("버튼 클릭", "직관 기록하기 버튼 클릭", "직관 기록하기 버튼");
@@ -65,6 +90,7 @@ const Main = () => {
           <Text variant='title_02'>직관 기록하기</Text>
         </RegisterButton>
       </Layer>
+      {renderPopup()}
     </MainContainer>
   );
 };
